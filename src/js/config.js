@@ -1,7 +1,4 @@
-/////////// SAN FRANCISCO .GOV DATA
-export const SFAPI_APP_TN = "TmnsQZtPesideUfTbGU3BeaAV";
-// How to use token: json?$$app_token=APP_TOKEN
-
+/////////////////////-----urbanite-----/////////////////////
 /////////// Leaflet Map
 export const getLatLngSF = () => {
   return window.innerWidth <= 758 ? [37.74, -122.447] : [37.762, -122.43];
@@ -18,9 +15,24 @@ export const MAP_LAYERS = [
   "https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg",
 ];
 
-/////////// SF Police - Last 48 hours Data
-export const API_URL_POLICE_48h =
-"https://data.sfgov.org/resource/gnap-fj3t.json";
+/////////// SAN FRANCISCO .GOV DATA
+const SFAPI_APP_TKN = "TmnsQZtPesideUfTbGU3BeaAV"; // How to use token: json?$$app_token=APP_TOKEN
+
+/////////// Police - Last 48 hours
+const API_URL_POLICE_48h = "https://data.sfgov.org/resource/gnap-fj3t.json";
+
+const excludedCallTypes = [
+  "PASSING CALL",
+  "TRAF VIOLATION CITE",
+  "WELL BEING CHECK",
+  "COMPLAINT UNKN",
+  "MISC",
+];
+const filterExpression = excludedCallTypes
+  .map((callType) => `call_type_final_desc != '${callType}'`)
+  .join(" and ");
+
+export const API_URL_POLICE_48h_FILTERED = `${API_URL_POLICE_48h}?$where=${filterExpression} AND intersection_point IS NOT NULL&$$app_token=${SFAPI_APP_TKN}&$limit=3000`
 
 // export const REQUEST_PARAM_POLICE_48h = "call_type_final_desc";
 // export const DATA_ORDER_POLICE_48h = "incident_datetime";

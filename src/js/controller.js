@@ -10,19 +10,30 @@ const latLngSF = sfapi.getLatLngSF();
 const zoomLevel = sfapi.getMapZoomLevel();
 const layerGroups = {};
 
-const controlMap = function () {
+const controlMap = async function () {
   try {
     // Initialize Leaflet map object, set Lat/Lng, add layer, add to "map" HTML element
     const map = L.map("map").setView(latLngSF, zoomLevel);
-
-    const startingLayer = L.tileLayer(sfapi.MAP_LAYERS[4]).addTo(map);
+    const initLayer = L.tileLayer(sfapi.MAP_LAYERS[4]).addTo(map);
     if (!map) return;
   } catch (err) {
-    console.error(err);
+    console.error(`${err} Leaflet map error`);
+    throw err;
   }
 };
 
-const init = function () {
-  controlMap();
+const addMarkersToLayerGroups = function () {
+  const dataPolice48h = model.fetchApiPolice48h(
+    sfapi.API_URL_POLICE_48h_FILTERED
+  );
 };
+
+const init = async function () {
+  try {
+    await Promise.all([controlMap(), addMarkersToLayerGroups()]);
+  } catch (err) {
+    console.error(`Init error: ${err}`);
+  }
+};
+
 init();
