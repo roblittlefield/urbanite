@@ -1,0 +1,26 @@
+{
+  "name": "urbanite",
+  "version": "4.0.0",
+  "description": "San Francisco .gov data mapping app",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roblittlefield/urbanite.git"
+  },
+  "keywords": [
+    "San",
+    "Francisco",
+    "Police",
+    "Firefighters",
+    "911"
+  ],
+  "author": "Rob Littlefield",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/roblittlefield/urbanite/issues"
+  },
+  "homepage": "https://github.com/roblittlefield/urbanite#readme"
+}
