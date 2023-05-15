@@ -2,9 +2,9 @@
   "name": "urbanite",
   "version": "4.0.0",
   "description": "San Francisco .gov data mapping app",
-  "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "parcel index.html",
+    "build": "parcel build index.html --dist-dir ./dist"
   },
   "repository": {
     "type": "git",
@@ -22,5 +22,10 @@
   "bugs": {
     "url": "https://github.com/roblittlefield/urbanite/issues"
   },
-  "homepage": "https://github.com/roblittlefield/urbanite#readme"
+  "homepage": "https://github.com/roblittlefield/urbanite#readme",
+  "dependencies": {
+    "leaflet": "^1.9.3",
+    "parcel": "^2.8.3",
+    "sass": "^1.62.1"
+  }
 }

@@ -1,0 +1,4 @@
+nodule_modules
+dist
+.parcel-cache
+.DS_Store
