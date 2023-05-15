@@ -1,20 +1,17 @@
 import * as sfapi from "./config.js";
 
-const layerGroups = {};
-
-export const fetchApiPolice48h = async function (url) {
+export const fetchApi = async function (url, reqParam, order) {
   try {
-    const res = await fetch(url);
-
-    if (!res.ok) {
+    const response = await fetch(url);
+    if (!response.ok) {
       throw new Error("Network response for promise was not ok");
     }
-    const data = await res.json();
+    // let data = await res.json();
+    // getCallTypeCount(data); // To delete
+    // console.log(data); // To delete
 
-    getCallTypeCount(data); // To delete
-    console.log(data); // To delete
-
-    return data;
+    // return data;
+    return response;
   } catch (err) {
     console.log(err);
   }
