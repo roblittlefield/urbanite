@@ -15,7 +15,7 @@ const controlMap = function () {
     // Initialize Leaflet map object, set Lat/Lng, add layer, add to "map" HTML element
     const map = L.map("map").setView(latLngSF, zoomLevel);
 
-    const startingLayer = L.tileLayer(sfapi.MAP_LAYERS[1]).addTo(map);
+    const startingLayer = L.tileLayer(sfapi.MAP_LAYERS[4]).addTo(map);
     if (!map) return;
   } catch (err) {
     console.error(err);
