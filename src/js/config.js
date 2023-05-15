@@ -1,5 +1,5 @@
 /////////// SAN FRANCISCO .GOV DATA
-export const SFAPI_APP_TOKEN = TmnsQZtPesideUfTbGU3BeaAV;
+export const SFAPI_APP_TN = "TmnsQZtPesideUfTbGU3BeaAV";
 // How to use token: json?$$app_token=APP_TOKEN
 
 /////////// Leaflet Map
@@ -9,6 +9,14 @@ export const getLatLngSF = () => {
 export const getMapZoomLevel = () => {
   return window.innerWidth <= 758 ? 12 : 13;
 };
+
+export const MAP_LAYERS = [
+  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  "https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.jpg",
+  "https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png",
+  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+  "https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg",
+];
 
 /////////// SF Police - Last 48 hours Data
 export const API_URL_POLICE_48h =
