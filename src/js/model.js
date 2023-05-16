@@ -16,5 +16,3 @@ export const fetchApi = async function (url, reqParam, order) {
     console.log(err);
   }
 };
-
-
