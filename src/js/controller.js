@@ -13,7 +13,6 @@ import { async } from "regenerator-runtime";
 let map;
 const controlMap = async function () {
   try {
-
     const position = await getPosition(sfapi.getLatLngSF());
 
     map = L.map("map").setView(position, sfapi.getMapZoomLevel());
