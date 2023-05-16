@@ -3,18 +3,24 @@ import "core-js/stable"; // Polyfilling everything else
 import L from "leaflet";
 import * as model from "./model.js";
 import * as sfapi from "./config.js";
-import View from "./views/circleMarkers.js";
-import { async } from "regenerator-runtime";
 import circleMarkers from "./views/circleMarkers.js";
 import sortMarkers from "./views/circleMarkersSort.js";
 import updateCallList from "./views/updateToLatest.js";
+import addHandlerMoveCenter from "./views/moveCenter.js";
+import getPosition from "./views/getPosition.js";
+import { async } from "regenerator-runtime";
 
 let map;
 const controlMap = async function () {
   try {
+    // Get position
+    console.log(sfapi.getLatLngSF());
+    const position = await getPosition(sfapi.getLatLngSF());
+    const { latitude, longitude } = position;
+    // If positon is nearby
     // Initialize Leaflet map object, set Lat/Lng, add layer, add to "map" HTML element
-    map = L.map("map").setView(sfapi.getLatLngSF(), sfapi.getMapZoomLevel());
-    const initLayer = L.tileLayer(sfapi.MAP_LAYERS[4]).addTo(map);
+    map = L.map("map").setView(position, sfapi.getMapZoomLevel());
+    const initLayer = L.tileLayer(sfapi.MAP_LAYERS[0]).addTo(map);
     if (!map) return;
     return map;
   } catch (err) {
@@ -31,26 +37,25 @@ const controlCircleMarkers = async function () {
     );
     // 1) Resolve Police48h promise to json
     const dataApiPolice48h = await responsePolice48h.json();
-
+    getCallTypeCount(dataApiPolice48h);
     // 2) Create new view and add markers
     const circleMarkersInst = new circleMarkers();
     circleMarkersInst.addCircleMarkers(
       dataApiPolice48h,
-      sfapi.API_MAP_POLICE_48h
+      sfapi.API_MAP_POLICE_48h,
+      "police48"
     );
 
     // SFPD
     // SFFD
 
-    const layerGroups = circleMarkersInst.layerGroups;
-    console.log(layerGroups);
-    const latestMarkers = sortMarkers(layerGroups);
-    console.log(latestMarkers);
+    const latestMarkers = sortMarkers(circleMarkersInst.layerGroups);
 
-    const latestLayerGroup = updateCallList(latestMarkers, layerGroups);
-    console.log(latestLayerGroup);
+    const latestLayerGroup = updateCallList(
+      latestMarkers,
+      circleMarkersInst.layerGroups
+    );
     latestLayerGroup.addTo(map);
-    // 2) Standardize Polce48h object parameters, format dates, add parameters, add layer groups, add circle markers
 
     // const [response2, response3] = await Promise.all([
     //   model.fetchApi(anotherApiUrl),
@@ -64,6 +69,7 @@ const controlCircleMarkers = async function () {
     // const dataRaw = dataApi.flatMap((arr) => arr);
     // console.log(dataRaw);
     // Remove duplicates without a cad number
+    return map;
   } catch (err) {
     console.log(err);
   }
@@ -71,12 +77,32 @@ const controlCircleMarkers = async function () {
 
 const init = async function () {
   try {
-    await Promise.all([controlMap()]);
+    const map = await controlMap(); // Wait for map initialization
+
+    await controlCircleMarkers(); // Wait for circle markers to be added
+
+    addHandlerMoveCenter(map); // Call addHandlerMoveCenter with the map
+    // Load position
   } catch (err) {
     console.error(`Init error: ${err}`);
   }
 };
 
-init().then(() => {
-  controlCircleMarkers();
-});
+init();
+const getCallTypeCount = function (data) {
+  const countByCallType = {};
+  data.forEach((call) => {
+    const callType = call.call_type_original_desc;
+    if (callType in countByCallType) {
+      countByCallType[callType]++;
+    } else {
+      countByCallType[callType] = 1;
+    }
+  });
+  const countPairs = Object.entries(countByCallType);
+  countPairs.sort((a, b) => b[1] - a[1]);
+  countPairs.forEach((pair) => {
+    console.log(`${pair[0]}: ${pair[1]}`);
+  });
+};
+getCallTypeCount();

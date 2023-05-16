@@ -4,7 +4,7 @@ export const getLatLngSF = () => {
   return window.innerWidth <= 758 ? [37.74, -122.447] : [37.762, -122.43];
 };
 export const getMapZoomLevel = () => {
-  return window.innerWidth <= 758 ? 12 : 13;
+  return window.innerWidth <= 758 ? 14 : 15;
 };
 
 export const MAP_LAYERS = [
@@ -23,19 +23,31 @@ const API_URL_POLICE_48h = "https://data.sfgov.org/resource/gnap-fj3t.json";
 
 const excludedCallTypes = [
   "PASSING CALL",
+  "NOISE NUISANCE",
   "TRAF VIOLATION CITE",
+  "TRAF VIOLATION TOW",
   "WELL BEING CHECK",
   "COMPLAINT UNKN",
-  "MISC",
+  "CITIZEN STANDBY",
   "MEET W/CITIZEN",
   "MEET W/CITY EMPLOYEE",
-  "undefined",
+  "VEHICLE ALARM",
+  "WANTED VEHICLE / SUB",
+  "HOMELESS COMPLAINT",
+  "TRAFFIC HAZARD",
+  "MISC",
+  "INVESTIGATION DETAIL",
+  "PERSON DUMPING",
+  "TOW TRUCK",
 ];
+
 const filterExpression = excludedCallTypes
   .map((callType) => `call_type_final_desc != '${callType}'`)
   .join(" and ");
 
 export const API_URL_POLICE_48h_FILTERED = `${API_URL_POLICE_48h}?$where=${filterExpression} AND intersection_point IS NOT NULL&$$app_token=${SFAPI_APP_TKN}&$limit=3000`;
+
+export const latestNumber = 1000;
 
 // export const REQUEST_PARAM_POLICE_48h = "call_type_final_desc";
 // export const DATA_ORDER_POLICE_48h = "incident_datetime";
@@ -65,6 +77,7 @@ export const API_MAP_POLICE_48h = {
     priority: "priority_final",
     onView: "onview_flag", // T/F officer observed activity of crime
     sensitive: "sensitive_call",
+    priority: "priority_final",
   };
 
 export const DISPOSITION_MAP_POLICE = {
@@ -73,64 +86,64 @@ export const DISPOSITION_MAP_POLICE = {
   ADV: "Officer advised",
   ARR: "Arrest",
   CAN: "Cancelled",
-  CSA: "CPSA Assignment",
+  CSA: "CPSA assignment",
   // 22: "Cancelled",
   CIT: "Citation issued",
-  CRM: "Burglary alarm, criminal activity",
-  GOA: "Gone on Arrival",
+  CRM: "Burglary alarm",
+  GOA: "Gone on arrival",
   HAN: "Officer handled",
-  NCR: "Officer found no criminal issue",
-  ND: "Related to another call",
-  NOM: "No Merit",
-  PAS: "Alarm, premise appears secure",
+  NCR: "No issue found",
+  ND: "No disposition",
+  NOM: "No merit",
+  PAS: "Home alarm",
   REP: "Police report made",
   SFD: "EMS engaged",
-  UTL: "Unable to Locate",
-  VAS: "Alarm, vehicle appears secure",
+  UTL: "Unable to locate",
+  VAS: "Car alarm",
 };
 
-// Police Hist
-export const API_MAP_POLICE_HIST = {
-  incidentNumber: "incident_number",
-  rowid: "row_id",
-  call_type: "incident_subcategory",
-  coords: "intersection_point",
-  unit: "",
-  receivedTime: "incident_datetime",
-  entryTime: "",
-  dispatchTime: "",
-  responseTime: "",
-  onSceneTime: "",
-  reportTime: "report_datetime",
-  address: "",
-  neighborhood: "analysis_neighborhood",
-  desc: "incident_description",
-  disposition: "", // SFPD only
-  closeTime: "",
-  priority: "",
-  onView: "", // T/F officer observed activity of crime
-  sensitive: "",
-};
+// // Police Hist
+// export const API_MAP_POLICE_HIST = {
+//   incidentNumber: "incident_number",
+//   rowid: "row_id",
+//   call_type: "incident_subcategory",
+//   coords: "intersection_point",
+//   unit: "",
+//   receivedTime: "incident_datetime",
+//   entryTime: "",
+//   dispatchTime: "",
+//   responseTime: "",
+//   onSceneTime: "",
+//   reportTime: "report_datetime",
+//   address: "",
+//   neighborhood: "analysis_neighborhood",
+//   desc: "incident_description",
+//   disposition: "", // SFPD only
+//   closeTime: "",
+//   priority: "",
+//   onView: "", // T/F officer observed activity of crime
+//   sensitive: "",
+// };
 
-// Fire
-export const API_MAP_FIRE_HIST = {
-  incidentNumber: "incident_number",
-  // rowid: "call_number",
-  rowid: "incident_number",
-  call_type: "call_type",
-  coords: "case_location",
-  unit: "unit_type",
-  receivedTime: "received_dttm",
-  entryTime: "entry_dttm",
-  dispatchTime: "dispatch_dttm",
-  responseTime: "response_dttm",
-  onSceneTime: "on_scene_dttm",
-  transportTime: "transport_dttm",
-  hospitalTime: "hospital_dttm",
-  availableTime: "available_dttm",
-  address: "address",
-  neighborhood: "neighborhoods_analysis_boundaries",
-  desc: "call_final_disposition",
-  battalion: "battalion", // SFFD only
-  numberAlarms: "number_of_alarms",
-};
+// // Fire
+// export const API_MAP_FIRE_HIST = {
+//   incidentNumber: "incident_number",
+//   // rowid: "call_number",
+//   rowid: "incident_number",
+//   call_type: "call_type",
+//   coords: "case_location",
+//   unit: "unit_type",
+//   receivedTime: "received_dttm",
+//   entryTime: "entry_dttm",
+//   dispatchTime: "dispatch_dttm",
+//   responseTime: "response_dttm",
+//   onSceneTime: "on_scene_dttm",
+//   transportTime: "transport_dttm",
+//   hospitalTime: "hospital_dttm",
+//   availableTime: "available_dttm",
+//   address: "address",
+//   neighborhood: "neighborhoods_analysis_boundaries",
+//   desc: "call_final_disposition",
+//   battalion: "battalion", // SFFD only
+//   numberAlarms: "number_of_alarms",
+// };

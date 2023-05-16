@@ -17,19 +17,4 @@ export const fetchApi = async function (url, reqParam, order) {
   }
 };
 
-const getCallTypeCount = function (data) {
-  const countByCallType = {};
-  data.forEach((call) => {
-    const callType = call.call_type_original_desc;
-    if (callType in countByCallType) {
-      countByCallType[callType]++;
-    } else {
-      countByCallType[callType] = 1;
-    }
-  });
-  const countPairs = Object.entries(countByCallType);
-  countPairs.sort((a, b) => b[1] - a[1]);
-  countPairs.forEach((pair) => {
-    console.log(`${pair[0]}: ${pair[1]}`);
-  });
-};
+

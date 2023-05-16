@@ -20,3 +20,20 @@ export const standardizeData = function (rawData, apiMap) {
   }
   return standardizedData;
 };
+
+export const textProperCase = function (textRaw) {
+  const textProper = textRaw
+    .toLowerCase()
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+  return textProper;
+};
+
+export const minsHoursFormat = function (time) {
+  const timeFormatted =
+    time < 60
+      ? `${time}m`
+      : time < 180
+      ? `${(time / 60).toFixed(0)}h ${time % 60}m`
+      : `${(time / 60).toFixed(0)}h`;
+  return timeFormatted;
+};
