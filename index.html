@@ -10,12 +10,16 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180x180.png">
-    <title>urbanite SF</title>
+    <title>Urbanite SF</title>
   </head>
   <body>
     <header></header>
+    <div class="overlay"></div>
     <div class="container">
       <div id="map"></div>
+      <div id="neighborhood-text"></div>
+      <button id="change-map">Map</button>
+      <button id="latest-list">List</button>
       <!-- <div class="weather">
         <div id="containerTemp">Weather icon</div>
       </div> -->
@@ -25,7 +29,7 @@
         <p id="nearby-alert-count"></p>
         <ul id="call-list"></ul>
         <button id="historic"></button>
-    </div>
-    <script type="module" src="src/js/controller.js"></script>
+      </div>
+      <script type="module" src="src/js/controller.js"></script>
   </body>
 </html>

@@ -35,19 +35,60 @@ const excludedCallTypes = [
   "WANTED VEHICLE / SUB",
   "HOMELESS COMPLAINT",
   "TRAFFIC HAZARD",
-  "MISC",
   "INVESTIGATION DETAIL",
   "PERSON DUMPING",
   "TOW TRUCK",
+  "MISSING ADULT",
+];
+
+export const includedCallTypes = [
+  // "FIGHT NO WEAPON",
+  // "SUSPICIOUS PERSON",
+  "TRESPASSER",
+  // "SUSPICIOUS VEHICLE",
+  "BURGLARY",
+  "AUTO BOOST / STRIP",
+  // "VANDALISM",
+  "ASSAULT / BATTERY",
+  // "THREATS / HARASSMENT",
+  "STOLEN VEHICLE",
+  "MENTALLY DISTURBED",
+  "PERSON W/GUN",
+  "INJURY VEH ACCIDENT",
+  // "INDECENT EXPOSURE",
+  "SHOTS FIRED",
+  "PERSON W/KNIFE",
+  "STRONGARM ROBBERY",
+  "PROWLER",
+  "ROBBERY",
+  "PERSON BREAKING IN",
+  "SHOT SPOTTER",
+  "INTOXICATED PERSON",
+  "H&R VEH ACCIDENT",
+  "DRUNK DRIVER",
+  "AGG ASSAULT / ADW",
+  "CITIZEN ARREST",
+  "FIGHT W/WEAPONS",
+  "GRAND THEFT",
+  "SILENT HOLDUP ALARM",
+  "STABBING",
+  "PERSON SCREAMING",
+  "H&R INJURY ACCIDENT",
+  "PURSE SNATCH",
+  "SHOOTING",
+  "STALKING",
+  "DEMO / PROTEST",
+  "ARREST MADE",
+  "RESISTING ARREST",
 ];
 
 const filterExpression = excludedCallTypes
   .map((callType) => `call_type_final_desc != '${callType}'`)
   .join(" and ");
 
-export const API_URL_POLICE_48h_FILTERED = `${API_URL_POLICE_48h}?$where=${filterExpression} AND intersection_point IS NOT NULL&$$app_token=${SFAPI_APP_TKN}&$limit=2000`;
+export const API_URL_POLICE_48h_FILTERED = `${API_URL_POLICE_48h}?$where=${filterExpression} AND intersection_point IS NOT NULL&$$app_token=${SFAPI_APP_TKN}&$limit=1000`;
 
-export const latestNumber = 500;
+export const latestNumber = 300;
 
 // export const REQUEST_PARAM_POLICE_48h = "call_type_final_desc";
 // export const DATA_ORDER_POLICE_48h = "incident_datetime";

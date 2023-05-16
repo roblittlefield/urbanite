@@ -27,14 +27,18 @@ const addHandlerMoveCenter = function (map) {
 
     // Open the popup of the closest marker and close others
     map.eachLayer((layer) => {
-      if (layer instanceof L.CircleMarker) {
-        if (layer === closestMarker) {
-          layer.openPopup();
-        } else {
-          layer.closePopup();
-        }
+      if (layer === closestMarker) {
+        layer.openPopup();
+
+        console.log(layer);
+        const { neighborhood } = layer.options.data;
+        console.log(neighborhood);
+        // Update the text content of the existing HTML element with id "neighborhood-text"
+        const neighborhoodText = document.getElementById("neighborhood-text");
+        neighborhoodText.textContent = neighborhood;
       }
     });
   });
 };
+
 export default addHandlerMoveCenter;

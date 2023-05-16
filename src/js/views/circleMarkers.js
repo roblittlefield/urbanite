@@ -24,12 +24,7 @@ export default class circleMarkers {
       // 2b) Categorize by call type
       const callType = call.call_type || call.call_type_original;
 
-      // // 3) Create layer groups
-      // if (!this._layerGroups[callType]) {
-      //   this._layerGroups[callType] = L.layerGroup();
-      // }
-
-      // 4) Format dates
+      // 3) Format dates
       if (call.onSceneTime && call.receivedTime) {
         const now = new Date();
         const receivedTime = new Date(call.receivedTime);
@@ -41,25 +36,26 @@ export default class circleMarkers {
         const receivedTimeFormatted = formatDate(receivedTime);
         const onSceneTimeFormatted = formatDate(onSceneTime);
 
-        // 5) Format address
+        // 4) Format address
         const properCaseAddress = textProperCase(call.address);
 
-        // 6) Create Disposition Meaning from Disposition Map
+        // 4) Create Disposition Meaning from Disposition Map
         const dispositionMeaning =
           DISPOSITION_MAP_POLICE[call.disposition] ?? "";
 
-        // 7) Create Circle Marker Popups
+        // 6) Create Circle Marker Popups
         let popupContent = `<b>${textProperCase(call.call_type)}</b>`;
         popupContent += ` \u2022 ${minsHoursFormat(timeAgo)}`;
         // popupContent += `<br>${receivedTimeFormatted}`;
 
-        if (responseTimeMins !== undefined && !isNaN(responseTimeMins)) {
+        if (responseTimeMins !== undefined && !isNaN(responseTimeMins) && call.onView !== "Y") {
           const timeDiffText = minsHoursFormat(responseTimeMins);
           popupContent += `<br><i>Response time: ${timeDiffText}</i>`;
         }
-        if (call.onView === "Y") {
-          popupContent += `<i> (observed)</i>`;
+        if (responseTimeMins === 0  && call.onView === "Y") {
+          popupContent += `<br><i>Observed by Officer</i>`;
         }
+
         if (dispositionMeaning !== "" && dispositionMeaning !== "Unknown") {
           popupContent += `<br/>${dispositionMeaning}`;
         }
@@ -72,7 +68,8 @@ export default class circleMarkers {
             Number(call.coords.coordinates[0]),
           ],
           {
-            radius: 4,
+            radius: call.priority === "A" ? 4 : call.priority === "B" ? 4 : 3,
+            keepInView: false,
             fillColor:
               call.priority === "A"
                 ? "#ff0000"
@@ -83,7 +80,7 @@ export default class circleMarkers {
             weight: 1,
             opacity: 0.9,
             fillOpacity:
-              call.priority === "A" ? 0.9 : call.priority === "B" ? 0.9 : 0.57,
+              call.priority === "A" ? 0.9 : call.priority === "B" ? 0.9 : 0.8,
             data: {
               receivedTimeCalc: new Date(call.receivedTime).getTime(),
               disposition: dispositionMeaning,
@@ -99,9 +96,33 @@ export default class circleMarkers {
               onView: call.onView,
               priority: call.priority,
             },
+            autoPan: false, // Disable automatic panning causing issue
+            closeOnClick: false,
+            interactive: false,
+            bubblingMouseEvents: false,
           }
-        ).bindPopup(popupContent);
+        ).bindPopup(popupContent, {
+          closeButton: false,
+          disableAnimation: true,
+        }); 
         marker.addTo(this._layerGroups[layerName]);
+      }
+    });
+    this.removeOverlappingMarkers(this._layerGroups);
+  }
+
+  removeOverlappingMarkers(layerGroup) {
+    const layers = Object.values(layerGroup);
+    const markersByLatLng = {};
+
+    layers.forEach((layer) => {
+      if (layer instanceof L.CircleMarker) {
+        const latLng = layer.getLatLng().toString();
+        if (!markersByLatLng[latLng]) {
+          markersByLatLng[latLng] = layer;
+        } else {
+          layerGroup.removeLayer(layer);
+        }
       }
     });
   }

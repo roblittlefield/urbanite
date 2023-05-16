@@ -8,6 +8,7 @@ import sortMarkers from "./views/circleMarkersSort.js";
 import updateCallList from "./views/updateToLatest.js";
 import addHandlerMoveCenter from "./views/moveCenter.js";
 import getPosition from "./views/getPosition.js";
+import { loadChangeMapButton } from "./views/buttonsView.js";
 import { async } from "regenerator-runtime";
 
 let map;
@@ -16,7 +17,11 @@ const controlMap = async function () {
     const position = await getPosition(sfapi.getLatLngSF());
 
     map = L.map("map").setView(position, sfapi.getMapZoomLevel());
-    const initLayer = L.tileLayer(sfapi.MAP_LAYERS[0]).addTo(map);
+    map.options.inertia = false;
+    map.options.dragging = {
+      sensitivity: 0.5, // Adjust the sensitivity (default: 1)
+    };
+    const initLayer = L.tileLayer(sfapi.MAP_LAYERS[4]).addTo(map);
     if (!map) return;
     return map;
   } catch (err) {
@@ -33,15 +38,19 @@ const controlCircleMarkers = async function () {
     );
     // 1) Resolve Police48h promise to json
     const dataApiPolice48h = await responsePolice48h.json();
-    // getCallTypeCount(dataApiPolice48h);
+    const dataApiPolice48hFiltered = dataApiPolice48h.filter((item) =>
+      sfapi.includedCallTypes.includes(item.call_type_final_desc)
+    );
+
+    // getCallTypeCount(dataApiPolice48hFiltered);
     // 2) Create new view and add markers
     const circleMarkersInst = new circleMarkers();
     circleMarkersInst.addCircleMarkers(
-      dataApiPolice48h,
+      dataApiPolice48hFiltered,
       sfapi.API_MAP_POLICE_48h,
       "police48"
     );
-
+    // circleMarkersInst.removeOverlappingMarkers(circleMarkersInst.layerGroups)
     // SFPD
     // SFFD
 
@@ -70,6 +79,22 @@ const controlCircleMarkers = async function () {
     console.log(err);
   }
 };
+let currentLayer = 0;
+const controlButtons = function () {
+  currentLayer = (currentLayer + 1) % sfapi.MAP_LAYERS.length;
+  const newLayer = L.tileLayer(sfapi.MAP_LAYERS[currentLayer]);
+  newLayer.on("tileerror", function (e) {
+    console.log("tile error", e);
+    L.tileLayer(sfapi.MAP_LAYERS[currentLayer]).remove();
+    currentLayer = (currentLayer + 1) % sfapi.MAP_LAYERS.length;
+    L.tileLayer(sfapi.MAP_LAYERS[currentLayer]).addTo(map);
+  });
+  L.tileLayer(sfapi.MAP_LAYERS[currentLayer]).addTo(map);
+  L.tileLayer(sfapi.MAP_LAYERS[currentLayer - 1]).remove();
+  if (currentLayer === 4) {
+    alert(`Beware, watercolors are beautiful but load a bit slower! 👨‍🎨`);
+  }
+};
 
 const init = async function () {
   try {
@@ -78,6 +103,8 @@ const init = async function () {
     await controlCircleMarkers(); // Wait for circle markers to be added
 
     addHandlerMoveCenter(map); // Call addHandlerMoveCenter with the map
+    loadChangeMapButton(controlButtons);
+    // document.body.removeChild(overlay);
     // Load position
   } catch (err) {
     console.error(`Init error: ${err}`);
@@ -101,4 +128,3 @@ init();
 //     console.log(`${pair[0]}: ${pair[1]}`);
 //   });
 // };
-// getCallTypeCount();
