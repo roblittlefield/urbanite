@@ -50,6 +50,7 @@ export const API_MAP_POLICE_48h = {
     incidentNumber: "cad_number",
     rowid: "id",
     call_type: "call_type_final_desc",
+    call_type_original: "call_type_original_desc",
     coords: "intersection_point",
     receivedTime: "received_datetime",
     entryTime: "entry_datetime",
@@ -65,6 +66,28 @@ export const API_MAP_POLICE_48h = {
     onView: "onview_flag", // T/F officer observed activity of crime
     sensitive: "sensitive_call",
   };
+
+export const DISPOSITION_MAP_POLICE = {
+  ABA: "Officer abated",
+  ADM: "Officer admonished",
+  ADV: "Officer advised",
+  ARR: "Arrest",
+  CAN: "Cancelled",
+  CSA: "CPSA Assignment",
+  // 22: "Cancelled",
+  CIT: "Citation issued",
+  CRM: "Burglary alarm, criminal activity",
+  GOA: "Gone on Arrival",
+  HAN: "Officer handled",
+  NCR: "Officer found no criminal issue",
+  ND: "Related to another call",
+  NOM: "No Merit",
+  PAS: "Alarm, premise appears secure",
+  REP: "Police report made",
+  SFD: "EMS engaged",
+  UTL: "Unable to Locate",
+  VAS: "Alarm, vehicle appears secure",
+};
 
 // Police Hist
 export const API_MAP_POLICE_HIST = {

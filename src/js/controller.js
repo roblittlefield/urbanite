@@ -3,50 +3,54 @@ import "core-js/stable"; // Polyfilling everything else
 import L from "leaflet";
 import * as model from "./model.js";
 import * as sfapi from "./config.js";
-import { formatDate, standardizeData } from "./helpers.js";
+import View from "./views/circleMarkers.js";
 import { async } from "regenerator-runtime";
+import circleMarkers from "./views/circleMarkers.js";
+import sortMarkers from "./views/circleMarkersSort.js";
+import updateCallList from "./views/updateToLatest.js";
 
-const latLngSF = sfapi.getLatLngSF();
-const zoomLevel = sfapi.getMapZoomLevel();
-const layerGroups = {};
-
+let map;
 const controlMap = async function () {
   try {
     // Initialize Leaflet map object, set Lat/Lng, add layer, add to "map" HTML element
-    const map = L.map("map").setView(latLngSF, zoomLevel);
+    map = L.map("map").setView(sfapi.getLatLngSF(), sfapi.getMapZoomLevel());
     const initLayer = L.tileLayer(sfapi.MAP_LAYERS[4]).addTo(map);
     if (!map) return;
+    return map;
   } catch (err) {
     console.error(`${err} Leaflet map error`);
     throw err;
   }
 };
 
-const addMarkersToLayerGroups = async function () {
+const controlCircleMarkers = async function () {
   try {
-    // Get Police48h promise
+    // 0) Get Police48h promise
     const responsePolice48h = await model.fetchApi(
       sfapi.API_URL_POLICE_48h_FILTERED
     );
-    // Resolve Police48h promise to json
+    // 1) Resolve Police48h promise to json
     const dataApiPolice48h = await responsePolice48h.json();
-    console.log(dataApiPolice48h);
-    // Standardize Polce48h object parameters
-    const standardizedData = dataApiPolice48h.map((call) => {
-      return standardizeData(call, sfapi.API_MAP_POLICE_48h);
-    });
-    console.log(standardizedData);
 
-    // data = standardizedData
-    //   .map((acc, val) => {
-    //     if (+val.cad_number === NaN || val.cad_mumber === undefined) {
-    //       console.log(`cad is duplicate`);
-    //       return null;
-    //     } else {
-    //       return val;
-    //     }
-    //   })
-    //   .filter(Boolean);
+    // 2) Create new view and add markers
+    const circleMarkersInst = new circleMarkers();
+    circleMarkersInst.addCircleMarkers(
+      dataApiPolice48h,
+      sfapi.API_MAP_POLICE_48h
+    );
+
+    // SFPD
+    // SFFD
+
+    const layerGroups = circleMarkersInst.layerGroups;
+    console.log(layerGroups);
+    const latestMarkers = sortMarkers(layerGroups);
+    console.log(latestMarkers);
+
+    const latestLayerGroup = updateCallList(latestMarkers, layerGroups);
+    console.log(latestLayerGroup);
+    latestLayerGroup.addTo(map);
+    // 2) Standardize Polce48h object parameters, format dates, add parameters, add layer groups, add circle markers
 
     // const [response2, response3] = await Promise.all([
     //   model.fetchApi(anotherApiUrl),
@@ -60,21 +64,6 @@ const addMarkersToLayerGroups = async function () {
     // const dataRaw = dataApi.flatMap((arr) => arr);
     // console.log(dataRaw);
     // Remove duplicates without a cad number
-
-    //   console.log(standardizedData);
-
-    //   const callType =
-    //     call.call_type_final_desc ?? call.call_type_original_desc; // Will need to update for Historic data
-    //   if (!layerGroups[callType]) {
-    //     layerGroups[callType] = L.layerGroup();
-    //   }
-    //   let timeDiffMinutes;
-    //   if (call.onSceneTime && call.receivedTime) {
-    //     const onSceneTime = new Date(call.onSceneTime);
-    //     const receivedTime = new Date(call.receivedTime);
-    //     const timeDiffMs = onSceneTime.getTime() - receivedTime.getTime();
-    //     timeDiffMinutes = Math.round(timeDiffMs / (1000 * 60));
-    //   }
   } catch (err) {
     console.log(err);
   }
@@ -82,10 +71,12 @@ const addMarkersToLayerGroups = async function () {
 
 const init = async function () {
   try {
-    await Promise.all([controlMap(), addMarkersToLayerGroups()]);
+    await Promise.all([controlMap()]);
   } catch (err) {
     console.error(`Init error: ${err}`);
   }
 };
 
-init();
+init().then(() => {
+  controlCircleMarkers();
+});
