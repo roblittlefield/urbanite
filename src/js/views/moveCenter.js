@@ -1,42 +1,52 @@
-const addHandlerMoveCenter = function (map) {
+const addHandlerMoveCenter = function (data, police48Layer, map) {
+  let timer = null;
   map.on("move", () => {
-    // Get the center coordinates of the viewer's window
-    const { x, y } = map.getSize();
-    const centerX = x / 2;
-    const centerY = y / 2;
+    clearTimeout(timer); //Clear timer
+    timer = setTimeout(() => {
+      // Get the center coordinates of the viewer's window
+      const { x, y } = map.getSize();
+      const centerX = x / 2;
+      const centerY = y / 2;
 
-    // Calculate the distance between the center coordinates and circle markers
-    let minDistance = Infinity;
-    let closestMarker = null;
+      // Calculate the distance between the center coordinates and circle markers
+      let minDistance = Infinity;
+      let closestCoords = null;
 
-    map.eachLayer((layer) => {
-      if (layer instanceof L.CircleMarker) {
-        const { x: markerX, y: markerY } = map.latLngToContainerPoint(
-          layer.getLatLng()
-        );
+      data.forEach((call) => {
+        const lat = call.coords.coordinates[1];
+        const lng = call.coords.coordinates[0];
+        const latlng = [lat, lng];
+        const { x: markerX, y: markerY } = map.latLngToContainerPoint(latlng);
         const distance = Math.sqrt(
           Math.pow(markerX - centerX, 2) + Math.pow(markerY - centerY, 2)
         );
-
         if (distance < minDistance) {
           minDistance = distance;
-          closestMarker = layer;
+          closestCoords = [markerX, markerY];
         }
-      }
-    });
+      });
 
-    // Open the popup of the closest marker and close others
-    map.eachLayer((layer) => {
-      if (layer === closestMarker) {
-        layer.openPopup();
+      // Open the popup of the closest marker and close others
+      police48Layer.eachLayer((layer) => {
+        if (layer instanceof L.CircleMarker) {
+          const { x: markerX, y: markerY } = map.latLngToContainerPoint(
+            layer.getLatLng()
+          );
 
-        console.log(layer);
-        const { neighborhood } = layer.options.data;
-        console.log(neighborhood);
-        // Update the text content of the existing HTML element with id "neighborhood-text"
-        const neighborhoodText = document.getElementById("neighborhood-text");
-        neighborhoodText.textContent = neighborhood;
-      }
+          if (
+            Math.abs(markerX - closestCoords[0]) < 1e-6 &&
+            Math.abs(markerY - closestCoords[1]) < 1e-6
+          ) {
+            layer.openPopup();
+            const { neighborhood } = layer.options.data;
+            const neighborhoodText =
+              document.getElementById("neighborhood-text");
+            neighborhoodText.textContent = neighborhood;
+          } else {
+            layer.closePopup();
+          }
+        }
+      }, 100); // Delay of 100 milliseconds
     });
   });
 };

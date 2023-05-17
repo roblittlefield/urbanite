@@ -1,12 +1,11 @@
 import { latestNumber } from "../config.js";
-const sortMarkers = function (layerGroups) {
-  // Get all of the circle markers from the layer groups
-  const allMarkers = Object.values(layerGroups).flatMap((layer) =>
-    layer.getLayers()
+
+const sortMarkers = function (layer) {
+  const markers = Array.from(layer.getLayers()).filter(
+    (layer) => layer instanceof L.CircleMarker
   );
 
-  // Sort the valid markers by receivedTime in descending order and take the first 15
-  const latestMarkers = allMarkers
+  const latestMarkers = markers
     .sort(
       (a, b) =>
         new Date(b.options.data.receivedTimeCalc).getTime() -

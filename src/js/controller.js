@@ -8,21 +8,27 @@ import sortMarkers from "./views/circleMarkersSort.js";
 import updateCallList from "./views/updateToLatest.js";
 import addHandlerMoveCenter from "./views/moveCenter.js";
 import getPosition from "./views/getPosition.js";
-import { loadChangeMapButton } from "./views/buttonsView.js";
+import displayNearestMarkerPopup from "./views/getPositionNearby.js";
+import {
+  loadChangeMapButton,
+  loadLatestListButton,
+} from "./views/buttonsView.js";
 import { async } from "regenerator-runtime";
 
 let map;
+let position;
 const controlMap = async function () {
   try {
-    const position = await getPosition(sfapi.getLatLngSF());
+    position = await getPosition(sfapi.getLatLngSF());
 
     map = L.map("map").setView(position, sfapi.getMapZoomLevel());
     map.options.inertia = false;
     map.options.dragging = {
       sensitivity: 0.5, // Adjust the sensitivity (default: 1)
     };
-    const initLayer = L.tileLayer(sfapi.MAP_LAYERS[4]).addTo(map);
+    const initLayer = L.tileLayer(sfapi.MAP_LAYERS[1]).addTo(map);
     if (!map) return;
+    console.log(position);
     return map;
   } catch (err) {
     console.error(`${err} Leaflet map error`);
@@ -45,23 +51,23 @@ const controlCircleMarkers = async function () {
     // getCallTypeCount(dataApiPolice48hFiltered);
     // 2) Create new view and add markers
     const circleMarkersInst = new circleMarkers();
-    circleMarkersInst.addCircleMarkers(
+    const [allCalls, police48Layer] = circleMarkersInst.addCircleMarkers(
       dataApiPolice48hFiltered,
-      sfapi.API_MAP_POLICE_48h,
-      "police48"
+      sfapi.API_REF_POLICE_48h
     );
     // circleMarkersInst.removeOverlappingMarkers(circleMarkersInst.layerGroups)
     // SFPD
     // SFFD
-
-    const latestMarkers = sortMarkers(circleMarkersInst.layerGroups);
+    const latestMarkers = sortMarkers(police48Layer);
 
     const latestLayerGroup = updateCallList(
       latestMarkers,
-      circleMarkersInst.layerGroups
+      circleMarkersInst.layerGroups // This is getting Police49h data, ok
     );
     latestLayerGroup.addTo(map);
 
+    displayNearestMarkerPopup(position, police48Layer);
+    addHandlerMoveCenter(allCalls, police48Layer, map);
     // const [response2, response3] = await Promise.all([
     //   model.fetchApi(anotherApiUrl),
     //   model.fetchApi(yetAnotherApiUrl),
@@ -91,9 +97,34 @@ const controlButtons = function () {
   });
   L.tileLayer(sfapi.MAP_LAYERS[currentLayer]).addTo(map);
   L.tileLayer(sfapi.MAP_LAYERS[currentLayer - 1]).remove();
-  if (currentLayer === 4) {
-    alert(`Beware, watercolors are beautiful but load a bit slower! 👨‍🎨`);
-  }
+};
+
+const controlOpenLatestList = function () {
+  const latestContainer = document.getElementById("latest-container");
+  const closeButton = document.querySelector(".close-button");
+  const classList = document.getElementById("call-list");
+  const latestButton = document.getElementById("latest-list");
+  latestContainer.classList.toggle("hidden");
+
+  closeButton.addEventListener("click", () => {
+    latestContainer.classList.add("hidden");
+  });
+
+  setTimeout(
+    window.addEventListener("click", (event) => {
+      console.log(latestButton);
+      const clickTarget = event.target;
+      if (
+        clickTarget !== latestContainer &&
+        !classList.contains(clickTarget) &&
+        clickTarget !== latestButton
+      ) {
+        latestContainer.classList.add("hidden");
+        latestButton.classList.toggle("active");
+      }
+    }),
+    200
+  );
 };
 
 const init = async function () {
@@ -102,8 +133,9 @@ const init = async function () {
 
     await controlCircleMarkers(); // Wait for circle markers to be added
 
-    addHandlerMoveCenter(map); // Call addHandlerMoveCenter with the map
+    // addHandlerMoveCenter(map); // Call addHandlerMoveCenter with the map
     loadChangeMapButton(controlButtons);
+    loadLatestListButton(controlOpenLatestList);
     // document.body.removeChild(overlay);
     // Load position
   } catch (err) {

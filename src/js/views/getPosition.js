@@ -18,16 +18,19 @@ const getPosition = function (defaultMapSF) {
             longitude < expandedMinLongitude ||
             longitude > expandedMaxLongitude
           ) {
+            alert(`Looks like you're outside San Francisco, loading city center.`)
             reject(new Error("Location outside expanded SF bounds"));
           } else {
             resolve([latitude, longitude]);
           }
         },
         () => {
+          alert(`Couldn't find your location, loading San Francisco`)
           resolve(defaultMapSF); // Use the default position if geolocation fails
         }
-      );
-    } else {
+        );
+      } else {
+      alert(`Couldn't find your location, loading San Francisco`)
       resolve(defaultMapSF); // Use the default position if geolocation is not supported
     }
   });
@@ -35,5 +38,3 @@ const getPosition = function (defaultMapSF) {
 
 export default getPosition;
 
-// Handling clicks on map
-// this.#map.on('click', this._showForm.bind(this));

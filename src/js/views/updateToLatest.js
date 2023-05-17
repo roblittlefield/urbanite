@@ -19,7 +19,9 @@ const updateCallList = function (latestMarkers, layerGroups) {
       // style="color: ${circleMarker.options.fillColor};" // Add next to h3 before >
       callBox.classList.add("call-box");
       callBox.innerHTML = `
-        <h3>${callTypeProper}${
+        <h3 style="color: ${
+          circleMarker.options.fillColor
+        };">${callTypeProper}${
         circleMarker.options.data.sensitive ? "***" : ""
       }</h3>
           <i><p>
@@ -32,7 +34,7 @@ const updateCallList = function (latestMarkers, layerGroups) {
                 ? `dispatched`
                 : circleMarker.options.data.entryTime
                 ? `Call entry, awaiting dispatch`
-                : "Received, awaiting call entry"
+                : `Received, awaiting call entry`
               : `On-scene in ${circleMarker.options.data.responseTime} mins`
           }${circleMarker.options.data.onView === "Y" ? ` (observed)` : ""} ${
         !circleMarker.options.data.disposition

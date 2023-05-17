@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 0;
 }
-
+/*----LEAFLET MAP----*/
 #map {
   height: 100%;
   width: 100vw;
@@ -15,29 +15,27 @@ body {
   overscroll-behavior-y: none;
 }
 
-.overlay {
-  height: 50%;
-  background-color: rgba(0, 0, 0, 0.4);
-  /* backdrop-filter: blur(4px); */
-  z-index: 9999;
-  /* -webkit-backdrop-filter: blur(4px); */
-}
-
 .hidden {
   display: none !important;
 }
 
-.leaflet-popup-content {
-  padding: 0px;
+.disclaimer {
+  color: black !important;
+  text-decoration: none;
+  position: fixed;
+  padding: 4px;
+  bottom: 0px;
+  left: 0px;
+  background-color: rgba(255, 255, 255, 0.8);
+  font-size: 8px;
 }
-.leaflet-popup-content-wrapper {
-  padding: 0.1px;
-}
+
+/*----CHANGE MAP AND SHOW LIST BUTTONS----*/
 #change-map {
-  top: 17px;
+  top: 9px;
 }
 #latest-list {
-  top: 52px;
+  top: 44px;
 }
 
 #change-map,
@@ -45,7 +43,7 @@ body {
   background-color: transparent;
   touch-action: none;
   user-select: none;
-  right: 17px;
+  right: 13px;
   font-size: 14px;
   font-weight: bold;
   border: 1px solid #c5c5c5;
@@ -54,6 +52,7 @@ body {
   text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.8);
   position: fixed;
   border-radius: 3px;
+  border-radius: 5px;
   vertical-align: center;
   width: 62px;
   height: 25px;
@@ -61,13 +60,9 @@ body {
   background-color: #f2f2f2;
   border: none;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-}
-
-#change-map,
-#latest-list:hover {
-  background-color: #a40a0a;
   cursor: pointer;
 }
+
 #change-map,
 #latest-list:active {
   box-shadow: none;
@@ -81,10 +76,188 @@ body {
 #neighborhood-text {
   font-size: 40px;
   font-family: Tahoma, Arial, Helvetica, sans-serif;
-  bottom: 38px;
+  bottom: 45px;
   left: 50%;
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.67);
   transform: translate(-50%, +50%);
   position: fixed;
   z-index: 9999;
+  white-space: nowrap;
+}
+
+/*----LEAFLET ELEMENTS----*/
+.leaflet-popup-content {
+  padding: 0.1px;
+}
+
+.leaflet-popup-content-wrapper {
+  padding: 0.1px;
+}
+
+.leaflet-control-zoom-in {
+  top: 9px;
+}
+
+.leaflet-control-zoom-out {
+  top: 54px;
+}
+
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+  background-color: transparent;
+  touch-action: none;
+  user-select: none;
+  font-weight: bold;
+  border: 1px solid #c5c5c5;
+  color: #484848;
+  background-image: linear-gradient(#f7f7f7, #e7e7e7);
+  text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.8);
+}
+
+.leaflet-control-zoom-in:hover,
+.leaflet-control-zoom-out:hover {
+  background-color: #f8f8f8;
+}
+
+.leaflet-touch .leaflet-control-zoom-in,
+.leaflet-touch .leaflet-control-zoom-out {
+  border: none;
+  box-shadow: none;
+}
+
+/*----LATEST INCIDENTS LIST----*/
+
+#latest-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72%;
+  height: 97%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: Arial, sans-serif;
+  border-radius: 3px;
+  border-radius: 10px;
+  /* overflow: scroll;
+  overflow-y: scroll; */
+  touch-action: pan-y;
+  -ms-touch-action: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
+}
+
+.close-button {
+  position: absolute;
+  top: 0px;
+  right: 11px;
+  font-size: 32px;
+  background: transparent;
+  border: none;
+  mix-blend-mode: difference;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+#latest-container h2 {
+  position: relative;
+  color: white;
+  font-family: Tahoma, Arial, Helvetica, sans-serif;
+  font-size: 15px;
+}
+
+#call-list {
+  position: relative;
+  bottom: 3px;
+  max-width: 320px;
+  list-style: none;
+  padding: 1px;
+  height: auto;
+  border-radius: 3px;
+  border-radius: 10px;
+  margin: 0px 0px 5px 0px;
+  width: 90%;
+  overflow: auto;
+  overflow-y: auto;
+  touch-action: pan-y;
+  -ms-touch-action: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.call-box {
+  background-color: #2f2f2f;
+  text-align: start;
+  height: 72px;
+  font-size: auto;
+  color: white;
+  border-radius: 3px;
+  border-radius: 5px;
+  padding: 2px;
+  margin: 4px 0px 0px 0px;
+  overflow: hidden;
+}
+
+.call-box h3 {
+  font-size: auto;
+  margin: 0px 5px -2px;
+  /* color: #007bff; */
+}
+
+.call-box p {
+  font-size: 13px;
+  color: white;
+  font-family: sans-serif;
+  background-color: transparent;
+  margin: 0px 7px 0px;
+}
+
+/*----SCROLL BAR----*/
+/* Set the width and height of the scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 6px;
+}
+
+/* Set the background color of the scrollbar */
+::-webkit-scrollbar-track {
+  background-color: #292828;
+}
+
+/* Set the color and shape of the scrollbar thumb as a rainbow gradient */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to bottom,
+    #ff0000,
+    #ff8000,
+    #ffff00,
+    #00ff00,
+    #0000ff,
+    #8000ff,
+    #ff00ff
+  );
+  border-radius: 5px;
+}
+
+/* Add animation to the scrollbar thumb to create a looping rainbow effect */
+@keyframes rainbow {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+::-webkit-scrollbar-thumb {
+  animation: rainbow 10s ease infinite;
+}
+
+/* Set the color and shape of the scrollbar corner */
+::-webkit-scrollbar-corner {
+  background-color: #f1f1f1;
 }

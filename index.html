@@ -16,6 +16,7 @@
     <header></header>
     <div class="overlay"></div>
     <div class="container">
+      <div id="visible-circle-markers-count"></div>
       <div id="map"></div>
       <div id="neighborhood-text"></div>
       <button id="change-map">Map</button>
@@ -24,11 +25,14 @@
         <div id="containerTemp">Weather icon</div>
       </div> -->
       <div class="hidden" id="latest-container">
+        <!-- <p id="nearby-alert-count"></p> -->
         <button class="close-button">&times;</button>
-        <h2>In this area</h2>
-        <p id="nearby-alert-count"></p>
+        <h2>Latest SFPD Calls</h2>
         <ul id="call-list"></ul>
         <button id="historic"></button>
+      </div>
+      <div class="disclaimer">
+        <a href="https://datasf.gitbook.io/datasf-dataset-explainers/law-enforcement-dispatched-calls-for-service">SFPD Dataset</a>
       </div>
       <script type="module" src="src/js/controller.js"></script>
   </body>

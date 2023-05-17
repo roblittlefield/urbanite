@@ -11,11 +11,11 @@ export const formatDate = function (rawDate) {
   return date;
 };
 
-export const standardizeData = function (rawData, apiMap) {
+export const standardizeData = function (rawData, apiRef) {
   const standardizedData = {};
-  for (const key in apiMap) {
-    if (apiMap.hasOwnProperty(key)) {
-      standardizedData[key] = rawData[apiMap[key]];
+  for (const key in apiRef) {
+    if (apiRef.hasOwnProperty(key)) {
+      standardizedData[key] = rawData[apiRef[key]];
     }
   }
   return standardizedData;
@@ -36,4 +36,26 @@ export const minsHoursFormat = function (time) {
       ? `${(time / 60).toFixed(0)}h ${time % 60}m`
       : `${(time / 60).toFixed(0)}h`;
   return timeFormatted;
+};
+
+export const neighborhoodFormat = function (neighborhood) {
+  const neighborhoodFormatted =
+    neighborhood === "Financial District/South Beach"
+      ? "Financial"
+      : neighborhood === "Lone Mountain/USF"
+      ? "USF"
+      : neighborhood === "Castro/Upper Market"
+      ? "Castro"
+      : neighborhood === "Sunset/Parkside"
+      ? "Sunset"
+      : neighborhood === "West of Twin Peaks"
+      ? "W Twin Peaks"
+      : neighborhood === "Bayview Hunters Point"
+      ? "Bayview"
+      : neighborhood === "Oceanview/Merced/Ingleside"
+      ? "OMI"
+      : neighborhood === "South of Market"
+      ? "SoMa"
+      : neighborhood;
+  return neighborhoodFormatted;
 };

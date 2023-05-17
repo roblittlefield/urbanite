@@ -1,10 +1,11 @@
 /////////////////////-----urbanite-----/////////////////////
+export const latestNumber = 700;
 /////////// Leaflet Map
 export const getLatLngSF = () => {
-  return window.innerWidth <= 758 ? [37.74, -122.447] : [37.762, -122.43];
+  return window.innerWidth <= 758 ? [37.758, -122.447] : [37.762, -122.445];
 };
 export const getMapZoomLevel = () => {
-  return window.innerWidth <= 758 ? 14 : 15;
+  return window.innerWidth <= 758 ? 13 : 14;
 };
 
 export const MAP_LAYERS = [
@@ -82,13 +83,54 @@ export const includedCallTypes = [
   "RESISTING ARREST",
 ];
 
+export const colorMap = {
+  "SHOOTING": "#DC143C",  // Crimson
+  "SHOTS FIRED": "#E40F3F",  
+  "PERSON W/GUN":  "#E3173F",  
+  "SHOT SPOTTER": "#E32948",  
+
+  "STABBING": "#DC143C",  // Crimson
+  "PERSON W/KNIFE": "#E3173F",  
+
+  "AGG ASSAULT / ADW": "#FFA500", // Orange
+  "ASSAULT / BATTERY": "#FFA500",  
+  "FIGHT W/WEAPONS": "#FFA500",  
+  "STRONGARM ROBBERY": "#FFA500",  
+  "PURSE SNATCH": "#FFA500",  
+  "ROBBERY": "#FFA500",  
+  "BURGLARY": "#FFA500",  
+  "PERSON BREAKING IN": "#FFA500",  
+  "SILENT HOLDUP ALARM": "#FFA500",  
+
+  "TRESPASSER": "#000080",  // Blue
+  "PROWLER": "#00008B",  
+  "STALKING": "#0000CD",  
+  "MENTALLY DISTURBED": "#3232FF",  
+  "INTOXICATED PERSON": "#4D4DFF",  
+  "PERSON SCREAMING": "#6666FF",  
+
+  "H&R INJURY ACCIDENT": "#000000", 
+  "H&R VEH ACCIDENT": "#000000",  
+  "INJURY VEH ACCIDENT": "#000000",  
+  "GRAND THEFT": "#FFA500",  
+  "STOLEN VEHICLE": "#FFA500",  
+  "DRUNK DRIVER": "#000000", 
+  "AUTO BOOST / STRIP": "#800080",  
+
+  "ARREST MADE": "#000000",  
+  "RESISTING ARREST": "#000000",  
+  "CITIZEN ARREST": "#000000", 
+  "DEMO / PROTEST": "#000000" 
+};
+
+
 const filterExpression = excludedCallTypes
   .map((callType) => `call_type_final_desc != '${callType}'`)
   .join(" and ");
 
-export const API_URL_POLICE_48h_FILTERED = `${API_URL_POLICE_48h}?$where=${filterExpression} AND intersection_point IS NOT NULL&$$app_token=${SFAPI_APP_TKN}&$limit=1000`;
+export const API_URL_POLICE_48h_FILTERED = `${API_URL_POLICE_48h}?$where=${filterExpression} AND intersection_point IS NOT NULL&$$app_token=${SFAPI_APP_TKN}&$limit=3000`;
 
-export const latestNumber = 300;
+
 
 // export const REQUEST_PARAM_POLICE_48h = "call_type_final_desc";
 // export const DATA_ORDER_POLICE_48h = "incident_datetime";
@@ -99,7 +141,7 @@ export const latestNumber = 300;
 // export const CALL_TYPES_POLICE_48h = ["STOLEN VEHICLE", "AUTO BOOST / STRIP", "TRESPASSER", "ASSAULT / BATTERY", "FIGHT NO WEAPON", "VEH ACCIDENT", "BURGLARY", "STRONGARM ROBBERY", "H&R INJURY ACCIDENT", "SHOTS FIRED", "PERSON W/GUN", "PERSON W/KNIFE",];
 // Alt: SHOOTING, MENTALLY DISTURBED, DRUNK DRIVER, ROBBERY, PANIC ALARM, STABBING, EXPLOSIVE FOUND, GRAND THEFT, PERSON BREAKING IN, DEMO / PROTEST, SHOT SPOTTER, CITIZEN ARREST, URGENT NOTIFICATION, AGG ASSAULT / ADW, FIGHT W/WEAPONS, STOLEN PROPERTY, PETTY THEFT, THREATS / HARASSMENT, WANTED VEHICLE / SUB
 
-export const API_MAP_POLICE_48h = {
+export const API_REF_POLICE_48h = {
     incidentNumber: "cad_number",
     rowid: "id",
     call_type: "call_type_final_desc",
@@ -121,7 +163,7 @@ export const API_MAP_POLICE_48h = {
     priority: "priority_final",
   };
 
-export const DISPOSITION_MAP_POLICE = {
+export const DISPOSITION_REF_POLICE = {
   ABA: "Officer abated",
   ADM: "Officer admonished",
   ADV: "Officer advised",
