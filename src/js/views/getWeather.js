@@ -1,5 +1,9 @@
-import {OPENWEATHER_API_KEY} from "./localWxKey"
-const OPENWEATHER_API_KEY = process.env.openWeatherApi_Key;
+import { wxKeyLocal } from "./localWxKey";
+const wxKeyNetlify = process.env.openWeatherApi_Key;
+console.log(process.env);
+console.log(wxKeyNetlify);
+const OPENWEATHER_API_KEY = wxKeyNetlify ? wxKeyNetlify : wxKeyLocal;
+console.log(OPENWEATHER_API_KEY);
 const getWeather = async function () {
   console.log(OPENWEATHER_API_KEY);
   const openWeatherCity = "San Francisco";
