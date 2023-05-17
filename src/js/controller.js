@@ -29,7 +29,6 @@ const controlMap = async function () {
     };
     const initLayer = L.tileLayer(sfapi.MAP_LAYERS[1]).addTo(map);
     if (!map) return;
-    console.log(position);
     return map;
   } catch (err) {
     console.error(`${err} Leaflet map error`);

@@ -1,8 +1,6 @@
 const displayNearestMarkerPopup = (position, police48Layer) => {
   let minDistance = Infinity;
   let nearestMarker = null;
-  console.log(position);
-  console.log(police48Layer);
 
   police48Layer.eachLayer((layer) => {
     if (layer instanceof L.CircleMarker) {
@@ -15,7 +13,6 @@ const displayNearestMarkerPopup = (position, police48Layer) => {
         minDistance = distance;
         console.log(minDistance);
         nearestMarker = layer;
-        console.log(nearestMarker);
       }
     }
   });
@@ -26,11 +23,9 @@ const displayNearestMarkerPopup = (position, police48Layer) => {
         layer.openPopup();
         // layer.fire("click");
         const { neighborhood } = layer.options.data;
-            const neighborhoodText =
-              document.getElementById("neighborhood-text");
-            neighborhoodText.textContent = neighborhood;
-      }
-      else {
+        const neighborhoodText = document.getElementById("neighborhood-text");
+        neighborhoodText.textContent = neighborhood;
+      } else {
         layer.closePopup();
       }
     }

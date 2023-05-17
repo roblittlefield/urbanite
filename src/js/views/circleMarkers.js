@@ -71,8 +71,8 @@ export default class circleMarkers {
           popupContent += `<br/>${dispositionMeaning}`;
         }
         // <br>${call.neighborhood}<br>`;
-        console.log(colorMap[call.call_type]);
-        // 8) Create Circle Markers
+
+        // 7) Create Circle Markers
         const marker = L.circleMarker(
           [
             Number(call.coords.coordinates[1]),
