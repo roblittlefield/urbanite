@@ -78,11 +78,37 @@ body {
   font-family: Tahoma, Arial, Helvetica, sans-serif;
   bottom: 45px;
   left: 50%;
-  color: rgba(0, 0, 0, 0.67);
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   transform: translate(-50%, +50%);
   position: fixed;
   z-index: 9999;
+  text-align: center;
   white-space: nowrap;
+}
+
+/*----Weather Info----*/
+#containerTemp {
+  grid-column: 1;
+  grid-row: 1;
+}
+#weather-label {
+  font-size: 12px;
+}
+
+.weather {
+  flex: auto;
+  flex-direction: column;
+  position: absolute;
+  font-family: Tahoma, Arial, Helvetica, sans-serif;
+  font-size: 25px;
+  top: 26px;
+  left: 50px;
+  color: white;
+  align-items: left;
+  z-index: 100;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /*----LEAFLET ELEMENTS----*/

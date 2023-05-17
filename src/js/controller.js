@@ -9,6 +9,7 @@ import updateCallList from "./views/updateToLatest.js";
 import addHandlerMoveCenter from "./views/moveCenter.js";
 import getPosition from "./views/getPosition.js";
 import displayNearestMarkerPopup from "./views/getPositionNearby.js";
+import getWeather from "./views/getWeather.js";
 import {
   loadChangeMapButton,
   loadLatestListButton,
@@ -136,6 +137,7 @@ const init = async function () {
     // addHandlerMoveCenter(map); // Call addHandlerMoveCenter with the map
     loadChangeMapButton(controlButtons);
     loadLatestListButton(controlOpenLatestList);
+    getWeather();
     // document.body.removeChild(overlay);
     // Load position
   } catch (err) {
