@@ -1,7 +1,9 @@
+// import { OPENWEATHER_API_KEY } from "../../../.env";
+const OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY;
 const getWeather = async function () {
-  const openWeatherApi_Key = process.env.OPENWEATHER_API_KEY;
+  console.log(OPENWEATHER_API_KEY);
   const openWeatherCity = "San Francisco";
-  const openWeatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${openWeatherCity}&units=imperial&appid=${openWeatherApi_Key}`;
+  const openWeatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${openWeatherCity}&units=imperial&appid=${OPENWEATHER_API_KEY}`;
 
   try {
     const response = await fetch(openWeatherApiUrl);

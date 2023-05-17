@@ -11,7 +11,6 @@ const displayNearestMarkerPopup = (position, police48Layer) => {
       );
       if (distance < minDistance) {
         minDistance = distance;
-        console.log(minDistance);
         nearestMarker = layer;
       }
     }
