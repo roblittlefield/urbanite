@@ -1,5 +1,5 @@
-// import { OPENWEATHER_API_KEY } from "../../../.env";
-const OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY;
+import {OPENWEATHER_API_KEY} from "./localWxKey"
+const OPENWEATHER_API_KEY = process.env.openWeatherApi_Key;
 const getWeather = async function () {
   console.log(OPENWEATHER_API_KEY);
   const openWeatherCity = "San Francisco";
