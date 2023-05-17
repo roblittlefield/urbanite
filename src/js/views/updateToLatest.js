@@ -1,3 +1,4 @@
+import { minsHoursFormat } from "../helpers";
 const updateCallList = function (latestMarkers, layerGroups) {
   // Get the call-list element and update it with the latest circle markers
   const callList = document.getElementById("call-list");
@@ -25,7 +26,7 @@ const updateCallList = function (latestMarkers, layerGroups) {
         circleMarker.options.data.sensitive ? "***" : ""
       }</h3>
           <i><p>
-          ${timeAgo === undefined ? "" : `${timeAgo} mins ago in`} 
+          ${timeAgo === undefined ? "" : `${minsHoursFormat(timeAgo)} ago in`} 
           ${circleMarker.options.data.neighborhood}
         </p></i>
           <p>${
@@ -35,11 +36,13 @@ const updateCallList = function (latestMarkers, layerGroups) {
                 : circleMarker.options.data.entryTime
                 ? `Call entry, awaiting dispatch`
                 : `Received, awaiting call entry`
-              : `On-scene in ${circleMarker.options.data.responseTime} mins`
-          }${circleMarker.options.data.onView === "Y" ? ` (observed)` : ""} ${
-        !circleMarker.options.data.disposition
-          ? ""
-          : ` -> ${circleMarker.options.data.disposition.toLowerCase()}`
+              : `Response time: ${minsHoursFormat(
+                  circleMarker.options.data.responseTime
+                )}`
+          }${circleMarker.options.data.onView === "Y" ? ` (observed)` : ""}${
+        circleMarker.options.data.disposition
+          ? `, ${circleMarker.options.data.disposition.toLowerCase()}`
+          : ""
       }
         
         </p>
