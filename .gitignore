@@ -3,4 +3,3 @@ dist
 .parcel-cache
 .DS_Store
 .env
-apikeys.js
