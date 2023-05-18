@@ -65,14 +65,11 @@ body {
 #latest-list {
   top: 44px;
 }
-#screenshot-capture {
-  top: 79px;
-}
+
 #change-map,
 #latest-list,
 #neighborhood-text,
 #count-nearby,
-#screenshot-capture,
 .weather {
   touch-action: none;
   user-select: none;
@@ -91,8 +88,7 @@ body {
 }
 
 #change-map,
-#latest-list,
-#screenshot-capture {
+#latest-list {
   font-weight: bold;
   touch-action: none;
   user-select: none;

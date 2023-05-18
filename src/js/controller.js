@@ -13,7 +13,7 @@ import getWeather from "./views/getWeather.js";
 import {
   loadChangeMapButton,
   loadLatestListButton,
-} from "./views/buttonsView.js";
+} from "./views/buttonsView.js"
 import { async } from "regenerator-runtime";
 
 let map;
@@ -41,7 +41,7 @@ const controlMap = async function () {
     map.options.dragging = {
       sensitivity: 0.5, // Adjust the sensitivity (default: 1)
     };
-    const initLayer = L.tileLayer(sfapi.MAP_LAYERS[1]).addTo(map);
+    const initLayer = L.tileLayer(sfapi.MAP_LAYERS[0]).addTo(map);
     if (!map) return;
     return map;
   } catch (err) {
@@ -149,14 +149,3 @@ const init = async function () {
 };
 
 init();
-/////////////////////////////////////////
-/////////////////////////////////////////
-const mapEl = document.getElementById("map");
-const screenshotEl = document.getElementById("screenshot-capture");
-screenshotEl.addEventListener(
-  "click",
-  () => {
-    console.log("Button pressed");
-  },
-  100
-); // Adjust the delay as needed
