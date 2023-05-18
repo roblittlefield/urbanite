@@ -1,7 +1,12 @@
-# .gitignore file
-node_modules
-dist
+# dependencies
+/node_modules
+/dist
 .parcel-cache
+
+# misc
 .DS_Store
+
+# local env files
 .env
-src/js/views/apikeys.js
+apikeys.js
+git 
