@@ -8,6 +8,8 @@ body {
   height: 100%;
   width: 100vw;
   margin: 0px;
+  top: 0px;
+  left: 0px;
   padding: 0;
   z-index: -1;
   position: absolute;
@@ -20,14 +22,40 @@ body {
 }
 
 .disclaimer {
-  color: black !important;
+  line-height: 1.4;
+  align-items: center;
+  color: #0057b7;
   text-decoration: none;
   position: fixed;
-  padding: 4px;
-  bottom: 0px;
-  left: 0px;
-  background-color: rgba(255, 255, 255, 0.8);
-  font-size: 8px;
+  padding: 0px 3px 0px 5.5px;
+  text-align: center;
+  bottom: 14px;
+  right: 0px;
+  font-family: Tahoma, Arial, Helvetica, sans-serif;
+  /* font-weight: bold; */
+  background-color: rgba(255, 255, 255, 0.65);
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.disclaimer a:hover {
+  text-decoration: underline; /* Add underline on hover */
+}
+
+.disclaimer a {
+  text-decoration: none;
+}
+.disclaimer a.centered-link {
+  display: flex;
+  align-items: center;
+}
+
+.disclaimer a.centered-link img {
+  margin-right: 3px; /* Adjust the spacing between the image and text */
+}
+
+.disclaimer a:visited {
+  color: #0057b7; /* Set the visited link color to the same as the default link color */
 }
 
 /*----CHANGE MAP AND SHOW LIST BUTTONS----*/
@@ -37,29 +65,42 @@ body {
 #latest-list {
   top: 44px;
 }
+#change-map,
+#latest-list,
+#neighborhood-text,
+#count-nearby,
+.weather {
+  touch-action: none;
+  user-select: none;
+  z-index: 9;
+  font-family: Tahoma, Arial, Helvetica, sans-serif;
+  color: rgba(72, 72, 72, 0.84);
+  text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  vertical-align: center;
+  position: fixed;
+  white-space: nowrap;
+  border-radius: 3px;
+  border-radius: 5px;
+  border: none;
+}
 
 #change-map,
 #latest-list {
-  background-color: transparent;
+  font-weight: bold;
   touch-action: none;
   user-select: none;
   right: 13px;
   font-size: 14px;
-  font-weight: bold;
   border: 1px solid #c5c5c5;
-  color: #484848;
+  color: rgba(72, 72, 72, 1);
   background-image: linear-gradient(#f7f7f7, #e7e7e7);
-  text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.8);
-  position: fixed;
-  border-radius: 3px;
-  border-radius: 5px;
-  vertical-align: center;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
   width: 62px;
   height: 25px;
   text-align: center;
-  background-color: #f2f2f2;
   border: none;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
   cursor: pointer;
 }
 
@@ -73,18 +114,26 @@ body {
   outline: none;
 }
 
+#count-container {
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+}
+
+#count-nearby {
+  font-size: 14px;
+  left: 50px;
+  top: 48px;
+  padding: 2px 6px 2px 6px;
+}
+
 #neighborhood-text {
   font-size: 40px;
-  font-family: Tahoma, Arial, Helvetica, sans-serif;
   bottom: 45px;
   left: 50%;
-  color: rgba(14, 14, 14, 0.6);
-  text-shadow: 1px 1px 1px rgba(71, 71, 71, 0.5);
+  padding: 0px 6px 0px 6px;
   transform: translate(-50%, +50%);
-  position: fixed;
-  z-index: 9999;
   text-align: center;
-  white-space: nowrap;
 }
 
 /*----Weather Info----*/
@@ -97,21 +146,24 @@ body {
 }
 
 .weather {
-  flex: auto;
-  flex-direction: column;
-  position: absolute;
-  font-family: Tahoma, Arial, Helvetica, sans-serif;
-  font-size: 25px;
-  top: 26px;
+  font-size: 23px;
+  top: 10.2px;
   left: 50px;
-  color: white;
-  align-items: left;
-  z-index: 100;
   text-align: center;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  padding: 2px 6px 2px 6px;
 }
 
 /*----LEAFLET ELEMENTS----*/
+.leaflet-control-attribution {
+  font-family: Tahoma, Arial, Helvetica, sans-serif;
+  background-color: rgba(255, 255, 255, 0.65) !important;
+  font-size: 10px;
+  color: #0057b7 !important;
+}
+
+.leaflet-control-attribution a:visited {
+  color: #0057b7; /* Set the visited link color to the same as the default link color */
+}
 .leaflet-popup-content {
   padding: 0.1px;
 }
@@ -151,16 +203,18 @@ body {
   box-shadow: none;
 }
 
-/*----LATEST INCIDENTS LIST----*/
+/*----CURRENT LOCATOIN DOT----*/
 
+/*----LATEST INCIDENTS LIST----*/
 #latest-container {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 72%;
+  max-width: 500px;
   height: 97%;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 9999;
   display: flex;
   flex-direction: column;
@@ -170,15 +224,10 @@ body {
   font-family: Arial, sans-serif;
   border-radius: 3px;
   border-radius: 10px;
-  /* overflow: scroll;
-  overflow-y: scroll; */
-  touch-action: pan-y;
-  -ms-touch-action: auto;
-  -webkit-overflow-scrolling: touch;
-  touch-action: pan-x pan-y;
+  touch-action: none;
 }
 
-.close-button {
+/* .close-button {
   position: absolute;
   top: 0px;
   right: 11px;
@@ -188,7 +237,7 @@ body {
   mix-blend-mode: difference;
   cursor: pointer;
   z-index: 9999;
-}
+} */
 
 #latest-container h2 {
   position: relative;
@@ -231,7 +280,6 @@ body {
 .call-box h3 {
   font-size: auto;
   margin: 0px 5px -2px;
-  /* color: #007bff; */
 }
 
 .call-box p {
@@ -287,3 +335,4 @@ body {
 ::-webkit-scrollbar-corner {
   background-color: #f1f1f1;
 }
+

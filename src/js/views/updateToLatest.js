@@ -1,4 +1,5 @@
 import { minsHoursFormat } from "../helpers";
+
 const updateCallList = function (latestMarkers, layerGroups) {
   // Get the call-list element and update it with the latest circle markers
   const callList = document.getElementById("call-list");
@@ -10,19 +11,21 @@ const updateCallList = function (latestMarkers, layerGroups) {
   latestMarkers.forEach((circleMarker) => {
     // Add a check to make sure data is defined
     if (circleMarker.options.data) {
-      const callTypeProper = circleMarker.options.data.callType
-        .toLowerCase()
-        .split(" ")
-        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-        .join(" ");
+      const callType = circleMarker.options.data.callType;
       const timeAgo = circleMarker.options.data.timeAgo;
       const callBox = document.createElement("li");
       // style="color: ${circleMarker.options.fillColor};" // Add next to h3 before >
       callBox.classList.add("call-box");
       callBox.innerHTML = `
         <h3 style="color: ${
-          circleMarker.options.fillColor
-        };">${callTypeProper}${
+          circleMarker.options.fillColor === "#000000"
+            ? "#D3D3D3"
+            : circleMarker.options.fillColor === "#FF00FF"
+            ? "#FF5AFF"
+            : circleMarker.options.fillColor === "#0000FF"
+            ? "#66CCFF"
+            : circleMarker.options.fillColor
+        };">${circleMarker.options.data.callType}${
         circleMarker.options.data.sensitive ? "***" : ""
       }</h3>
           <i><p>

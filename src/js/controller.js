@@ -18,6 +18,19 @@ import { async } from "regenerator-runtime";
 
 let map;
 let position;
+const latestContainer = document.getElementById("latest-container");
+const classList = document.getElementById("call-list");
+const latestButton = document.getElementById("latest-list");
+const changeMap = document.getElementById("change-map");
+const neighborhoodContainer = document.getElementById("neighborhood-text");
+const countNearbyContainer = document.getElementById("count-nearby");
+const zoomControls = document.querySelector(
+  ".leaflet-control-zoom.leaflet-bar"
+);
+const temperatureContainer = document.querySelector(".weather");
+const disclaimerContainer = document.querySelector(".disclaimer");
+const attribution = document.querySelector(".leaflet-control-attribution");
+
 const controlMap = async function () {
   try {
     position = await getPosition(sfapi.getLatLngSF());
@@ -38,53 +51,44 @@ const controlMap = async function () {
 
 const controlCircleMarkers = async function () {
   try {
-    // 0) Get Police48h promise
     const responsePolice48h = await model.fetchApi(
       sfapi.API_URL_POLICE_48h_FILTERED
     );
-    // 1) Resolve Police48h promise to json
+
     const dataApiPolice48h = await responsePolice48h.json();
     const dataApiPolice48hFiltered = dataApiPolice48h.filter((item) =>
       sfapi.includedCallTypes.includes(item.call_type_final_desc)
     );
 
-    // getCallTypeCount(dataApiPolice48hFiltered);
-    // 2) Create new view and add markers
     const circleMarkersInst = new circleMarkers();
-    const [allCalls, police48Layer] = circleMarkersInst.addCircleMarkers(
-      dataApiPolice48hFiltered,
-      sfapi.API_REF_POLICE_48h
-    );
-    // circleMarkersInst.removeOverlappingMarkers(circleMarkersInst.layerGroups)
-    // SFPD
-    // SFFD
+    const [allCalls, police48Layer, markerCount] =
+      circleMarkersInst.addCircleMarkers(dataApiPolice48hFiltered, position);
+    document.getElementById("count-nearby").textContent =
+      markerCount.toString() + " calls within 500m";
     const latestMarkers = sortMarkers(police48Layer);
-
     const latestLayerGroup = updateCallList(
       latestMarkers,
-      circleMarkersInst.layerGroups // This is getting Police49h data, ok
+      circleMarkersInst.layerGroups
     );
     latestLayerGroup.addTo(map);
-
     displayNearestMarkerPopup(position, police48Layer);
     addHandlerMoveCenter(allCalls, police48Layer, map);
-    // const [response2, response3] = await Promise.all([
-    //   model.fetchApi(anotherApiUrl),
-    //   model.fetchApi(yetAnotherApiUrl),
-    // ]);
-
-    // const dataApi2 = await response2.json();
-    // const dataApi3 = await response3.json();
-
-    // Flatten to 1 array
-    // const dataRaw = dataApi.flatMap((arr) => arr);
-    // console.log(dataRaw);
-    // Remove duplicates without a cad number
+    if (position !== sfapi.getLatLngSF()) {
+      const circle = L.circle(position, {
+        radius: 500, // meters
+        color: "white",
+        fillColor: "blue",
+        fillOpacity: 0.15,
+        weight: 1,
+      });
+      circle.addTo(map);
+    }
     return map;
   } catch (err) {
     console.log(err);
   }
 };
+
 let currentLayer = 0;
 const controlButtons = function () {
   currentLayer = (currentLayer + 1) % sfapi.MAP_LAYERS.length;
@@ -100,27 +104,30 @@ const controlButtons = function () {
 };
 
 const controlOpenLatestList = function () {
-  const latestContainer = document.getElementById("latest-container");
-  const closeButton = document.querySelector(".close-button");
-  const classList = document.getElementById("call-list");
-  const latestButton = document.getElementById("latest-list");
   latestContainer.classList.toggle("hidden");
-
-  closeButton.addEventListener("click", () => {
-    latestContainer.classList.add("hidden");
-  });
+  latestButton.classList.toggle("hidden");
+  changeMap.classList.toggle("hidden");
+  temperatureContainer.classList.toggle("hidden");
+  countNearbyContainer.classList.toggle("hidden");
+  neighborhoodContainer.classList.toggle("hidden");
+  disclaimerContainer.classList.toggle("hidden");
 
   setTimeout(
     window.addEventListener("click", (event) => {
-      console.log(latestButton);
       const clickTarget = event.target;
       if (
+        !latestContainer.classList.contains("hidden") &&
         clickTarget !== latestContainer &&
         !classList.contains(clickTarget) &&
         clickTarget !== latestButton
       ) {
         latestContainer.classList.add("hidden");
-        latestButton.classList.toggle("active");
+        latestButton.classList.toggle("hidden");
+        countNearbyContainer.classList.toggle("hidden");
+        temperatureContainer.classList.toggle("hidden");
+        neighborhoodContainer.classList.toggle("hidden");
+        disclaimerContainer.classList.toggle("hidden");
+        changeMap.classList.toggle("hidden");
       }
     }),
     200
@@ -129,35 +136,15 @@ const controlOpenLatestList = function () {
 
 const init = async function () {
   try {
-    const map = await controlMap(); // Wait for map initialization
-
-    await controlCircleMarkers(); // Wait for circle markers to be added
-
-    // addHandlerMoveCenter(map); // Call addHandlerMoveCenter with the map
+    const map = await controlMap();
+    await controlCircleMarkers();
     loadChangeMapButton(controlButtons);
     loadLatestListButton(controlOpenLatestList);
     getWeather();
-    // document.body.removeChild(overlay);
-    // Load position
+    disclaimerContainer.style.display = "block";
   } catch (err) {
     console.error(`Init error: ${err}`);
   }
 };
 
 init();
-// const getCallTypeCount = function (data) {
-//   const countByCallType = {};
-//   data.forEach((call) => {
-//     const callType = call.call_type_original_desc;
-//     if (callType in countByCallType) {
-//       countByCallType[callType]++;
-//     } else {
-//       countByCallType[callType] = 1;
-//     }
-//   });
-//   const countPairs = Object.entries(countByCallType);
-//   countPairs.sort((a, b) => b[1] - a[1]);
-//   countPairs.forEach((pair) => {
-//     console.log(`${pair[0]}: ${pair[1]}`);
-//   });
-// };

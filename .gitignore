@@ -3,4 +3,4 @@ dist
 .parcel-cache
 .DS_Store
 .env
-localWxKey.js
+apikey.js

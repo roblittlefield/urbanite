@@ -16,7 +16,7 @@
     <header></header>
     <div class="overlay"></div>
     <div class="container">
-      <div id="visible-circle-markers-count"></div>
+      <!-- <div id="visible-circle-markers-count"></div> -->
       <div id="map"></div>
       <div id="neighborhood-text"></div>
       <button id="change-map">Map</button>
@@ -24,9 +24,12 @@
       <div class="weather">
         <div id="containerTemp"></div>
       </div>
+      <div id="count-container">
+        <div id="count-nearby"></div>
+      </div>
       <div class="hidden" id="latest-container">
-        <button class="close-button">&times;</button>
-        <h2>Latest SFPD Calls</h2>
+        <!-- <button class="close-button">&times;</button> -->
+        <h2>Latest Police Dispatched Calls for Service</h2>
         <ul id="call-list"></ul>
         <style>
           .inline-headings h3,
@@ -36,9 +39,12 @@
           }
         </style>
       </div>
-      <div class="disclaimer">
-        <a href="https://datasf.gitbook.io/datasf-dataset-explainers/law-enforcement-dispatched-calls-for-service">SFPD Dataset</a>
-      </div>
+      <div class="disclaimer" style="display: none;">
+        <a href="https://datasf.gitbook.io/datasf-dataset-explainers/law-enforcement-dispatched-calls-for-service" class="centered-link">
+          <img src="https://sf.gov/themes/custom/sfgovpl/logo.svg" alt="SF.gov Data" style="width: 10px; height: 10px;">
+          SF Gov
+        </a>
+      </div>      
       <script type="module" src="src/js/controller.js"></script>
   </body>
 </html>

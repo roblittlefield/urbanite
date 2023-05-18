@@ -1,3 +1,5 @@
+import { SFDATA_API_KEY } from "./views/apikeys";
+
 /////////////////////-----urbanite-----/////////////////////
 export const latestNumber = 700;
 /////////// Leaflet Map
@@ -17,8 +19,7 @@ export const MAP_LAYERS = [
 ];
 
 /////////// SAN FRANCISCO .GOV DATA
-const SFAPI_APP_TKN = "TmnsQZtPesideUfTbGU3BeaAV"; // How to use token: json?$$app_token=APP_TOKEN
-
+export const openWeatherCity = "San Francisco";
 /////////// Police - Last 48 hours
 const API_URL_POLICE_48h = "https://data.sfgov.org/resource/gnap-fj3t.json";
 
@@ -83,54 +84,93 @@ export const includedCallTypes = [
   "RESISTING ARREST",
 ];
 
-export const colorMap = {
-  "SHOOTING": "#DC143C",  // Crimson
-  "SHOTS FIRED": "#E40F3F",  
-  "PERSON W/GUN":  "#E3173F",  
-  "SHOT SPOTTER": "#E32948",  
+export const colorMap = new Map([
+  ["SHOOTING", "#E3173F"], // Crimson
+  ["SHOTS FIRED", "#E3173F"],
+  ["PERSON W/GUN", "#E3173F"],
+  ["SHOT SPOTTER", "#E3173F"],
 
-  "STABBING": "#DC143C",  // Crimson
-  "PERSON W/KNIFE": "#E3173F",  
+  ["STABBING", "#E3173F"], // Lighter crimson
+  ["PERSON W/KNIFE", "#E3173F"],
+  ["FIGHT W/WEAPONS", "#E3173F"],
 
-  "AGG ASSAULT / ADW": "#FFA500", // Orange
-  "ASSAULT / BATTERY": "#FFA500",  
-  "FIGHT W/WEAPONS": "#FFA500",  
-  "STRONGARM ROBBERY": "#FFA500",  
-  "PURSE SNATCH": "#FFA500",  
-  "ROBBERY": "#FFA500",  
-  "BURGLARY": "#FFA500",  
-  "PERSON BREAKING IN": "#FFA500",  
-  "SILENT HOLDUP ALARM": "#FFA500",  
+  ["AGG ASSAULT / ADW", "#FFF000"], // Yellow (darker)
+  ["ASSAULT / BATTERY", "#FFF000"],
+  ["STRONGARM ROBBERY", "#FFA500"], // Orange
+  ["GRAND THEFT", "#FFA500"],
+  ["PURSE SNATCH", "#FFA500"],
+  ["ROBBERY", "#FFA500"],
+  ["BURGLARY", "#FFA500"],
+  ["PERSON BREAKING IN", "#FFA500"],
+  ["SILENT HOLDUP ALARM", "#FFA500"],
 
-  "TRESPASSER": "#000080",  // Blue
-  "PROWLER": "#00008B",  
-  "STALKING": "#0000CD",  
-  "MENTALLY DISTURBED": "#3232FF",  
-  "INTOXICATED PERSON": "#4D4DFF",  
-  "PERSON SCREAMING": "#6666FF",  
+  ["TRESPASSER", "#0000FF"], // Blue
+  ["PROWLER", "#0000FF"],
+  ["STALKING", "#0000FF"],
 
-  "H&R INJURY ACCIDENT": "#000000", 
-  "H&R VEH ACCIDENT": "#000000",  
-  "INJURY VEH ACCIDENT": "#000000",  
-  "GRAND THEFT": "#FFA500",  
-  "STOLEN VEHICLE": "#FFA500",  
-  "DRUNK DRIVER": "#000000", 
-  "AUTO BOOST / STRIP": "#800080",  
+  ["MENTALLY DISTURBED", "#9ACD32"], // Puke Green
+  ["INTOXICATED PERSON", "#9ACD32"],
+  ["PERSON SCREAMING", "#9ACD32"],
+  ["DRUNK DRIVER", "#9ACD32"],
 
-  "ARREST MADE": "#000000",  
-  "RESISTING ARREST": "#000000",  
-  "CITIZEN ARREST": "#000000", 
-  "DEMO / PROTEST": "#000000" 
-};
+  ["STOLEN VEHICLE", "#FF00FF"],
+  ["AUTO BOOST / STRIP", "#FF00FF"], // Pink
 
+  ["H&R INJURY ACCIDENT", "#000000"], // Black
+  ["H&R VEH ACCIDENT", "#000000"],
+  ["INJURY VEH ACCIDENT", "#000000"],
+  ["ARREST MADE", "#000000"],
+  ["RESISTING ARREST", "#000000"],
+  ["CITIZEN ARREST", "#000000"],
+  ["DEMO / PROTEST", "#000000"],
+]);
+
+export const callTypeConversionMap = new Map([
+  ["SHOOTING", "Shooting"],
+  ["SHOTS FIRED", "Shots fired"],
+  ["PERSON W/GUN", "Person with gun"],
+  ["SHOT SPOTTER", "Shot spotter"],
+
+  ["STABBING", "Stabbing"],
+  ["PERSON W/KNIFE", "Person with knife"],
+  ["FIGHT W/WEAPONS", "Fight with weapons"],
+
+  ["AGG ASSAULT / ADW", "Aggravated assault / ADW"],
+  ["ASSAULT / BATTERY", "Assault / Battery"],
+  ["STRONGARM ROBBERY", "Strong-arm robbery"],
+  ["GRAND THEFT", "Grand theft"],
+  ["PURSE SNATCH", "Purse snatch"],
+  ["ROBBERY", "Robbery"],
+  ["BURGLARY", "Burglary"],
+  ["PERSON BREAKING IN", "Person breaking in"],
+  ["SILENT HOLDUP ALARM", "Silent holdup alarm"],
+
+  ["TRESPASSER", "Trespasser"],
+  ["PROWLER", "Prowler"],
+  ["STALKING", "Stalking"],
+
+  ["MENTALLY DISTURBED", "Mentally disturbed"],
+  ["INTOXICATED PERSON", "Intoxicated person"],
+  ["PERSON SCREAMING", "Person screaming"],
+  ["DRUNK DRIVER", "Drunk driver"],
+
+  ["STOLEN VEHICLE", "Stolen vehicle"],
+  ["AUTO BOOST / STRIP", "Car break-in"],
+
+  ["H&R INJURY ACCIDENT", "Hit and run - Injury accident"],
+  ["H&R VEH ACCIDENT", "Hit and run - Vehicle accident"],
+  ["INJURY VEH ACCIDENT", "Injury vehicle accident"],
+  ["ARREST MADE", "Arrest made"],
+  ["RESISTING ARREST", "Resisting arrest"],
+  ["CITIZEN ARREST", "Citizen arrest"],
+  ["DEMO / PROTEST", "Demonstration / Protest"],
+]);
 
 const filterExpression = excludedCallTypes
   .map((callType) => `call_type_final_desc != '${callType}'`)
   .join(" and ");
 
-export const API_URL_POLICE_48h_FILTERED = `${API_URL_POLICE_48h}?$where=${filterExpression} AND intersection_point IS NOT NULL&$$app_token=${SFAPI_APP_TKN}&$limit=3000`;
-
-
+export const API_URL_POLICE_48h_FILTERED = `${API_URL_POLICE_48h}?$where=${filterExpression} AND intersection_point IS NOT NULL&$$app_token=${SFDATA_API_KEY}&$limit=3000`;
 
 // export const REQUEST_PARAM_POLICE_48h = "call_type_final_desc";
 // export const DATA_ORDER_POLICE_48h = "incident_datetime";

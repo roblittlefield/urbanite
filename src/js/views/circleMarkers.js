@@ -9,20 +9,22 @@ import {
   DISPOSITION_REF_POLICE,
   API_REF_POLICE_48h,
   colorMap,
+  callTypeConversionMap,
 } from "../config.js";
 
 export default class circleMarkers {
   constructor() {
     this.police48Layer = L.layerGroup();
+    this.markersWithinRadius = [];
   }
 
   get layerGroups() {
     return this.police48Layer;
   }
 
-  addCircleMarkers(data) {
-    let allCalls = [];
-
+  addCircleMarkers(data, position) {
+    const allCalls = [];
+    const positionLatLng = L.latLng(position[0], position[1]);
     data.map((callRaw) => {
       // 2a) Standardize Data
       const call = standardizeData(callRaw, API_REF_POLICE_48h);
@@ -45,15 +47,18 @@ export default class circleMarkers {
         // 4) Format address
         const properCaseAddress = textProperCase(call.address);
         const neighborhoodFormatted = neighborhoodFormat(call.neighborhood);
+        const callTypeFormatted =
+          callTypeConversionMap.get(callType) || callType;
         // 4) Create Disposition Meaning from Disposition
         const dispositionMeaning =
           DISPOSITION_REF_POLICE[call.disposition] ?? "";
 
         // 6) Create Circle Marker Popups
-        let popupContent = `<b>${textProperCase(callType)}</b>`;
+        let popupContent = `<b>${callTypeFormatted}</b>`;
+
         popupContent += ` \u2022 ${minsHoursFormat(timeAgo)}`;
         // popupContent += `<br>${receivedTimeFormatted}`;
-        
+
         popupContent += `<br>${properCaseAddress}`;
         if (
           responseTimeMins !== undefined &&
@@ -71,7 +76,8 @@ export default class circleMarkers {
           popupContent += `<br/>${dispositionMeaning}`;
         }
         // <br>${call.neighborhood}<br>`;
-
+        const lat = Number(call.coords.coordinates[1]);
+        const lng = Number(call.coords.coordinates[0]);
         // 7) Create Circle Markers
         const marker = L.circleMarker(
           [
@@ -80,15 +86,9 @@ export default class circleMarkers {
           ],
           {
             // radius: call.priority === "A" ? 4 : call.priority === "B" ? 4 : 3,
-            radius: 3,
+            radius: window.innerWidth <= 758 ? 3 : 4,
             keepInView: false,
-            // fillColor:
-            //   call.priority === "A"
-            //     ? "#ff0000"
-            //     : call.priority === "B"
-            //     ? "#ffcc00"
-            //     : "#000000",
-            fillColor: colorMap[call.call_type] || "#0000000",
+            fillColor: colorMap.get(call.call_type) || "#0000000",
             color: "#333333",
             weight: 1,
             // opacity: 0.9,
@@ -117,7 +117,7 @@ export default class circleMarkers {
               dispatchTime: call.dispatch_datetime,
               responseTime: responseTimeMins,
               address: properCaseAddress,
-              callType: call.call_type,
+              callType: callTypeFormatted,
               timeAgo: timeAgo,
               desc: call.desc,
               onView: call.onView,
@@ -132,9 +132,16 @@ export default class circleMarkers {
           closeButton: false,
           disableAnimation: true,
         });
+        const markerLatLng = marker.getLatLng();
+        const distance = positionLatLng.distanceTo(markerLatLng);
+
+        if (distance < 500) {
+          this.markersWithinRadius.push(marker);
+        }
         marker.addTo(this.police48Layer);
       }
     });
-    return [allCalls, this.police48Layer];
+    const markerCount = this.markersWithinRadius.length;
+    return [allCalls, this.police48Layer, markerCount];
   }
 }
