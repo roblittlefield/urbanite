@@ -24,12 +24,13 @@ const latestButton = document.getElementById("latest-list");
 const changeMap = document.getElementById("change-map");
 const neighborhoodContainer = document.getElementById("neighborhood-text");
 const countNearbyContainer = document.getElementById("count-nearby");
+const temperatureContainer = document.querySelector(".weather");
+const disclaimerContainer = document.querySelector(".disclaimer");
+
+const attribution = document.querySelector(".leaflet-control-attribution");
 const zoomControls = document.querySelector(
   ".leaflet-control-zoom.leaflet-bar"
 );
-const temperatureContainer = document.querySelector(".weather");
-const disclaimerContainer = document.querySelector(".disclaimer");
-const attribution = document.querySelector(".leaflet-control-attribution");
 
 const controlMap = async function () {
   try {
@@ -78,7 +79,7 @@ const controlCircleMarkers = async function () {
         radius: 500, // meters
         color: "white",
         fillColor: "blue",
-        fillOpacity: 0.15,
+        fillOpacity: 0.1,
         weight: 1,
       });
       circle.addTo(map);
@@ -148,3 +149,14 @@ const init = async function () {
 };
 
 init();
+/////////////////////////////////////////
+/////////////////////////////////////////
+const mapEl = document.getElementById("map");
+const screenshotEl = document.getElementById("screenshot-capture");
+screenshotEl.addEventListener(
+  "click",
+  () => {
+    console.log("Button pressed");
+  },
+  100
+); // Adjust the delay as needed

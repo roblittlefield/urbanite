@@ -13,10 +13,6 @@ const sortMarkers = function (layer) {
     )
     .slice(0, latestNumber);
   return latestMarkers;
-
-  //   Set the latestCircleMarkers array to the sorted markers
-  // this.#latestCircleMarkers = latestMarkers;
-  //   this._updateCallList();
 };
 
 export default sortMarkers;

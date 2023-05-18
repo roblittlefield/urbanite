@@ -44,7 +44,7 @@ const excludedCallTypes = [
 ];
 
 export const includedCallTypes = [
-  // "FIGHT NO WEAPON",
+  "FIGHT NO WEAPON",
   // "SUSPICIOUS PERSON",
   "TRESPASSER",
   // "SUSPICIOUS VEHICLE",
@@ -93,6 +93,7 @@ export const colorMap = new Map([
   ["STABBING", "#E3173F"], // Lighter crimson
   ["PERSON W/KNIFE", "#E3173F"],
   ["FIGHT W/WEAPONS", "#E3173F"],
+  ["FIGHT NO WEAPON", "#E3173F"],
 
   ["AGG ASSAULT / ADW", "#FFF000"], // Yellow (darker)
   ["ASSAULT / BATTERY", "#FFF000"],
@@ -134,6 +135,7 @@ export const callTypeConversionMap = new Map([
   ["STABBING", "Stabbing"],
   ["PERSON W/KNIFE", "Person with knife"],
   ["FIGHT W/WEAPONS", "Fight with weapons"],
+  ["FIGHT NO WEAPON", "Fight"],
 
   ["AGG ASSAULT / ADW", "Aggravated assault / ADW"],
   ["ASSAULT / BATTERY", "Assault / Battery"],
@@ -172,36 +174,28 @@ const filterExpression = excludedCallTypes
 
 export const API_URL_POLICE_48h_FILTERED = `${API_URL_POLICE_48h}?$where=${filterExpression} AND intersection_point IS NOT NULL&$$app_token=${SFDATA_API_KEY}&$limit=3000`;
 
-// export const REQUEST_PARAM_POLICE_48h = "call_type_final_desc";
-// export const DATA_ORDER_POLICE_48h = "incident_datetime";
-// export const ROW_ID_POLICE_48h = "row_id";
-// export const COORDS_POLICE_48h = "point";
-
-// prettier-ignore
-// export const CALL_TYPES_POLICE_48h = ["STOLEN VEHICLE", "AUTO BOOST / STRIP", "TRESPASSER", "ASSAULT / BATTERY", "FIGHT NO WEAPON", "VEH ACCIDENT", "BURGLARY", "STRONGARM ROBBERY", "H&R INJURY ACCIDENT", "SHOTS FIRED", "PERSON W/GUN", "PERSON W/KNIFE",];
-// Alt: SHOOTING, MENTALLY DISTURBED, DRUNK DRIVER, ROBBERY, PANIC ALARM, STABBING, EXPLOSIVE FOUND, GRAND THEFT, PERSON BREAKING IN, DEMO / PROTEST, SHOT SPOTTER, CITIZEN ARREST, URGENT NOTIFICATION, AGG ASSAULT / ADW, FIGHT W/WEAPONS, STOLEN PROPERTY, PETTY THEFT, THREATS / HARASSMENT, WANTED VEHICLE / SUB
-
 export const API_REF_POLICE_48h = {
-    incidentNumber: "cad_number",
-    rowid: "id",
-    call_type: "call_type_final_desc",
-    call_type_original: "call_type_original_desc",
-    coords: "intersection_point",
-    receivedTime: "received_datetime",
-    entryTime: "entry_datetime",
-    dispatchTime: "dispatch_datetime",
-    responseTime: "enroute_datetime",
-    onSceneTime: "onscene_datetime",
-    address: "intersection_name",
-    neighborhood: "analysis_neighborhood",
-    desc: "call_final_disposition",
-    disposition: "disposition", // SFPD only
-    closeTime: "close_datetime",
-    priority: "priority_final",
-    onView: "onview_flag", // T/F officer observed activity of crime
-    sensitive: "sensitive_call",
-    priority: "priority_final",
-  };
+  incidentNumber: "cad_number",
+  rowid: "id",
+  call_type: "call_type_final_desc",
+  call_type_original: "call_type_original_desc",
+  // callTypeCode: "call_type_final",
+  coords: "intersection_point",
+  receivedTime: "received_datetime",
+  // entryTime: "entry_datetime",
+  // dispatchTime: "dispatch_datetime",
+  // enrouteTime: "enroute_datetime",
+  onSceneTime: "onscene_datetime",
+  address: "intersection_name",
+  neighborhood: "analysis_neighborhood",
+  // desc: "call_final_disposition",
+  disposition: "disposition", // SFPD only
+  // closeTime: "close_datetime",
+  // priority: "priority_final",
+  onView: "onview_flag", // T/F officer observed activity of crime
+  sensitive: "sensitive_call",
+  // priority: "priority_final",
+};
 
 export const DISPOSITION_REF_POLICE = {
   ABA: "Officer abated",
@@ -210,7 +204,6 @@ export const DISPOSITION_REF_POLICE = {
   ARR: "Arrest",
   CAN: "Cancelled",
   CSA: "CPSA assignment",
-  // 22: "Cancelled",
   CIT: "Citation issued",
   CRM: "Burglary alarm",
   GOA: "Gone on arrival",

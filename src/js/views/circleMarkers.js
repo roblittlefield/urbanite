@@ -26,13 +26,11 @@ export default class circleMarkers {
     const allCalls = [];
     const positionLatLng = L.latLng(position[0], position[1]);
     data.map((callRaw) => {
-      // 2a) Standardize Data
       const call = standardizeData(callRaw, API_REF_POLICE_48h);
       allCalls.push(call);
-      // 2b) Categorize by call type
+
       const callType = call.call_type || call.call_type_original;
 
-      // 3) Format dates
       if (call.onSceneTime && call.receivedTime) {
         const now = new Date();
         const receivedTime = new Date(call.receivedTime);
@@ -44,21 +42,16 @@ export default class circleMarkers {
         const receivedTimeFormatted = formatDate(receivedTime);
         const onSceneTimeFormatted = formatDate(onSceneTime);
 
-        // 4) Format address
         const properCaseAddress = textProperCase(call.address);
         const neighborhoodFormatted = neighborhoodFormat(call.neighborhood);
         const callTypeFormatted =
           callTypeConversionMap.get(callType) || callType;
-        // 4) Create Disposition Meaning from Disposition
+
         const dispositionMeaning =
           DISPOSITION_REF_POLICE[call.disposition] ?? "";
 
-        // 6) Create Circle Marker Popups
         let popupContent = `<b>${callTypeFormatted}</b>`;
-
         popupContent += ` \u2022 ${minsHoursFormat(timeAgo)}`;
-        // popupContent += `<br>${receivedTimeFormatted}`;
-
         popupContent += `<br>${properCaseAddress}`;
         if (
           responseTimeMins !== undefined &&
@@ -75,55 +68,37 @@ export default class circleMarkers {
         if (dispositionMeaning !== "" && dispositionMeaning !== "Unknown") {
           popupContent += `<br/>${dispositionMeaning}`;
         }
-        // <br>${call.neighborhood}<br>`;
-        const lat = Number(call.coords.coordinates[1]);
-        const lng = Number(call.coords.coordinates[0]);
-        // 7) Create Circle Markers
+
         const marker = L.circleMarker(
           [
             Number(call.coords.coordinates[1]),
             Number(call.coords.coordinates[0]),
           ],
           {
-            // radius: call.priority === "A" ? 4 : call.priority === "B" ? 4 : 3,
             radius: window.innerWidth <= 758 ? 3 : 4,
             keepInView: false,
             fillColor: colorMap.get(call.call_type) || "#0000000",
             color: "#333333",
             weight: 1,
-            // opacity: 0.9,
-            opacity:
-              timeAgo < 60
-                ? 0.9
-                : timeAgo < 120
-                ? 0.8
-                : timeAgo < 180
-                ? 0.7
-                : timeAgo < 240
-                ? 0.6
-                : timeAgo < 300
-                ? 0.5
-                : timeAgo < 360
-                ? 0.4
-                : 0.35,
-            fillOpacity:
-              call.priority === "A" ? 0.9 : call.priority === "B" ? 0.9 : 0.8,
+            opacity: .6,
+            fillOpacity: 0.9,
             data: {
               receivedTimeCalc: new Date(call.receivedTime).getTime(),
               disposition: dispositionMeaning,
               neighborhood: neighborhoodFormatted,
               receivedTime: receivedTimeFormatted,
-              entryTime: call.entry_datetime,
+              // entryTime: call.entry_datetime,
               dispatchTime: call.dispatch_datetime,
               responseTime: responseTimeMins,
               address: properCaseAddress,
               callType: callTypeFormatted,
               timeAgo: timeAgo,
-              desc: call.desc,
+              // callTypeCode: call.callTypeCode,
+              // desc: call.desc,
               onView: call.onView,
-              priority: call.priority,
+              // priority: call.priority,
             },
-            autoPan: false, // Disable automatic panning causing issue
+            autoPan: false,
             closeOnClick: false,
             interactive: false,
             bubblingMouseEvents: false,
@@ -132,9 +107,9 @@ export default class circleMarkers {
           closeButton: false,
           disableAnimation: true,
         });
+        
         const markerLatLng = marker.getLatLng();
         const distance = positionLatLng.distanceTo(markerLatLng);
-
         if (distance < 500) {
           this.markersWithinRadius.push(marker);
         }

@@ -6,7 +6,7 @@ const getWeather = async function () {
     const openWeatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${openWeatherCity}&units=imperial&appid=${WEATHER_API_KEY}`;
     const response = await fetch(openWeatherApiUrl);
     const data = await response.json();
-    const temperature = data.main.temp.toFixed(0);
+    const temperature = data.main.temp.toFixed(1);
     const iconCode = data.weather[0].icon;
     const iconUrl = `http://openweathermap.org/img/w/${iconCode}.png`;
     const containerTemp = document.querySelector("#containerTemp");

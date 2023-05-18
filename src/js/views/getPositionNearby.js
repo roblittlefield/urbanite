@@ -20,7 +20,6 @@ const displayNearestMarkerPopup = (position, police48Layer) => {
     if (layer instanceof L.CircleMarker) {
       if (layer === nearestMarker) {
         layer.openPopup();
-        // layer.fire("click");
         const { neighborhood } = layer.options.data;
         const neighborhoodText = document.getElementById("neighborhood-text");
         neighborhoodText.textContent = neighborhood;

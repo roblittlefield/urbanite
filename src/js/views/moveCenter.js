@@ -1,14 +1,12 @@
 const addHandlerMoveCenter = function (data, police48Layer, map) {
   let timer = null;
   map.on("move", () => {
-    clearTimeout(timer); // Clear timer
+    clearTimeout(timer);
     timer = setTimeout(() => {
-      // Get the center coordinates of the viewer's window
       const { x, y } = map.getSize();
       const centerX = x / 2;
       const centerY = y / 2;
 
-      // Calculate the distance between the center coordinates and circle markers
       let minDistance = Infinity;
       let closestCoords = null;
 
@@ -26,9 +24,7 @@ const addHandlerMoveCenter = function (data, police48Layer, map) {
         }
       });
 
-      // Check if the closest marker is within the minimum distance threshold
       if (minDistance <= 200) {
-        // Open the popup of the closest marker and close others
         police48Layer.eachLayer((layer) => {
           if (layer instanceof L.CircleMarker) {
             const { x: markerX, y: markerY } = map.latLngToContainerPoint(
@@ -50,14 +46,13 @@ const addHandlerMoveCenter = function (data, police48Layer, map) {
           }
         });
       } else {
-        // No markers within the minimum distance, close all popups
         police48Layer.eachLayer((layer) => {
           if (layer instanceof L.CircleMarker) {
             layer.closePopup();
           }
         });
       }
-    }, 100); // Delay of 100 milliseconds
+    }, 5); // Delay of 4 ms
   });
 };
 

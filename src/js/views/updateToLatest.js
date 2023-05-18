@@ -25,29 +25,28 @@ const updateCallList = function (latestMarkers, layerGroups) {
             : circleMarker.options.fillColor === "#0000FF"
             ? "#66CCFF"
             : circleMarker.options.fillColor
-        };">${circleMarker.options.data.callType}${
-        circleMarker.options.data.sensitive ? "***" : ""
-      }</h3>
+        };">${circleMarker.options.data.callType}${circleMarker.options.data.sensitive ? "***" : ""}</h3>
           <i><p>
           ${timeAgo === undefined ? "" : `${minsHoursFormat(timeAgo)} ago in`} 
           ${circleMarker.options.data.neighborhood}
         </p></i>
           <p>${
-            circleMarker.options.data.responseTime === undefined
-              ? circleMarker.options.data.dispatchTime
-                ? `dispatched`
-                : circleMarker.options.data.entryTime
-                ? `Call entry, awaiting dispatch`
-                : `Received, awaiting call entry`
-              : `Response time: ${minsHoursFormat(
+            circleMarker.options.data.responseTime !== undefined &&
+            !isNaN(circleMarker.options.data.responseTime) &&
+            circleMarker.options.data.onView !== "Y"
+              ? `Response time: ${minsHoursFormat(
                   circleMarker.options.data.responseTime
                 )}`
+              : circleMarker.options.data.dispatchTime
+              ? `Dispatched`
+              : circleMarker.options.data.entryTime
+              ? `Call entry, awaiting dispatch`
+              : `Received, awaiting call entry`
           }${circleMarker.options.data.onView === "Y" ? ` (observed)` : ""}${
         circleMarker.options.data.disposition
           ? `, ${circleMarker.options.data.disposition.toLowerCase()}`
           : ""
       }
-        
         </p>
           <p>${circleMarker.options.data.address}</p>
         `;
