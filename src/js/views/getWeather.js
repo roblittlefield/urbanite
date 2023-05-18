@@ -1,4 +1,5 @@
-import { WEATHER_API_KEY } from "./apikeys";
+import { WEATHER_API_KEY } from "./apikeys.js";
+
 const openWeatherCity = "San Francisco";
 const getWeather = async function () {
   try {

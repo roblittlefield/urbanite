@@ -3,5 +3,4 @@ dist
 .parcel-cache
 .DS_Store
 .env
-git rm --cached
 src/js/views/apikeys.js
