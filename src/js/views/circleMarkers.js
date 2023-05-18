@@ -16,6 +16,7 @@ export default class circleMarkers {
   constructor() {
     this.police48Layer = L.layerGroup();
     this.markersWithinRadius = [];
+    this.markersWithinRadiusRecent = [];
   }
 
   get layerGroups() {
@@ -104,9 +105,15 @@ export default class circleMarkers {
       if (distance < 500) {
         this.markersWithinRadius.push(marker);
       }
+      // Count recent markers in circle
+      if (timeAgo < 120) {
+        this.markersWithinRadiusRecent.push(marker);
+      }
+
       marker.addTo(this.police48Layer);
     });
     const markerCount = this.markersWithinRadius.length;
-    return [allCalls, this.police48Layer, markerCount];
+    const marketCountRecent = this.markersWithinRadiusRecent.length;
+    return [allCalls, this.police48Layer, markerCount, marketCountRecent];
   }
 }

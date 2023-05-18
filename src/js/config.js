@@ -88,7 +88,7 @@ export const colorMap = new Map([
   ["PERSON W/GUN", "#E3173F"],
   ["SHOT SPOTTER", "#E3173F"],
 
-  ["STABBING", "#E3173F"], // Lighter crimson
+  ["STABBING", "#E3173F"], 
   ["PERSON W/KNIFE", "#E3173F"],
   ["FIGHT W/WEAPONS", "#E3173F"],
   ["FIGHT NO WEAPON", "#E3173F"],
