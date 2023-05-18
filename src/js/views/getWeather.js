@@ -1,6 +1,5 @@
-import { WEATHER_API_KEY } from "./apikeys.js";
-import { openWeatherCity } from "../config.js";
-
+import { WEATHER_API_KEY } from "./apikeys";
+const openWeatherCity = "San Francisco";
 const getWeather = async function () {
   try {
     const openWeatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${openWeatherCity}&units=imperial&appid=${WEATHER_API_KEY}`;

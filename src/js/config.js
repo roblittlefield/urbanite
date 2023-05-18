@@ -1,4 +1,4 @@
-import { SFDATA_API_KEY } from "./views/apikeys";
+import { SFDATA_API_KEY } from "./views/apikeys.js";
 
 export const latestNumber = 700;
 /////////// Leaflet Map
@@ -18,7 +18,6 @@ export const MAP_LAYERS = [
 ];
 
 /////////// SAN FRANCISCO .GOV DATA
-export const openWeatherCity = "San Francisco";
 /////////// Police - Last 48 hours
 const API_URL_POLICE_48h = "https://data.sfgov.org/resource/gnap-fj3t.json";
 
