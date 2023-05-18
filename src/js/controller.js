@@ -53,7 +53,8 @@ const controlCircleMarkers = async function () {
     const [allCalls, police48Layer, markerCount] =
       circleMarkersInst.addCircleMarkers(dataApiPolice48hFiltered, position);
 
-    const latestMarkers = sortMarkers(police48Layer);
+    const { latestMarkers, count } = sortMarkers(police48Layer);
+    console.log(count); // COunt of last 2 hrs
     const latestLayerGroup = updateCallList(
       latestMarkers,
       circleMarkersInst.layerGroups,
@@ -62,13 +63,12 @@ const controlCircleMarkers = async function () {
     latestLayerGroup.addTo(map);
     displayNearestMarkerPopup(position, police48Layer);
     addHandlerMoveCenter(allCalls, police48Layer, map);
-    const countNearbyContainer = document.getElementById("count-nearby");
+    const countNearbyContainer = document.getElementById("count-display");
     countNearbyContainer.classList.toggle("hidden");
     if (JSON.stringify(position) !== JSON.stringify(sfapi.getLatLngSF())) {
       countNearbyContainer.classList.toggle("hidden");
-      console.log(`not default position`);
-      document.getElementById("count-nearby").textContent =
-        markerCount.toString() + " calls within 500m";
+      document.getElementById("count-display").textContent =
+      markerCount.toString() + " calls within 500m";
       const circle = L.circle(position, {
         radius: 500, // meters
         color: "white",
@@ -77,6 +77,10 @@ const controlCircleMarkers = async function () {
         weight: 1,
       });
       circle.addTo(map);
+    } else {
+      countNearbyContainer.classList.toggle("hidden");
+      document.getElementById("count-display").textContent =
+        count.toString() + " calls past 2h";
     }
     return map;
   } catch (err) {

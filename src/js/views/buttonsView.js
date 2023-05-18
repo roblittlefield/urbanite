@@ -2,7 +2,7 @@ const latestContainer = document.getElementById("latest-container");
 const latestButton = document.getElementById("latest-list");
 const changeMap = document.getElementById("change-map");
 const neighborhoodContainer = document.getElementById("neighborhood-text");
-const countNearbyContainer = document.getElementById("count-nearby");
+const countNearbyContainer = document.getElementById("count-display");
 const temperatureContainer = document.querySelector(".weather");
 const disclaimerContainer = document.querySelector(".disclaimer");
 

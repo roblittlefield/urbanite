@@ -1,3 +1,16 @@
+const showAlert = function (message) {
+  const alertElement = document.createElement("div");
+  alertElement.classList.add("alert");
+  alertElement.textContent = message;
+  document.body.appendChild(alertElement);
+
+  setTimeout(function () {
+    if (alertElement.parentElement) {
+      alertElement.parentElement.removeChild(alertElement);
+    }
+  }, 2000);
+};
+
 const getPosition = function (defaultMapSF) {
   return new Promise((resolve, reject) => {
     if (navigator.geolocation) {
@@ -16,23 +29,28 @@ const getPosition = function (defaultMapSF) {
             longitude < expandedMinLongitude ||
             longitude > expandedMaxLongitude
           ) {
-            alert(`Looks like you're outside San Francisco, loading city center.`)
+            showAlert(
+              `Looks like you're outside San Francisco 🌉🌴🌊🌅 Loading city center.`
+            );
             reject(new Error("Location outside expanded SF bounds"));
           } else {
             resolve([latitude, longitude]);
           }
         },
         () => {
-          alert(`Couldn't find your location, loading San Francisco`)
-          resolve(defaultMapSF); 
+          showAlert(
+            `Couldn't find your location in San Francisco 🌉 Loading city center.`
+          );
+          resolve(defaultMapSF);
         }
-        );
-      } else {
-      alert(`Couldn't find your location, loading San Francisco`)
+      );
+    } else {
+      showAlert(
+        `Couldn't find your location in San Francisco 🌉🌴🌊🌅 Loading city center.`
+      );
       resolve(defaultMapSF);
     }
   });
 };
 
 export default getPosition;
-
