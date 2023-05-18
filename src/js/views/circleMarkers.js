@@ -30,90 +30,81 @@ export default class circleMarkers {
       allCalls.push(call);
 
       const callType = call.call_type || call.call_type_original;
+      const now = new Date();
+      const receivedTime = new Date(call.receivedTime);
+      const onSceneTime = new Date(call.onSceneTime);
+      const responseTimeMins = Math.round((onSceneTime - receivedTime) / 60000);
+      const timeAgo = Math.floor((now - receivedTime) / 60000);
+      const properCaseAddress = textProperCase(call.address);
+      const neighborhoodFormatted = neighborhoodFormat(call.neighborhood);
+      const callTypeFormatted = callTypeConversionMap.get(callType) || callType;
 
-      if (call.onSceneTime && call.receivedTime) {
-        const now = new Date();
-        const receivedTime = new Date(call.receivedTime);
-        const onSceneTime = new Date(call.onSceneTime);
-        const responseTimeMins = Math.round(
-          (onSceneTime - receivedTime) / 60000
-        );
-        const timeAgo = Math.floor((now - receivedTime) / 60000);
-        const receivedTimeFormatted = formatDate(receivedTime);
+      const dispositionMeaning = DISPOSITION_REF_POLICE[call.disposition] ?? "";
 
-        const properCaseAddress = textProperCase(call.address);
-        const neighborhoodFormatted = neighborhoodFormat(call.neighborhood);
-        const callTypeFormatted =
-          callTypeConversionMap.get(callType) || callType;
+      let popupContent = `<b>${callTypeFormatted}</b>`;
+      popupContent += ` \u2022 ${minsHoursFormat(timeAgo)}`;
+      popupContent += `<br>${properCaseAddress}`;
 
-        const dispositionMeaning =
-          DISPOSITION_REF_POLICE[call.disposition] ?? "";
+      popupContent +=
+        call.onView === "Y"
+          ? `<br>Officer observed`
+          : call.responseTime
+          ? `<br>Response time: ${minsHoursFormat(responseTimeMins)}`
+          : call.dispatchTime
+          ? `<br>Dispatched ${minsHoursFormat(call.dispatchTime)} ago`
+          : call.entry_datetime
+          ? `<br>Call entry in queue`
+          : `<br>Call received`;
+      popupContent +=
+        dispositionMeaning !== "" && dispositionMeaning !== "Unknown"
+          ? `, ${dispositionMeaning.toLowerCase()}`
+          : "";
 
-        let popupContent = `<b>${callTypeFormatted}</b>`;
-        popupContent += ` \u2022 ${minsHoursFormat(timeAgo)}`;
-        popupContent += `<br>${properCaseAddress}`;
-        if (
-          responseTimeMins !== undefined &&
-          !isNaN(responseTimeMins) &&
-          call.onView !== "Y"
-        ) {
-          const timeDiffText = minsHoursFormat(responseTimeMins);
-          popupContent += `<br><i>Response time: ${timeDiffText}</i>`;
+      const marker = L.circleMarker(
+        [
+          Number(call.coords.coordinates[1]),
+          Number(call.coords.coordinates[0]),
+        ],
+        {
+          radius: window.innerWidth <= 758 ? 3 : 4,
+          keepInView: false,
+          fillColor: colorMap.get(call.call_type) || "#0000000",
+          color: "#333333",
+          weight: 1,
+          opacity: 0.6,
+          fillOpacity: 0.9,
+          data: {
+            receivedTimeCalc: new Date(call.receivedTime).getTime(),
+            disposition: dispositionMeaning,
+            neighborhood: neighborhoodFormatted,
+            receivedTime: formatDate(receivedTime),
+            entryTime: call.entry_datetime,
+            dispatchTime: call.dispatch_datetime,
+            responseTime: responseTimeMins,
+            address: properCaseAddress,
+            callType: callTypeFormatted,
+            timeAgo: timeAgo,
+            // callTypeCode: call.callTypeCode,
+            // desc: call.desc,
+            onView: call.onView,
+            // priority: call.priority,
+          },
+          autoPan: false,
+          closeOnClick: false,
+          interactive: false,
+          bubblingMouseEvents: false,
         }
-        if (responseTimeMins === 0 && call.onView === "Y") {
-          popupContent += `<br><i>Observed by Officer</i>`;
-        }
+      ).bindPopup(popupContent, {
+        closeButton: false,
+        disableAnimation: true,
+      });
 
-        if (dispositionMeaning !== "" && dispositionMeaning !== "Unknown") {
-          popupContent += `<br/>${dispositionMeaning}`;
-        }
-
-        const marker = L.circleMarker(
-          [
-            Number(call.coords.coordinates[1]),
-            Number(call.coords.coordinates[0]),
-          ],
-          {
-            radius: window.innerWidth <= 758 ? 3 : 4,
-            keepInView: false,
-            fillColor: colorMap.get(call.call_type) || "#0000000",
-            color: "#333333",
-            weight: 1,
-            opacity: .6,
-            fillOpacity: 0.9,
-            data: {
-              receivedTimeCalc: new Date(call.receivedTime).getTime(),
-              disposition: dispositionMeaning,
-              neighborhood: neighborhoodFormatted,
-              receivedTime: receivedTimeFormatted,
-              entryTime: call.entry_datetime,
-              dispatchTime: call.dispatch_datetime,
-              responseTime: responseTimeMins,
-              address: properCaseAddress,
-              callType: callTypeFormatted,
-              timeAgo: timeAgo,
-              // callTypeCode: call.callTypeCode,
-              // desc: call.desc,
-              onView: call.onView,
-              // priority: call.priority,
-            },
-            autoPan: false,
-            closeOnClick: false,
-            interactive: false,
-            bubblingMouseEvents: false,
-          }
-        ).bindPopup(popupContent, {
-          closeButton: false,
-          disableAnimation: true,
-        });
-        
-        const markerLatLng = marker.getLatLng();
-        const distance = positionLatLng.distanceTo(markerLatLng);
-        if (distance < 500) {
-          this.markersWithinRadius.push(marker);
-        }
-        marker.addTo(this.police48Layer);
+      const markerLatLng = marker.getLatLng();
+      const distance = positionLatLng.distanceTo(markerLatLng);
+      if (distance < 500) {
+        this.markersWithinRadius.push(marker);
       }
+      marker.addTo(this.police48Layer);
     });
     const markerCount = this.markersWithinRadius.length;
     return [allCalls, this.police48Layer, markerCount];
