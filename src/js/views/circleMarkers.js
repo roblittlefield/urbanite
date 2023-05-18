@@ -40,7 +40,6 @@ export default class circleMarkers {
         );
         const timeAgo = Math.floor((now - receivedTime) / 60000);
         const receivedTimeFormatted = formatDate(receivedTime);
-        const onSceneTimeFormatted = formatDate(onSceneTime);
 
         const properCaseAddress = textProperCase(call.address);
         const neighborhoodFormatted = neighborhoodFormat(call.neighborhood);

@@ -1,10 +1,9 @@
 import { SFDATA_API_KEY } from "./views/apikeys";
 
-/////////////////////-----urbanite-----/////////////////////
 export const latestNumber = 700;
 /////////// Leaflet Map
 export const getLatLngSF = () => {
-  return window.innerWidth <= 758 ? [37.758, -122.447] : [37.762, -122.445];
+  return window.innerWidth <= 758 ? [37.758, -122.43] : [37.762, -122.445];
 };
 export const getMapZoomLevel = () => {
   return window.innerWidth <= 758 ? 13 : 14;
@@ -13,9 +12,9 @@ export const getMapZoomLevel = () => {
 export const MAP_LAYERS = [
   "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
   "https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.jpg",
+  "https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg",
   "https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png",
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-  "https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg",
 ];
 
 /////////// SAN FRANCISCO .GOV DATA

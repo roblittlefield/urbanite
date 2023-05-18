@@ -1,5 +1,12 @@
+const latestContainer = document.getElementById("latest-container");
+const latestButton = document.getElementById("latest-list");
+const changeMap = document.getElementById("change-map");
+const neighborhoodContainer = document.getElementById("neighborhood-text");
+const countNearbyContainer = document.getElementById("count-nearby");
+const temperatureContainer = document.querySelector(".weather");
+const disclaimerContainer = document.querySelector(".disclaimer");
+
 export const loadChangeMapButton = function (handler) {
-  const changeMap = document.getElementById("change-map");
   changeMap.addEventListener("click", (e) => {
     const btn = e.target.closest("#change-map");
     if (!btn) return;
@@ -8,7 +15,6 @@ export const loadChangeMapButton = function (handler) {
 };
 
 export const loadLatestListButton = function (handler) {
-  const latestButton = document.getElementById("latest-list");
   latestButton.addEventListener("click", (e) => {
     const btn = e.target.closest("#latest-list");
     if (!btn) return;
@@ -16,3 +22,12 @@ export const loadLatestListButton = function (handler) {
   });
 };
 
+export const toggleVisibleItems = function () {
+  latestContainer.classList.toggle("hidden");
+  latestButton.classList.toggle("hidden");
+  countNearbyContainer.classList.toggle("hidden");
+  temperatureContainer.classList.toggle("hidden");
+  neighborhoodContainer.classList.toggle("hidden");
+  disclaimerContainer.classList.toggle("hidden");
+  changeMap.classList.toggle("hidden");
+};

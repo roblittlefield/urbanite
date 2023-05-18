@@ -23,14 +23,16 @@ body {
 
 .disclaimer {
   line-height: 1.4;
+  box-sizing: border-box;
+  display: block;
   align-items: center;
   color: #0057b7;
   text-decoration: none;
   position: fixed;
   padding: 0px 3px 0px 5px;
-  width: 45px;
+  width: 55px;
   text-align: center;
-  bottom: 14px;
+  bottom: 15px;
   right: 0px;
   font-family: Tahoma, Arial, Helvetica, sans-serif;
   background-color: rgba(255, 255, 255, 0.65);
@@ -55,7 +57,7 @@ body {
 }
 
 .disclaimer a:visited {
-  color: #0057b7; /* Set the visited link color to the same as the default link color */
+  color: #0057b7; 
 }
 
 /*----CHANGE MAP AND SHOW LIST BUTTONS----*/
@@ -132,6 +134,7 @@ body {
   font-size: 40px;
   bottom: 45px;
   left: 50%;
+  z-index: 99;
   padding: 0px 6px 0px 6px;
   transform: translate(-50%, +50%);
   text-align: center;
@@ -160,7 +163,8 @@ body {
   background-color: rgba(255, 255, 255, 0.65) !important;
   font-size: 10px;
   color: #0057b7 !important;
-  width: 43px;
+  width: 55px;
+  box-sizing: border-box;
 }
 
 .leaflet-control-attribution a:visited {
@@ -229,18 +233,6 @@ body {
   touch-action: none;
 }
 
-/* .close-button {
-  position: absolute;
-  top: 0px;
-  right: 11px;
-  font-size: 32px;
-  background: transparent;
-  border: none;
-  mix-blend-mode: difference;
-  cursor: pointer;
-  z-index: 9999;
-} */
-
 #latest-container h2 {
   position: relative;
   color: white;
@@ -278,6 +270,7 @@ body {
   padding: 2px;
   margin: 4px 0px 0px 0px;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .call-box h3 {

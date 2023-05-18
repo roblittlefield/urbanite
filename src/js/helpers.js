@@ -30,7 +30,7 @@ export const textProperCase = function (textRaw) {
 
 export const minsHoursFormat = function (time) {
   const timeFormatted =
-    time < 60
+    time <= 60
       ? `${time}m`
       : time < 180
       ? `${(time / 60).toFixed(0)}h ${time % 60}m`

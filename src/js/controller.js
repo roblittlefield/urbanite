@@ -13,34 +13,22 @@ import getWeather from "./views/getWeather.js";
 import {
   loadChangeMapButton,
   loadLatestListButton,
-} from "./views/buttonsView.js"
+  toggleVisibleItems,
+} from "./views/buttonsView.js";
 import { async } from "regenerator-runtime";
 
 let map;
 let position;
 const latestContainer = document.getElementById("latest-container");
-const classList = document.getElementById("call-list");
+const callList = document.getElementById("call-list");
 const latestButton = document.getElementById("latest-list");
-const changeMap = document.getElementById("change-map");
-const neighborhoodContainer = document.getElementById("neighborhood-text");
-const countNearbyContainer = document.getElementById("count-nearby");
-const temperatureContainer = document.querySelector(".weather");
 const disclaimerContainer = document.querySelector(".disclaimer");
-
-const attribution = document.querySelector(".leaflet-control-attribution");
-const zoomControls = document.querySelector(
-  ".leaflet-control-zoom.leaflet-bar"
-);
 
 const controlMap = async function () {
   try {
     position = await getPosition(sfapi.getLatLngSF());
 
     map = L.map("map").setView(position, sfapi.getMapZoomLevel());
-    map.options.inertia = false;
-    map.options.dragging = {
-      sensitivity: 0.5, // Adjust the sensitivity (default: 1)
-    };
     const initLayer = L.tileLayer(sfapi.MAP_LAYERS[0]).addTo(map);
     if (!map) return;
     return map;
@@ -69,12 +57,14 @@ const controlCircleMarkers = async function () {
     const latestMarkers = sortMarkers(police48Layer);
     const latestLayerGroup = updateCallList(
       latestMarkers,
-      circleMarkersInst.layerGroups
+      circleMarkersInst.layerGroups,
+      map
     );
     latestLayerGroup.addTo(map);
     displayNearestMarkerPopup(position, police48Layer);
     addHandlerMoveCenter(allCalls, police48Layer, map);
-    if (position !== sfapi.getLatLngSF()) {
+
+    if (JSON.stringify(position) !== JSON.stringify(sfapi.getLatLngSF())) {
       const circle = L.circle(position, {
         radius: 500, // meters
         color: "white",
@@ -105,30 +95,17 @@ const controlButtons = function () {
 };
 
 const controlOpenLatestList = function () {
-  latestContainer.classList.toggle("hidden");
-  latestButton.classList.toggle("hidden");
-  changeMap.classList.toggle("hidden");
-  temperatureContainer.classList.toggle("hidden");
-  countNearbyContainer.classList.toggle("hidden");
-  neighborhoodContainer.classList.toggle("hidden");
-  disclaimerContainer.classList.toggle("hidden");
+  toggleVisibleItems();
 
   setTimeout(
     window.addEventListener("click", (event) => {
       const clickTarget = event.target;
       if (
         !latestContainer.classList.contains("hidden") &&
-        clickTarget !== latestContainer &&
-        !classList.contains(clickTarget) &&
+        !callList.contains(clickTarget) &&
         clickTarget !== latestButton
       ) {
-        latestContainer.classList.add("hidden");
-        latestButton.classList.toggle("hidden");
-        countNearbyContainer.classList.toggle("hidden");
-        temperatureContainer.classList.toggle("hidden");
-        neighborhoodContainer.classList.toggle("hidden");
-        disclaimerContainer.classList.toggle("hidden");
-        changeMap.classList.toggle("hidden");
+        toggleVisibleItems();
       }
     }),
     200
