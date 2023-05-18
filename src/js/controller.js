@@ -52,8 +52,7 @@ const controlCircleMarkers = async function () {
     const circleMarkersInst = new circleMarkers();
     const [allCalls, police48Layer, markerCount] =
       circleMarkersInst.addCircleMarkers(dataApiPolice48hFiltered, position);
-    document.getElementById("count-nearby").textContent =
-      markerCount.toString() + " calls within 500m";
+
     const latestMarkers = sortMarkers(police48Layer);
     const latestLayerGroup = updateCallList(
       latestMarkers,
@@ -63,8 +62,13 @@ const controlCircleMarkers = async function () {
     latestLayerGroup.addTo(map);
     displayNearestMarkerPopup(position, police48Layer);
     addHandlerMoveCenter(allCalls, police48Layer, map);
-
+    const countNearbyContainer = document.getElementById("count-nearby");
+    countNearbyContainer.classList.toggle("hidden");
     if (JSON.stringify(position) !== JSON.stringify(sfapi.getLatLngSF())) {
+      countNearbyContainer.classList.toggle("hidden");
+      console.log(`not default position`);
+      document.getElementById("count-nearby").textContent =
+        markerCount.toString() + " calls within 500m";
       const circle = L.circle(position, {
         radius: 500, // meters
         color: "white",
