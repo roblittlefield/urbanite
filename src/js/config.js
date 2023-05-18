@@ -1,5 +1,5 @@
-// import { SFDATA_API_KEY } from "../../apikeys.js";
-const SFDATA_API_KEY = "TmnsQZtPesideUfTbGU3BeaAV";
+import { SFDATA_API_KEY } from "../../apikeys.js";
+
 export const latestNumber = 700;
 /////////// Leaflet Map
 export const getLatLngSF = () => {
