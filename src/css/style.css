@@ -144,6 +144,7 @@ body {
   outline: none;
   transform: scale(1.025);
   transform-origin: left;
+  transition: transform 0.2s ease-in-out;
 }
 
 #count-container {
@@ -225,20 +226,17 @@ body {
   color: #484848;
   background-image: linear-gradient(#f7f7f7, #e7e7e7);
   text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.8);
+  transition: transform 0.2s ease-in-out;
 }
 
 .leaflet-control-zoom-in:hover,
 .leaflet-control-zoom-out:hover {
   transform: scale(1.02);
-  transform-origin: left;
+  transform-origin: top;
+  outline: none;
   background-color: #f8f8f8;
 }
 
-.leaflet-touch .leaflet-control-zoom-in,
-.leaflet-touch .leaflet-control-zoom-out {
-  border: none;
-  box-shadow: none;
-}
 
 /*----CURRENT LOCATOIN DOT----*/
 

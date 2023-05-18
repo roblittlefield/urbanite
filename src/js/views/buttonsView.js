@@ -4,7 +4,6 @@ const changeMap = document.getElementById("change-map");
 const neighborhoodContainer = document.getElementById("neighborhood-text");
 const countNearbyContainer = document.getElementById("count-display");
 const temperatureContainer = document.querySelector(".weather");
-const disclaimerContainer = document.querySelector(".disclaimer");
 
 export const loadChangeMapButton = function (handler) {
   changeMap.addEventListener("click", (e) => {
@@ -28,6 +27,5 @@ export const toggleVisibleItems = function () {
   countNearbyContainer.classList.toggle("hidden");
   temperatureContainer.classList.toggle("hidden");
   neighborhoodContainer.classList.toggle("hidden");
-  disclaimerContainer.classList.toggle("hidden");
   changeMap.classList.toggle("hidden");
 };

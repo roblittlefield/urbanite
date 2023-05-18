@@ -86,7 +86,7 @@ export default class circleMarkers {
               disposition: dispositionMeaning,
               neighborhood: neighborhoodFormatted,
               receivedTime: receivedTimeFormatted,
-              // entryTime: call.entry_datetime,
+              entryTime: call.entry_datetime,
               dispatchTime: call.dispatch_datetime,
               responseTime: responseTimeMins,
               address: properCaseAddress,

@@ -14,14 +14,11 @@ const sortMarkers = function (layer) {
     .slice(0, latestNumber);
 
   const count = latestMarkers.reduce((total, marker) => {
-    console.log(marker.options.data.timeAgo);
     if (marker.options.data.timeAgo <= 120) {
       return total + 1;
     }
     return total;
   }, 0);
-  console.log(count);
-
   return { latestMarkers, count };
 };
 

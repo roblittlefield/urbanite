@@ -54,7 +54,6 @@ const controlCircleMarkers = async function () {
       circleMarkersInst.addCircleMarkers(dataApiPolice48hFiltered, position);
 
     const { latestMarkers, count } = sortMarkers(police48Layer);
-    console.log(count); // COunt of last 2 hrs
     const latestLayerGroup = updateCallList(
       latestMarkers,
       circleMarkersInst.layerGroups,
@@ -68,7 +67,7 @@ const controlCircleMarkers = async function () {
     if (JSON.stringify(position) !== JSON.stringify(sfapi.getLatLngSF())) {
       countNearbyContainer.classList.toggle("hidden");
       document.getElementById("count-display").textContent =
-      markerCount.toString() + " calls within 500m";
+        markerCount.toString() + " calls within 500m";
       const circle = L.circle(position, {
         radius: 500, // meters
         color: "white",

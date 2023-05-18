@@ -3,14 +3,14 @@ import { toggleVisibleItems } from "./buttonsView";
 
 const updateCallList = function (latestMarkers, layerGroups, map) {
   const callList = document.getElementById("call-list");
-  const status = (callList.innerHTML = "");
+  callList.innerHTML = "";
   if (!layerGroups[`latest`]) {
     layerGroups[`latest`] = L.layerGroup();
   }
   layerGroups["latest"].clearLayers();
   latestMarkers.forEach((circleMarker) => {
     if (circleMarker.options.data) {
-      const callType = circleMarker.options.data.callType;
+      // const callType = circleMarker.options.data.callType;
       const timeAgo = circleMarker.options.data.timeAgo;
       const callBox = document.createElement("li");
       callBox.classList.add("call-box");
@@ -31,22 +31,20 @@ const updateCallList = function (latestMarkers, layerGroups, map) {
           ${circleMarker.options.data.neighborhood}
         </p></i>
           <p>${
-            circleMarker.options.data.responseTime !== undefined &&
-            !isNaN(circleMarker.options.data.responseTime) &&
-            circleMarker.options.data.responseTime !== 0
+            circleMarker.options.data.onView === "Y"
+              ? `Officer observed`
+              : circleMarker.options.data.responseTime
               ? `Response time: ${minsHoursFormat(
                   circleMarker.options.data.responseTime
                 )}`
-              : circleMarker.options.data.responseTime === 0
-              ? ``
               : circleMarker.options.data.dispatchTime
-              ? `Dispatched`
+              ? `Dispatched ${minsHoursFormat(
+                  circleMarker.options.data.dispatchTime
+                )} ago`
               : circleMarker.options.data.entryTime
-              ? `Awaiting dispatch`
+              ? `Call entry in queue`
               : `Call received`
           }${
-        circleMarker.options.data.onView === "Y" ? ` Office observed` : ""
-      }${
         circleMarker.options.data.disposition
           ? `, ${circleMarker.options.data.disposition.toLowerCase()}`
           : ""
