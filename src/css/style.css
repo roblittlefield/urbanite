@@ -102,7 +102,6 @@ body {
 #count-display,
 .weather {
   touch-action: none;
-  user-select: none;
   z-index: 9;
   font-family: Tahoma, Arial, Helvetica, sans-serif;
   color: rgba(72, 72, 72, 0.84);
@@ -135,14 +134,16 @@ body {
   cursor: pointer;
 }
 
-#change-map,
+#change-map:active,
 #latest-list:active {
   box-shadow: none;
 }
 
-#change-map,
-#latest-list:focus {
+#change-map:hover,
+#latest-list:hover {
   outline: none;
+  transform: scale(1.025);
+  transform-origin: left;
 }
 
 #count-container {
@@ -228,6 +229,8 @@ body {
 
 .leaflet-control-zoom-in:hover,
 .leaflet-control-zoom-out:hover {
+  transform: scale(1.02);
+  transform-origin: left;
   background-color: #f8f8f8;
 }
 
@@ -266,7 +269,9 @@ body {
   color: white;
   font-family: Tahoma, Arial, Helvetica, sans-serif;
   font-size: 16px;
-  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8);
+  border: #292828;
+  border-width: 5px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 #call-list {
@@ -299,6 +304,12 @@ body {
   margin: 4px 0px 0px 0px;
   overflow: hidden;
   cursor: pointer;
+}
+
+.call-box:hover {
+  transform: scale(1.025);
+  transform-origin: left;
+  background-color: #0e0e0eeb;
 }
 
 .call-box h3 {
