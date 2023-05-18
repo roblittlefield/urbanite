@@ -169,7 +169,7 @@ export const callTypeConversionMap = new Map([
 const filterExpression = excludedCallTypes
   .map((callType) => `call_type_final_desc != '${callType}'`)
   .join(" and ");
-
+console.log(filterExpression);
 export const API_URL_POLICE_48h_FILTERED = `${API_URL_POLICE_48h}?$where=${filterExpression} AND intersection_point IS NOT NULL&$$app_token=${SFDATA_API_KEY}&$limit=3000`;
 
 export const API_REF_POLICE_48h = {

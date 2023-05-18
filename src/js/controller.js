@@ -29,7 +29,7 @@ const controlMap = async function () {
     position = await getPosition(sfapi.getLatLngSF());
 
     map = L.map("map").setView(position, sfapi.getMapZoomLevel());
-    const initLayer = L.tileLayer(sfapi.MAP_LAYERS[0]).addTo(map);
+    const initLayer = L.tileLayer(sfapi.MAP_LAYERS[1]).addTo(map);
     if (!map) return;
     return map;
   } catch (err) {
