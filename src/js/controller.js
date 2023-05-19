@@ -14,22 +14,26 @@ import {
   loadChangeMapButton,
   loadLatestListButton,
   toggleVisibleItems,
-  // loadNearbyListButton,
+  loadNearbyListButton,
 } from "./views/buttonsView.js";
 import { async } from "regenerator-runtime";
 
 let map;
+let originalPosition;
+let originalZoom;
 let position;
-const latestContainer = document.getElementById("call-list-containerr");
+let nearbyMarkersL = [];
+const latestContainer = document.getElementById("call-list-container");
 const callList = document.getElementById("call-list");
 const latestButton = document.getElementById("latest-list");
 const disclaimerContainer = document.querySelector(".disclaimer");
-
+const callListHeading = document.getElementById("call-list-heading");
 const controlMap = async function () {
   try {
     position = await getPosition(sfapi.getLatLngSF());
-
-    map = L.map("map").setView(position, sfapi.getMapZoomLevel());
+    originalPosition = position;
+    originalZoom = sfapi.getMapZoomLevel();
+    map = L.map("map").setView(originalPosition, originalZoom);
     const initLayer = L.tileLayer(sfapi.MAP_LAYERS[1]).addTo(map);
     if (!map) return;
     return map;
@@ -51,27 +55,38 @@ const controlCircleMarkers = async function () {
     );
 
     const circleMarkersInst = new circleMarkers();
-    const [allCalls, police48Layer, markerCount, marketCountRecent] =
-      circleMarkersInst.addCircleMarkers(dataApiPolice48hFiltered, position);
 
-    const { latestMarkers, count } = sortMarkers(police48Layer);
+    /////////////////////////
+    /////////////////////////
+    const [
+      allCalls,
+      police48Layer,
+      markerCount,
+      marketCountRecent,
+      nearbyLayer,
+    ] = circleMarkersInst.addCircleMarkers(dataApiPolice48hFiltered, position);
+    const { latestMarkers: nearbyLatestMarkers, count: nearbyCount } =
+      sortMarkers(nearbyLayer);
+    loadNearbyListButton(controlOpenNearbyList, nearbyLatestMarkers);
+    const { latestMarkers: latestMarkers, count: count } =
+      sortMarkers(police48Layer);
+
+    ///////////////////////// FIx this above, redudant
+    /////////////////////////
     police48Layer.addTo(map);
+    loadLatestListButton(controlOpenLatestList, latestMarkers);
+
     initPopupNieghborhood(position, police48Layer);
     addHandlerMoveCenter(allCalls, police48Layer, map);
-    updateCallList(
-      latestMarkers,
-      // circleMarkersInst.layerGroups,
-      map
-    );
-    const countNearbyContainer = document.getElementById("nearby-list");
+    const countNearbyContainer = document.getElementById("nearby-info");
     countNearbyContainer.classList.toggle("hidden");
     if (JSON.stringify(position) !== JSON.stringify(sfapi.getLatLngSF())) {
       countNearbyContainer.classList.toggle("hidden");
-      document.getElementById("nearby-list").textContent =
-        markerCount.toString() +
+      document.getElementById("nearby-info").textContent =
+        nearbyCount.toString() +
         " calls within 500m, \n" +
         marketCountRecent.toString() +
-        " past 2h";
+        " past 6h";
       const circle = L.circle(position, {
         radius: 500, // meters
         color: "white",
@@ -82,7 +97,7 @@ const controlCircleMarkers = async function () {
       circle.addTo(map);
     } else {
       countNearbyContainer.classList.toggle("hidden");
-      document.getElementById("nearby-list").textContent =
+      document.getElementById("nearby-info").textContent =
         count.toString() + " calls past 2h";
     }
     return map;
@@ -105,9 +120,30 @@ const controlButtons = function () {
   L.tileLayer(sfapi.MAP_LAYERS[currentLayer - 1]).remove();
 };
 
-const controlOpenLatestList = function () {
+const controlOpenLatestList = function (latestMarkers) {
+  callListHeading.textContent = "Latest SF Dispatched Calls";
+  updateCallList(latestMarkers, map);
   toggleVisibleItems();
+  setTimeout(
+    window.addEventListener("click", (event) => {
+      const clickTarget = event.target;
+      if (
+        !latestContainer.classList.contains("hidden") &&
+        !callList.contains(clickTarget) &&
+        clickTarget !== latestButton
+      ) {
+        toggleVisibleItems();
+      }
+    }),
+    200
+  );
+};
 
+const controlOpenNearbyList = function (nearbyMarkersL) {
+  callListHeading.textContent = "Latest Nearby Dispatched Calls";
+  updateCallList(nearbyMarkersL, map);
+  toggleVisibleItems();
+  map.setView(originalPosition, originalZoom);
   setTimeout(
     window.addEventListener("click", (event) => {
       const clickTarget = event.target;
@@ -128,8 +164,8 @@ const init = async function () {
     const map = await controlMap();
     await controlCircleMarkers();
     loadChangeMapButton(controlButtons);
-    loadLatestListButton(controlOpenLatestList);
-    // loadNearbyListButton(controlOpenNearbyList);
+
+    // loadNearbyListButton(controlOpenNearbyList, nearbyMarkersL);
     getWeather();
     disclaimerContainer.style.display = "block";
   } catch (err) {

@@ -2,6 +2,8 @@ import { minsHoursFormat } from "../helpers";
 import { toggleVisibleItems } from "./buttonsView";
 
 const updateCallList = function (latestMarkers, map) {
+  // console.log(latestMarkers);
+  // console.log(map);
   const callList = document.getElementById("call-list");
   const callListHeading = document.getElementById("call-list-heading");
   callList.innerHTML = "";

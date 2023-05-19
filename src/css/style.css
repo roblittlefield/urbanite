@@ -96,7 +96,11 @@ body {
   top: 44px;
 }
 
-#nearby-list,
+#nearby-list {
+  top: 79px;
+}
+
+#nearby-info,
 .weather {
   background-color: rgba(255, 255, 255, 0.6);
 }
@@ -104,6 +108,7 @@ body {
 #change-map,
 #latest-list,
 #neighborhood-text,
+#nearby-info,
 #nearby-list,
 .weather {
   touch-action: none;
@@ -125,7 +130,8 @@ body {
 }
 
 #change-map,
-#latest-list {
+#latest-list,
+#nearby-list {
   font-weight: bold;
   right: 13px;
   font-size: 14px;
@@ -141,7 +147,8 @@ body {
 }
 
 #change-map:active,
-#latest-list:active {
+#latest-list:active,
+#nearby-list:active {
   box-shadow: none;
   outline: none;
   transform: scale(1.025);
@@ -155,7 +162,7 @@ body {
   height: 20px;
 }
 
-#nearby-list {
+#nearby-info {
   font-size: 14px;
   left: 50px;
   top: 48px;
@@ -220,26 +227,19 @@ body {
 
 .leaflet-control-zoom-in,
 .leaflet-control-zoom-out {
-  background-color: transparent;
-  touch-action: none;
-  user-select: none;
   font-weight: bold;
-  border: 1px solid #c5c5c5;
   color: #484848;
   background-image: linear-gradient(#f7f7f7, #e7e7e7);
-  text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.8);
   transition: transform 0.2s ease-in-out;
 }
 
-.leaflet-control-zoom-in:hover,
-.leaflet-control-zoom-out:hover {
+.leaflet-control-zoom-in:active,
+.leaflet-control-zoom-out:active {
   transform: scale(1.02);
   transform-origin: top;
   outline: none;
   background-color: #f8f8f8;
 }
-
-/*----CURRENT LOCATOIN DOT----*/
 
 /*----LATEST INCIDENTS LIST----*/
 #call-list-container {
@@ -328,7 +328,7 @@ body {
 
 .call-box h3 {
   font-size: auto;
-  margin: 3px 9px -2px;
+  margin: 1.5px 9px -2px;
 }
 
 .call-box p {
@@ -341,7 +341,7 @@ body {
 
 /*----SCROLL BAR----*/
 ::-webkit-scrollbar {
-  width: 20px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {

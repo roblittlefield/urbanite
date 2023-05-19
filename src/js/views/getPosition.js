@@ -30,7 +30,7 @@ const getPosition = function (defaultMapSF) {
             longitude > expandedMaxLongitude
           ) {
             showAlert(
-              `Looks like you're outside San Francisco 🌉🌴🌊🌅 Loading city center.`
+              `Looks like you're outside San Francisco, loading city center 🌉`
             );
             reject(new Error("Location outside expanded SF bounds"));
           } else {
@@ -39,14 +39,14 @@ const getPosition = function (defaultMapSF) {
         },
         () => {
           showAlert(
-            `Couldn't find your location in San Francisco 🌉 Loading city center.`
+            `Couldn't find your location in San Francisco, loading city center 🌉`
           );
           resolve(defaultMapSF);
         }
       );
     } else {
       showAlert(
-        `Couldn't find your location in San Francisco 🌉🌴🌊🌅 Loading city center.`
+        `Couldn't find your location in San Francisco, loading city center 🌉`
       );
       resolve(defaultMapSF);
     }
