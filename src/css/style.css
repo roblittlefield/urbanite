@@ -342,48 +342,6 @@ body {
 }
 
 /*----SCROLL BAR----*/
-/* Hide the default scroll bar */
-body {
-  scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
-}
-
-/* Style for the custom scroll bar track */
-.scrollbar-track {
-  background-color: #292828;
-  border-radius: 10px;
-}
-
-/* Style for the custom scroll bar thumb */
-.scrollbar-thumb {
-  background: linear-gradient(
-    to bottom,
-    #ff0000,
-    #ff8000,
-    #ffff00,
-    #00ff00,
-    #0000ff,
-    #8000ff,
-    #ff00ff
-  );
-  border-radius: 3px;
-}
-
-/* Style for the custom scroll bar thumb animation */
-@keyframes rainbow {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 0 100%;
-  }
-}
-
-.scrollbar-thumb {
-  animation: rainbow 10s ease infinite;
-}
-
-
 ::-webkit-scrollbar {
   width: 10px;
 }
