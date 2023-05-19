@@ -1,6 +1,8 @@
 import { SFDATA_API_KEY } from "../../apikeys.js";
 
 export const latestNumber = 700;
+export const timeElapNearby = 120;
+export const timeElapSF = 360;
 /////////// Leaflet Map
 export const getLatLngSF = () => {
   return window.innerWidth <= 758 ? [37.758, -122.43] : [37.762, -122.445];

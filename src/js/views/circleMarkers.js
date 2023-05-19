@@ -120,8 +120,6 @@ export default class circleMarkers {
     return [
       allCalls,
       this.police48Layer,
-      nearbyMarkersCount,
-      nearbyMarketsCountRecent,
       this.nearbyLayer,
     ];
   }

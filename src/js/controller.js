@@ -22,12 +22,14 @@ let map;
 let originalPosition;
 let originalZoom;
 let position;
-let nearbyMarkersL = [];
+// let nearbyMarkersL = [];
 const latestContainer = document.getElementById("call-list-container");
 const callList = document.getElementById("call-list");
 const latestButton = document.getElementById("latest-list");
 const disclaimerContainer = document.querySelector(".disclaimer");
 const callListHeading = document.getElementById("call-list-heading");
+const countNearbyContainer = document.getElementById("nearby-info");
+
 const controlMap = async function () {
   try {
     position = await getPosition(sfapi.getLatLngSF());
@@ -61,31 +63,29 @@ const controlCircleMarkers = async function () {
     const [
       allCalls,
       police48Layer,
-      nearbyMarkersCount,
-      nearbyMarketsCountRecent,
       nearbyLayer,
     ] = circleMarkersInst.addCircleMarkers(dataApiPolice48hFiltered, position);
-    console.log(nearbyLayer);
-    const { latestMarkers: nearbyLatestMarkers, count: nearbyCount2h } =
-      sortMarkers(nearbyLayer);
-    loadNearbyListButton(controlOpenNearbyList, nearbyLatestMarkers);
-    const { latestMarkers: latestMarkers, count: count2h } =
-      sortMarkers(police48Layer);
 
-    ///////////////////////// FIx this above, redudant
-    /////////////////////////
     police48Layer.addTo(map);
-    loadLatestListButton(controlOpenLatestList, latestMarkers);
     initPopupNieghborhood(position, police48Layer);
+    const { latestMarkers: latestMarkersSorted, count: countRecentSF } =
+    sortMarkers(police48Layer,sfapi.timeElapSF);
+    loadLatestListButton(controlOpenLatestList, latestMarkersSorted);
     addHandlerMoveCenter(allCalls, police48Layer, map);
-    const countNearbyContainer = document.getElementById("nearby-info");
-    countNearbyContainer.classList.toggle("hidden");
+
+    const { latestMarkers: nearbyLatestMarkersSorted, count: countRecentNearby } =
+    sortMarkers(nearbyLayer, sfapi.timeElapNearby);
+    loadNearbyListButton(controlOpenNearbyList, nearbyLatestMarkersSorted);
+
+    ///////////////////////// 
+    /////////////////////////
+    // countNearbyContainer.classList.toggle("hidden");
     if (JSON.stringify(position) !== JSON.stringify(sfapi.getLatLngSF())) {
-      countNearbyContainer.classList.toggle("hidden");
+      // countNearbyContainer.classList.toggle("hidden");
       document.getElementById("nearby-info").textContent =
-        nearbyMarkersCount.toString() +
+      nearbyLatestMarkersSorted.length.toString() +
         " calls within 500m, \n" +
-        nearbyMarketsCountRecent.toString() +
+        countRecentNearby.toString() +
         " past 6h";
       const circle = L.circle(position, {
         radius: 500, // meters
@@ -96,9 +96,9 @@ const controlCircleMarkers = async function () {
       });
       circle.addTo(map);
     } else {
-      countNearbyContainer.classList.toggle("hidden");
+      // countNearbyContainer.classList.toggle("hidden");
       document.getElementById("nearby-info").textContent =
-        count2h.toString() + " calls past 2h";
+        countRecentSF.toString() + " calls past 2h";
     }
     return map;
   } catch (err) {

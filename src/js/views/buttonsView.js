@@ -42,3 +42,13 @@ export const toggleVisibleItems = function () {
   neighborhoodContainer.classList.toggle("hidden");
   changeMap.classList.toggle("hidden");
 };
+
+// Add custom scroll bar to the element with the class 'custom-scrollbar'
+const scrollbarTrack = document.createElement('div');
+const scrollbarThumb = document.createElement('div');
+
+scrollbarTrack.classList.add('scrollbar-track');
+scrollbarThumb.classList.add('scrollbar-thumb');
+
+document.body.appendChild(scrollbarTrack);
+scrollbarTrack.appendChild(scrollbarThumb);
