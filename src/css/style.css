@@ -315,7 +315,7 @@ body {
   border-radius: 8px;
 
   /* Padding and Margin */
-  padding: 2px;
+  padding: 2px 2px 3px 2px;
   margin: 4px 0px 0px 0px;
 
   /* Cursor */
