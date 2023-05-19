@@ -98,7 +98,7 @@ body {
 
 #nearby-list,
 .weather {
-  background-color: rgba(255, 255, 255, 0.60);
+  background-color: rgba(255, 255, 255, 0.6);
 }
 
 #change-map,
@@ -121,7 +121,7 @@ body {
 }
 
 #neighborhood-text {
-  background-color: rgba(255, 255, 255, 0.70);
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 #change-map,
@@ -242,7 +242,7 @@ body {
 /*----CURRENT LOCATOIN DOT----*/
 
 /*----LATEST INCIDENTS LIST----*/
-#latest-container {
+#call-list-container {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -264,7 +264,7 @@ body {
   pointer-events: none;
 }
 
-#latest-container h2 {
+#call-list-container h2 {
   position: relative;
   color: white;
   font-family: Tahoma, Arial, Helvetica, sans-serif;
@@ -341,7 +341,7 @@ body {
 
 /*----SCROLL BAR----*/
 ::-webkit-scrollbar {
-  width: 20px;  
+  width: 20px;
 }
 
 ::-webkit-scrollbar-track {
