@@ -83,9 +83,9 @@ const controlCircleMarkers = async function () {
     if (JSON.stringify(position) !== JSON.stringify(sfapi.getLatLngSF())) {
       countNearbyContainer.classList.toggle("hidden");
       document.getElementById("nearby-info").textContent =
-      nearbyMarkersCount.toString() +
+        nearbyMarkersCount.toString() +
         " calls within 500m, \n" +
-        marketCountRecent.toString() +
+        nearbyMarketsCountRecent.toString() +
         " past 6h";
       const circle = L.circle(position, {
         radius: 500, // meters
