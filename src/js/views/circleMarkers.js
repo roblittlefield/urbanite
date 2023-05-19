@@ -115,13 +115,13 @@ export default class circleMarkers {
       marker.addTo(this.police48Layer);
     });
     const nearbyMarkers = this.markersWithinRadius;
-    const markerCount = this.markersWithinRadius.length;
-    const marketCountRecent = this.markersWithinRadiusRecent.length;
+    const nearbyMarkersCount = this.markersWithinRadius.length;
+    const nearbyMarketsCountRecent = this.markersWithinRadiusRecent.length;
     return [
       allCalls,
       this.police48Layer,
-      markerCount,
-      marketCountRecent,
+      nearbyMarkersCount,
+      nearbyMarketsCountRecent,
       this.nearbyLayer,
     ];
   }

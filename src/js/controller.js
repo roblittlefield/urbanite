@@ -61,21 +61,21 @@ const controlCircleMarkers = async function () {
     const [
       allCalls,
       police48Layer,
-      markerCount,
-      marketCountRecent,
+      nearbyMarkersCount,
+      nearbyMarketsCountRecent,
       nearbyLayer,
     ] = circleMarkersInst.addCircleMarkers(dataApiPolice48hFiltered, position);
-    const { latestMarkers: nearbyLatestMarkers, count: nearbyCount } =
+    console.log(nearbyLayer);
+    const { latestMarkers: nearbyLatestMarkers, count: nearbyCount2h } =
       sortMarkers(nearbyLayer);
     loadNearbyListButton(controlOpenNearbyList, nearbyLatestMarkers);
-    const { latestMarkers: latestMarkers, count: count } =
+    const { latestMarkers: latestMarkers, count: count2h } =
       sortMarkers(police48Layer);
 
     ///////////////////////// FIx this above, redudant
     /////////////////////////
     police48Layer.addTo(map);
     loadLatestListButton(controlOpenLatestList, latestMarkers);
-
     initPopupNieghborhood(position, police48Layer);
     addHandlerMoveCenter(allCalls, police48Layer, map);
     const countNearbyContainer = document.getElementById("nearby-info");
@@ -83,7 +83,7 @@ const controlCircleMarkers = async function () {
     if (JSON.stringify(position) !== JSON.stringify(sfapi.getLatLngSF())) {
       countNearbyContainer.classList.toggle("hidden");
       document.getElementById("nearby-info").textContent =
-        nearbyCount.toString() +
+      nearbyMarkersCount.toString() +
         " calls within 500m, \n" +
         marketCountRecent.toString() +
         " past 6h";
@@ -98,7 +98,7 @@ const controlCircleMarkers = async function () {
     } else {
       countNearbyContainer.classList.toggle("hidden");
       document.getElementById("nearby-info").textContent =
-        count.toString() + " calls past 2h";
+        count2h.toString() + " calls past 2h";
     }
     return map;
   } catch (err) {

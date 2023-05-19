@@ -133,6 +133,7 @@ body {
 #latest-list,
 #nearby-list {
   font-weight: bold;
+  text-align: center;
   right: 13px;
   font-size: 14px;
   border: 1px solid #c5c5c5;
