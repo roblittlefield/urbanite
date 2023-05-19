@@ -1,8 +1,8 @@
-const latestContainer = document.getElementById("latest-container");
+const latestContainer = document.getElementById("call-list-container");
 const latestButton = document.getElementById("latest-list");
 const changeMap = document.getElementById("change-map");
 const neighborhoodContainer = document.getElementById("neighborhood-text");
-const countNearbyContainer = document.getElementById("count-display");
+const countNearbyContainer = document.getElementById("nearby-list");
 const temperatureContainer = document.querySelector(".weather");
 
 export const loadChangeMapButton = function (handler) {
@@ -20,6 +20,10 @@ export const loadLatestListButton = function (handler) {
     handler();
   });
 };
+
+export const loadNearbyListButton = function(handler) {
+
+}
 
 export const toggleVisibleItems = function () {
   latestContainer.classList.toggle("hidden");

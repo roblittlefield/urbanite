@@ -1,16 +1,16 @@
 import { minsHoursFormat } from "../helpers";
 import { toggleVisibleItems } from "./buttonsView";
 
-const updateCallList = function (latestMarkers, layerGroups, map) {
+const updateCallList = function (latestMarkers, map) {
   const callList = document.getElementById("call-list");
+  const callListHeading = document.getElementById("call-list-heading");
   callList.innerHTML = "";
-  if (!layerGroups[`latest`]) {
-    layerGroups[`latest`] = L.layerGroup();
-  }
-  layerGroups["latest"].clearLayers();
+  // if (!layerGroups[`latest`]) {
+  //   layerGroups[`latest`] = L.layerGroup();
+  // }
+  // layerGroups["latest"].clearLayers();
   latestMarkers.forEach((circleMarker) => {
     if (circleMarker.options.data) {
-      // const callType = circleMarker.options.data.callType;
       const timeAgo = circleMarker.options.data.timeAgo;
       const callBox = document.createElement("li");
       callBox.classList.add("call-box");
@@ -24,7 +24,7 @@ const updateCallList = function (latestMarkers, layerGroups, map) {
             ? "#66CCFF"
             : circleMarker.options.fillColor
         };">${circleMarker.options.data.callType}${
-        circleMarker.options.data.sensitive ? "***" : ""
+        circleMarker.options.data.sensitive ? "  *sensitive call" : ""
       }</h3>
           <i><p>
           ${timeAgo === undefined ? "" : `${minsHoursFormat(timeAgo)} ago in`} 
@@ -50,7 +50,7 @@ const updateCallList = function (latestMarkers, layerGroups, map) {
           : ""
       }
         </p>
-          <p>${circleMarker.options.data.address}</p>
+          <p>${circleMarker.options.data.address.slice(0, 45)}</p>
         `;
       callBox.addEventListener("click", () => {
         toggleVisibleItems();
@@ -58,9 +58,9 @@ const updateCallList = function (latestMarkers, layerGroups, map) {
         circleMarker.openPopup();
       });
       callList.appendChild(callBox);
-      layerGroups[`latest`].addLayer(circleMarker);
+      // layerGroups[`latest`].addLayer(circleMarker);
     }
   });
-  return layerGroups[`latest`];
+  // return layerGroups[`latest`];
 };
 export default updateCallList;

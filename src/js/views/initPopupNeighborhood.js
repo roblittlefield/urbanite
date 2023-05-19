@@ -1,4 +1,4 @@
-const displayNearestMarkerPopup = (position, police48Layer) => {
+const initPopupNieghborhood = (position, police48Layer) => {
   let minDistance = Infinity;
   let nearestMarker = null;
 
@@ -30,4 +30,4 @@ const displayNearestMarkerPopup = (position, police48Layer) => {
   });
 };
 
-export default displayNearestMarkerPopup;
+export default initPopupNieghborhood;

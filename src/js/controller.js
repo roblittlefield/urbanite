@@ -8,18 +8,19 @@ import sortMarkers from "./views/circleMarkersSort.js";
 import updateCallList from "./views/updateToLatest.js";
 import addHandlerMoveCenter from "./views/moveCenter.js";
 import getPosition from "./views/getPosition.js";
-import displayNearestMarkerPopup from "./views/getPositionNearby.js";
+import initPopupNieghborhood from "./views/initPopupNeighborhood.js";
 import getWeather from "./views/getWeather.js";
 import {
   loadChangeMapButton,
   loadLatestListButton,
   toggleVisibleItems,
+  // loadNearbyListButton,
 } from "./views/buttonsView.js";
 import { async } from "regenerator-runtime";
 
 let map;
 let position;
-const latestContainer = document.getElementById("latest-container");
+const latestContainer = document.getElementById("call-list-containerr");
 const callList = document.getElementById("call-list");
 const latestButton = document.getElementById("latest-list");
 const disclaimerContainer = document.querySelector(".disclaimer");
@@ -54,19 +55,19 @@ const controlCircleMarkers = async function () {
       circleMarkersInst.addCircleMarkers(dataApiPolice48hFiltered, position);
 
     const { latestMarkers, count } = sortMarkers(police48Layer);
-    const latestLayerGroup = updateCallList(
+    police48Layer.addTo(map);
+    initPopupNieghborhood(position, police48Layer);
+    addHandlerMoveCenter(allCalls, police48Layer, map);
+    updateCallList(
       latestMarkers,
-      circleMarkersInst.layerGroups,
+      // circleMarkersInst.layerGroups,
       map
     );
-    latestLayerGroup.addTo(map);
-    displayNearestMarkerPopup(position, police48Layer);
-    addHandlerMoveCenter(allCalls, police48Layer, map);
-    const countNearbyContainer = document.getElementById("count-display");
+    const countNearbyContainer = document.getElementById("nearby-list");
     countNearbyContainer.classList.toggle("hidden");
     if (JSON.stringify(position) !== JSON.stringify(sfapi.getLatLngSF())) {
       countNearbyContainer.classList.toggle("hidden");
-      document.getElementById("count-display").textContent =
+      document.getElementById("nearby-list").textContent =
         markerCount.toString() +
         " calls within 500m, \n" +
         marketCountRecent.toString() +
@@ -81,7 +82,7 @@ const controlCircleMarkers = async function () {
       circle.addTo(map);
     } else {
       countNearbyContainer.classList.toggle("hidden");
-      document.getElementById("count-display").textContent =
+      document.getElementById("nearby-list").textContent =
         count.toString() + " calls past 2h";
     }
     return map;
@@ -128,6 +129,7 @@ const init = async function () {
     await controlCircleMarkers();
     loadChangeMapButton(controlButtons);
     loadLatestListButton(controlOpenLatestList);
+    // loadNearbyListButton(controlOpenNearbyList);
     getWeather();
     disclaimerContainer.style.display = "block";
   } catch (err) {
