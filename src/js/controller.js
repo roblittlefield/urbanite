@@ -28,7 +28,7 @@ const callList = document.getElementById("call-list");
 const latestButton = document.getElementById("latest-list");
 const disclaimerContainer = document.querySelector(".disclaimer");
 const callListHeading = document.getElementById("call-list-heading");
-const countNearbyContainer = document.getElementById("nearby-info");
+const countContainer = document.getElementById("nearby-info");
 
 const controlMap = async function () {
   try {
@@ -50,41 +50,33 @@ const controlCircleMarkers = async function () {
     const responsePolice48h = await model.fetchApi(
       sfapi.API_URL_POLICE_48h_FILTERED
     );
-    
     const dataApiPolice48h = await responsePolice48h.json();
     const dataApiPolice48hFiltered = dataApiPolice48h.filter((item) =>
       sfapi.includedCallTypes.includes(item.call_type_final_desc)
     );
 
     const circleMarkersInst = new circleMarkers();
-
-    /////////////////////////
-    /////////////////////////
-    const [
-      allCalls,
-      police48Layer,
-      nearbyLayer,
-    ] = circleMarkersInst.addCircleMarkers(dataApiPolice48hFiltered, position);
-
+    const [allCalls, police48Layer, nearbyLayer] =
+      circleMarkersInst.addCircleMarkers(dataApiPolice48hFiltered, position);
     police48Layer.addTo(map);
     initPopupNieghborhood(position, police48Layer);
+
     const { latestMarkers: latestMarkersSorted, count: countRecentSF } =
-    sortMarkers(police48Layer,sfapi.timeElapSF);
-    loadLatestListButton(controlOpenLatestList, latestMarkersSorted);
+      sortMarkers(police48Layer, sfapi.timeElapSF);
+    loadLatestListButton(controlOpenCallList, latestMarkersSorted, false);
+
     addHandlerMoveCenter(allCalls, police48Layer, map);
 
-    const { latestMarkers: nearbyLatestMarkersSorted, count: countRecentNearby } =
-    sortMarkers(nearbyLayer, sfapi.timeElapNearby);
-    loadNearbyListButton(controlOpenNearbyList, nearbyLatestMarkersSorted);
+    const {
+      latestMarkers: nearbyLatestMarkersSorted,
+      count: countRecentNearby,
+    } = sortMarkers(nearbyLayer, sfapi.timeElapNearby);
+    loadNearbyListButton(controlOpenCallList, nearbyLatestMarkersSorted, true);
 
-    ///////////////////////// 
-    /////////////////////////
-    // countNearbyContainer.classList.toggle("hidden");
     if (JSON.stringify(position) !== JSON.stringify(sfapi.getLatLngSF())) {
-      // countNearbyContainer.classList.toggle("hidden");
-      document.getElementById("nearby-info").textContent =
-      nearbyLatestMarkersSorted.length.toString() +
-        " calls nearby, \n" +
+      countContainer.textContent =
+        nearbyLatestMarkersSorted.length.toString() +
+        " calls nearby, " +
         countRecentNearby.toString() +
         " past 6h";
       const circle = L.circle(position, {
@@ -96,9 +88,7 @@ const controlCircleMarkers = async function () {
       });
       circle.addTo(map);
     } else {
-      // countNearbyContainer.classList.toggle("hidden");
-      document.getElementById("nearby-info").textContent =
-        countRecentSF.toString() + " calls past 2h";
+      countContainer.textContent = countRecentSF.toString() + " calls past 2h";
     }
     return map;
   } catch (err) {
@@ -107,7 +97,7 @@ const controlCircleMarkers = async function () {
 };
 
 let currentLayer = 0;
-const controlButtons = function () {
+const controlChangeMap = function () {
   currentLayer = (currentLayer + 1) % sfapi.MAP_LAYERS.length;
   const newLayer = L.tileLayer(sfapi.MAP_LAYERS[currentLayer]);
   newLayer.on("tileerror", function (e) {
@@ -120,37 +110,56 @@ const controlButtons = function () {
   L.tileLayer(sfapi.MAP_LAYERS[currentLayer - 1]).remove();
 };
 
-const controlOpenLatestList = function (latestMarkers) {
-  callListHeading.textContent = "Latest SF Dispatched Calls";
-  updateCallList(latestMarkers, map);
-  toggleVisibleItems();
-  setTimeout(
-    window.addEventListener("click", (event) => {
-      const clickTarget = event.target;
-      if (
-        !latestContainer.classList.contains("hidden") &&
-        !callList.contains(clickTarget) &&
-        clickTarget !== latestButton
-      ) {
-        toggleVisibleItems();
-      }
-    }),
-    200
-  );
-};
+// const controlOpenLatestList = function (latestMarkers) {
+//   callListHeading.textContent = "Latest SF Dispatched Calls";
+//   updateCallList(latestMarkers, map);
+//   toggleVisibleItems();
+//   setTimeout(
+//     window.addEventListener("click", (event) => {
+//       const clickTarget = event.target;
+//       if (
+//         !latestContainer.classList.contains("hidden") &&
+//         !callList.contains(clickTarget) &&
+//         clickTarget !== latestButton
+//       ) {
+//         toggleVisibleItems();
+//       }
+//     }),
+//     200
+//   );
+// };
 
-const controlOpenNearbyList = function (nearbyMarkersL) {
-  callListHeading.textContent = "Latest Nearby Dispatched Calls";
-  updateCallList(nearbyMarkersL, map);
+// const controlOpenNearbyList = function (nearbyMarkersL) {
+//   callListHeading.textContent = "Latest Nearby Dispatched Calls";
+//   updateCallList(nearbyMarkersL, map);
+//   toggleVisibleItems();
+//   map.setView(originalPosition, originalZoom);
+//   setTimeout(
+//     window.addEventListener("click", (event) => {
+//       const clickTarget = event.target;
+//       if (
+//         !latestContainer.classList.contains("hidden") &&
+//         !callList.contains(clickTarget) &&
+//         clickTarget !== latestButton
+//       ) {
+//         toggleVisibleItems();
+//       }
+//     }),
+//     200
+//   );
+// };
+
+const controlOpenCallList = function (markers, message, nearby) {
+  callListHeading.textContent = message;
+  updateCallList(markers, map, nearby);
   toggleVisibleItems();
-  map.setView(originalPosition, originalZoom);
+  if (nearby) map.setView(originalPosition, originalZoom);
   setTimeout(
     window.addEventListener("click", (event) => {
       const clickTarget = event.target;
       if (
         !latestContainer.classList.contains("hidden") &&
-        !callList.contains(clickTarget) &&
-        clickTarget !== latestButton
+        !callList.contains(clickTarget)
       ) {
         toggleVisibleItems();
       }
@@ -163,9 +172,7 @@ const init = async function () {
   try {
     const map = await controlMap();
     await controlCircleMarkers();
-    loadChangeMapButton(controlButtons);
-
-    // loadNearbyListButton(controlOpenNearbyList, nearbyMarkersL);
+    loadChangeMapButton(controlChangeMap);
     getWeather();
     disclaimerContainer.style.display = "block";
   } catch (err) {

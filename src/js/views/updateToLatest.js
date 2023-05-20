@@ -1,34 +1,32 @@
 import { minsHoursFormat } from "../helpers";
 import { toggleVisibleItems } from "./buttonsView";
 
-const updateCallList = function (latestMarkers, map) {
-  // console.log(latestMarkers);
-  // console.log(map);
+const updateCallList = function (latestMarkers, map, nearby) {
   const callList = document.getElementById("call-list");
-  const callListHeading = document.getElementById("call-list-heading");
+  // const callListHeading = document.getElementById("call-list-heading");
   callList.innerHTML = "";
-  // if (!layerGroups[`latest`]) {
-  //   layerGroups[`latest`] = L.layerGroup();
-  // }
-  // layerGroups["latest"].clearLayers();
   let calcHour = 0;
+  let maxCountLabel = false;
   latestMarkers.forEach((circleMarker) => {
     const receivedTimeAgo = circleMarker.options.data.receivedTimeAgo;
-    // if (receivedTimeAgo > )
     const receivedTimeAgoF = minsHoursFormat(receivedTimeAgo);
     const hours = Math.floor(receivedTimeAgo / 60);
     if (hours > calcHour) {
-      console.log(calcHour);
+      console.log(nearby);
       calcHour = hours;
+      // if (!nearby) {
       const minutesNumber = document.createElement("span");
       minutesNumber.classList.add("received-time-ago-hours");
       minutesNumber.textContent = `${hours} hour${hours === 1 ? "" : "s"} ago`;
-      // minutesNumber.style.fontSize = "40px";
-      // minutesNumber.style.fontFamily = "sans-serif";
-      // minutesNumber.style.textAlign = "right";
       callList.appendChild(minutesNumber);
+      minutesNumber.addEventListener("click", () => {
+        if (!minutesNumber) return;
+        e.stopPropagation();
+        minutesNumber.style.display =
+          minutesNumber.style.display === "none" ? "" : "none";
+      });
+      // }
     }
-
     const responseTime = circleMarker.options.data.responseTime;
     const responseTimeF = minsHoursFormat(responseTime);
     console.log(responseTime);
@@ -75,10 +73,7 @@ const updateCallList = function (latestMarkers, map) {
         circleMarker.openPopup();
       });
       callList.appendChild(callBox);
-
-      // layerGroups[`latest`].addLayer(circleMarker);
     }
   });
-  // return layerGroups[`latest`];
 };
 export default updateCallList;

@@ -17,20 +17,22 @@ export const loadChangeMapButton = function (handler) {
 };
 
 export const loadLatestListButton = function (handler, latestMarkers) {
+  const message = "Latest SF Dispatched Calls";
   latestButton.addEventListener("click", (e) => {
+    e.stopPropagation();
     const btn = e.target.closest("#latest-list-btn");
     if (!btn) return;
-    e.stopPropagation();
-    handler(latestMarkers);
+    handler(latestMarkers, message, false);
   });
 };
 
 export const loadNearbyListButton = function (handler, nearbyMarkers) {
+  const message = "Latest Nearby Dispatched Calls";
   nearbyButton.addEventListener("click", (e) => {
+    e.stopPropagation();
     const btn = e.target.closest("#nearby-list-btn");
     if (!btn) return;
-    handler(nearbyMarkers);
-    e.stopPropagation();
+    handler(nearbyMarkers, message, true);
   });
 };
 
