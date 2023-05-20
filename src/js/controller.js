@@ -22,6 +22,7 @@ let map;
 let originalPosition;
 let originalZoom;
 let position;
+let lastLoadedList;
 // let nearbyMarkersL = [];
 const latestContainer = document.getElementById("call-list-container");
 const callList = document.getElementById("call-list");
@@ -152,8 +153,21 @@ const controlChangeMap = function () {
 const controlOpenCallList = function (markers, message, nearby) {
   callListHeading.textContent = message;
   updateCallList(markers, map, nearby);
+
+  //////////////////////
+  //////////////////////
+  ////////////////////// New code to try out
+  //////////////////////
   toggleVisibleItems();
+  if (
+    (lastLoadedList === "nearby" && !nearby) ||
+    (lastLoadedList === "SF" && nearby)
+  ) {
+    console.log(`scroll to top`);
+    callList.scrollTop = 0;
+  }
   if (nearby) map.setView(originalPosition, originalZoom);
+  nearby ? (lastLoadedList = "nearby") : (lastLoadedList = "SF");
   setTimeout(
     window.addEventListener("click", (event) => {
       const clickTarget = event.target;

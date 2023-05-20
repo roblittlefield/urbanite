@@ -53,7 +53,6 @@ export default class circleMarkers {
       const onSceneTime = new Date(call.onSceneTime);
       const responseTime = Math.round((onSceneTime - receivedTime) / 60000);
       const receivedTimeAgo = Math.floor((this.now - receivedTime) / 60000);
-      console.log(call.address);
       const properCaseAddress = textProperCase(call.address);
       const neighborhoodFormatted = neighborhoodFormat(call.neighborhood);
       const callTypeFormatted = callTypeConversionMap.get(callType) || callType;
@@ -75,7 +74,7 @@ export default class circleMarkers {
           : `<br>Call received`;
       popupContent +=
         dispositionMeaning !== "" && dispositionMeaning !== "Unknown"
-          ? `, ${dispositionMeaning.toLowerCase()}`
+          ? `<br>${dispositionMeaning}`
           : "";
 
       const marker = L.circleMarker(
@@ -118,7 +117,6 @@ export default class circleMarkers {
         closeButton: false,
         disableAnimation: true,
       });
-
       const markerLatLng = marker.getLatLng();
       const distance = positionLatLng.distanceTo(markerLatLng);
       if (distance < 500) {

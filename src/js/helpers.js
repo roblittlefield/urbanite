@@ -22,10 +22,15 @@ export const standardizeData = function (rawData, apiRef) {
 };
 
 export const textProperCase = function (textRaw) {
-  const textProper = textRaw
+  const text = textRaw
+    .replace(/0(\d)/g, "$1")
+    .replace(/\\/g, "/")
+    .split("/")
+    .slice(0, 2)
+    .join("/")
     .toLowerCase()
     .replace(/\b\w/g, (char) => char.toUpperCase());
-  return textProper;
+  return text;
 };
 
 export const minsHoursFormat = function (time) {

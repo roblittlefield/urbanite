@@ -1,3 +1,5 @@
+import { centerPopupTolerance } from "../config.js";
+
 const addHandlerMoveCenter = function (data, police48Layer, map) {
   let timer = null;
   map.on("move", () => {
@@ -24,7 +26,7 @@ const addHandlerMoveCenter = function (data, police48Layer, map) {
         }
       });
 
-      if (minDistance <= 200) {
+      if (minDistance <= centerPopupTolerance) {
         police48Layer.eachLayer((layer) => {
           if (layer instanceof L.CircleMarker) {
             const { x: markerX, y: markerY } = map.latLngToContainerPoint(

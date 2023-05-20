@@ -1,15 +1,16 @@
 import { SFDATA_API_KEY } from "../../apikeys.js";
-
+///////////-----Controls-----///////////
 export const latestNumber = 700;
 export const timeElapNearby = 120;
-export const timeElapSF = 360;
-export const maxHoursAgo = 60;
+export const timeElapSF = 360; // 6h
+export const maxHoursAgo = 60; // 60h
+export const centerPopupTolerance = 100;
 ///////////-----Leaflet Map-----///////////
 export const getLatLngSF = () => {
   return window.innerWidth <= 758 ? [37.758, -122.43] : [37.762, -122.445];
 };
 export const getMapZoomLevel = () => {
-  return window.innerWidth <= 758 ? 13 : 14;
+  return window.innerWidth <= 758 ? 14 : 15;
 };
 
 export const MAP_LAYERS = [
@@ -139,7 +140,7 @@ export const callTypeConversionMap = new Map([
   ["FIGHT NO WEAPON", "Fight"],
 
   ["AGG ASSAULT / ADW", "Aggravated assault / ADW"],
-  ["ASSAULT / BATTERY", "Assault / battery"],
+  ["ASSAULT / BATTERY", "Assault & battery"],
   ["STRONGARM ROBBERY", "Strong-arm robbery"],
   ["GRAND THEFT", "Grand theft"],
   ["PURSE SNATCH", "Purse snatch"],

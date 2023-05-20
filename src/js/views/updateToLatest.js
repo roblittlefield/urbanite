@@ -6,30 +6,32 @@ const updateCallList = function (latestMarkers, map, nearby) {
   // const callListHeading = document.getElementById("call-list-heading");
   callList.innerHTML = "";
   let calcHour = 0;
-  let maxCountLabel = false;
   latestMarkers.forEach((circleMarker) => {
     const receivedTimeAgo = circleMarker.options.data.receivedTimeAgo;
     const receivedTimeAgoF = minsHoursFormat(receivedTimeAgo);
     const hours = Math.floor(receivedTimeAgo / 60);
     if (hours > calcHour) {
-      console.log(nearby);
       calcHour = hours;
-      // if (!nearby) {
+
       const minutesNumber = document.createElement("span");
       minutesNumber.classList.add("received-time-ago-hours");
-      minutesNumber.textContent = `${hours} hour${hours === 1 ? "" : "s"} ago`;
+      if (nearby) {
+        minutesNumber.style.fontSize = "15px";
+      }
+      minutesNumber.textContent = `${calcHour} hour${
+        calcHour === 1 ? "" : "s"
+      } ago`;
       callList.appendChild(minutesNumber);
+
       minutesNumber.addEventListener("click", () => {
         if (!minutesNumber) return;
         e.stopPropagation();
         minutesNumber.style.display =
           minutesNumber.style.display === "none" ? "" : "none";
       });
-      // }
     }
     const responseTime = circleMarker.options.data.responseTime;
     const responseTimeF = minsHoursFormat(responseTime);
-    console.log(responseTime);
     if (circleMarker.options.data) {
       const callBox = document.createElement("li");
       callBox.classList.add("call-box");
