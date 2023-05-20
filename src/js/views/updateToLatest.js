@@ -11,9 +11,28 @@ const updateCallList = function (latestMarkers, map) {
   //   layerGroups[`latest`] = L.layerGroup();
   // }
   // layerGroups["latest"].clearLayers();
+  let calcHour = 0;
   latestMarkers.forEach((circleMarker) => {
+    const receivedTimeAgo = circleMarker.options.data.receivedTimeAgo;
+    // if (receivedTimeAgo > )
+    const receivedTimeAgoF = minsHoursFormat(receivedTimeAgo);
+    const hours = Math.floor(receivedTimeAgo / 60);
+    if (hours > calcHour) {
+      console.log(calcHour);
+      calcHour = hours;
+      const minutesNumber = document.createElement("span");
+      minutesNumber.classList.add("received-time-ago-hours");
+      minutesNumber.textContent = `${hours} hour${hours === 1 ? "" : "s"} ago`;
+      // minutesNumber.style.fontSize = "40px";
+      // minutesNumber.style.fontFamily = "sans-serif";
+      // minutesNumber.style.textAlign = "right";
+      callList.appendChild(minutesNumber);
+    }
+
+    const responseTime = circleMarker.options.data.responseTime;
+    const responseTimeF = minsHoursFormat(responseTime);
+    console.log(responseTime);
     if (circleMarker.options.data) {
-      const timeAgo = circleMarker.options.data.timeAgo;
       const callBox = document.createElement("li");
       callBox.classList.add("call-box");
       callBox.innerHTML = `
@@ -29,27 +48,23 @@ const updateCallList = function (latestMarkers, map) {
         circleMarker.options.data.sensitive ? "  *sensitive call" : ""
       }</h3>
           <i><p>
-          ${timeAgo === undefined ? "" : `${minsHoursFormat(timeAgo)} ago in`} 
+          ${receivedTimeAgo === NaN ? "" : `${receivedTimeAgoF} ago in`} 
           ${circleMarker.options.data.neighborhood}
         </p></i>
           <p>${
             circleMarker.options.data.onView === "Y"
               ? `Officer observed`
-              : circleMarker.options.data.responseTime
-              ? `Response time: ${minsHoursFormat(
-                  circleMarker.options.data.responseTime
-                )}`
+              : responseTime
+              ? `Response time: ${responseTimeF}`
               : circleMarker.options.data.dispatchTime
-              ? `Dispatched ${minsHoursFormat(
-                  circleMarker.options.data.dispatchTime
-                )} ago`
+              ? `Dispatched ${circleMarker.options.data.dispatchedTimeAgo} ago`
               : circleMarker.options.data.entryTime
-              ? `Call entry in queue`
-              : `Call received`
+              ? `Call entry in queue ${circleMarker.options.data.enteredTimeAgo} ago`
+              : `Call received, pending entry`
           }${
         circleMarker.options.data.disposition
           ? `, ${circleMarker.options.data.disposition.toLowerCase()}`
-          : ""
+          : ", open"
       }
         </p>
           <p>${circleMarker.options.data.address.slice(0, 45)}</p>
@@ -60,6 +75,7 @@ const updateCallList = function (latestMarkers, map) {
         circleMarker.openPopup();
       });
       callList.appendChild(callBox);
+
       // layerGroups[`latest`].addLayer(circleMarker);
     }
   });

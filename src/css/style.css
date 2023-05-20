@@ -89,27 +89,33 @@ body {
 }
 
 /*----CHANGE MAP AND SHOW LIST BUTTONS----*/
-#change-map {
+#change-map-btn {
   top: 9px;
 }
-#latest-list {
+#latest-list-btn {
   top: 44px;
 }
 
-#nearby-list {
+#nearby-list-btn {
   top: 79px;
+}
+
+#project-info-btn {
+  display: none;
+  top: 114px;
 }
 
 #nearby-info,
 .weather {
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
-#change-map,
-#latest-list,
-#neighborhood-text,
+#change-map-btn,
+#latest-list-btn,
+#nearby-list-btn,
 #nearby-info,
-#nearby-list,
+#neighborhood-text,
+#project-info-btn,
 .weather {
   touch-action: none;
   z-index: 9;
@@ -129,9 +135,10 @@ body {
   background-color: rgba(255, 255, 255, 0.7);
 }
 
-#change-map,
-#latest-list,
-#nearby-list {
+#change-map-btn,
+#latest-list-btn,
+#nearby-list-btn,
+#project-info-btn {
   font-weight: bold;
   text-align: center;
   right: 13px;
@@ -148,9 +155,10 @@ body {
   cursor: pointer;
 }
 
-#change-map:active,
-#latest-list:active,
-#nearby-list:active {
+#change-map-btn:active,
+#latest-list-btn:active,
+#nearby-list-btn:active,
+#project-info-btn:active {
   box-shadow: none;
   outline: none;
   transform: scale(1.025);
@@ -266,6 +274,12 @@ body {
   pointer-events: none;
 }
 
+.received-time-ago-hours {
+  font-size: 40px;
+  font-family: Tahoma, Arial, Helvetica, sans-serif;
+  text-align: right;
+}
+
 #call-list-container h2 {
   position: relative;
   color: white;
@@ -339,6 +353,27 @@ body {
   font-family: sans-serif;
   background-color: transparent;
   margin: 0px 11px 0px;
+}
+
+/*----PROJECT INFO----*/
+#project-info {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+#project-info-heading {
+  font: bold;
+}
+
+#project-info p {
+  font: 12px;
 }
 
 /*----SCROLL BAR----*/

@@ -3,7 +3,8 @@ import { SFDATA_API_KEY } from "../../apikeys.js";
 export const latestNumber = 700;
 export const timeElapNearby = 120;
 export const timeElapSF = 360;
-/////////// Leaflet Map
+export const maxHoursAgo = 60;
+///////////-----Leaflet Map-----///////////
 export const getLatLngSF = () => {
   return window.innerWidth <= 758 ? [37.758, -122.43] : [37.762, -122.445];
 };
@@ -19,8 +20,8 @@ export const MAP_LAYERS = [
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
 ];
 
-/////////// SAN FRANCISCO .GOV DATA
-/////////// Police - Last 48 hours
+///////////-----SAN FRANCISCO .GOV DATA-----///////////
+///////////-----Police - Last 48 hours-----///////////
 const API_URL_POLICE_48h = "https://data.sfgov.org/resource/gnap-fj3t.json";
 
 const excludedCallTypes = [
@@ -45,19 +46,14 @@ const excludedCallTypes = [
 
 export const includedCallTypes = [
   "FIGHT NO WEAPON",
-  // "SUSPICIOUS PERSON",
   "TRESPASSER",
-  // "SUSPICIOUS VEHICLE",
   "BURGLARY",
   "AUTO BOOST / STRIP",
-  // "VANDALISM",
   "ASSAULT / BATTERY",
-  // "THREATS / HARASSMENT",
   "STOLEN VEHICLE",
   "MENTALLY DISTURBED",
   "PERSON W/GUN",
   "INJURY VEH ACCIDENT",
-  // "INDECENT EXPOSURE",
   "SHOTS FIRED",
   "PERSON W/KNIFE",
   "STRONGARM ROBBERY",
@@ -82,6 +78,11 @@ export const includedCallTypes = [
   "DEMO / PROTEST",
   "ARREST MADE",
   "RESISTING ARREST",
+  // "SUSPICIOUS VEHICLE",
+  // "SUSPICIOUS PERSON",
+  // "VANDALISM",
+  // "THREATS / HARASSMENT",
+  // "INDECENT EXPOSURE",
 ];
 
 export const colorMap = new Map([
@@ -90,7 +91,7 @@ export const colorMap = new Map([
   ["PERSON W/GUN", "#E3173F"],
   ["SHOT SPOTTER", "#E3173F"],
 
-  ["STABBING", "#E3173F"], 
+  ["STABBING", "#E3173F"],
   ["PERSON W/KNIFE", "#E3173F"],
   ["FIGHT W/WEAPONS", "#E3173F"],
   ["FIGHT NO WEAPON", "#E3173F"],
@@ -130,7 +131,7 @@ export const callTypeConversionMap = new Map([
   ["SHOOTING", "Shooting"],
   ["SHOTS FIRED", "Shots fired"],
   ["PERSON W/GUN", "Person with gun"],
-  ["SHOT SPOTTER", "Shot spotter"],
+  ["SHOT SPOTTER", "Shot Spotter"],
 
   ["STABBING", "Stabbing"],
   ["PERSON W/KNIFE", "Person with knife"],
@@ -138,20 +139,20 @@ export const callTypeConversionMap = new Map([
   ["FIGHT NO WEAPON", "Fight"],
 
   ["AGG ASSAULT / ADW", "Aggravated assault / ADW"],
-  ["ASSAULT / BATTERY", "Assault / Battery"],
+  ["ASSAULT / BATTERY", "Assault / battery"],
   ["STRONGARM ROBBERY", "Strong-arm robbery"],
   ["GRAND THEFT", "Grand theft"],
   ["PURSE SNATCH", "Purse snatch"],
   ["ROBBERY", "Robbery"],
   ["BURGLARY", "Burglary"],
   ["PERSON BREAKING IN", "Person breaking in"],
-  ["SILENT HOLDUP ALARM", "Silent holdup alarm"],
+  ["SILENT HOLDUP ALARM", "Silent hold-up alarm"],
 
   ["TRESPASSER", "Trespasser"],
   ["PROWLER", "Prowler"],
   ["STALKING", "Stalking"],
 
-  ["MENTALLY DISTURBED", "Mentally disturbed"],
+  ["MENTALLY DISTURBED", "Mentally disturbed person"],
   ["INTOXICATED PERSON", "Intoxicated person"],
   ["PERSON SCREAMING", "Person screaming"],
   ["DRUNK DRIVER", "Drunk driver"],
@@ -159,9 +160,9 @@ export const callTypeConversionMap = new Map([
   ["STOLEN VEHICLE", "Stolen vehicle"],
   ["AUTO BOOST / STRIP", "Car break-in"],
 
-  ["H&R INJURY ACCIDENT", "Hit and run - Injury accident"],
-  ["H&R VEH ACCIDENT", "Hit and run - Vehicle accident"],
-  ["INJURY VEH ACCIDENT", "Injury vehicle accident"],
+  ["H&R INJURY ACCIDENT", "Hit and run with injuries"],
+  ["H&R VEH ACCIDENT", "Hit and run with no injuries"],
+  ["INJURY VEH ACCIDENT", "Car crash with injuries"],
   ["ARREST MADE", "Arrest made"],
   ["RESISTING ARREST", "Resisting arrest"],
   ["CITIZEN ARREST", "Citizen arrest"],
@@ -178,22 +179,20 @@ export const API_REF_POLICE_48h = {
   rowid: "id",
   call_type: "call_type_final_desc",
   call_type_original: "call_type_original_desc",
-  // callTypeCode: "call_type_final",
+  callTypeCode: "call_type_final",
   coords: "intersection_point",
   receivedTime: "received_datetime",
-  // entryTime: "entry_datetime",
-  // dispatchTime: "dispatch_datetime",
-  // enrouteTime: "enroute_datetime",
+  entryTime: "entry_datetime",
+  dispatchTime: "dispatch_datetime",
+  enrouteTime: "enroute_datetime",
   onSceneTime: "onscene_datetime",
   address: "intersection_name",
   neighborhood: "analysis_neighborhood",
-  // desc: "call_final_disposition",
-  disposition: "disposition", // SFPD only
+  disposition: "disposition",
   // closeTime: "close_datetime",
-  // priority: "priority_final",
+  priority: "priority_final",
   onView: "onview_flag", // T/F officer observed activity of crime
   sensitive: "sensitive_call",
-  // priority: "priority_final",
 };
 
 export const DISPOSITION_REF_POLICE = {
@@ -208,7 +207,7 @@ export const DISPOSITION_REF_POLICE = {
   GOA: "Gone on arrival",
   HAN: "Officer handled",
   NCR: "No issue found",
-  ND: "No disposition",
+  ND: "related to another call",
   NOM: "No merit",
   PAS: "Home alarm",
   REP: "Police report made",

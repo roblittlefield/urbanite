@@ -50,7 +50,7 @@ const controlCircleMarkers = async function () {
     const responsePolice48h = await model.fetchApi(
       sfapi.API_URL_POLICE_48h_FILTERED
     );
-
+    
     const dataApiPolice48h = await responsePolice48h.json();
     const dataApiPolice48hFiltered = dataApiPolice48h.filter((item) =>
       sfapi.includedCallTypes.includes(item.call_type_final_desc)
@@ -84,7 +84,7 @@ const controlCircleMarkers = async function () {
       // countNearbyContainer.classList.toggle("hidden");
       document.getElementById("nearby-info").textContent =
       nearbyLatestMarkersSorted.length.toString() +
-        " calls within 500m, \n" +
+        " calls nearby, \n" +
         countRecentNearby.toString() +
         " past 6h";
       const circle = L.circle(position, {

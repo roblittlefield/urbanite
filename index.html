@@ -17,14 +17,15 @@
     <div class="overlay"></div>
     <div class="container">
       <div id="map"></div>
-      <div class="share-button"></div>
-      <div id="neighborhood-text"></div>
-      <button id="change-map">Map</button>
-      <button id="latest-list">All SF</button>
-      <button id="nearby-list">Nearby</button>
+      <!-- <div class="share-button"></div> -->
       <div class="weather">
         <div id="containerTemp"></div>
       </div>
+      <div id="neighborhood-text"></div>
+      <button id="change-map-btn">Map</button>
+      <button id="latest-list-btn">All SF</button>
+      <button id="nearby-list-btn">Nearby</button>
+      <button id="project-info-btn">About</button>
       <div id="nearby-container">
         <button id="nearby-info"></button>
       </div>
@@ -32,12 +33,15 @@
         <h2 id="call-list-heading"></h2>
         <ul id="call-list"></ul>
         <style>
-          .inline-headings h3,
-          .inline-headings h4 {
+          .inline-headings h3 {
             display: inline;
             margin: 0;
           }
         </style>
+      </div>
+      <div id="project-info">
+          <h2 id="project-info-heading"></h2>
+          <p>This is a description of my webapp</p>
       </div>
       <div class="disclaimer" style="display: none;">
         <a href="https://datasf.gitbook.io/datasf-dataset-explainers/law-enforcement-dispatched-calls-for-service" class="centered-link">

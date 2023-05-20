@@ -10,9 +10,11 @@ import {
   API_REF_POLICE_48h,
   colorMap,
   callTypeConversionMap,
+  maxHoursAgo,
 } from "../config.js";
 
 export default class circleMarkers {
+  now = new Date();
   constructor() {
     this.police48Layer = L.layerGroup();
     this.markersWithinRadius = [];
@@ -27,16 +29,31 @@ export default class circleMarkers {
   addCircleMarkers(data, position) {
     const allCalls = [];
     const positionLatLng = L.latLng(position[0], position[1]);
-    data.map((callRaw) => {
+
+    const dataDateFilter = data.filter((call) => {
+      return (
+        Math.floor((this.now - new Date(call.received_datetime)) / 3600000) <=
+        maxHoursAgo
+      );
+    });
+
+    dataDateFilter.map((callRaw) => {
       const call = standardizeData(callRaw, API_REF_POLICE_48h);
       allCalls.push(call);
-
-      const callType = call.call_type || call.call_type_original;
-      const now = new Date();
       const receivedTime = new Date(call.receivedTime);
+      const callType = call.call_type || call.call_type_original;
+      const enteredTime = new Date(call.entryTime);
+      const enteredTimeAgo = minsHoursFormat(
+        Math.round((this.now - enteredTime) / 60000)
+      );
+      const dispatchedTime = new Date(call.dispatchTime);
+      const dispatchedTimeAgo = minsHoursFormat(
+        Math.round((this.now - dispatchedTime) / 60000)
+      );
       const onSceneTime = new Date(call.onSceneTime);
-      const responseTimeMins = Math.round((onSceneTime - receivedTime) / 60000);
-      const timeAgo = Math.floor((now - receivedTime) / 60000);
+      const responseTime = Math.round((onSceneTime - receivedTime) / 60000);
+      const receivedTimeAgo = Math.floor((this.now - receivedTime) / 60000);
+      console.log(call.address);
       const properCaseAddress = textProperCase(call.address);
       const neighborhoodFormatted = neighborhoodFormat(call.neighborhood);
       const callTypeFormatted = callTypeConversionMap.get(callType) || callType;
@@ -44,18 +61,17 @@ export default class circleMarkers {
       const dispositionMeaning = DISPOSITION_REF_POLICE[call.disposition] ?? "";
 
       let popupContent = `<b>${callTypeFormatted}</b>`;
-      popupContent += ` \u2022 ${minsHoursFormat(timeAgo)}`;
+      popupContent += ` \u2022 ${minsHoursFormat(receivedTimeAgo)}`;
       popupContent += `<br>${properCaseAddress}`;
-
       popupContent +=
         call.onView === "Y"
           ? `<br>Officer observed`
-          : call.responseTime
-          ? `<br>Response time: ${minsHoursFormat(responseTimeMins)}`
+          : responseTime
+          ? `<br>Response time: ${minsHoursFormat(responseTime)}`
           : call.dispatchTime
-          ? `<br>Dispatched ${minsHoursFormat(call.dispatchTime)} ago`
+          ? `<br>Dispatched ${dispatchedTimeAgo} ago`
           : call.entry_datetime
-          ? `<br>Call entry in queue`
+          ? `<br>Call entry in queue ${enteredTimeAgo} ago`
           : `<br>Call received`;
       popupContent +=
         dispositionMeaning !== "" && dispositionMeaning !== "Unknown"
@@ -80,12 +96,14 @@ export default class circleMarkers {
             disposition: dispositionMeaning,
             neighborhood: neighborhoodFormatted,
             receivedTime: formatDate(receivedTime),
-            entryTime: call.entry_datetime,
-            dispatchTime: call.dispatch_datetime,
-            responseTime: responseTimeMins,
+            // entryTime: enteredTime,
+            entryTimeAgo: enteredTimeAgo,
+            // dispatchTime: dispatchedTime,
+            dispatchedTimeAgo: dispatchedTimeAgo,
+            responseTime: responseTime,
             address: properCaseAddress,
             callType: callTypeFormatted,
-            timeAgo: timeAgo,
+            receivedTimeAgo: receivedTimeAgo,
             // callTypeCode: call.callTypeCode,
             // desc: call.desc,
             onView: call.onView,
@@ -108,7 +126,7 @@ export default class circleMarkers {
         marker.addTo(this.nearbyLayer);
       }
       // Count recent markers in circle
-      if (timeAgo <= 360 && distance < 500) {
+      if (receivedTimeAgo <= 360 && distance < 500) {
         this.markersWithinRadiusRecent.push(marker);
       }
 
@@ -117,10 +135,6 @@ export default class circleMarkers {
     const nearbyMarkers = this.markersWithinRadius;
     const nearbyMarkersCount = this.markersWithinRadius.length;
     const nearbyMarketsCountRecent = this.markersWithinRadiusRecent.length;
-    return [
-      allCalls,
-      this.police48Layer,
-      this.nearbyLayer,
-    ];
+    return [allCalls, this.police48Layer, this.nearbyLayer];
   }
 }
