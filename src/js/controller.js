@@ -55,7 +55,6 @@ const controlCircleMarkers = async function () {
     const dataApiPolice48hFiltered = dataApiPolice48h.filter((item) =>
       sfapi.includedCallTypes.includes(item.call_type_final_desc)
     );
-
     const circleMarkersInst = new circleMarkers();
     const [allCalls, police48Layer, nearbyLayer] =
       circleMarkersInst.addCircleMarkers(dataApiPolice48hFiltered, position);

@@ -7,9 +7,7 @@ const sortMarkers = function (layer, timeElap) {
   );
   const latestMarkers = markers
     .sort(
-      (a, b) =>
-        new Date(b.options.data.receivedTimeCalc).getTime() -
-        new Date(a.options.data.receivedTimeCalc).getTime()
+      (a, b) => a.options.data.receivedTimeAgo -b.options.data.receivedTimeAgo
     )
     .slice(0, latestNumber);
 

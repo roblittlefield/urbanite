@@ -52,7 +52,7 @@ export default class circleMarkers {
       );
       const onSceneTime = new Date(call.onSceneTime);
       const responseTime = Math.round((onSceneTime - receivedTime) / 60000);
-      const receivedTimeAgo = Math.floor((this.now - receivedTime) / 60000);
+      const receivedTimeAgo = Math.round((this.now - receivedTime) / 60000);
       const properCaseAddress = textProperCase(call.address);
       const neighborhoodFormatted = neighborhoodFormat(call.neighborhood);
       const callTypeFormatted = callTypeConversionMap.get(callType) || callType;
@@ -91,7 +91,7 @@ export default class circleMarkers {
           opacity: 0.6,
           fillOpacity: 0.9,
           data: {
-            receivedTimeCalc: new Date(call.receivedTime).getTime(),
+            // receivedTimeCalc: call.receivedTime,
             disposition: dispositionMeaning,
             neighborhood: neighborhoodFormatted,
             receivedTime: formatDate(receivedTime),

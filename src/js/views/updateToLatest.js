@@ -3,6 +3,7 @@ import { toggleVisibleItems } from "./buttonsView";
 
 const updateCallList = function (latestMarkers, map, nearby) {
   const callList = document.getElementById("call-list");
+  
   // const callListHeading = document.getElementById("call-list-heading");
   callList.innerHTML = "";
   let calcHour = 0;
@@ -22,13 +23,6 @@ const updateCallList = function (latestMarkers, map, nearby) {
         calcHour === 1 ? "" : "s"
       } ago`;
       callList.appendChild(minutesNumber);
-
-      minutesNumber.addEventListener("click", () => {
-        if (!minutesNumber) return;
-        e.stopPropagation();
-        minutesNumber.style.display =
-          minutesNumber.style.display === "none" ? "" : "none";
-      });
     }
     const responseTime = circleMarker.options.data.responseTime;
     const responseTimeF = minsHoursFormat(responseTime);
