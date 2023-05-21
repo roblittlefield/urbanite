@@ -1,8 +1,9 @@
 import { SFDATA_API_KEY } from "../../apikeys.js";
 ///////////-----Controls-----///////////
-export const latestNumber = 700;
+export const maxCalls = 700;
 export const timeElapSF = 120; // 6h
-export const timeElapNearby = 180; // Nearby 
+export const nearbyRadius = 500;
+export const timeElapNearby = 180; // Nearby
 export const maxHoursAgo = 60; // 60h
 export const centerPopupTolerance = 100;
 ///////////-----Leaflet Map-----///////////
@@ -45,7 +46,7 @@ const excludedCallTypes = [
   "MISSING ADULT",
 ];
 
-export const includedCallTypes = [
+export const includedCallTypesPDlive = [
   "FIGHT NO WEAPON",
   "TRESPASSER",
   "BURGLARY",
@@ -175,7 +176,7 @@ const filterExpression = excludedCallTypes
   .join(" and ");
 export const API_URL_POLICE_48h_FILTERED = `${API_URL_POLICE_48h}?$where=${filterExpression} AND intersection_point IS NOT NULL&$$app_token=${SFDATA_API_KEY}&$limit=2500`;
 
-export const API_REF_POLICE_48h = {
+export const PARAM_MAP_POLICE_48h = {
   incidentNumber: "cad_number",
   rowid: "id",
   call_type: "call_type_final_desc",
@@ -208,7 +209,7 @@ export const DISPOSITION_REF_POLICE = {
   GOA: "Gone on arrival",
   HAN: "Officer handled",
   NCR: "No issue found",
-  ND: "related to another call",
+  ND: "Related to another call",
   NOM: "No merit",
   PAS: "Home alarm",
   REP: "Police report made",

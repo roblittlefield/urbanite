@@ -4,7 +4,6 @@ import L from "leaflet";
 import * as model from "./model.js";
 import * as sfapi from "./config.js";
 import circleMarkers from "./views/circleMarkers.js";
-import sortMarkers from "./views/circleMarkersSort.js";
 import updateCallList from "./views/updateToLatest.js";
 import addHandlerMoveCenter from "./views/moveCenter.js";
 import getPosition from "./views/getPosition.js";
@@ -57,16 +56,22 @@ const controlCircleMarkers = async function () {
 
     // Receive API data
     const dataApiPolice48h = await responsePolice48h.json();
-
-    // Filter out unwanted calls
-    const dataApiPolice48hFiltered = dataApiPolice48h.filter((item) =>
-      sfapi.includedCallTypes.includes(item.call_type_final_desc)
+    ////////////////////////
+    ////////////////////////
+    const dataResult = model.dataProcess(
+      position,
+      dataApiPolice48h,
+      sfapi.includedCallTypesPDlive,
+      sfapi.PARAM_MAP_POLICE_48h
     );
+    const data = dataResult.data;
 
     // Create Circle Markers
     const circleMarkersInst = new circleMarkers();
-    const [allCalls, police48Layer, nearbyLayer] =
-      circleMarkersInst.addCircleMarkers(dataApiPolice48hFiltered, position);
+    const [police48Layer, nearbyLayer] = circleMarkersInst.addCircleMarkers(
+      data,
+      position
+    );
 
     // Circle Markers to Map
     police48Layer.addTo(map);
@@ -74,28 +79,18 @@ const controlCircleMarkers = async function () {
     // 1st Popup
     initPopupNieghborhood(position, police48Layer);
 
-    // Load All SF btn w data
-    const { latestMarkers: latestMarkersSorted, count: countRecentSF } =
-      sortMarkers(police48Layer, sfapi.timeElapSF);
+    loadLatestListButton(controlOpenCallList, police48Layer, false);
 
-    loadLatestListButton(controlOpenCallList, latestMarkersSorted, false);
+    addHandlerMoveCenter(data, police48Layer, map);
 
-    addHandlerMoveCenter(allCalls, police48Layer, map);
-    
-    // Load Nearby btn w data
-    const {
-      latestMarkers: nearbyLatestMarkersSorted,
-      count: countRecentNearby,
-    } = sortMarkers(nearbyLayer, sfapi.timeElapNearby);
-    
-    loadNearbyListButton(controlOpenCallList, nearbyLatestMarkersSorted, true);
+    loadNearbyListButton(controlOpenCallList, nearbyLayer, true);
     
     // Control Call Count Display
     if (JSON.stringify(position) !== JSON.stringify(sfapi.getLatLngSF())) {
       countContainer.textContent =
-        nearbyLatestMarkersSorted.length.toString() +
+        dataResult.countCallsNearby.toString() +
         ` calls nearby, ` +
-        countRecentNearby.toString() +
+        dataResult.countCallsNearbyRecent.toString() +
         ` past ${sfapi.timeElapNearby / 60}h`;
       const circle = L.circle(position, {
         radius: 500, // meters
@@ -107,7 +102,8 @@ const controlCircleMarkers = async function () {
       circle.addTo(map);
     } else {
       countContainer.textContent =
-        countRecentSF.toString() + ` calls past ${sfapi.timeElapSF / 60}h`;
+        dataResult.countCallsRecent.toString() +
+        ` calls past ${sfapi.timeElapSF / 60}h`;
     }
     return map;
   } catch (err) {

@@ -5,7 +5,7 @@ const updateCallList = function (latestMarkers, map, nearby) {
   const callList = document.getElementById("call-list");
   callList.innerHTML = "";
   let calcHour = 0;
-  latestMarkers.forEach((circleMarker) => {
+  latestMarkers.eachLayer((circleMarker) => {
     const receivedTimeAgo = circleMarker.options.data.receivedTimeAgo;
     const receivedTimeAgoF = minsHoursFormat(receivedTimeAgo);
 
