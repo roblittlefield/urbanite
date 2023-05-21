@@ -105,7 +105,6 @@ const controlChangeMap = function () {
   currentLayer = (currentLayer + 1) % sfapi.MAP_LAYERS.length;
   const newLayer = L.tileLayer(sfapi.MAP_LAYERS[currentLayer]);
   newLayer.on("tileerror", function (e) {
-    console.log("tile error", e);
     L.tileLayer(sfapi.MAP_LAYERS[currentLayer]).remove();
     currentLayer = (currentLayer + 1) % sfapi.MAP_LAYERS.length;
     L.tileLayer(sfapi.MAP_LAYERS[currentLayer]).addTo(map);
@@ -144,7 +143,6 @@ const controlOpenCallList = function (markers, message, nearby) {
 };
 
 const controlProjectInfo = function () {
-  console.log(`control projec tinfo function started`);
   toggleVisibleInfo();
   toggleVisibleItems();
   setTimeout(

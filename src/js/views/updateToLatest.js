@@ -47,7 +47,7 @@ const updateCallList = function (latestMarkers, map, nearby) {
             circleMarker.options.data.onView === "Y"
               ? `Officer observed`
               : responseTime
-              ? `Response time ${responseTimeF}`
+              ? `Response time: ${responseTimeF}`
               : circleMarker.options.data.dispatchTime
               ? `Dispatched ${circleMarker.options.data.dispatchedTimeAgo} ago`
               : circleMarker.options.data.entryTime

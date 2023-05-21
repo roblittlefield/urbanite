@@ -66,7 +66,7 @@ export default class circleMarkers {
         call.onView === "Y"
           ? `<br>Officer observed`
           : responseTime
-          ? `<br>Response time ${minsHoursFormat(responseTime)}`
+          ? `<br>Response time: ${minsHoursFormat(responseTime)}`
           : call.dispatchTime
           ? `<br>Dispatched ${dispatchedTimeAgo} ago`
           : call.entry_datetime

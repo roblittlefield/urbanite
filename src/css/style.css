@@ -91,18 +91,18 @@ body {
 }
 
 /*----CHANGE MAP AND SHOW LIST BUTTONS----*/
-#change-map-btn {
+#project-info-btn {
   top: 9px;
 }
-#latest-list-btn {
+
+#change-map-btn {
   top: 44px;
 }
-
-#nearby-list-btn {
+#latest-list-btn {
   top: 79px;
 }
 
-#project-info-btn {
+#nearby-list-btn {
   top: 114px;
 }
 

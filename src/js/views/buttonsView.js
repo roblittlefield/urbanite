@@ -41,7 +41,6 @@ export const loadProjectInfoButton = function (handler) {
   projectInfoButton.addEventListener("click", (e) => {
     e.stopPropagation();
     const btn = e.target.closest("#project-info-btn");
-    console.log(`button pressed`);
     if (!btn) return;
     handler();
   });
@@ -62,6 +61,5 @@ export const toggleVisibleList = function () {
 };
 
 export const toggleVisibleInfo = function () {
-  console.log(`toggling visible project info in buttons view`);
   infoContainer.classList.toggle("hidden");
 };
