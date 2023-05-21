@@ -61,5 +61,6 @@ export const toggleVisibleList = function () {
 };
 
 export const toggleVisibleInfo = function () {
+  console.log(`toggling visible project info in buttons view`);
   infoContainer.classList.toggle("hidden");
 };

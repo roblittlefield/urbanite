@@ -1,5 +1,5 @@
 import { minsHoursFormat } from "../helpers";
-import { toggleVisibleItems } from "./buttonsView";
+import { toggleVisibleList, toggleVisibleItems } from "./buttonsView";
 
 const updateCallList = function (latestMarkers, map, nearby) {
   const callList = document.getElementById("call-list");
@@ -8,6 +8,7 @@ const updateCallList = function (latestMarkers, map, nearby) {
   latestMarkers.forEach((circleMarker) => {
     const receivedTimeAgo = circleMarker.options.data.receivedTimeAgo;
     const receivedTimeAgoF = minsHoursFormat(receivedTimeAgo);
+
     const hours = Math.floor(receivedTimeAgo / 60);
     if (hours > calcHour) {
       calcHour = hours;
@@ -22,6 +23,7 @@ const updateCallList = function (latestMarkers, map, nearby) {
       } ago`;
       callList.appendChild(minutesNumber);
     }
+
     const responseTime = circleMarker.options.data.responseTime;
     const responseTimeF = minsHoursFormat(responseTime);
     if (circleMarker.options.data) {
@@ -62,6 +64,7 @@ const updateCallList = function (latestMarkers, map, nearby) {
           <p>${circleMarker.options.data.address.slice(0, 45)}</p>
         `;
       callBox.addEventListener("click", () => {
+        toggleVisibleList();
         toggleVisibleItems();
         map.flyTo(circleMarker.getLatLng(), 14);
         circleMarker.openPopup();

@@ -17,7 +17,6 @@ import {
   loadNearbyListButton,
   loadProjectInfoButton,
   toggleVisibleList,
-  tiggleVisibleInfo,
   toggleVisibleInfo,
 } from "./views/buttonsView.js";
 import { async } from "regenerator-runtime";
@@ -51,31 +50,47 @@ const controlMap = async function () {
 
 const controlCircleMarkers = async function () {
   try {
+    // Fetch API data
     const responsePolice48h = await model.fetchApi(
       sfapi.API_URL_POLICE_48h_FILTERED
     );
+
+    // Receive API data
     const dataApiPolice48h = await responsePolice48h.json();
+
+    // Filter out unwanted calls
     const dataApiPolice48hFiltered = dataApiPolice48h.filter((item) =>
       sfapi.includedCallTypes.includes(item.call_type_final_desc)
     );
+
+    // Create Circle Markers
     const circleMarkersInst = new circleMarkers();
     const [allCalls, police48Layer, nearbyLayer] =
       circleMarkersInst.addCircleMarkers(dataApiPolice48hFiltered, position);
+
+    // Circle Markers to Map
     police48Layer.addTo(map);
+
+    // 1st Popup
     initPopupNieghborhood(position, police48Layer);
 
+    // Load All SF btn w data
     const { latestMarkers: latestMarkersSorted, count: countRecentSF } =
       sortMarkers(police48Layer, sfapi.timeElapSF);
+
     loadLatestListButton(controlOpenCallList, latestMarkersSorted, false);
 
     addHandlerMoveCenter(allCalls, police48Layer, map);
-
+    
+    // Load Nearby btn w data
     const {
       latestMarkers: nearbyLatestMarkersSorted,
       count: countRecentNearby,
     } = sortMarkers(nearbyLayer, sfapi.timeElapNearby);
+    
     loadNearbyListButton(controlOpenCallList, nearbyLatestMarkersSorted, true);
-
+    
+    // Control Call Count Display
     if (JSON.stringify(position) !== JSON.stringify(sfapi.getLatLngSF())) {
       countContainer.textContent =
         nearbyLatestMarkersSorted.length.toString() +
@@ -122,7 +137,6 @@ const controlOpenCallList = function (markers, message, nearby) {
     (lastLoadedList === "nearby" && !nearby) ||
     (lastLoadedList === "SF" && nearby)
   ) {
-    console.log(`scroll to top`);
     callList.scrollTop = 0;
   }
   if (nearby) map.setView(originalPosition, originalZoom);

@@ -1,8 +1,8 @@
 import { SFDATA_API_KEY } from "../../apikeys.js";
 ///////////-----Controls-----///////////
 export const latestNumber = 700;
-export const timeElapNearby = 120; // All SF: 2h
-export const timeElapSF = 360; // Nearby: 6h
+export const timeElapSF = 120; // 6h
+export const timeElapNearby = 180; // Nearby 
 export const maxHoursAgo = 60; // 60h
 export const centerPopupTolerance = 100;
 ///////////-----Leaflet Map-----///////////

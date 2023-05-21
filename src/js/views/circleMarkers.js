@@ -16,6 +16,8 @@ import {
 export default class circleMarkers {
   now = new Date();
   constructor() {
+    this.markers = [];
+    this.markersNearby = [];
     this.police48Layer = L.layerGroup();
     this.markersWithinRadius = [];
     this.markersWithinRadiusRecent = [];
