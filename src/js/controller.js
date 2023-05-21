@@ -15,6 +15,10 @@ import {
   loadLatestListButton,
   toggleVisibleItems,
   loadNearbyListButton,
+  loadProjectInfoButton,
+  toggleVisibleList,
+  tiggleVisibleInfo,
+  toggleVisibleInfo,
 } from "./views/buttonsView.js";
 import { async } from "regenerator-runtime";
 
@@ -23,13 +27,12 @@ let originalPosition;
 let originalZoom;
 let position;
 let lastLoadedList;
-// let nearbyMarkersL = [];
 const latestContainer = document.getElementById("call-list-container");
 const callList = document.getElementById("call-list");
-const latestButton = document.getElementById("latest-list");
 const disclaimerContainer = document.querySelector(".disclaimer");
 const callListHeading = document.getElementById("call-list-heading");
 const countContainer = document.getElementById("nearby-info");
+const infoContainer = document.getElementById("project-info-container");
 
 const controlMap = async function () {
   try {
@@ -76,9 +79,9 @@ const controlCircleMarkers = async function () {
     if (JSON.stringify(position) !== JSON.stringify(sfapi.getLatLngSF())) {
       countContainer.textContent =
         nearbyLatestMarkersSorted.length.toString() +
-        " calls nearby, " +
+        ` calls nearby, ` +
         countRecentNearby.toString() +
-        " past 6h";
+        ` past ${sfapi.timeElapNearby / 60}h`;
       const circle = L.circle(position, {
         radius: 500, // meters
         color: "white",
@@ -88,7 +91,8 @@ const controlCircleMarkers = async function () {
       });
       circle.addTo(map);
     } else {
-      countContainer.textContent = countRecentSF.toString() + " calls past 2h";
+      countContainer.textContent =
+        countRecentSF.toString() + ` calls past ${sfapi.timeElapSF / 60}h`;
     }
     return map;
   } catch (err) {
@@ -110,54 +114,11 @@ const controlChangeMap = function () {
   L.tileLayer(sfapi.MAP_LAYERS[currentLayer - 1]).remove();
 };
 
-// const controlOpenLatestList = function (latestMarkers) {
-//   callListHeading.textContent = "Latest SF Dispatched Calls";
-//   updateCallList(latestMarkers, map);
-//   toggleVisibleItems();
-//   setTimeout(
-//     window.addEventListener("click", (event) => {
-//       const clickTarget = event.target;
-//       if (
-//         !latestContainer.classList.contains("hidden") &&
-//         !callList.contains(clickTarget) &&
-//         clickTarget !== latestButton
-//       ) {
-//         toggleVisibleItems();
-//       }
-//     }),
-//     200
-//   );
-// };
-
-// const controlOpenNearbyList = function (nearbyMarkersL) {
-//   callListHeading.textContent = "Latest Nearby Dispatched Calls";
-//   updateCallList(nearbyMarkersL, map);
-//   toggleVisibleItems();
-//   map.setView(originalPosition, originalZoom);
-//   setTimeout(
-//     window.addEventListener("click", (event) => {
-//       const clickTarget = event.target;
-//       if (
-//         !latestContainer.classList.contains("hidden") &&
-//         !callList.contains(clickTarget) &&
-//         clickTarget !== latestButton
-//       ) {
-//         toggleVisibleItems();
-//       }
-//     }),
-//     200
-//   );
-// };
-
 const controlOpenCallList = function (markers, message, nearby) {
   callListHeading.textContent = message;
   updateCallList(markers, map, nearby);
-
-  //////////////////////
-  //////////////////////
-  ////////////////////// New code to try out
-  //////////////////////
   toggleVisibleItems();
+  toggleVisibleList();
   if (
     (lastLoadedList === "nearby" && !nearby) ||
     (lastLoadedList === "SF" && nearby)
@@ -175,6 +136,26 @@ const controlOpenCallList = function (markers, message, nearby) {
         !callList.contains(clickTarget)
       ) {
         toggleVisibleItems();
+        toggleVisibleList();
+      }
+    }),
+    200
+  );
+};
+
+const controlProjectInfo = function () {
+  console.log(`control projec tinfo function started`);
+  toggleVisibleInfo();
+  toggleVisibleItems();
+  setTimeout(
+    window.addEventListener("click", (event) => {
+      const clickTarget = event.target;
+      if (
+        !infoContainer.classList.contains("hidden") &&
+        !callList.contains(clickTarget)
+      ) {
+        toggleVisibleItems();
+        toggleVisibleInfo();
       }
     }),
     200
@@ -186,6 +167,7 @@ const init = async function () {
     const map = await controlMap();
     await controlCircleMarkers();
     loadChangeMapButton(controlChangeMap);
+    loadProjectInfoButton(controlProjectInfo);
     getWeather();
     disclaimerContainer.style.display = "block";
   } catch (err) {

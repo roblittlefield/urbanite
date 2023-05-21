@@ -74,7 +74,7 @@ body {
   width: 70%;
   height: 15%;
   background-color: rgba(0, 0, 0, 0.6);
-  z-index: 9999;
+  z-index: 6;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -103,7 +103,6 @@ body {
 }
 
 #project-info-btn {
-  display: none;
   top: 114px;
 }
 
@@ -121,7 +120,7 @@ body {
 .weather {
   user-select: none;
   touch-action: none;
-  z-index: 9;
+  z-index: 3;
   font-family: Tahoma, Arial, Helvetica, sans-serif;
   color: rgba(39, 39, 39, 0.84);
   text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.8);
@@ -186,7 +185,7 @@ body {
   font-size: 40px;
   bottom: 45px;
   left: 50%;
-  z-index: 99;
+  z-index: 3;
   padding: 0px 6px 0px 6px;
   transform: translate(-50%, +50%);
   text-align: center;
@@ -266,7 +265,7 @@ body {
   max-width: 500px;
   height: 97%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
+  z-index: 4;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -362,16 +361,35 @@ body {
 }
 
 /*----PROJECT INFO----*/
-#project-info {
+#project-info-container {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 70%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 5;
+  display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 8px;
+}
+
+#project-info a {
+  color: #dc7c06;
+}
+
+#project-info a:visited {
+  color: #00b70f;
+}
+
+#project-info {
+  position: fixed;
+  padding: 20px;
+  z-index: 5;
+  color: white;
+  font-family: Tahoma, Arial, Helvetica, sans-serif;
 }
 
 #project-info-heading {
@@ -379,7 +397,7 @@ body {
 }
 
 #project-info p {
-  font: 12px;
+  font-size: 14px;
 }
 
 /*----SCROLL BAR----*/

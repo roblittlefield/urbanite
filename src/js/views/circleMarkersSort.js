@@ -12,7 +12,7 @@ const sortMarkers = function (layer, timeElap) {
     .slice(0, latestNumber);
 
   const count = latestMarkers.reduce((total, marker) => {
-    if (marker.options.data.timeAgo <= timeElap) {
+    if (marker.options.data.receivedTimeAgo <= timeElap) {
       return total + 1;
     }
     return total;

@@ -6,6 +6,7 @@ const projectInfoButton = document.getElementById("project-info-btn");
 const latestContainer = document.getElementById("call-list-container");
 const countNearbyContainer = document.getElementById("nearby-info");
 const neighborhoodContainer = document.getElementById("neighborhood-text");
+const infoContainer = document.getElementById("project-info-container");
 
 export const loadChangeMapButton = function (handler) {
   changeMap.addEventListener("click", (e) => {
@@ -36,6 +37,16 @@ export const loadNearbyListButton = function (handler, nearbyMarkers) {
   });
 };
 
+export const loadProjectInfoButton = function (handler) {
+  projectInfoButton.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const btn = e.target.closest("#project-info-btn");
+    console.log(`button pressed`);
+    if (!btn) return;
+    handler();
+  });
+};
+
 export const toggleVisibleItems = function () {
   temperatureContainer.classList.toggle("hidden");
   changeMap.classList.toggle("hidden");
@@ -43,6 +54,14 @@ export const toggleVisibleItems = function () {
   nearbyButton.classList.toggle("hidden");
   projectInfoButton.classList.toggle("hidden");
   countNearbyContainer.classList.toggle("hidden");
-  latestContainer.classList.toggle("hidden");
   neighborhoodContainer.classList.toggle("hidden");
+};
+
+export const toggleVisibleList = function () {
+  latestContainer.classList.toggle("hidden");
+};
+
+export const toggleVisibleInfo = function () {
+  console.log(`toggling visible project info in buttons view`);
+  infoContainer.classList.toggle("hidden");
 };
