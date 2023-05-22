@@ -4,7 +4,7 @@ import L from "leaflet";
 import * as model from "./model.js";
 import * as sfapi from "./config.js";
 import circleMarkers from "./views/circleMarkers.js";
-import {updateCallList, controlOpenCallList} from "./views/updateCallList.js";
+import { updateCallList, controlOpenCallList } from "./views/updateCallList.js";
 import addHandlerMoveCenter from "./views/moveCenter.js";
 import getPosition from "./views/getPosition.js";
 import initPopupNieghborhood from "./views/initPopupNeighborhood.js";
@@ -23,7 +23,6 @@ let map;
 let originalPosition;
 let originalZoom;
 let position;
-
 
 const disclaimerContainer = document.querySelector(".disclaimer");
 
@@ -68,11 +67,15 @@ const controlCircleMarkers = async function () {
 
     initPopupNieghborhood(position, police48Layer);
     addHandlerMoveCenter(data, police48Layer, map);
-    
-    loadLatestListButton(controlOpenCallList)
-    loadNearbyListButton(controlOpenCallList, originalPosition, originalZoom, map);
-    
-    
+
+    loadLatestListButton(controlOpenCallList);
+    loadNearbyListButton(
+      controlOpenCallList,
+      originalPosition,
+      originalZoom,
+      map
+    );
+
     updateCallList(nearbyLayer, map, true);
     updateCallList(police48Layer, map, false);
 
@@ -123,7 +126,7 @@ const controlProjectInfo = function () {
       const clickTarget = event.target;
       if (
         !infoContainer.classList.contains("hidden") &&
-        !callList.contains(clickTarget)
+        !infoContainer.contains(clickTarget)
       ) {
         toggleVisibleItems();
         toggleVisibleInfo();
