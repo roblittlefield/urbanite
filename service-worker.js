@@ -14,3 +14,17 @@ async function activate() {
 }
 
 addEventListener("activate", (e) => e.waitUntil(activate()));
+
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.action === "reloadAPI") {
+    // Perform async API call reload logic here
+    // This could involve clearing caches, fetching new data, etc.
+
+    // Once the reload is complete, post a message to the client
+    self.clients.matchAll().then((clients) => {
+      clients.forEach((client) => {
+        client.postMessage("APIReloaded");
+      });
+    });
+  }
+});

@@ -24,23 +24,28 @@ export const loadChangeMapButton = function (handler) {
   });
 };
 
-export const loadLatestListButton = function (handler, latestMarkers) {
+export const loadLatestListButton = function (handler) {
   const message = "Latest SF Dispatched Calls";
   latestButton.addEventListener("click", (e) => {
     e.stopPropagation();
     const btn = e.target.closest("#latest-list-btn");
     if (!btn) return;
-    handler(latestMarkers, message, false);
+    handler(message, false);
   });
 };
 
-export const loadNearbyListButton = function (handler, nearbyMarkers) {
+export const loadNearbyListButton = function (
+  handler,
+  originalPosition,
+  originalZoom,
+  map
+) {
   const message = "Latest Nearby Dispatched Calls";
   nearbyButton.addEventListener("click", (e) => {
     e.stopPropagation();
     const btn = e.target.closest("#nearby-list-btn");
     if (!btn) return;
-    handler(nearbyMarkers, message, true);
+    handler(message, true, originalPosition, originalZoom, map);
   });
 };
 

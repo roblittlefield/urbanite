@@ -4,7 +4,7 @@ import L from "leaflet";
 import * as model from "./model.js";
 import * as sfapi from "./config.js";
 import circleMarkers from "./views/circleMarkers.js";
-import updateCallList from "./views/updateToLatest.js";
+import {updateCallList, controlOpenCallList} from "./views/updateCallList.js";
 import addHandlerMoveCenter from "./views/moveCenter.js";
 import getPosition from "./views/getPosition.js";
 import initPopupNieghborhood from "./views/initPopupNeighborhood.js";
@@ -15,7 +15,6 @@ import {
   toggleVisibleItems,
   loadNearbyListButton,
   loadProjectInfoButton,
-  toggleVisibleList,
   toggleVisibleInfo,
 } from "./views/buttonsView.js";
 import { async } from "regenerator-runtime";
@@ -24,11 +23,10 @@ let map;
 let originalPosition;
 let originalZoom;
 let position;
-let lastLoadedList;
-const latestContainer = document.getElementById("call-list-container");
-const callList = document.getElementById("call-list");
+
+
 const disclaimerContainer = document.querySelector(".disclaimer");
-const callListHeading = document.getElementById("call-list-heading");
+
 const countContainer = document.getElementById("nearby-info");
 const infoContainer = document.getElementById("project-info-container");
 
@@ -49,12 +47,9 @@ const controlMap = async function () {
 
 const controlCircleMarkers = async function () {
   try {
-    // Fetch API data
     const responsePolice48h = await model.fetchApi(
       sfapi.API_URL_POLICE_48h_FILTERED
     );
-
-    // Receive API data
     const dataApiPolice48h = await responsePolice48h.json();
     const dataResult = model.dataProcess(
       position,
@@ -64,26 +59,24 @@ const controlCircleMarkers = async function () {
     );
     const data = dataResult.data;
 
-    // Create Circle Markers
     const circleMarkersInst = new circleMarkers();
     const [police48Layer, nearbyLayer] = circleMarkersInst.addCircleMarkers(
       data,
       position
     );
-
-    // Circle Markers to Map
     police48Layer.addTo(map);
 
-    // 1st Popup
     initPopupNieghborhood(position, police48Layer);
-
-    loadLatestListButton(controlOpenCallList, police48Layer, false);
-
     addHandlerMoveCenter(data, police48Layer, map);
+    
+    loadLatestListButton(controlOpenCallList)
+    loadNearbyListButton(controlOpenCallList, originalPosition, originalZoom, map);
+    
+    
+    updateCallList(nearbyLayer, map, true);
+    updateCallList(police48Layer, map, false);
 
-    loadNearbyListButton(controlOpenCallList, nearbyLayer, true);
-
-    // Control Call Count Display
+    // Call Count Display
     if (JSON.stringify(position) !== JSON.stringify(sfapi.getLatLngSF())) {
       countContainer.textContent =
         dataResult.countCallsNearby.toString() +
@@ -91,7 +84,7 @@ const controlCircleMarkers = async function () {
         dataResult.countCallsNearbyRecent.toString() +
         ` past ${sfapi.timeElapNearby / 60}h`;
       const circle = L.circle(position, {
-        radius: 500, // meters
+        radius: 500, // m
         color: "white",
         fillColor: "blue",
         fillOpacity: 0.1,
@@ -120,34 +113,6 @@ const controlChangeMap = function () {
   });
   L.tileLayer(sfapi.MAP_LAYERS[currentLayer]).addTo(map);
   L.tileLayer(sfapi.MAP_LAYERS[currentLayer - 1]).remove();
-};
-
-const controlOpenCallList = function (markers, message, nearby) {
-  callListHeading.textContent = message;
-  updateCallList(markers, map, nearby);
-  toggleVisibleItems();
-  toggleVisibleList();
-  if (
-    (lastLoadedList === "nearby" && !nearby) ||
-    (lastLoadedList === "SF" && nearby)
-  ) {
-    callList.scrollTop = 0;
-  }
-  if (nearby) map.setView(originalPosition, originalZoom);
-  nearby ? (lastLoadedList = "nearby") : (lastLoadedList = "SF");
-  setTimeout(
-    window.addEventListener("click", (event) => {
-      const clickTarget = event.target;
-      if (
-        !latestContainer.classList.contains("hidden") &&
-        !callList.contains(clickTarget)
-      ) {
-        toggleVisibleItems();
-        toggleVisibleList();
-      }
-    }),
-    200
-  );
 };
 
 const controlProjectInfo = function () {

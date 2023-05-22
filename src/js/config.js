@@ -78,11 +78,6 @@ export const includedCallTypesPDlive = [
   "DEMO / PROTEST",
   "ARREST MADE",
   "RESISTING ARREST",
-  // "SUSPICIOUS VEHICLE",
-  // "SUSPICIOUS PERSON",
-  // "VANDALISM",
-  // "THREATS / HARASSMENT",
-  // "INDECENT EXPOSURE",
 ];
 
 export const colorMap = new Map([
@@ -96,7 +91,7 @@ export const colorMap = new Map([
   ["FIGHT W/WEAPONS", "#E3173F"],
   ["FIGHT NO WEAPON", "#E3173F"],
 
-  ["AGG ASSAULT / ADW", "#FFF000"], // Yellow (darker)
+  ["AGG ASSAULT / ADW", "#FFF000"], // Yellow
   ["ASSAULT / BATTERY", "#FFF000"],
   ["STRONGARM ROBBERY", "#FFA500"], // Orange
   ["GRAND THEFT", "#FFA500"],
@@ -189,9 +184,8 @@ export const PARAM_MAP_POLICE_48h = {
   address: "intersection_name",
   neighborhood: "analysis_neighborhood",
   disposition: "disposition",
-  // closeTime: "close_datetime",
   priority: "priority_final",
-  onView: "onview_flag", // T/F officer observed activity of crime
+  onView: "onview_flag", 
   sensitive: "sensitive_call",
 };
 
@@ -215,42 +209,3 @@ export const DISPOSITION_REF_POLICE = {
   UTL: "Unable to locate",
   VAS: "Car alarm",
 };
-
-// const API_URL_POLICE_HIST = 'https://data.sfgov.org/resource/wg3w-h783.json'
-
-// // Police Hist
-// export const API_MAP_POLICE_HIST = {
-//   incidentNumber: "incident_number",
-//   rowid: "row_id",
-//   call_type: "incident_subcategory",
-//   coords: "intersection_point",
-//   receivedTime: "incident_datetime",
-//   reportTime: "report_datetime",
-//   neighborhood: "analysis_neighborhood",
-//   desc: "incident_description",
-//   disposition: "", // SFPD only
-//   onView: "", // T/F officer observed activity of crime
-// };
-
-// // Fire
-// export const API_MAP_FIRE_HIST = {
-//   incidentNumber: "incident_number",
-//   // rowid: "call_number",
-//   rowid: "incident_number",
-//   call_type: "call_type",
-//   coords: "case_location",
-//   unit: "unit_type",
-//   receivedTime: "received_dttm",
-//   entryTime: "entry_dttm",
-//   dispatchTime: "dispatch_dttm",
-//   responseTime: "response_dttm",
-//   onSceneTime: "on_scene_dttm",
-//   transportTime: "transport_dttm",
-//   hospitalTime: "hospital_dttm",
-//   availableTime: "available_dttm",
-//   address: "address",
-//   neighborhood: "neighborhoods_analysis_boundaries",
-//   desc: "call_final_disposition",
-//   battalion: "battalion", // SFFD only
-//   numberAlarms: "number_of_alarms",
-// };

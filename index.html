@@ -17,18 +17,18 @@
   </head>
   <body>
     <header></header>
+    <main>
     <div class="overlay"></div>
     <div class="container">
       <div id="map"></div>
-      <!-- <div class="share-button"></div> -->
       <div class="weather">
         <div id="containerTemp"></div>
       </div>
       <div id="neighborhood-text"></div>
+      <button id="project-info-btn">About</button>
       <button id="change-map-btn">Map</button>
       <button id="latest-list-btn">All SF</button>
       <button id="nearby-list-btn">Nearby</button>
-      <button id="project-info-btn">About</button>
       <div id="nearby-container">
         <button id="nearby-info"></button>
       </div>
@@ -45,7 +45,7 @@
       <div class="hidden" id="project-info-container">
         <div id="project-info">
           <h2 id="project-info-heading"></h2>
-          <p>Welcome to Urbanite!  🌁  <br><br>Explore the latest law enforcement dispatched calls for service in San Francisco with this interactive web app.<br><br>Move around the map to view calls in different neighborhoods. Change the map skin.  Open the list to see the latest calls in all SF or nearby.<br><br>Built as a lightweight and speedy alternative to other incident mapping apps with heavy pay-walls.<br><br>A personal project designed and developed in the Misson using vanilla Javascript. 🌯🌴🌴 <br><br>Inquiries/feedback? DM <a href="https://twitter.com/roblittlefield">@roblittlefield</a><br><br>Future plans include ability to share calls, view historic calls, view fire dept calls, view 311 data.<br><br>Calls anonymized to nearest intersection, delayed 10m. Links to source details in footer.<br><br>Thanks for stopping by 🤙 <br><br> ~ Rob 
+          <p>Welcome to Urbanite!  🌁  <br><br>Explore the latest law enforcement dispatched calls for service in San Francisco with this interactive web app. Move around the map to view calls in different neighborhoods. Change the map skin.  Open the list to see the latest calls in all SF or nearby.<br><br>Built as a lightweight and speedy alternative to other heavier incident mapping apps with pay-walls and ads.<br><br>A personal project designed and developed in the Misson using vanilla Javascript. 🌯🌴🌴 <br><br>Inquiries/feedback? DM <a href="https://twitter.com/roblittlefield">@roblittlefield</a><br><br>Calls anonymized to nearest intersection, delayed 10m. Links to source details in footer.<br><br>Thanks for stopping by 🤙 <br><br> ~ Rob 
           </p>
         </div></div>
         <div class="disclaimer" style="display: none;">
@@ -54,6 +54,7 @@
             SF Gov
           </a>
         </div>
+      </main>
         <footer>
           <span id="last-updated"></span>
         </footer>
