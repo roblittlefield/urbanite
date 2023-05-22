@@ -1,19 +1,17 @@
 const temperatureContainer = document.querySelector(".weather");
+const projectInfoButton = document.getElementById("project-info-btn");
 const changeMap = document.getElementById("change-map-btn");
 const latestButton = document.getElementById("latest-list-btn");
 const nearbyButton = document.getElementById("nearby-list-btn");
-const projectInfoButton = document.getElementById("project-info-btn");
 const latestContainer = document.getElementById("call-list-container");
 const countNearbyContainer = document.getElementById("nearby-info");
 const neighborhoodContainer = document.getElementById("neighborhood-text");
 const infoContainer = document.getElementById("project-info-container");
+const lastUpdatedElement = document.getElementById("last-updated");
 
-setTimeout(() => {
-  projectInfoButton.style.transform = "translateX(-15px)";
-}, 3500);
-setTimeout(() => {
-  projectInfoButton.style.transform = "translateX(0px)";
-}, 8000);
+setTimeout(function () {
+  projectInfoButton.classList.add("bouncing");
+}, 4000);
 
 export const loadChangeMapButton = function (handler) {
   changeMap.addEventListener("click", (e) => {
@@ -66,6 +64,7 @@ export const toggleVisibleItems = function () {
   projectInfoButton.classList.toggle("hidden");
   countNearbyContainer.classList.toggle("hidden");
   neighborhoodContainer.classList.toggle("hidden");
+  lastUpdatedElement.classList.toggle("hidden");
 };
 
 export const toggleVisibleList = function () {
@@ -73,6 +72,5 @@ export const toggleVisibleList = function () {
 };
 
 export const toggleVisibleInfo = function () {
-  console.log(`toggling visible project info in buttons view`);
   infoContainer.classList.toggle("hidden");
 };

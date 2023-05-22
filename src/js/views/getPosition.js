@@ -11,7 +11,7 @@ const showAlert = function (message) {
   }, 2000);
 };
 
-const getPosition = function (defaultMapSF) {
+export const getPosition = function (defaultMapSF) {
   return new Promise((resolve, reject) => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -52,19 +52,16 @@ const getPosition = function (defaultMapSF) {
     }
   });
 };
-
-const lastUpdatedElement = document.getElementById("last-updated");
-const storedTimestamp = localStorage.getItem("lastUpdatedTimestamp");
-const currentDate = new Date();
-const formattedDate = currentDate.toLocaleString("en-US", {
-  month: "long",
-  day: "numeric",
-  hour: "numeric",
-  minute: "numeric",
-  hour12: true,
-  timeZoneName: "short",
-});
-lastUpdatedElement.textContent = `${formattedDate}`;
-localStorage.setItem("lastUpdatedTimestamp", formattedDate);
-
-export default getPosition;
+export const loadLastUpdated = function () {
+  const lastUpdatedElement = document.getElementById("last-updated");
+  const currentDate = new Date();
+  const formattedDate = currentDate.toLocaleString("en-US", {
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+    timeZoneName: "short",
+  });
+  lastUpdatedElement.textContent = `${formattedDate}`;
+};

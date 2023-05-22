@@ -35,12 +35,12 @@
       <div class="hidden" id="call-list-container">
         <h2 id="call-list-heading"></h2>
         <ul id="call-list"></ul>
-        <style>
+        <!-- <style>
           .inline-headings h3 {
             display: inline;
             margin: 0;
           }
-          </style>
+          </style> -->
       </div>
       <div class="hidden" id="project-info-container">
         <div id="project-info">
@@ -55,9 +55,7 @@
           </a>
         </div>
       </main>
-        <footer>
-          <span id="last-updated"></span>
-        </footer>
+        
         <script type="module">
           window.addEventListener('load', () => {
             if ('serviceWorker' in navigator) {
@@ -72,9 +70,11 @@
             }
           });
           </script>
-        
         <script type="module" src="src/js/controller.js"></script>
         <link rel="stylesheet" href="src/css/style2.css" />
+        <footer>
+          <span id="last-updated"></span>
+        </footer>
       </body>
       </html>
       

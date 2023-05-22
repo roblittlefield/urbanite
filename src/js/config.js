@@ -201,7 +201,7 @@ export const DISPOSITION_REF_POLICE = {
   GOA: "Gone on arrival",
   HAN: "Officer handled",
   NCR: "No issue found",
-  ND: "Related to another call",
+  ND: "Related call",
   NOM: "No merit",
   PAS: "Home alarm",
   REP: "Police report made",

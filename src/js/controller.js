@@ -6,7 +6,7 @@ import * as sfapi from "./config.js";
 import circleMarkers from "./views/circleMarkers.js";
 import { updateCallList, controlOpenCallList } from "./views/updateCallList.js";
 import addHandlerMoveCenter from "./views/moveCenter.js";
-import getPosition from "./views/getPosition.js";
+import { getPosition, loadLastUpdated } from "./views/getPosition.js";
 import initPopupNieghborhood from "./views/initPopupNeighborhood.js";
 import getWeather from "./views/getWeather.js";
 import {
@@ -25,7 +25,6 @@ let originalZoom;
 let position;
 
 const disclaimerContainer = document.querySelector(".disclaimer");
-
 const countContainer = document.getElementById("nearby-info");
 const infoContainer = document.getElementById("project-info-container");
 
@@ -37,6 +36,7 @@ const controlMap = async function () {
     map = L.map("map").setView(originalPosition, originalZoom);
     const initLayer = L.tileLayer(sfapi.MAP_LAYERS[0]).addTo(map);
     if (!map) return;
+    loadLastUpdated();
     return map;
   } catch (err) {
     console.error(`${err} Leaflet map error`);
@@ -57,7 +57,6 @@ const controlCircleMarkers = async function () {
       sfapi.PARAM_MAP_POLICE_48h
     );
     const data = dataResult.data;
-
     const circleMarkersInst = new circleMarkers();
     const [police48Layer, nearbyLayer] = circleMarkersInst.addCircleMarkers(
       data,

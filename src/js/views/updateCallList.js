@@ -98,8 +98,12 @@ export const controlOpenCallList = function (
   originalZoom,
   map
 ) {
-  const callBoxes = document.getElementsByClassName(nearby ? "nearby-call-box" : "allSF-call-box");
-  const callBoxesHide = document.getElementsByClassName(nearby? "allSF-call-box" : "nearby-call-box");
+  const callBoxes = document.getElementsByClassName(
+    nearby ? "nearby-call-box" : "allSF-call-box"
+  );
+  const callBoxesHide = document.getElementsByClassName(
+    nearby ? "allSF-call-box" : "nearby-call-box"
+  );
   for (let i = 0; i < callBoxesHide.length; i++) {
     callBoxesHide[i].classList.add("hidden");
   }
@@ -136,3 +140,21 @@ export const controlOpenCallList = function (
     800
   );
 };
+
+// Prevent rubber-banding
+// Call list container
+window.addEventListener("DOMContentLoaded", function () {
+  const minY = 0; // Min scroll
+  const maxY = latestContainer.scrollHeight - latestContainer.clientHeight; // Max scroll
+
+  latestContainer.addEventListener("scroll", function () {
+    const scrollTop = latestContainer.scrollTop;
+
+    // Restrict scrolling beyond range
+    if (scrollTop < minY) {
+      latestContainer.scrollTop = minY;
+    } else if (scrollTop > maxY) {
+      latestContainer.scrollTop = maxY;
+    }
+  });
+});
