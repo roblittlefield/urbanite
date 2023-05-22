@@ -4,6 +4,7 @@
   "description": "Explore the latest San Francisco law enforcement dispatched calls for service near you with Urbanite.",
   "start_url": "/",
   "display": "minimal-ui",
+  "background_color": "#f7f7f7",
   "icons": [
     {
       "src": "./icon-192x192.png",
