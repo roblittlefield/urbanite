@@ -3,7 +3,7 @@
   "short_name": "Urbanite",
   "description": "Explore the latest San Francisco law enforcement dispatched calls for service near you with Urbanite.",
   "start_url": "/",
-  "display": "fullscreen",
+  "display": "minimal-ui",
   "background_color": "#ffffff",
   "theme_color": "#007bff",
   "icons": [
