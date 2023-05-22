@@ -31,13 +31,14 @@ body {
   text-decoration: none;
   position: fixed;
   padding: 0px 3px 0px 5px;
-  width: 55px;
+  width: 65px;
   text-align: center;
-  bottom: 0px;
-  right: 55px;
+  bottom: 0%;
+  /* right: 55px; */
+  left: 0%;
   font-family: Tahoma, Arial, Helvetica, sans-serif;
   background-color: rgba(255, 255, 255, 0.65);
-  font-size: 10px;
+  font-size: 12px;
   cursor: pointer;
   border-radius: 4px 0px 0px 0px;
 }
@@ -194,9 +195,9 @@ body {
   grid-column: 1;
   grid-row: 1;
 }
-#weather-label {
+/* #weather-label {
   font-size: 12px;
-}
+} */
 
 .weather {
   font-size: 23px;
@@ -210,9 +211,9 @@ body {
   user-select: none;
   font-family: Tahoma, Arial, Helvetica, sans-serif;
   background-color: rgba(255, 255, 255, 0.65) !important;
-  font-size: 10px;
+  font-size: 12px;
   color: #0057b7 !important;
-  width: 55px;
+  width: 65px;
   box-sizing: border-box;
 }
 
@@ -255,7 +256,7 @@ body {
 }
 
 #last-updated {
-  font-size: 10px;
+  font-size: 12px;
   touch-action: none;
   line-height: 1.4;
   font-family: Tahoma, Arial, Helvetica, sans-serif;
