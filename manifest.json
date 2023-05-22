@@ -5,7 +5,6 @@
   "start_url": "/",
   "display": "minimal-ui",
   "background_color": "#ffffff",
-  "theme_color": "#007bff",
   "icons": [
     {
       "src": "./icon-192x192.png",
