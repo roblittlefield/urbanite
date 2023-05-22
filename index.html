@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="description" content="Urbanite is an interactive web app that provides real-time access to San Francisco's dispatched law enforcement calls. Explore the latest incidents near you, navigate different neighborhoods, and stay informed with ease. Built using vanilla JavaScript, Urbanite offers a lightweight and fast user experience. Discover the power of real-time incident mapping in San Francisco with Urbanite." />
+    <link rel="preload" as="image" href="https://stamen-tiles-b.a.ssl.fastly.net/terrain/14/2620/6333.jpg">
     <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="src/css/style.css" />
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -39,27 +40,27 @@
             display: inline;
             margin: 0;
           }
-        </style>
+          </style>
       </div>
       <div class="hidden" id="project-info-container">
         <div id="project-info">
           <h2 id="project-info-heading"></h2>
           <p>Welcome to Urbanite!  🌁  <br><br>Explore the latest law enforcement dispatched calls for service in San Francisco with this interactive web app.<br><br>Move around the map to view calls in different neighborhoods. Change the map skin.  Open the list to see the latest calls in all SF or nearby.<br><br>Built as a lightweight and speedy alternative to other incident mapping apps with heavy pay-walls.<br><br>A personal project designed and developed in the Misson using vanilla Javascript. 🌯🌴🌴 <br><br>Inquiries/feedback? DM <a href="https://twitter.com/roblittlefield">@roblittlefield</a><br><br>Future plans include ability to share calls, view historic calls, view fire dept calls, view 311 data.<br><br>Calls anonymized to nearest intersection, delayed 10m. Links to source details in footer.<br><br>Thanks for stopping by 🤙 <br><br> ~ Rob 
           </p>
-          </div></div>
-      <div class="disclaimer" style="display: none;">
-        <a href="https://datasf.gitbook.io/datasf-dataset-explainers/law-enforcement-dispatched-calls-for-service" class="centered-link">
-          <img src="https://sf.gov/themes/custom/sfgovpl/logo.svg" alt="SF.gov Data" style="width: 10px; height: 10px;">
-          SF Gov
-        </a>
-      </div>
-      <footer>
-        <span id="last-updated"></span>
-      </footer>
-      <script type="module">
-        window.addEventListener('load', () => {
-          if ('serviceWorker' in navigator) {
-            navigator.serviceWorker
+        </div></div>
+        <div class="disclaimer" style="display: none;">
+          <a href="https://datasf.gitbook.io/datasf-dataset-explainers/law-enforcement-dispatched-calls-for-service" class="centered-link">
+            <img src="https://sf.gov/themes/custom/sfgovpl/logo.svg" alt="SF.gov Data" style="width: 10px; height: 10px;">
+            SF Gov
+          </a>
+        </div>
+        <footer>
+          <span id="last-updated"></span>
+        </footer>
+        <script type="module">
+          window.addEventListener('load', () => {
+            if ('serviceWorker' in navigator) {
+              navigator.serviceWorker
               .register(new URL('/service-worker.js', import.meta.url), { type: 'module' })
               .then((registration) => {
                 console.log('Service Worker registered:', registration);
@@ -67,10 +68,12 @@
               .catch((error) => {
                 console.log('Service Worker registration failed:', error);
               });
-          }
-        });
-      </script>
+            }
+          });
+          </script>
         
-      <script type="module" src="src/js/controller.js"></script>
-  </body>
-</html>
+        <script type="module" src="src/js/controller.js"></script>
+        <link rel="stylesheet" href="src/css/style2.css" />
+      </body>
+      </html>
+      

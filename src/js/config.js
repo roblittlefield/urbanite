@@ -1,12 +1,12 @@
 import { SFDATA_API_KEY } from "../../apikeys.js";
-///////////-----Controls-----///////////
+
 export const maxCalls = 700;
 export const timeElapSF = 120; // 6h
 export const nearbyRadius = 500;
 export const timeElapNearby = 180; // Nearby
 export const maxHoursAgo = 60; // 60h
 export const centerPopupTolerance = 100;
-///////////-----Leaflet Map-----///////////
+
 export const getLatLngSF = () => {
   return window.innerWidth <= 758 ? [37.758, -122.43] : [37.762, -122.445];
 };
@@ -22,8 +22,6 @@ export const MAP_LAYERS = [
   "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
 ];
 
-///////////-----SAN FRANCISCO .GOV DATA-----///////////
-///////////-----Police - Last 48 hours-----///////////
 const API_URL_POLICE_48h = "https://data.sfgov.org/resource/gnap-fj3t.json";
 
 const excludedCallTypes = [
@@ -226,27 +224,13 @@ export const DISPOSITION_REF_POLICE = {
 //   rowid: "row_id",
 //   call_type: "incident_subcategory",
 //   coords: "intersection_point",
-//   unit: "",
 //   receivedTime: "incident_datetime",
-//   entryTime: "",
-//   dispatchTime: "",
-//   responseTime: "",
-//   onSceneTime: "",
 //   reportTime: "report_datetime",
-//   address: "",
 //   neighborhood: "analysis_neighborhood",
 //   desc: "incident_description",
 //   disposition: "", // SFPD only
-//   closeTime: "",
-//   priority: "",
 //   onView: "", // T/F officer observed activity of crime
-//   sensitive: "",
 // };
-
-// const filterExpressionPoliceHist = excludedCallTypes
-//   .map((callType) => `call_type_final_desc != '${callType}'`)
-//   .join(" and ");
-// export const API_URL_POLICE_HIST_FILTERED = `${API_URL_POLICE_HIST}?$where=${filterExpression}&$$app_token=${SFDATA_API_KEY}&$limit=10000`;
 
 // // Fire
 // export const API_MAP_FIRE_HIST = {
