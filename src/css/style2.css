@@ -175,10 +175,10 @@
 }
 .bouncing {
   animation-name: bounce;
-  animation-duration: 0.4s;
+  animation-duration: 0.5s;
   animation-timing-function: ease-in-out;
-  animation-iteration-count: 2;
-  transition: transform 0.4s;
+  animation-iteration-count: 5;
+  transition: transform 0.5s;
 }
 
 /*----SCROLL BAR----*/
