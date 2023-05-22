@@ -38,7 +38,7 @@ const controlMap = async function () {
     originalPosition = position;
     originalZoom = sfapi.getMapZoomLevel();
     map = L.map("map").setView(originalPosition, originalZoom);
-    const initLayer = L.tileLayer(sfapi.MAP_LAYERS[1]).addTo(map);
+    const initLayer = L.tileLayer(sfapi.MAP_LAYERS[0]).addTo(map);
     if (!map) return;
     return map;
   } catch (err) {
@@ -56,8 +56,6 @@ const controlCircleMarkers = async function () {
 
     // Receive API data
     const dataApiPolice48h = await responsePolice48h.json();
-    ////////////////////////
-    ////////////////////////
     const dataResult = model.dataProcess(
       position,
       dataApiPolice48h,
@@ -84,7 +82,7 @@ const controlCircleMarkers = async function () {
     addHandlerMoveCenter(data, police48Layer, map);
 
     loadNearbyListButton(controlOpenCallList, nearbyLayer, true);
-    
+
     // Control Call Count Display
     if (JSON.stringify(position) !== JSON.stringify(sfapi.getLatLngSF())) {
       countContainer.textContent =

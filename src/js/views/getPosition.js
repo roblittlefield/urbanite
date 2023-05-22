@@ -53,4 +53,19 @@ const getPosition = function (defaultMapSF) {
   });
 };
 
+// window.addEventListener("DOMContentLoaded", () => {
+  const lastUpdatedElement = document.getElementById("last-updated");
+  const storedTimestamp = localStorage.getItem("lastUpdatedTimestamp");
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleString("en-US", {
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      timeZoneName: "short",
+    });
+    lastUpdatedElement.textContent = `${formattedDate}`;
+    localStorage.setItem("lastUpdatedTimestamp", formattedDate);
+// });
+
 export default getPosition;

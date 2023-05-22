@@ -25,12 +25,15 @@
   "homepage": "https://github.com/roblittlefield/urbanite#readme",
   "dependencies": {
     "@mdi/svg": "^7.2.96",
+    "@parcel/service-worker": "^2.8.3",
     "core-js": "^3.30.2",
     "leaflet": "^1.9.3",
     "parcel": "^2.8.3",
     "regenerator-runtime": "^0.13.11"
   },
   "devDependencies": {
+    "@parcel/packager-raw-url": "^2.8.3",
+    "@parcel/transformer-webmanifest": "^2.8.3",
     "@types/core-js": "^2.5.5",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",

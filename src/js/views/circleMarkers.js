@@ -65,9 +65,6 @@ export default class circleMarkers {
         closeButton: false,
         disableAnimation: true,
       });
-
-
-
       const markerLatLng = callLatlng;
       const distance = positionLatLng.distanceTo(markerLatLng);
       if (distance < 500) {

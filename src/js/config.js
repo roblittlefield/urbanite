@@ -15,11 +15,11 @@ export const getMapZoomLevel = () => {
 };
 
 export const MAP_LAYERS = [
-  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
   "https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.jpg",
   "https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg",
   "https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png",
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
 ];
 
 ///////////-----SAN FRANCISCO .GOV DATA-----///////////
@@ -218,6 +218,8 @@ export const DISPOSITION_REF_POLICE = {
   VAS: "Car alarm",
 };
 
+// const API_URL_POLICE_HIST = 'https://data.sfgov.org/resource/wg3w-h783.json'
+
 // // Police Hist
 // export const API_MAP_POLICE_HIST = {
 //   incidentNumber: "incident_number",
@@ -240,6 +242,11 @@ export const DISPOSITION_REF_POLICE = {
 //   onView: "", // T/F officer observed activity of crime
 //   sensitive: "",
 // };
+
+// const filterExpressionPoliceHist = excludedCallTypes
+//   .map((callType) => `call_type_final_desc != '${callType}'`)
+//   .join(" and ");
+// export const API_URL_POLICE_HIST_FILTERED = `${API_URL_POLICE_HIST}?$where=${filterExpression}&$$app_token=${SFDATA_API_KEY}&$limit=10000`;
 
 // // Fire
 // export const API_MAP_FIRE_HIST = {

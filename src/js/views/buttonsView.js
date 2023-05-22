@@ -8,6 +8,21 @@ const countNearbyContainer = document.getElementById("nearby-info");
 const neighborhoodContainer = document.getElementById("neighborhood-text");
 const infoContainer = document.getElementById("project-info-container");
 
+setTimeout(() => {
+  projectInfoButton.style.transform = "translateX(-15px)";
+}, 2700);
+setTimeout(() => {
+  projectInfoButton.style.transform = "translateX(0px)";
+}, 7000);
+
+// setTimeout(() => {
+//   projectInfoButton.style.display = "none";
+//   changeMap.style.transform = "translateY(-35px)";
+//   latestButton.style.transform = "translateY(-35px)";
+//   nearbyButton.style.transform = "translateY(-35px)";
+//   projectInfoButton.style.transform = "translateY(-35px)";
+// }, 30000);
+
 export const loadChangeMapButton = function (handler) {
   changeMap.addEventListener("click", (e) => {
     const btn = e.target.closest("#change-map-btn");
