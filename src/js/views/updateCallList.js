@@ -7,7 +7,6 @@ const callList = document.getElementById("call-list");
 
 export const updateCallList = function (latestMarkers, map, nearby) {
   const callList = document.getElementById("call-list");
-  // callList.innerHTML = "";
   let calcHour = 0;
   const sortedMarkersArr = latestMarkers.getLayers().reverse();
   sortedMarkersArr.forEach((circleMarker) => {
@@ -21,7 +20,7 @@ export const updateCallList = function (latestMarkers, map, nearby) {
       const minutesNumber = document.createElement("span");
       minutesNumber.classList.add("received-time-ago-hours");
       if (nearby) {
-        minutesNumber.style.fontSize = "15px";
+        minutesNumber.style.fontSize = "20px";
       }
       minutesNumber.textContent = `${calcHour} hour${
         calcHour === 1 ? "" : "s"
@@ -140,21 +139,3 @@ export const controlOpenCallList = function (
     800
   );
 };
-
-// Prevent rubber-banding
-// Call list container
-window.addEventListener("DOMContentLoaded", function () {
-  const minY = 0; // Min scroll
-  const maxY = latestContainer.scrollHeight - latestContainer.clientHeight; // Max scroll
-
-  latestContainer.addEventListener("scroll", function () {
-    const scrollTop = latestContainer.scrollTop;
-
-    // Restrict scrolling beyond range
-    if (scrollTop < minY) {
-      latestContainer.scrollTop = minY;
-    } else if (scrollTop > maxY) {
-      latestContainer.scrollTop = maxY;
-    }
-  });
-});

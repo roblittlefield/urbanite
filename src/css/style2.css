@@ -71,7 +71,6 @@
   font-size: 40px;
   font-family: Tahoma, Arial, Helvetica, sans-serif;
   border: #292828;
-  text-align: right;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   user-select: none;
   touch-action: none;
@@ -167,7 +166,7 @@
     transform: translateX(0);
   }
   50% {
-    transform: translateX(-10px);
+    transform: translateX(-6px);
   }
   100% {
     transform: translateX(0);
@@ -177,7 +176,7 @@
   animation-name: bounce;
   animation-duration: 0.5s;
   animation-timing-function: ease-in-out;
-  animation-iteration-count: 5;
+  animation-iteration-count: 2;
   transition: transform 0.5s;
 }
 

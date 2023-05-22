@@ -36,12 +36,12 @@ export const textProperCase = function (textRaw) {
 export const minsHoursFormat = function (time) {
   const hours = Math.floor(time / 60);
   const minutes = time % 60;
-  if ((hours === 0)) {
-    return `${minutes}m`; // Format as hours and minutes
+  if (hours === 0) {
+    return `${minutes}m`;
   } else if (hours < 6) {
-    return `${hours}h ${minutes}m`; // Format as hours only
+    return `${hours}h${minutes === 0 ? "" : ` ${minutes}m`}`;
   } else {
-    return `${hours}h`; // Format as minutes only
+    return `${hours}h`;
   }
 };
 

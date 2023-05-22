@@ -4,7 +4,7 @@ export const maxCalls = 700;
 export const timeElapSF = 120; // 6h
 export const nearbyRadius = 500;
 export const timeElapNearby = 180; // Nearby
-export const maxHoursAgo = 60; // 60h
+export const maxHoursAgo = 48; // 60h
 export const centerPopupTolerance = 100;
 
 export const getLatLngSF = () => {
