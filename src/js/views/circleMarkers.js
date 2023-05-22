@@ -40,6 +40,7 @@ export default class circleMarkers {
         opacity: 0.6,
         fillOpacity: 0.9,
         data: {
+          cadNumber: call.cadNumber,
           // receivedTimeCalc: call.receivedTime,
           disposition: call.dispositionMeaning,
           neighborhood: call.neighborhoodFormatted,

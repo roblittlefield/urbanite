@@ -9,10 +9,6 @@ const neighborhoodContainer = document.getElementById("neighborhood-text");
 const infoContainer = document.getElementById("project-info-container");
 const lastUpdatedElement = document.getElementById("last-updated");
 
-setTimeout(function () {
-  projectInfoButton.classList.add("bouncing");
-}, 4000);
-
 export const loadChangeMapButton = function (handler) {
   changeMap.addEventListener("click", (e) => {
     const btn = e.target.closest("#change-map-btn");

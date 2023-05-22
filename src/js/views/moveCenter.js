@@ -1,4 +1,6 @@
 import { centerPopupTolerance } from "../config.js";
+let currentPopup = null;
+let isPopupOpen = false;
 
 const addHandlerMoveCenter = function (data, police48Layer, map) {
   let timer = null;
@@ -32,17 +34,21 @@ const addHandlerMoveCenter = function (data, police48Layer, map) {
             const { x: markerX, y: markerY } = map.latLngToContainerPoint(
               layer.getLatLng()
             );
-
             if (
               Math.abs(markerX - closestCoords[0]) < 1e-6 &&
               Math.abs(markerY - closestCoords[1]) < 1e-6
             ) {
-              layer.openPopup();
+              if (!isPopupOpen && currentPopup !== layer) {
+                layer.openPopup();
+                isPopupOpen = true;
+                currentPopup = layer;
+              }
               const { neighborhood } = layer.options.data;
               const neighborhoodText =
                 document.getElementById("neighborhood-text");
               neighborhoodText.textContent = neighborhood;
-            } else {
+            } else if (currentPopup === layer) {
+              isPopupOpen = false;
               layer.closePopup();
             }
           }

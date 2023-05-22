@@ -50,7 +50,7 @@
   transform: translate(-50%, -50%);
   width: 72%;
   max-width: 500px;
-  height: 97%;
+  max-height: 93vh;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 4;
   display: flex;
@@ -60,8 +60,8 @@
   color: white;
   font-family: Arial, sans-serif;
   border-radius: 8px;
-  /* overflow: auto; */
   overflow: hidden;
+  overscroll-behavior: none;
   pointer-events: none;
   user-select: none;
   touch-action: none;
@@ -99,7 +99,7 @@
 
   /* Dimension and Layout */
   max-width: 320px;
-  height: auto;
+  max-height: 80vh;
   width: 90%;
   padding: 1px;
   margin: 0px 0px 5px 0px;
@@ -110,12 +110,13 @@
 
   /* Scrolling and Interaction */
   overflow-x: hidden;
+  overflow-y: auto;
   pointer-events: auto;
   touch-action: pan-y;
   -ms-touch-action: auto;
   -webkit-overflow-scrolling: touch;
   user-select: none;
-  overscroll-behavior: contain; /* Stop rubber-banding */
+  overscroll-behavior: none; /* Stop rubber-banding */
 }
 
 .call-box {
@@ -160,37 +161,18 @@
   margin: 0px 11px 0px;
 }
 
-/*----BUTTON BOUNCE----*/
-@keyframes bounce {
-  0% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(-6px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-.bouncing {
-  animation-name: bounce;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: 2;
-  transition: transform 0.5s;
-}
-
 /*----SCROLL BAR----*/
-::-webkit-scrollbar {
+#call-list::-webkit-scrollbar {
+  -webkit-appearance: scrollbar;
   width: 10px;
 }
 
-::-webkit-scrollbar-track {
+#call-list::-webkit-scrollbar-track {
   background-color: #292828;
   border-radius: 10px;
 }
 
-::-webkit-scrollbar-thumb {
+#call-list::-webkit-scrollbar-thumb {
   background: linear-gradient(
     to bottom,
     #ff0000,

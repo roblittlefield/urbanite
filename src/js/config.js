@@ -170,7 +170,7 @@ const filterExpression = excludedCallTypes
 export const API_URL_POLICE_48h_FILTERED = `${API_URL_POLICE_48h}?$where=${filterExpression} AND intersection_point IS NOT NULL&$$app_token=${SFDATA_API_KEY}&$limit=2500`;
 
 export const PARAM_MAP_POLICE_48h = {
-  incidentNumber: "cad_number",
+  cadNumber: "cad_number",
   rowid: "id",
   call_type: "call_type_final_desc",
   call_type_original: "call_type_original_desc",
@@ -185,7 +185,7 @@ export const PARAM_MAP_POLICE_48h = {
   neighborhood: "analysis_neighborhood",
   disposition: "disposition",
   priority: "priority_final",
-  onView: "onview_flag", 
+  onView: "onview_flag",
   sensitive: "sensitive_call",
 };
 

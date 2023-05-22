@@ -120,19 +120,21 @@ const controlChangeMap = function () {
 const controlProjectInfo = function () {
   toggleVisibleInfo();
   toggleVisibleItems();
-  setTimeout(
-    window.addEventListener("click", (event) => {
-      const clickTarget = event.target;
-      if (
-        !infoContainer.classList.contains("hidden") &&
-        !infoContainer.contains(clickTarget)
-      ) {
-        toggleVisibleItems();
-        toggleVisibleInfo();
-      }
-    }),
-    200
-  );
+
+  const handleClick = (event) => {
+    const clickTarget = event.target;
+    if (
+      !infoContainer.classList.contains("hidden") &&
+      !infoContainer.contains(clickTarget)
+    ) {
+      toggleVisibleItems();
+      toggleVisibleInfo();
+    }
+  };
+  window.addEventListener("click", handleClick);
+  setTimeout(() => {
+    window.removeEventListener("click", handleClick);
+  }, 200);
 };
 
 const init = async function () {

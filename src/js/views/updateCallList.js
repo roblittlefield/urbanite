@@ -4,6 +4,7 @@ let lastLoadedList;
 const callListHeading = document.getElementById("call-list-heading");
 const latestContainer = document.getElementById("call-list-container");
 const callList = document.getElementById("call-list");
+let isEventListenerAdded = false;
 
 export const updateCallList = function (latestMarkers, map, nearby) {
   const callList = document.getElementById("call-list");
@@ -119,23 +120,28 @@ export const controlOpenCallList = function (
     callList.scrollTop = 0;
   }
   if (nearby) map.setView(originalPosition, originalZoom);
-  nearby ? (lastLoadedList = "nearby") : (lastLoadedList = "SF");
-  setTimeout(
-    window.addEventListener("click", (event) => {
-      const clickTarget = event.target;
-      if (
-        !latestContainer.classList.contains("hidden") &&
-        !callList.contains(clickTarget)
-      ) {
-        toggleVisibleItems();
-        toggleVisibleList();
-        const callBoxCallList = nearby ? "nearby-call-box" : "allSF-call-box";
-        const callBoxes = document.getElementsByClassName(callBoxCallList);
-        for (let i = 0; i < callBoxes.length; i++) {
-          callBoxes[i].classList.add("hidden");
-        }
+
+  const handleClick = (event) => {
+    const clickTarget = event.target;
+    if (
+      !latestContainer.classList.contains("hidden") &&
+      !callList.contains(clickTarget)
+    ) {
+      toggleVisibleItems();
+      toggleVisibleList();
+      const callBoxCallList = nearby ? "nearby-call-box" : "allSF-call-box";
+      const callBoxes = document.getElementsByClassName(callBoxCallList);
+      for (let i = 0; i < callBoxes.length; i++) {
+        callBoxes[i].classList.add("hidden");
       }
-    }),
-    800
-  );
+    }
+  };
+
+  if (latestContainer && callList) {
+    nearby ? (lastLoadedList = "nearby") : (lastLoadedList = "SF");
+    if (!isEventListenerAdded) {
+      window.addEventListener("click", handleClick);
+      isEventListenerAdded = true;
+    }
+  }
 };
