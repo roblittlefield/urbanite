@@ -52,6 +52,8 @@ export const loadProjectInfoButton = function (handler) {
   });
 };
 
+
+
 export const toggleVisibleItems = function () {
   temperatureContainer.classList.toggle("hidden");
   changeMap.classList.toggle("hidden");

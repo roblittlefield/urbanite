@@ -131,9 +131,9 @@ const controlProjectInfo = function () {
       toggleVisibleInfo();
     }
   };
-  window.addEventListener("click", handleClick);
+
   setTimeout(() => {
-    window.removeEventListener("click", handleClick);
+    window.addEventListener("click", handleClick);
   }, 200);
 };
 
