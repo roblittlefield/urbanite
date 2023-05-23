@@ -127,6 +127,7 @@ const controlProjectInfo = function () {
       !infoContainer.classList.contains("hidden") &&
       !infoContainer.contains(clickTarget)
     ) {
+
       toggleVisibleItems();
       toggleVisibleInfo();
     }
