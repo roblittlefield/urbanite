@@ -9,9 +9,7 @@ import {
 } from "./config";
 import {
   standardizeData,
-  formatDate, // Using this?
   textProperCase,
-  minsHoursFormat,
   neighborhoodFormat,
 } from "./helpers.js";
 
@@ -32,7 +30,7 @@ export const dataProcess = function (position, dataRaw, callTypeMap, paramMap) {
   let countCallsRecent = 0;
   let countCallsNearby = 0;
   let countCallsNearbyRecent = 0;
-  // Filter calls
+
   const dataFiltered = dataRaw.filter((callRaw) => {
     const receivedTime = new Date(callRaw.received_datetime);
     const isCallTypeIncluded = callTypeMap.includes(
@@ -43,32 +41,22 @@ export const dataProcess = function (position, dataRaw, callTypeMap, paramMap) {
     return isCallTypeIncluded && isWithinTimeRange;
   });
 
-  // Standardize calls
+
   const dataPreSort = dataFiltered.map((callRaw) => {
-    // Standardize Parameters
     const call = standardizeData(callRaw, paramMap);
-    // Call Type
     const callType = call.call_type || call.call_type_original;
-    // Call Received Time
     const receivedTime = new Date(call.receivedTime);
     const receivedTimeAgo = Math.round((now - receivedTime) / 60000);
-    // Call Entered Time
     const enteredTime = new Date(call.entryTime);
     const enteredTimeAgo = Math.round((now - enteredTime) / 60000);
-    // Call Disatched Time
     const dispatchedTime = new Date(call.dispatchTime);
     const dispatchedTimeAgo = Math.round((now - dispatchedTime) / 60000);
-    // Call OnScene Time
     const onSceneTime = new Date(call.onSceneTime);
     const responseTime = Math.round((onSceneTime - receivedTime) / 60000);
-
-    // Text Formatting
     const properCaseAddress = textProperCase(call.address);
     const neighborhoodFormatted = neighborhoodFormat(call.neighborhood);
     const callTypeFormatted = callTypeConversionMap.get(callType) || callType;
     const dispositionMeaning = DISPOSITION_REF_POLICE[call.disposition] ?? "";
-
-    // Count Recent, Nearby, Nearby Recent calls
     const positionLatLng = L.latLng(position[0], position[1]);
     const callLatLng = [
       Number(call.coords.coordinates[1]),
@@ -98,7 +86,7 @@ export const dataProcess = function (position, dataRaw, callTypeMap, paramMap) {
       positionLatLng,
     };
   });
-  // Sort calls
+
   const data = dataPreSort
     .sort((a, b) => b.receivedTimeAgo - a.receivedTimeAgo)
     .slice(0, maxCalls);

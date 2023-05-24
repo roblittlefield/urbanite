@@ -17,7 +17,7 @@
   justify-content: center;
   border-radius: 8px;
   user-select: none;
-  /* touch-action:none */
+  overflow: hidden;
 }
 
 #project-info a {
@@ -46,7 +46,7 @@
   font-size: 0.95rem;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 768px) and (min-height: 600px) {
   #project-info p {
     font-size: 1.3rem;
     padding-left: 20px;
@@ -58,19 +58,59 @@
   }
 }
 /*----LATEST INCIDENTS LIST----*/
+/*--Flicker--*/
 #call-list-container {
+  background: linear-gradient(
+    to bottom left,
+    rgba(1, 8, 147, 0.5),
+    rgba(0, 0, 0, 0.5)
+  );
+  animation: flicker 2s, fade 2.5s 2s forwards;
+}
+
+@keyframes flicker {
+  0% {
+    background-color: rgba(3, 15, 248, 0.5);
+  }
+  20% {
+    background-color: rgba(255, 0, 0, 0.5);
+  }
+  40% {
+    background-color: rgba(1, 1, 255, 0.5);
+  }
+  60% {
+    background-color: rgba(223, 15, 15, 0.5);
+  }
+  80% {
+    background-color: rgba(0, 0, 255, 0.5);
+  }
+  100% {
+    background-color: rgba(250, 4, 4, 0.5);
+  }
+}
+
+@keyframes fade {
+  from {
+    background-color: rgba(250, 4, 4, 0.6);
+  }
+  to {
+    background-color: transparent;
+  }
+}
+
+#call-list-container {
+  /* background: linear-gradient(
+    to bottom left,
+    rgba(0, 4, 79, 0.7),
+    rgba(0, 0, 0, 0.7)
+  ); */
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 72%;
-  max-width: 500px;
+  max-width: 460px;
   max-height: 93vh;
-  background: linear-gradient(
-    to bottom left,
-    rgba(0, 4, 79, 0.7),
-    rgba(0, 0, 0, 0.7)
-  );
   z-index: 4;
   display: flex;
   flex-direction: column;
@@ -104,11 +144,6 @@
   border-width: 5px;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   user-select: none;
-}
-
-.inline-headings h3 {
-  display: inline;
-  margin: 0;
 }
 
 #call-list {

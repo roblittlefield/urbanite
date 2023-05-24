@@ -8,7 +8,7 @@ let isEventListenerAdded = false;
 
 export const updateCallList = function (latestMarkers, map, nearby) {
   const callList = document.getElementById("call-list");
-  let calcHour = 0;
+  let calcHour = -1;
   const sortedMarkersArr = latestMarkers.getLayers().reverse();
   sortedMarkersArr.forEach((circleMarker) => {
     const receivedTimeAgo = circleMarker.options.data.receivedTimeAgo;
@@ -17,15 +17,28 @@ export const updateCallList = function (latestMarkers, map, nearby) {
     const hours = Math.floor(receivedTimeAgo / 60);
     if (hours > calcHour) {
       calcHour = hours;
-
       const minutesNumber = document.createElement("span");
       minutesNumber.classList.add("received-time-ago-hours");
       if (nearby) {
         minutesNumber.style.fontSize = "20px";
       }
-      minutesNumber.textContent = `${calcHour} hour${
-        calcHour === 1 ? "" : "s"
-      } ago`;
+      if (calcHour === 0 && nearby) {
+        minutesNumber.textContent = `Last hour`;
+        minutesNumber.style.color = "Yellow";
+        minutesNumber.style.fontStyle = "italic";
+      }
+      if (calcHour !== 0) {
+        minutesNumber.textContent = `${calcHour} hour${
+          calcHour === 1 ? "" : "s"
+        } ago`;
+      }
+      nearby
+        ? calcHour === 1
+          ? (minutesNumber.style.color = "Yellow")
+          : calcHour === 2
+          ? (minutesNumber.style.color = "Yellow")
+          : ""
+        : "";
       if (nearby) {
         minutesNumber.classList.add("nearby-call-box");
       } else {
@@ -60,19 +73,20 @@ export const updateCallList = function (latestMarkers, map, nearby) {
       }</h3>
           <i><p>
           ${receivedTimeAgo === NaN ? "" : `${receivedTimeAgoF} ago in`} 
-          ${circleMarker.options.data.neighborhood}
-        </p></i>
-          <p>${
-            circleMarker.options.data.onView === "Y"
-              ? `Officer observed`
-              : responseTime
-              ? `Response time: ${responseTimeF}`
-              : circleMarker.options.data.dispatchTime
-              ? `Dispatched ${circleMarker.options.data.dispatchedTimeAgo} ago`
-              : circleMarker.options.data.entryTime
-              ? `Call entry in queue ${circleMarker.options.data.enteredTimeAgo} ago`
-              : `Call received, pending entry`
-          }${
+          ${circleMarker.options.data.neighborhood}, priority ${
+        circleMarker.options.data.priority
+      }</p>
+         </i><p>${
+           circleMarker.options.data.onView === "Y"
+             ? `Officer observed`
+             : responseTime
+             ? `Response time: ${responseTimeF}`
+             : circleMarker.options.data.dispatchTime
+             ? `Dispatched ${circleMarker.options.data.dispatchedTimeAgo} ago`
+             : circleMarker.options.data.entryTime
+             ? `Call entry in queue ${circleMarker.options.data.enteredTimeAgo} ago`
+             : `Call received, pending entry`
+         }${
         circleMarker.options.data.disposition
           ? `, ${circleMarker.options.data.disposition.toLowerCase()}`
           : ", open"
@@ -120,7 +134,7 @@ export const controlOpenCallList = function (
     callList.scrollTop = 0;
   }
   if (nearby) map.setView(originalPosition, originalZoom);
-
+  localStorage.setItem("openList", nearby ? "nearby" : "allSF");
   const handleClick = (event) => {
     const clickTarget = event.target;
     if (
@@ -134,6 +148,7 @@ export const controlOpenCallList = function (
       for (let i = 0; i < callBoxes.length; i++) {
         callBoxes[i].classList.add("hidden");
       }
+      localStorage.removeItem("openList");
     }
   };
 

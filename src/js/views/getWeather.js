@@ -9,7 +9,9 @@ const getWeather = async function () {
     const temperature = data.main.temp.toFixed(1);
     const iconCode = data.weather[0].icon;
     const iconUrl = `http://openweathermap.org/img/w/${iconCode}.png`;
+
     const containerTemp = document.querySelector("#containerTemp");
+    containerTemp.innerHTML = ""; // Refactor if we dont add icons
     //   containerTemp.innerHTML = `<img src="${iconUrl}" alt="${data.weather[0].description}" title="${data.weather[0].description}">`;
     containerTemp.innerHTML += `${temperature}&deg;F`;
   } catch (error) {

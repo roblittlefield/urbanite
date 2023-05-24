@@ -13,6 +13,7 @@ export default class circleMarkers {
       let popupContent = `<b>${call.callTypeFormatted}</b>`;
       popupContent += ` \u2022 ${minsHoursFormat(call.receivedTimeAgo)}`;
       popupContent += `<br>${call.properCaseAddress}`;
+      popupContent += `<br>Priority ${call.priority}`;
       popupContent +=
         call.onView === "Y"
           ? `<br>Officer observed`
@@ -56,7 +57,7 @@ export default class circleMarkers {
           // callTypeCode: call.callTypeCode,
           // desc: call.desc,
           onView: call.onView,
-          // priority: call.priority,
+          priority: call.priority,
         },
         autoPan: false,
         closeOnClick: false,

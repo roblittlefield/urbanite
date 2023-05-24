@@ -27,6 +27,15 @@ let position;
 const disclaimerContainer = document.querySelector(".disclaimer");
 const countContainer = document.getElementById("nearby-info");
 const infoContainer = document.getElementById("project-info-container");
+const latestButton = document.getElementById("latest-list-btn");
+const nearbyButton = document.getElementById("nearby-list-btn");
+
+// Page reload refresh window every focus back
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") {
+    location.reload();
+  }
+});
 
 const controlMap = async function () {
   try {
@@ -74,10 +83,13 @@ const controlCircleMarkers = async function () {
       originalZoom,
       map
     );
-
     updateCallList(nearbyLayer, map, true);
     updateCallList(police48Layer, map, false);
-
+    localStorage.getItem("openList") === "nearby"
+      ? nearbyButton.click()
+      : localStorage.getItem("openList") === "allSF"
+      ? latestButton.click()
+      : "";
     // Call Count Display
     if (JSON.stringify(position) !== JSON.stringify(sfapi.getLatLngSF())) {
       countContainer.textContent =
@@ -127,7 +139,6 @@ const controlProjectInfo = function () {
       !infoContainer.classList.contains("hidden") &&
       !infoContainer.contains(clickTarget)
     ) {
-
       toggleVisibleItems();
       toggleVisibleInfo();
     }
