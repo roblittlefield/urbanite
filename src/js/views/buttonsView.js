@@ -7,7 +7,7 @@ const latestContainer = document.getElementById("call-list-container");
 const countNearbyContainer = document.getElementById("nearby-info");
 const neighborhoodContainer = document.getElementById("neighborhood-text");
 const infoContainer = document.getElementById("project-info-container");
-const lastUpdatedElement = document.getElementById("last-updated");
+// const lastUpdatedElement = document.getElementById("last-updated");
 
 export const loadChangeMapButton = function (handler) {
   changeMap.addEventListener("click", (e) => {
@@ -60,7 +60,7 @@ export const toggleVisibleItems = function () {
   projectInfoButton.classList.toggle("hidden");
   countNearbyContainer.classList.toggle("hidden");
   neighborhoodContainer.classList.toggle("hidden");
-  lastUpdatedElement.classList.toggle("hidden");
+  // lastUpdatedElement.classList.toggle("hidden");
 };
 
 export const toggleVisibleList = function () {

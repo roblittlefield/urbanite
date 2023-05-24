@@ -25,21 +25,23 @@ export default class circleMarkers {
           : "";
       const tweetContent = `${call.callTypeFormatted} in ${
         call.neighborhoodFormatted
-      }, ${
+      } ${receivedTimeAgoF} ago, ${
         call.onView === "Y"
-          ? "officer observed"
+          ? "SFPD officer observed"
           : call.responseTime
-          ? `response time ${responseTimeF}`
+          ? `SFPD response time: ${
+              call.responseTime > 30 ? `${responseTimeF} 😬` : responseTimeF
+            }`
           : dispatchedTimeAgoF !== "NaNh" && dispatchedTimeAgoF
-          ? `dispatched ${dispatchedTimeAgoF} ago`
+          ? `SFPD dispatched ${dispatchedTimeAgoF} ago`
           : call.enteredTime
-          ? `dall entry in queue ${call.enteredTimeAgo} ago`
-          : "call received"
-      }, ${disposition.toLowerCase()} ${receivedTimeF} https://data.sfgov.org/resource/gnap-fj3t.json?cad_number=${
+          ? `call entry in SFPD queue ${call.enteredTimeAgo} ago`
+          : "call received by SFPD"
+      }${disposition ? `, ${disposition.toLowerCase()}` : ""}, CAD#${
         call.cadNumber
-      } Archive:https://data.sfgov.org/resource/wg3w-h783.json?cad_number=${
+      } https://urbanitesf.netlify.app/?cad_number=${
         call.cadNumber
-      }`;
+      } #SanFrancisco`;
       const textMessageContent = `"${call.callTypeFormatted} in ${
         call.neighborhoodFormatted
       } ${receivedTimeAgoF} ago, ${
@@ -54,21 +56,21 @@ export default class circleMarkers {
           : call.enteredTime
           ? `call entry in queue ${call.enteredTimeAgo} ago`
           : "call received"
-      }${disposition ? `, ${disposition.toLowerCase()}` : ""}, CAD #${
+      }${disposition ? `, ${disposition.toLowerCase()}` : ""}, CAD#${
         call.cadNumber
-      }" via https://urbanitesf.netlify.app`;
+      }" https://urbanitesf.netlify.app/?cad_number=${call.cadNumber}`;
       const popupContent = `
     <div>
       <b>${call.callTypeFormatted}</b>
-      \u2022 ${receivedTimeAgoF}<a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      \u2022 ${receivedTimeAgoF} <a href="sms:&body=${encodeURIComponent(
+        textMessageContent
+      )}">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IMessage_logo.svg/20px-IMessage_logo.svg.png" alt="iMessage / text" style="height:20px; position: absolute; bottom: 0px; left: calc(50% - 27px); transform: translate(-50%, -50%);">
+      </a>
+      <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweetContent
       )}" target="_blank">
-      <img src="https://www.freeiconspng.com/uploads/logo-twitter-circle-png-transparent-image-1.png" alt="Twitter Bird Icon" style="width: 25px; height: 25px; position: absolute; bottom: 0px; left: 62%;
-      transform: translate(-50%, -50%) ;">
-      </a>
-      <a href="sms:&body=${encodeURIComponent(textMessageContent)}">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IMessage_logo.svg/langfr-220px-IMessage_logo.svg.png" alt="iMessage / text" style="height:25px; position: absolute; bottom: 0px; left: 38%;
-      transform: translate(-50%, -50%); ">
+      <img src="https://www.freeiconspng.com/uploads/logo-twitter-circle-png-transparent-image-1.png" alt="Twitter Bird Icon" style=" height: 20px; position: absolute; bottom: 0px; left: calc(50% + 25px); transform: translate(-50%, -50%);">
       </a>
       <br>${call.properCaseAddress}
       <br>Priority ${
@@ -138,3 +140,5 @@ export default class circleMarkers {
     return [this.police48Layer, this.nearbyLayer];
   }
 }
+
+// ${receivedTimeF} https://data.sfgov.org/resource/gnap-fj3t.json?cad_number=${call.cadNumber} Archive:https://data.sfgov.org/resource/wg3w-h783.json?cad_number=${call.cadNumber}  // Twitter content live source & archive source

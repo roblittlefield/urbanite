@@ -17,6 +17,7 @@ import {
   loadProjectInfoButton,
   toggleVisibleInfo,
 } from "./views/buttonsView.js";
+import getURLParameter from "./views/hashURL.js";
 import { async } from "regenerator-runtime";
 
 let map;
@@ -24,23 +25,34 @@ let originalPosition;
 let originalZoom;
 let position;
 
-const disclaimerContainer = document.querySelector(".disclaimer");
+// const disclaimerContainer = document.querySelector(".disclaimer");
 const countContainer = document.getElementById("nearby-info");
 const infoContainer = document.getElementById("project-info-container");
 const latestButton = document.getElementById("latest-list-btn");
 const nearbyButton = document.getElementById("nearby-list-btn");
+const lastUpdatedElement = document.getElementById("last-updated");
 
-const lastLoad = localStorage.getItem("last-load");
-const now = new Date();
-if (!lastLoad || now - new Date(lastLoad) >= 1000 * 60 * 5) {
-  localStorage.setItem("last-load", now);
+let urlCAD;
+const initGetUrlParam = function () {
+  urlCAD = getURLParameter("cad_number");
+};
+
+const interval = 1000 * 60 * 5;
+function reloadPage() {
+  localStorage.setItem("last-load", new Date());
   location.reload();
 }
+const lastLoad = localStorage.getItem("last-load");
+const remainingTime = lastLoad
+  ? interval - (new Date() - new Date(lastLoad))
+  : interval;
+setTimeout(reloadPage, remainingTime);
 
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") {
+    const now = new Date();
     const lastLoad = localStorage.getItem("last-load");
-    if (!lastLoad || now - new Date(lastLoad) >= 1000 * 60 * 5) {
+    if (!lastLoad || now - new Date(lastLoad) >= 1000 * 60 * 3) {
       localStorage.setItem("last-load", now);
       location.reload();
     }
@@ -82,8 +94,7 @@ const controlCircleMarkers = async function () {
       position
     );
     police48Layer.addTo(map);
-
-    initPopupNieghborhood(position, police48Layer);
+    initPopupNieghborhood(position, police48Layer, urlCAD, map); // IF THIS
     addHandlerMoveCenter(data, police48Layer, map);
 
     loadLatestListButton(controlOpenCallList);
@@ -142,6 +153,7 @@ const controlChangeMap = function () {
 const controlProjectInfo = function () {
   toggleVisibleInfo();
   toggleVisibleItems();
+  lastUpdatedElement.classList.toggle("hidden");
 
   const handleClick = (event) => {
     const clickTarget = event.target;
@@ -151,6 +163,7 @@ const controlProjectInfo = function () {
     ) {
       toggleVisibleItems();
       toggleVisibleInfo();
+      lastUpdatedElement.classList.toggle("hidden");
     }
   };
 
@@ -161,12 +174,12 @@ const controlProjectInfo = function () {
 
 const init = async function () {
   try {
+    initGetUrlParam();
     const map = await controlMap();
     await controlCircleMarkers();
     loadChangeMapButton(controlChangeMap);
     loadProjectInfoButton(controlProjectInfo);
     getWeather();
-    disclaimerContainer.style.display = "block";
   } catch (err) {
     console.error(`Init error: ${err}`);
   }
