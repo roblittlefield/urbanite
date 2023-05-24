@@ -1,14 +1,14 @@
 export const formatDate = function (rawDate) {
-  const date = rawDate.toLocaleString("en-US", {
+  const newRawDate = new Date(rawDate);
+  const date = newRawDate.toLocaleString("en-US", {
     timeZone: "America/Los_Angeles",
-    month: "2-digit",
-    day: "2-digit",
-    year: "2-digit",
+    month: "numeric",
+    day: "numeric",
     hour: "numeric",
     minute: "numeric",
-    hour12: false,
+    hour12: true,
   });
-  return date;
+  return date.replace(",", "");
 };
 
 export const standardizeData = function (rawData, apiRef) {
@@ -29,7 +29,8 @@ export const textProperCase = function (textRaw) {
     .slice(0, 2)
     .join("/")
     .toLowerCase()
-    .replace(/\b\w/g, (char) => char.toUpperCase());
+    .replace(/\b\w/g, (char) => char.toUpperCase())
+    .slice(0, 45);
   return text;
 };
 

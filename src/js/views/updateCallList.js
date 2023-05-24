@@ -92,7 +92,7 @@ export const updateCallList = function (latestMarkers, map, nearby) {
           : ", open"
       }
         </p>
-          <p>${circleMarker.options.data.address.slice(0, 45)}</p>
+          <p>${circleMarker.options.data.address}</p>
         `;
       callBox.addEventListener("click", () => {
         toggleVisibleList();

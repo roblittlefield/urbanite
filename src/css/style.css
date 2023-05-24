@@ -223,7 +223,12 @@ body {
 }
 
 .leaflet-popup-content {
-  padding: 0.1px;
+  padding: 0.1px 0px 28px 0px;
+  background-color: transparent;
+  transition: padding 0.5s;
+}
+.leaflet-popup-content-small-padding {
+  padding: 0.1px 0px 0px 0px;
   background-color: transparent;
 }
 

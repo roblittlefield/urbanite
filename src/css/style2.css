@@ -44,6 +44,7 @@
 }
 #project-info p {
   font-size: 0.95rem;
+  line-height: 1.1;
 }
 
 @media screen and (min-width: 768px) and (min-height: 600px) {
@@ -65,33 +66,33 @@
     rgba(1, 8, 147, 0.5),
     rgba(0, 0, 0, 0.5)
   );
-  animation: flicker 2s, fade 2.5s 2s forwards;
+  animation: flicker 1s, fade 3s 1s forwards;
 }
 
 @keyframes flicker {
   0% {
-    background-color: rgba(3, 15, 248, 0.5);
-  }
-  20% {
     background-color: rgba(255, 0, 0, 0.5);
   }
-  40% {
-    background-color: rgba(1, 1, 255, 0.5);
-  }
-  60% {
-    background-color: rgba(223, 15, 15, 0.5);
-  }
-  80% {
+  20% {
     background-color: rgba(0, 0, 255, 0.5);
   }
+  40% {
+    background-color: rgba(255, 0, 0, 0.5);
+  }
+  60% {
+    background-color: rgba(0, 0, 255, 0.5);
+  }
+  80% {
+    background-color: rgba(255, 0, 0, 0.5);
+  }
   100% {
-    background-color: rgba(250, 4, 4, 0.5);
+    background-color: rgba(0, 0, 255, 0.5);
   }
 }
 
 @keyframes fade {
   from {
-    background-color: rgba(250, 4, 4, 0.6);
+    background-color: rgba(0, 0, 255, 0.45);
   }
   to {
     background-color: transparent;

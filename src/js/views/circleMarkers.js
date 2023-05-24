@@ -10,24 +10,85 @@ export default class circleMarkers {
   addCircleMarkers(data, position) {
     const positionLatLng = L.latLng(position[0], position[1]);
     data.map((call) => {
-      let popupContent = `<b>${call.callTypeFormatted}</b>`;
-      popupContent += ` \u2022 ${minsHoursFormat(call.receivedTimeAgo)}`;
-      popupContent += `<br>${call.properCaseAddress}`;
-      popupContent += `<br>Priority ${call.priority}`;
-      popupContent +=
+      const receivedTimeF = formatDate(call.receivedTime);
+      const responseTimeF = minsHoursFormat(call.responseTime);
+      const dispatchedTimeAgoF =
+        call.dispatchTime &&
+        call.dispatchTime !== NaN &&
+        call.dispatchTime !== "NaN"
+          ? minsHoursFormat(call.dispatchTime)
+          : "";
+      const receivedTimeAgoF = minsHoursFormat(call.receivedTimeAgo);
+      const disposition =
+        call.dispositionMeaning !== "" && call.dispositionMeaning !== "Unknown"
+          ? `${call.dispositionMeaning}`
+          : "";
+      const tweetContent = `${call.callTypeFormatted} in ${
+        call.neighborhoodFormatted
+      }, ${
         call.onView === "Y"
-          ? `<br>Officer observed`
+          ? "officer observed"
           : call.responseTime
-          ? `<br>Response time: ${minsHoursFormat(call.responseTime)}`
-          : call.dispatchTime
-          ? `<br>Dispatched ${call.dispatchedTimeAgo} ago`
+          ? `response time ${responseTimeF}`
+          : dispatchedTimeAgoF !== "NaNh" && dispatchedTimeAgoF
+          ? `dispatched ${dispatchedTimeAgoF} ago`
+          : call.enteredTime
+          ? `dall entry in queue ${call.enteredTimeAgo} ago`
+          : "call received"
+      }, ${disposition.toLowerCase()} ${receivedTimeF} https://data.sfgov.org/resource/gnap-fj3t.json?cad_number=${
+        call.cadNumber
+      } Archive:https://data.sfgov.org/resource/wg3w-h783.json?cad_number=${
+        call.cadNumber
+      }`;
+      const textMessageContent = `"${call.callTypeFormatted} in ${
+        call.neighborhoodFormatted
+      } ${receivedTimeAgoF} ago, ${
+        call.onView === "Y"
+          ? "officer observed"
+          : call.responseTime
+          ? `response time: ${
+              call.responseTime > 30 ? `${responseTimeF} 😬` : responseTimeF
+            }`
+          : dispatchedTimeAgoF !== "NaNh" && dispatchedTimeAgoF
+          ? `dispatched ${dispatchedTimeAgoF} ago`
+          : call.enteredTime
+          ? `call entry in queue ${call.enteredTimeAgo} ago`
+          : "call received"
+      }${disposition ? `, ${disposition.toLowerCase()}` : ""}, CAD #${
+        call.cadNumber
+      }" via https://urbanitesf.netlify.app`;
+      const popupContent = `
+    <div>
+      <b>${call.callTypeFormatted}</b>
+      \u2022 ${receivedTimeAgoF}<a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        tweetContent
+      )}" target="_blank">
+      <img src="https://www.freeiconspng.com/uploads/logo-twitter-circle-png-transparent-image-1.png" alt="Twitter Bird Icon" style="width: 25px; height: 25px; position: absolute; bottom: 0px; left: 62%;
+      transform: translate(-50%, -50%) ;">
+      </a>
+      <a href="sms:&body=${encodeURIComponent(textMessageContent)}">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IMessage_logo.svg/langfr-220px-IMessage_logo.svg.png" alt="iMessage / text" style="height:25px; position: absolute; bottom: 0px; left: 38%;
+      transform: translate(-50%, -50%); ">
+      </a>
+      <br>${call.properCaseAddress}
+      <br>Priority ${
+        call.priority
+      } #<a href="https://data.sfgov.org/resource/gnap-fj3t.json?cad_number=${
+        call.cadNumber
+      }" target="_blank">${call.cadNumber}</a>
+      ${
+        call.onView === "Y"
+          ? "<br>Officer observed"
+          : call.responseTime
+          ? `<br>Response time: ${responseTimeF}`
+          : dispatchedTimeAgoF !== "NaNh" && dispatchedTimeAgoF
+          ? `<br>Dispatched ${dispatchedTimeAgoF} ago`
           : call.enteredTime
           ? `<br>Call entry in queue ${call.enteredTimeAgo} ago`
-          : `<br>Call received`;
-      popupContent +=
-        call.dispositionMeaning !== "" && call.dispositionMeaning !== "Unknown"
-          ? `<br>${call.dispositionMeaning}`
-          : "";
+          : "<br>Call received"
+      }<br>${disposition}
+  </div>
+`;
       const callLatlng = [
         Number(call.coords.coordinates[1]),
         Number(call.coords.coordinates[0]),
@@ -45,11 +106,11 @@ export default class circleMarkers {
           // receivedTimeCalc: call.receivedTime,
           disposition: call.dispositionMeaning,
           neighborhood: call.neighborhoodFormatted,
-          receivedTime: formatDate(call.receivedTime),
+          receivedTime: receivedTimeF,
           // entryTime: enteredTime,
           entryTimeAgo: call.enteredTimeAgo,
           // dispatchTime: dispatchedTime,
-          dispatchedTimeAgo: call.dispatchedTimeAgo,
+          dispatchedTimeAgo: dispatchedTimeAgoF,
           responseTime: call.responseTime,
           address: call.properCaseAddress,
           callType: call.callTypeFormatted,

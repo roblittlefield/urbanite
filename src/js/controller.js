@@ -30,10 +30,20 @@ const infoContainer = document.getElementById("project-info-container");
 const latestButton = document.getElementById("latest-list-btn");
 const nearbyButton = document.getElementById("nearby-list-btn");
 
-// Page reload refresh window every focus back
+const lastLoad = localStorage.getItem("last-load");
+const now = new Date();
+if (!lastLoad || now - new Date(lastLoad) >= 1000 * 60 * 5) {
+  localStorage.setItem("last-load", now);
+  location.reload();
+}
+
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") {
-    location.reload();
+    const lastLoad = localStorage.getItem("last-load");
+    if (!lastLoad || now - new Date(lastLoad) >= 1000 * 60 * 5) {
+      localStorage.setItem("last-load", now);
+      location.reload();
+    }
   }
 });
 

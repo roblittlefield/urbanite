@@ -19,7 +19,7 @@ export const loadChangeMapButton = function (handler) {
 };
 
 export const loadLatestListButton = function (handler) {
-  const message = "Latest SF Dispatched Calls";
+  const message = "Latest All SF Dispatched Calls";
   latestButton.addEventListener("click", (e) => {
     e.stopPropagation();
     const btn = e.target.closest("#latest-list-btn");
