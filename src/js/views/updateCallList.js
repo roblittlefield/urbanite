@@ -2,9 +2,18 @@ import { minsHoursFormat } from "../helpers";
 import { toggleVisibleList, toggleVisibleItems } from "./buttonsView";
 let lastLoadedList;
 const callListHeading = document.getElementById("call-list-heading");
+const callListSubHeading = document.getElementById("call-list-subheading");
 const latestContainer = document.getElementById("call-list-container");
 const callList = document.getElementById("call-list");
 let isEventListenerAdded = false;
+const formattedDate = new Date().toLocaleString("en-US", {
+  weekday: "long",
+  month: "long",
+  day: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+  hour12: true,
+});
 
 export const updateCallList = function (latestMarkers, map, nearby) {
   const callList = document.getElementById("call-list");
@@ -135,6 +144,7 @@ export const controlOpenCallList = function (
     callBoxes[i].classList.remove("hidden");
   }
   callListHeading.textContent = message;
+  callListSubHeading.textContent = `Updated: ` + formattedDate;
   toggleVisibleItems();
   toggleVisibleList();
   if (

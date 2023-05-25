@@ -81,45 +81,45 @@ export const includedCallTypesPDlive = [
 ];
 
 export const colorMap = new Map([
-  ["SHOOTING", "#E3173F"], // Crimson
-  ["SHOTS FIRED", "#E3173F"],
-  ["PERSON W/GUN", "#E3173F"],
-  ["SHOT SPOTTER", "#E3173F"],
+  ["SHOOTING", "#d53e5c"], // Crimson
+  ["SHOTS FIRED", "#d53e5c"],
+  ["PERSON W/GUN", "#d53e5c"],
+  ["SHOT SPOTTER", "#d53e5c"],
 
-  ["STABBING", "#E3173F"],
-  ["PERSON W/KNIFE", "#E3173F"],
-  ["FIGHT W/WEAPONS", "#E3173F"],
-  ["FIGHT NO WEAPON", "#E3173F"],
+  ["STABBING", "#f46d43"], // Orage
+  ["PERSON W/KNIFE", "#f46d43"],
+  ["FIGHT W/WEAPONS", "#f46d43"],
+  ["FIGHT NO WEAPON", "#f46d43"],
 
-  ["AGG ASSAULT / ADW", "#FFF000"], // Yellow
-  ["ASSAULT / BATTERY", "#FFF000"],
-  ["STRONGARM ROBBERY", "#FFA500"], // Orange
-  ["GRAND THEFT", "#FFA500"],
-  ["PURSE SNATCH", "#FFA500"],
-  ["ROBBERY", "#FFA500"],
-  ["BURGLARY", "#FFA500"],
-  ["PERSON BREAKING IN", "#FFA500"],
-  ["SILENT HOLDUP ALARM", "#FFA500"],
+  ["AGG ASSAULT / ADW", "#fdae61"], // YellowOrange
+  ["ASSAULT / BATTERY", "#fdae61"],
+  ["STRONGARM ROBBERY", "#f0fe8b"], // Orange
+  ["GRAND THEFT", "#f0fe8b"], // Yellow
+  ["PURSE SNATCH", "#f0fe8b"],
+  ["ROBBERY", "#f0fe8b"],
+  ["BURGLARY", "#f0fe8b"],
+  ["PERSON BREAKING IN", "#f0fe8b"],
+  ["SILENT HOLDUP ALARM", "#f0fe8b"],
 
-  ["TRESPASSER", "#0000FF"], // Blue
-  ["PROWLER", "#0000FF"],
-  ["STALKING", "#0000FF"],
+  ["TRESPASSER", "#3288bd"], // Blue
+  ["PROWLER", "#3288bd"],
+  ["STALKING", "#3288bd"],
 
-  ["MENTALLY DISTURBED", "#9ACD32"], // Puke Green
-  ["INTOXICATED PERSON", "#9ACD32"],
-  ["PERSON SCREAMING", "#9ACD32"],
-  ["DRUNK DRIVER", "#9ACD32"],
+  ["MENTALLY DISTURBED", "#66c2a5"], // Puke Green
+  ["INTOXICATED PERSON", "#66c2a5"],
+  ["PERSON SCREAMING", "#66c2a5"],
+  ["DRUNK DRIVER", "#66c2a5"],
 
-  ["STOLEN VEHICLE", "#FF00FF"],
-  ["AUTO BOOST / STRIP", "#FF00FF"], // Pink
+  ["STOLEN VEHICLE", "#f598ea"],
+  ["AUTO BOOST / STRIP", "#f598ea"], // Pink
 
-  ["H&R INJURY ACCIDENT", "#000000"], // Black
-  ["H&R VEH ACCIDENT", "#000000"],
-  ["INJURY VEH ACCIDENT", "#000000"],
-  ["ARREST MADE", "#000000"],
-  ["RESISTING ARREST", "#000000"],
-  ["CITIZEN ARREST", "#000000"],
-  ["DEMO / PROTEST", "#000000"],
+  ["H&R INJURY ACCIDENT", "#3288bd"],
+  ["H&R VEH ACCIDENT", "#888888"], // Black
+  ["INJURY VEH ACCIDENT", "#3288bd"],
+  ["ARREST MADE", "#888888"],
+  ["RESISTING ARREST", "#888888"],
+  ["CITIZEN ARREST", "#888888"],
+  ["DEMO / PROTEST", "#a098f5"],
 ]);
 
 export const callTypeConversionMap = new Map([

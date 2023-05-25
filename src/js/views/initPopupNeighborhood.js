@@ -134,7 +134,7 @@ const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
           const markerHist = L.circleMarker(coordsHist, {
             radius: window.innerWidth <= 758 ? 3 : 4,
             keepInView: false,
-            fillColor: "#00FF00",
+            fillColor: "#98f5e1",
             color: "#333333",
             weight: 1,
             opacity: 0.6,

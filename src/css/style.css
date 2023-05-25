@@ -63,7 +63,7 @@ body {
   color: #0057b7;
 }
 
-.alert {
+#alert {
   user-select: none;
   font-family: Tahoma, Arial, Helvetica, sans-serif;
   background-color: #c5c5c5;
@@ -80,7 +80,6 @@ body {
   flex-direction: column;
   justify-content: center;
   padding: 30px;
-  overflow: auto;
   word-wrap: normal;
   align-items: center;
   color: white;
