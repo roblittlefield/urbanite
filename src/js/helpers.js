@@ -36,13 +36,22 @@ export const textProperCase = function (textRaw) {
 
 export const minsHoursFormat = function (time) {
   const hours = Math.floor(time / 60);
+  const days = Math.floor(time / 1440);
   const minutes = time % 60;
   if (hours === 0) {
     return `${minutes}m`;
   } else if (hours < 6) {
     return `${hours}h${minutes === 0 ? "" : ` ${minutes}m`}`;
-  } else {
+  } else if (hours < 24) {
     return `${hours}h`;
+  } else if (days < 365) {
+    return `${days}d${
+      Math.floor((time % 1440) / 60) === 0
+        ? ` ${time % 1440}m`
+        : ` ${Math.floor((time % 1440) / 60)}h ${(time % 1440) % 60}m`
+    }`;
+  } else {
+    return `${Math.floor(days / 365)}y ${Math.floor((time % 525600) / 1440)}d`;
   }
 };
 

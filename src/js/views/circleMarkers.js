@@ -12,12 +12,7 @@ export default class circleMarkers {
     data.map((call) => {
       const receivedTimeF = formatDate(call.receivedTime);
       const responseTimeF = minsHoursFormat(call.responseTime);
-      const dispatchedTimeAgoF =
-        call.dispatchTime &&
-        call.dispatchTime !== NaN &&
-        call.dispatchTime !== "NaN"
-          ? minsHoursFormat(call.dispatchTime)
-          : "";
+      const dispatchedTimeAgoF = minsHoursFormat(call.dispatchedTimeAgo);
       const receivedTimeAgoF = minsHoursFormat(call.receivedTimeAgo);
       const disposition =
         call.dispositionMeaning !== "" && call.dispositionMeaning !== "Unknown"

@@ -21,7 +21,7 @@ body {
   display: none !important;
 }
 
-.disclaimer {
+.addSFDataSource {
   user-select: none;
   box-sizing: border-box;
   line-height: 1.4;
@@ -43,23 +43,23 @@ body {
   border-radius: 0px 4px 0px 0px;
 }
 
-.disclaimer a:hover {
+.addSFDataSource a:hover {
   text-decoration: underline;
 }
 
-.disclaimer a {
+.addSFDataSource a {
   text-decoration: none;
 }
-.disclaimer a.centered-link {
+.addSFDataSource a.centered-link {
   display: flex;
   align-items: center;
 }
 
-.disclaimer a.centered-link img {
+.addSFDataSource a.centered-link img {
   margin-right: 3px;
 }
 
-.disclaimer a:visited {
+.addSFDataSource a:visited {
   color: #0057b7;
 }
 

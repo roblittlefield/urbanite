@@ -10,7 +10,16 @@ export const updateCallList = function (latestMarkers, map, nearby) {
   const callList = document.getElementById("call-list");
   let calcHour = -1;
   const sortedMarkersArr = latestMarkers.getLayers().reverse();
-  sortedMarkersArr.forEach((circleMarker) => {
+  const index = sortedMarkersArr.findIndex((circleMarker) => {
+    const receivedTimeAgo = circleMarker.options.data.receivedTimeAgo;
+    return receivedTimeAgo > 2910;
+  });
+
+  let slicedData;
+  if (index !== 0 && index !== 1) {
+    slicedData = sortedMarkersArr.slice(0, index);
+  }
+  slicedData.forEach((circleMarker) => {
     const receivedTimeAgo = circleMarker.options.data.receivedTimeAgo;
     const receivedTimeAgoF = minsHoursFormat(receivedTimeAgo);
 

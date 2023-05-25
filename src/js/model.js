@@ -1,6 +1,5 @@
 import {
   maxCalls,
-  maxHoursAgo,
   callTypeConversionMap,
   DISPOSITION_REF_POLICE,
   timeElapSF,
@@ -13,7 +12,7 @@ import {
   neighborhoodFormat,
 } from "./helpers.js";
 
-export const fetchApi = async function (url, reqParam, order) {
+export const fetchApi = async function (url) {
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -32,15 +31,11 @@ export const dataProcess = function (position, dataRaw, callTypeMap, paramMap) {
   let countCallsNearbyRecent = 0;
 
   const dataFiltered = dataRaw.filter((callRaw) => {
-    const receivedTime = new Date(callRaw.received_datetime);
     const isCallTypeIncluded = callTypeMap.includes(
       callRaw.call_type_final_desc
     );
-    const hoursAgo = Math.floor((now - receivedTime) / 3600000);
-    const isWithinTimeRange = hoursAgo <= maxHoursAgo;
-    return isCallTypeIncluded && isWithinTimeRange;
+    return isCallTypeIncluded;
   });
-
 
   const dataPreSort = dataFiltered.map((callRaw) => {
     const call = standardizeData(callRaw, paramMap);
@@ -91,4 +86,19 @@ export const dataProcess = function (position, dataRaw, callTypeMap, paramMap) {
     .sort((a, b) => b.receivedTimeAgo - a.receivedTimeAgo)
     .slice(0, maxCalls);
   return { data, countCallsNearby, countCallsRecent, countCallsNearbyRecent };
+};
+
+export const fetchHistData = async function (cad_number) {
+  try {
+    const response = await fetch(
+      `https://data.sfgov.org/resource/wg3w-h783.json?cad_number=${cad_number}`
+    );
+    if (!response.ok) {
+      throw new Error("Network response for promise was not ok");
+    }
+    const dataHistbyCAD = await response.json();
+    return dataHistbyCAD;
+  } catch (err) {
+    console.log(err);
+  }
 };

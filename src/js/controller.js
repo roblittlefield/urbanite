@@ -1,11 +1,11 @@
-import "regenerator-runtime/runtime"; // Polyfilling ASYNC/AWAIT
-import "core-js/stable"; // Polyfilling everything else
+import "regenerator-runtime/runtime";
+import "core-js/stable";
 import L from "leaflet";
 import * as model from "./model.js";
 import * as sfapi from "./config.js";
 import circleMarkers from "./views/circleMarkers.js";
 import { updateCallList, controlOpenCallList } from "./views/updateCallList.js";
-import addHandlerMoveCenter from "./views/moveCenter.js";
+// import addHandlerMoveCenter from "./views/moveCenter.js";
 import { getPosition, loadLastUpdated } from "./views/getPosition.js";
 import initPopupNieghborhood from "./views/initPopupNeighborhood.js";
 import getWeather from "./views/getWeather.js";
@@ -25,7 +25,6 @@ let originalPosition;
 let originalZoom;
 let position;
 
-// const disclaimerContainer = document.querySelector(".disclaimer");
 const countContainer = document.getElementById("nearby-info");
 const infoContainer = document.getElementById("project-info-container");
 const latestButton = document.getElementById("latest-list-btn");
@@ -37,7 +36,7 @@ const initGetUrlParam = function () {
   urlCAD = getURLParameter("cad_number");
 };
 
-const interval = 1000 * 60 * 5;
+const interval = 60000 * 5;
 function reloadPage() {
   localStorage.setItem("last-load", new Date());
   location.reload();
@@ -52,7 +51,7 @@ document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") {
     const now = new Date();
     const lastLoad = localStorage.getItem("last-load");
-    if (!lastLoad || now - new Date(lastLoad) >= 1000 * 60 * 3) {
+    if (!lastLoad || now - new Date(lastLoad) >= 60000 * 5) {
       localStorage.setItem("last-load", now);
       location.reload();
     }
@@ -93,10 +92,9 @@ const controlCircleMarkers = async function () {
       data,
       position
     );
-    police48Layer.addTo(map);
-    initPopupNieghborhood(position, police48Layer, urlCAD, map); // IF THIS
-    addHandlerMoveCenter(data, police48Layer, map);
+    //////
 
+    initPopupNieghborhood(position, police48Layer, urlCAD, map);
     loadLatestListButton(controlOpenCallList);
     loadNearbyListButton(
       controlOpenCallList,
