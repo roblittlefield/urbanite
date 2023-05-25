@@ -20,7 +20,11 @@ export default class circleMarkers {
           : "";
       const tweetContent = `${call.callTypeFormatted} in ${
         call.neighborhoodFormatted
-      } ${receivedTimeAgoF} ago, ${
+      } ${
+        call.receivedTimeAgo <= 6
+          ? `${receivedTimeAgoF} ago`
+          : `${formatDate(call.receivedTime)}`
+      }, ${
         call.onView === "Y"
           ? "SFPD officer observed"
           : call.responseTime
@@ -32,11 +36,11 @@ export default class circleMarkers {
           : call.enteredTime
           ? `call entry in SFPD queue ${call.enteredTimeAgo} ago`
           : "call received by SFPD"
-      }${disposition ? `, ${disposition.toLowerCase()}` : ""}, CAD#${
+      }${
+        disposition ? `, ${disposition.toLowerCase()}` : ""
+      } #SanFrancisco https://urbanitesf.netlify.app/?cad_number=${
         call.cadNumber
-      } https://urbanitesf.netlify.app/?cad_number=${
-        call.cadNumber
-      } #SanFrancisco`;
+      }`;
       const textMessageContent = `"${call.callTypeFormatted} in ${
         call.neighborhoodFormatted
       } ${receivedTimeAgoF} ago, ${
@@ -46,14 +50,14 @@ export default class circleMarkers {
           ? `response time: ${
               call.responseTime > 30 ? `${responseTimeF} 😬` : responseTimeF
             }`
-          : dispatchedTimeAgoF !== "NaNh" && dispatchedTimeAgoF
+          : dispatchedTimeAgoF
           ? `dispatched ${dispatchedTimeAgoF} ago`
           : call.enteredTime
           ? `call entry in queue ${call.enteredTimeAgo} ago`
           : "call received"
-      }${disposition ? `, ${disposition.toLowerCase()}` : ""}, CAD#${
-        call.cadNumber
-      }" https://urbanitesf.netlify.app/?cad_number=${call.cadNumber}`;
+      }${
+        disposition ? `, ${disposition.toLowerCase()}` : ""
+      }" via https://urbanitesf.netlify.app/?cad_number=${call.cadNumber}`;
       const popupContent = `
     <div>
       <b>${call.callTypeFormatted}</b>
@@ -135,5 +139,3 @@ export default class circleMarkers {
     return [this.police48Layer, this.nearbyLayer];
   }
 }
-
-// ${receivedTimeF} https://data.sfgov.org/resource/gnap-fj3t.json?cad_number=${call.cadNumber} Archive:https://data.sfgov.org/resource/wg3w-h783.json?cad_number=${call.cadNumber}  // Twitter content live source & archive source

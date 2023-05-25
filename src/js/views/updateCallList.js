@@ -19,6 +19,7 @@ export const updateCallList = function (latestMarkers, map, nearby) {
   if (index !== 0 && index !== 1) {
     slicedData = sortedMarkersArr.slice(0, index);
   }
+  if (slicedData.length === 0) return;
   slicedData.forEach((circleMarker) => {
     const receivedTimeAgo = circleMarker.options.data.receivedTimeAgo;
     const receivedTimeAgoF = minsHoursFormat(receivedTimeAgo);

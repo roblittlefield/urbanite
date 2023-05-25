@@ -5,7 +5,6 @@ import * as model from "./model.js";
 import * as sfapi from "./config.js";
 import circleMarkers from "./views/circleMarkers.js";
 import { updateCallList, controlOpenCallList } from "./views/updateCallList.js";
-// import addHandlerMoveCenter from "./views/moveCenter.js";
 import { getPosition, loadLastUpdated } from "./views/getPosition.js";
 import initPopupNieghborhood from "./views/initPopupNeighborhood.js";
 import getWeather from "./views/getWeather.js";
@@ -151,7 +150,6 @@ const controlChangeMap = function () {
 const controlProjectInfo = function () {
   toggleVisibleInfo();
   toggleVisibleItems();
-  lastUpdatedElement.classList.toggle("hidden");
 
   const handleClick = (event) => {
     const clickTarget = event.target;
@@ -161,7 +159,6 @@ const controlProjectInfo = function () {
     ) {
       toggleVisibleItems();
       toggleVisibleInfo();
-      lastUpdatedElement.classList.toggle("hidden");
     }
   };
 

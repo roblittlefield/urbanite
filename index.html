@@ -20,39 +20,41 @@
   <body>
     <header></header>
     <main>
-    <div class="overlay"></div>
-    <div class="container">
       <div id="map"></div>
-      <div class="weather">
-        <div id="containerTemp"></div>
-      </div>
-      <div id="neighborhood-text"></div>
-      <button id="project-info-btn">About</button>
-      <button id="change-map-btn">Map</button>
-      <button id="latest-list-btn">All SF</button>
-      <button id="nearby-list-btn">Nearby</button>
-      <div id="nearby-container">
-        <button id="nearby-info"></button>
-      </div>
-      <div class="hidden" id="call-list-container">
-        <h2 id="call-list-heading"></h2>
-        <ul id="call-list"></ul>
-      </div>
-      <div class="hidden" id="project-info-container">
-        <div id="project-info">
-          <h2 id="project-info-heading">Welcome to Urbanite  🌁  </h2>
-          <p>Explore the latest law enforcement dispatched calls for service in San Francisco.<br><br>&bull; Move around the neighborhoods<br>&bull; See call details + reponse times<br>&bull; Change the map skin<br>&bull; Open the list of latest calls<br>&bull; Autoloads every 5 mins<br><br>Built as a lightweight & speedy alternative to other incident mapping apps, Urbanite goes beyond by providing priority, status, exact response times & <a href="https://datasf.gitbook.io/datasf-dataset-explainers/law-enforcement-dispatched-calls-for-service#universe-of-calls-captured-in-the-cad-system">CAD ID #</a>. Hyperlinks to raw .gov live dataset which redirect when city moves calls to archive.<br><br>A personal project designed and developed in the Misson neighborhood 🌯🌴🌴 using vanilla Javascript.<br><br>Inquiries/feedback? DM me <a href="https://twitter.com/roblittlefield">@roblittlefield</a>
-          </p>
-          
-        
-        </div></div>
-        <div class="addSFDataSource">
-          <a href="https://datasf.gitbook.io/datasf-dataset-explainers/law-enforcement-dispatched-calls-for-service" class="centered-link">
-            <img src="https://sf.gov/themes/custom/sfgovpl/logo.svg" alt="SF.gov Data" style="width: 10px; height: 10px;">
-            SF Data
-          </a>
+      <div class="container">
+        <div class="weather">
+          <div id="containerTemp"></div>
         </div>
-      </main>
+        <button id="project-info-btn">About</button>
+        <button id="change-map-btn">Map</button>
+        <button id="latest-list-btn">All SF</button>
+        <button id="nearby-list-btn">Nearby</button>
+        <div id="nearby-container">
+          <button id="nearby-info"></button>
+        </div>
+        <div id="last-updated"></div>
+        <div id="neighborhood-text"></div>
+        <div id="overlay" class="hidden" ></div>
+        <div class="hidden" id="call-list-container">
+          <h2 id="call-list-heading"></h2>
+          <ul id="call-list"></ul>
+        </div>
+        <div class="hidden" id="project-info-container">
+          <div id="project-info">
+            <h2 id="project-info-heading">Welcome to Urbanite  🌁  </h2>
+            <p>Explore the latest law enforcement dispatched calls for service in San Francisco.<br><br>&bull; Move around the neighborhoods<br>&bull; See call details + reponse times<br>&bull; Change the map skin<br>&bull; Open the list of latest calls<br>&bull; Social links to city data<br><br>Built as a lightweight & speedy alternative to other incident mapping apps, Urbanite goes beyond by providing priority, status, exact response times & <a href="https://datasf.gitbook.io/datasf-dataset-explainers/law-enforcement-dispatched-calls-for-service#universe-of-calls-captured-in-the-cad-system">CAD ID #</a><br><br>A personal project designed and developed in the Misson neighborhood 🌯🌴🌴 using vanilla Javascript.<br><br>Inquiries/feedback? DM me <a href="https://twitter.com/roblittlefield">@roblittlefield</a>
+            </p>
+            
+            
+          </div></div>
+          <div class="addSFDataSource">
+            <a href="https://datasf.gitbook.io/datasf-dataset-explainers/law-enforcement-dispatched-calls-for-service" class="centered-link">
+              <img src="https://sf.gov/themes/custom/sfgovpl/logo.svg" alt="SF.gov Data" style="width: 10px; height: 10px;">
+              SF Data
+            </a>
+          </div>
+          <div id="alert"></div>
+        </main>
         
         <script type="module">
           window.addEventListener('load', () => {
@@ -70,9 +72,6 @@
           </script>
         <script type="module" src="src/js/controller.js"></script>
         <link rel="stylesheet" href="src/css/style2.css" />
-        <footer>
-          <span id="last-updated"></span>
-        </footer>
       </body>
       </html>
       

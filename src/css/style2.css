@@ -1,4 +1,15 @@
 /*----CALLS LIST----*/
+#overlay {
+  backdrop-filter: blur(4px);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  touch-action: none;
+  pointer-events: none;
+  z-index: 5;
+}
+
 #project-info-container {
   position: fixed;
   top: 50%;
@@ -59,7 +70,6 @@
   }
 }
 /*----LATEST INCIDENTS LIST----*/
-/*--Flicker--*/
 #call-list-container {
   background: linear-gradient(
     to bottom left,
@@ -109,10 +119,10 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 72%;
+  width: 85%;
   max-width: 460px;
   max-height: 93vh;
-  z-index: 4;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -139,7 +149,7 @@
 #call-list-container h2 {
   position: relative;
   color: white;
-  font-family: Tahoma, Arial, Helvetica, sans-serif;
+  font-family: sans-serif;
   font-size: 16px;
   border: #292828;
   border-width: 5px;
@@ -153,7 +163,7 @@
 
   max-width: 320px;
   max-height: 80vh;
-  width: 90%;
+  width: 93%;
   padding: 1px;
   margin: 0px 0px 5px 0px;
 
@@ -201,7 +211,7 @@
 
 .call-box p {
   font-size: 13px;
-  color: white;
+  color: rgb(255, 255, 255);
   font-family: sans-serif;
   background-color: transparent;
   margin: 0px 11px 0px;

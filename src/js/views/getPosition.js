@@ -1,6 +1,5 @@
 const showAlert = function (message) {
-  const alertElement = document.createElement("div");
-  alertElement.classList.add("alert");
+  const alertElement = document.getElementById("alert");
   alertElement.textContent = message;
   document.body.appendChild(alertElement);
 
@@ -29,25 +28,19 @@ export const getPosition = function (defaultMapSF) {
             longitude < expandedMinLongitude ||
             longitude > expandedMaxLongitude
           ) {
-            showAlert(
-              `Looks like you're outside San Francisco, loading city center 🌉`
-            );
-            reject(new Error("Location outside expanded SF bounds"));
+            showAlert(`Outside San Francisco, loading city center 🌉`);
+            reject(new Error("Location outside SF"));
           } else {
             resolve([latitude, longitude]);
           }
         },
         () => {
-          showAlert(
-            `Couldn't find your location in San Francisco, loading city center 🌉`
-          );
+          showAlert(`Couldn't find you, loading city center 🌉`);
           resolve(defaultMapSF);
         }
       );
     } else {
-      showAlert(
-        `Couldn't find your location in San Francisco, loading city center 🌉`
-      );
+      showAlert(`Couldn't find you, loading city center 🌉`);
       resolve(defaultMapSF);
     }
   });

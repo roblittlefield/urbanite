@@ -42,7 +42,7 @@ export const minsHoursFormat = function (time) {
     return `${minutes}m`;
   } else if (hours < 6) {
     return `${hours}h${minutes === 0 ? "" : ` ${minutes}m`}`;
-  } else if (hours < 24) {
+  } else if (hours <= 50) {
     return `${hours}h`;
   } else if (days < 365) {
     return `${days}d${
