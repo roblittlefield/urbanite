@@ -62,7 +62,7 @@ export const toggleVisibleItems = function () {
   countNearbyContainer.classList.toggle("hidden");
   neighborhoodContainer.classList.toggle("hidden");
   lastUpdatedElement.classList.toggle("hidden");
-  overlay.classList.toggle("hidden");
+  // overlay.classList.toggle("hidden");
 };
 
 export const toggleVisibleList = function () {
