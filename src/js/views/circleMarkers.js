@@ -69,7 +69,7 @@ export default class circleMarkers {
       <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweetContent
       )}" target="_blank">
-      <img src="https://www.freeiconspng.com/uploads/logo-twitter-circle-png-transparent-image-1.png" alt="Twitter Bird Icon" style=" height: 20px; position: absolute; bottom: 0px; left: calc(50% + 25px); transform: translate(-50%, -50%);">
+      <img src="https://icons.iconarchive.com/icons/xenatt/the-circle/256/App-Twitter-icon.png" alt="Twitter Bird Icon" style=" height: 20px; position: absolute; bottom: 0px; left: calc(50% + 25px); transform: translate(-50%, -50%);">
       </a>
       <br>${call.properCaseAddress}
       <br>Priority ${
