@@ -3,6 +3,9 @@ body {
   margin: 0;
   padding: 0;
 }
+html {
+  box-sizing: border-box;
+}
 
 #map {
   height: 100%;
@@ -21,7 +24,7 @@ body {
   display: none !important;
 }
 
-.addSFDataSource {
+#addSFDataSource {
   user-select: none;
   box-sizing: border-box;
   line-height: 1.4;

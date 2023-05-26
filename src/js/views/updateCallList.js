@@ -7,9 +7,9 @@ const latestContainer = document.getElementById("call-list-container");
 const callList = document.getElementById("call-list");
 let isEventListenerAdded = false;
 const formattedDate = new Date().toLocaleString("en-US", {
-  weekday: "long",
-  month: "long",
-  day: "numeric",
+  // weekday: "long",
+  // month: "long",
+  // day: "numeric",
   hour: "numeric",
   minute: "numeric",
   hour12: true,
@@ -144,7 +144,7 @@ export const controlOpenCallList = function (
     callBoxes[i].classList.remove("hidden");
   }
   callListHeading.textContent = message;
-  callListSubHeading.textContent = `Updated: ` + formattedDate;
+  callListSubHeading.textContent = `Last updated: ` + formattedDate;
   toggleVisibleItems();
   toggleVisibleList();
   if (

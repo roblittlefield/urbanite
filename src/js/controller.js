@@ -28,7 +28,7 @@ const countContainer = document.getElementById("nearby-info");
 const infoContainer = document.getElementById("project-info-container");
 const latestButton = document.getElementById("latest-list-btn");
 const nearbyButton = document.getElementById("nearby-list-btn");
-const lastUpdatedElement = document.getElementById("last-updated");
+const sfDataSource = document.getElementById("addSFDataSource");
 
 let urlCAD;
 const initGetUrlParam = function () {
@@ -175,6 +175,7 @@ const init = async function () {
     loadChangeMapButton(controlChangeMap);
     loadProjectInfoButton(controlProjectInfo);
     getWeather();
+    sfDataSource.classList.remove("hidden");
   } catch (err) {
     console.error(`Init error: ${err}`);
   }
