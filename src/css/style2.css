@@ -175,7 +175,7 @@
   bottom: 3px;
 
   max-width: 320px;
-  max-height: 80vh;
+  /* max-height: 80vh; */
   width: 93%;
   padding: 1px;
   margin: 0px 0px 5px 0px;
