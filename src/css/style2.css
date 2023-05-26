@@ -52,6 +52,7 @@
 #project-info h2 {
   font-size: 1rem;
   font-style: bold;
+  line-height: 0.5;
 }
 #project-info p {
   font-size: 0.95rem;
