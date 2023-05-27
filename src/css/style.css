@@ -84,7 +84,7 @@ html {
   justify-content: center;
   padding: 30px;
   word-wrap: normal;
-  align-items: center;
+  text-align: center;
   color: white;
   font-family: Arial, sans-serif;
   border-radius: 3px;

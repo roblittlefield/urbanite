@@ -1,6 +1,6 @@
 import { formatDate, minsHoursFormat } from "../helpers.js";
 import { colorMap } from "../config.js";
-
+const overlapOffset = 0.00005;
 export default class circleMarkers {
   constructor() {
     this.police48Layer = L.layerGroup();
@@ -18,9 +18,9 @@ export default class circleMarkers {
         call.dispositionMeaning !== "" && call.dispositionMeaning !== "Unknown"
           ? `${call.dispositionMeaning}`
           : "";
-      const tweetContent = `${call.callTypeFormatted} in ${
-        call.neighborhoodFormatted
-      } ${
+      const tweetContent = `${call.callTypeFormatted} at ${
+        call.properCaseAddress
+      } in ${call.neighborhoodFormatted} ${
         call.receivedTimeAgo <= 6
           ? `${receivedTimeAgoF} ago`
           : `${formatDate(call.receivedTime)}`
@@ -41,13 +41,13 @@ export default class circleMarkers {
       } #SanFrancisco https://urbanitesf.netlify.app/?cad_number=${
         call.cadNumber
       }`;
-      const textMessageContent = `"${call.callTypeFormatted} in ${
-        call.neighborhoodFormatted
-      } ${receivedTimeAgoF} ago, ${
+      const textMessageContent = `"${call.callTypeFormatted} at ${
+        call.properCaseAddress
+      } in ${call.neighborhoodFormatted} ${receivedTimeAgoF} ago, ${
         call.onView === "Y"
           ? "officer observed"
           : call.responseTime
-          ? `response time: ${
+          ? `SFPD response time: ${
               call.responseTime > 30 ? `${responseTimeF} 😬` : responseTimeF
             }`
           : dispatchedTimeAgoF
@@ -90,10 +90,19 @@ export default class circleMarkers {
       }<br>${disposition}
   </div>
 `;
-      const callLatlng = [
+      let callLatlng = [
         Number(call.coords.coordinates[1]),
         Number(call.coords.coordinates[0]),
       ];
+      this.police48Layer.eachLayer(function (layer) {
+        if (layer.getLatLng().equals(callLatlng)) {
+          callLatlng[0] += overlapOffset;
+          // callLatlng[1] += overlapOffset;;
+
+          layer.setLatLng(callLatlng);
+        }
+      });
+
       const marker = L.circleMarker(callLatlng, {
         radius: window.innerWidth <= 758 ? 3 : 4,
         keepInView: false,

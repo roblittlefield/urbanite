@@ -18,7 +18,7 @@ const formattedDate = new Date().toLocaleString("en-US", {
 export const updateCallList = function (latestMarkers, map, nearby) {
   const callList = document.getElementById("call-list");
   let calcHour = -1;
-  const sortedMarkersArr = latestMarkers.getLayers().reverse();
+  const sortedMarkersArr = latestMarkers.getLayers();
   const index = sortedMarkersArr.findIndex((circleMarker) => {
     const receivedTimeAgo = circleMarker.options.data.receivedTimeAgo;
     return receivedTimeAgo > 2910;

@@ -66,9 +66,10 @@ const controlMap = async function () {
     const initLayer = L.tileLayer(sfapi.MAP_LAYERS[0]).addTo(map);
     if (!map) return;
     loadLastUpdated();
+    getWeather(originalPosition);
     return map;
   } catch (err) {
-    console.error(`${err} Leaflet map error`);
+    console.error(err);
     throw err;
   }
 };
@@ -108,7 +109,7 @@ const controlCircleMarkers = async function () {
       : localStorage.getItem("openList") === "allSF"
       ? latestButton.click()
       : "";
-    // Call Count Display
+    // Call Count
     if (JSON.stringify(position) !== JSON.stringify(sfapi.getLatLngSF())) {
       countContainer.textContent =
         dataResult.countCallsNearby.toString() +
@@ -174,7 +175,7 @@ const init = async function () {
     await controlCircleMarkers();
     loadChangeMapButton(controlChangeMap);
     loadProjectInfoButton(controlProjectInfo);
-    getWeather();
+    // getWeather();
     sfDataSource.classList.remove("hidden");
   } catch (err) {
     console.error(`Init error: ${err}`);

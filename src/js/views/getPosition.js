@@ -2,13 +2,13 @@ const showAlert = function (message) {
   const alertElement = document.getElementById("alert");
   alertElement.classList.remove("hidden");
   alertElement.textContent = message;
-  document.body.appendChild(alertElement);
+  // document.body.appendChild(alertElement);
   setTimeout(function () {
     if (alertElement.parentElement) {
       alertElement.classList.add("hidden");
-      alertElement.removeChild(alertElement);
+      // alertElement.removeChild(alertElement);
     }
-  }, 2000);
+  }, 3000);
 };
 
 export const getPosition = function (defaultMapSF) {
@@ -36,12 +36,12 @@ export const getPosition = function (defaultMapSF) {
           }
         },
         () => {
-          showAlert(`Couldn't find you, loading city center 🌉`);
+          showAlert(`Share your location to see nearby calls 🌉`);
           resolve(defaultMapSF);
         }
       );
     } else {
-      showAlert(`Couldn't find you, loading city center 🌉`);
+      showAlert(`Share your location to see nearby calls 🌉`);
       resolve(defaultMapSF);
     }
   });
