@@ -9,6 +9,9 @@ const neighborhoodContainer = document.getElementById("neighborhood-text");
 const infoContainer = document.getElementById("project-info-container");
 const lastUpdatedElement = document.getElementById("last-updated");
 const contactFormElement = document.getElementById("contact-form");
+const contactFormContainerElement = document.getElementById(
+  "contact-form-container"
+);
 const openContactFormElement = document.getElementById("open-contact-form");
 const overlay = document.getElementById("overlay");
 
@@ -63,10 +66,9 @@ export const loadContactFormLink = function (handler) {
   });
   contactFormElement.addEventListener("submit", (e) => {
     e.preventDefault();
-    if (e.submitter.getAttribute("data-netlify") === "true") {
-      toggleVisibleItems();
-      contactFormElement.classList.add("hidden");
-    }
+
+    contactFormContainerElement.classList.toggle("hidden");
+    toggleVisibleItems();
   });
 };
 
