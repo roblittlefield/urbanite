@@ -274,6 +274,10 @@
   background-color: #f1f1f1;
 }
 
+#open-contact-form {
+  text-decoration: underline;
+}
+
 #contact-form {
   position: fixed;
   color: white;

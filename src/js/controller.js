@@ -33,6 +33,9 @@ const sfDataSource = document.getElementById("addSFDataSource");
 const contactFormContainerElement = document.getElementById(
   "contact-form-container"
 );
+const openContactFormElement = document.getElementById("open-contact-form");
+const contactFormElement = document.getElementById("contact-form");
+const submitButton = document.getElementById("form-submit-btn");
 
 let urlCAD;
 const initGetUrlParam = function () {
@@ -96,7 +99,6 @@ const controlCircleMarkers = async function () {
       data,
       position
     );
-    //////
 
     initPopupNieghborhood(position, police48Layer, urlCAD, map);
     loadLatestListButton(controlOpenCallList);
@@ -160,10 +162,13 @@ const controlProjectInfo = function () {
     const clickTarget = event.target;
     if (
       !infoContainer.classList.contains("hidden") &&
-      !infoContainer.contains(clickTarget)
+      !infoContainer.contains(clickTarget) &&
+      clickTarget !== openContactFormElement &&
+      clickTarget !== submitButton
     ) {
       toggleVisibleItems();
       toggleVisibleInfo();
+      console.log(`toggled visible`);
     }
   };
 
@@ -173,9 +178,32 @@ const controlProjectInfo = function () {
 };
 
 const controlContactForm = function () {
+  contactFormContainerElement.classList.remove("hidden");
   toggleVisibleInfo();
-  contactFormContainerElement.classList.toggle("hidden");
+  const handleClick = (event) => {
+    const clickTarget = event.target;
+    if (
+      !contactFormContainerElement.classList.contains("hidden") &&
+      !contactFormContainerElement.contains(clickTarget) &&
+      clickTarget !== openContactFormElement &&
+      clickTarget !== submitButton
+    ) {
+      toggleVisibleItems();
+      console.log(`toggled visible items from click out not submit`);
+      contactFormContainerElement.classList.add("hidden");
+    }
+  };
+  setTimeout(() => {
+    window.addEventListener("click", handleClick);
+  }, 600);
 };
+
+contactFormElement.addEventListener("submit", (e) => {
+  contactFormElement.reset();
+  e.preventDefault();
+  contactFormContainerElement.classList.add("hidden");
+  toggleVisibleItems();
+});
 
 const init = async function () {
   try {

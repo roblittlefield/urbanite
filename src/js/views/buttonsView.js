@@ -8,10 +8,6 @@ const countNearbyContainer = document.getElementById("nearby-info");
 const neighborhoodContainer = document.getElementById("neighborhood-text");
 const infoContainer = document.getElementById("project-info-container");
 const lastUpdatedElement = document.getElementById("last-updated");
-const contactFormElement = document.getElementById("contact-form");
-const contactFormContainerElement = document.getElementById(
-  "contact-form-container"
-);
 const openContactFormElement = document.getElementById("open-contact-form");
 const overlay = document.getElementById("overlay");
 
@@ -60,15 +56,8 @@ export const loadProjectInfoButton = function (handler) {
 
 export const loadContactFormLink = function (handler) {
   openContactFormElement.addEventListener("click", (e) => {
-    e.preventDefault();
-    const btn = e.target.closest("open-contact-form");
+    console.log(`button pressed`);
     handler();
-  });
-  contactFormElement.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    contactFormContainerElement.classList.toggle("hidden");
-    toggleVisibleItems();
   });
 };
 
