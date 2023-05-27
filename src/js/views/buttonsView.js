@@ -8,6 +8,8 @@ const countNearbyContainer = document.getElementById("nearby-info");
 const neighborhoodContainer = document.getElementById("neighborhood-text");
 const infoContainer = document.getElementById("project-info-container");
 const lastUpdatedElement = document.getElementById("last-updated");
+const contactFormElement = document.getElementById("contact-form");
+const openContactFormElement = document.getElementById("open-contact-form");
 const overlay = document.getElementById("overlay");
 
 export const loadChangeMapButton = function (handler) {
@@ -53,6 +55,21 @@ export const loadProjectInfoButton = function (handler) {
   });
 };
 
+export const loadContactFormLink = function (handler) {
+  openContactFormElement.addEventListener("click", (e) => {
+    e.preventDefault();
+    const btn = e.target.closest("open-contact-form");
+    handler();
+  });
+  contactFormElement.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (e.submitter.getAttribute("data-netlify") === "true") {
+      toggleVisibleItems();
+      contactFormElement.classList.add("hidden");
+    }
+  });
+};
+
 export const toggleVisibleItems = function () {
   temperatureContainer.classList.toggle("hidden");
   changeMap.classList.toggle("hidden");
@@ -73,4 +90,4 @@ export const toggleVisibleInfo = function () {
   infoContainer.classList.toggle("hidden");
 };
 
-const addSFDataSourceElement = document.querySelector(".addSFDataSource");
+// const addSFDataSourceElement = document.querySelector(".addSFDataSource");

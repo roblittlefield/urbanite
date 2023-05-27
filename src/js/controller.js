@@ -15,6 +15,7 @@ import {
   loadNearbyListButton,
   loadProjectInfoButton,
   toggleVisibleInfo,
+  loadContactFormLink,
 } from "./views/buttonsView.js";
 import getURLParameter from "./views/hashURL.js";
 import { async } from "regenerator-runtime";
@@ -29,6 +30,9 @@ const infoContainer = document.getElementById("project-info-container");
 const latestButton = document.getElementById("latest-list-btn");
 const nearbyButton = document.getElementById("nearby-list-btn");
 const sfDataSource = document.getElementById("addSFDataSource");
+const contactFormContainerElement = document.getElementById(
+  "contact-form-container"
+);
 
 let urlCAD;
 const initGetUrlParam = function () {
@@ -168,6 +172,11 @@ const controlProjectInfo = function () {
   }, 200);
 };
 
+const controlContactForm = function () {
+  toggleVisibleInfo();
+  contactFormContainerElement.classList.toggle("hidden");
+};
+
 const init = async function () {
   try {
     initGetUrlParam();
@@ -175,6 +184,7 @@ const init = async function () {
     await controlCircleMarkers();
     loadChangeMapButton(controlChangeMap);
     loadProjectInfoButton(controlProjectInfo);
+    loadContactFormLink(controlContactForm);
     // getWeather();
     sfDataSource.classList.remove("hidden");
   } catch (err) {
