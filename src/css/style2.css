@@ -273,3 +273,33 @@
 ::-webkit-scrollbar-corner {
   background-color: #f1f1f1;
 }
+
+#contact-form {
+  position: fixed;
+  color: white;
+  font-family: sans-serif;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#contact-form-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  height: 40%;
+  background: linear-gradient(
+    to bottom left,
+    rgba(0, 4, 79, 0.7),
+    rgba(0, 0, 0, 0.7)
+  );
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  user-select: none;
+  overflow: hidden;
+}
