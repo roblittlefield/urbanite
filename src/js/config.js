@@ -134,7 +134,7 @@ export const callTypeConversionMap = new Map([
   ["FIGHT NO WEAPON", "Fight"],
 
   ["AGG ASSAULT / ADW", "Aggravated assault"],
-  ["ASSAULT / BATTERY", "Assault & battery"],
+  ["ASSAULT / BATTERY", "Assault / battery"],
   ["STRONGARM ROBBERY", "Strong-arm robbery"],
   ["GRAND THEFT", "Grand theft"],
   ["PURSE SNATCH", "Purse snatch"],
