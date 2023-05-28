@@ -7,6 +7,7 @@ import {
   neighborhoodFormat,
 } from "../helpers.js";
 import addHandlerMoveCenter from "./moveCenter.js";
+import { showAlert } from "./getPosition.js";
 
 const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
   let minDistance = Infinity;
@@ -68,6 +69,8 @@ const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
         try {
           const dataHistbyCAD = await fetchHistData(urlCAD);
           ///
+          dataHistbyCAD[0] ??
+            showAlert(`Call pending DataSF archive entry, try later`);
           const coordsHist = [
             Number(dataHistbyCAD[0].latitude),
             Number(dataHistbyCAD[0].longitude),

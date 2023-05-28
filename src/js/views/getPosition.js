@@ -1,4 +1,4 @@
-const showAlert = function (message) {
+export const showAlert = function (message) {
   const alertElement = document.getElementById("alert");
   alertElement.classList.remove("hidden");
   alertElement.textContent = message;
