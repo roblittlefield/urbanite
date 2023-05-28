@@ -201,8 +201,7 @@ contactFormElement.addEventListener("submit", (e) => {
   contactFormElement.reset();
   e.preventDefault();
   contactFormContainerElement.classList.add("hidden");
-  toggleVisibleItems();
-  document.body.style.zoom = "1";
+  document.body.style.transform = "scale(1)";
 });
 
 document.addEventListener("gesturestart", (e) => {
