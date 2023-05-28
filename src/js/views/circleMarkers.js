@@ -1,6 +1,7 @@
 import { formatDate, minsHoursFormat } from "../helpers.js";
 import { colorMap } from "../config.js";
 const overlapOffset = 0.00005;
+
 export default class circleMarkers {
   constructor() {
     this.police48Layer = L.layerGroup();

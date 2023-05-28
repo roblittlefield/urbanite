@@ -6,6 +6,7 @@ const callListSubHeading = document.getElementById("call-list-subheading");
 const latestContainer = document.getElementById("call-list-container");
 const callList = document.getElementById("call-list");
 let isEventListenerAdded = false;
+const callTypeTotals = {};
 const formattedDate = new Date().toLocaleString("en-US", {
   // weekday: "long",
   // month: "long",
@@ -30,6 +31,8 @@ export const updateCallList = function (latestMarkers, map, nearby) {
   }
   if (slicedData.length === 0) return;
   slicedData.forEach((circleMarker) => {
+    callTypeTotals[circleMarker.options.data.callType] =
+      (callTypeTotals[circleMarker.options.data.callType] || 0) + 1;
     const receivedTimeAgo = circleMarker.options.data.receivedTimeAgo;
     const receivedTimeAgoF = minsHoursFormat(receivedTimeAgo);
 
@@ -179,4 +182,5 @@ export const controlOpenCallList = function (
       isEventListenerAdded = true;
     }
   }
+  console.log(callTypeTotals);
 };
