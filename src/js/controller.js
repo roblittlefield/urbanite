@@ -35,7 +35,7 @@ const initGetUrlParam = function () {
   urlCAD = getURLParameter("cad_number");
 };
 
-const interval = 60000 * 5;
+const interval = 60000 * 10;
 function reloadPage() {
   localStorage.setItem("last-load", new Date());
   location.reload();
@@ -50,7 +50,7 @@ document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") {
     const now = new Date();
     const lastLoad = localStorage.getItem("last-load");
-    if (!lastLoad || now - new Date(lastLoad) >= 60000 * 5) {
+    if (!lastLoad || now - new Date(lastLoad) > 60000 * 10) {
       localStorage.setItem("last-load", now);
       location.reload();
     }
@@ -92,7 +92,6 @@ const controlCircleMarkers = async function () {
       data,
       position
     );
-    //////
 
     initPopupNieghborhood(position, police48Layer, urlCAD, map);
     loadLatestListButton(controlOpenCallList);
@@ -175,7 +174,6 @@ const init = async function () {
     await controlCircleMarkers();
     loadChangeMapButton(controlChangeMap);
     loadProjectInfoButton(controlProjectInfo);
-    // getWeather();
     sfDataSource.classList.remove("hidden");
   } catch (err) {
     console.error(`Init error: ${err}`);

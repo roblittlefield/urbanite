@@ -87,7 +87,7 @@ const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
           );
           const addressHist = textProperCase(dataHistbyCAD[0].intersection);
           const resolutionHist = dataHistbyCAD[0].resolution;
-          //////////
+
           const tweetContent = `${incident_descHist} at ${addressHist} in ${neighborhoodHist} ${
             receivedTimeAgo <= 6
               ? `${receivedTimeAgoF} ago`
@@ -99,6 +99,7 @@ const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
                 : `<br>${resolutionHist}`
               : ""
           } #SanFrancisco https://urbanitesf.netlify.app/?cad_number=${cad_numberHist}`;
+
           const textMessageContent = `"${incident_descHist} at ${addressHist} in ${neighborhoodHist} ${receivedTimeAgo} ago${
             resolutionHist
               ? resolutionHist === "Open or Active"
@@ -106,6 +107,7 @@ const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
                 : `, ${resolutionHist}`
               : ""
           }, CAD #${cad_numberHist}" https://urbanitesf.netlify.app/?cad_number=${cad_numberHist}`;
+
           const popupContent = `
           <div>
             <b>${incident_descHist}</b>
