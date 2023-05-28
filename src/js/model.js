@@ -32,9 +32,13 @@ export const dataProcess = function (position, dataRaw, callTypeMap, paramMap) {
 
   const dataFiltered = dataRaw.filter((callRaw) => {
     const isCallTypeIncluded = callTypeMap.includes(
-      callRaw.call_type_final_desc
+      callRaw.call_type_final_desc || callRaw.call_type_original_desc
     );
-    return isCallTypeIncluded;
+    const callReceivedTime = new Date(callRaw.received_datetime);
+    const currentTime = new Date();
+    const timeDifference = currentTime - callReceivedTime;
+    const hoursDifference = timeDifference / 3600000;
+    return isCallTypeIncluded && hoursDifference < 49;
   });
 
   const dataPreSort = dataFiltered.map((callRaw) => {

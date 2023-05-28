@@ -64,6 +64,9 @@ const controlMap = async function () {
     originalZoom = sfapi.getMapZoomLevel();
     map = L.map("map").setView(originalPosition, originalZoom);
     const initLayer = L.tileLayer(sfapi.MAP_LAYERS[0]).addTo(map);
+    mapElement.addEventListener("touchstart", function (e) {
+      e.stopPropagation();
+    });
     if (!map) return;
     loadLastUpdated();
     getWeather(originalPosition);

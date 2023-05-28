@@ -23,6 +23,7 @@ export const standardizeData = function (rawData, apiRef) {
 
 export const textProperCase = function (textRaw) {
   const text = textRaw
+    .replace(/\\\\/g, "\\")
     .replace(/0(\d)/g, "$1")
     .replace(/\\/g, "/")
     .split("/")

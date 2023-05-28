@@ -20,17 +20,8 @@ export const updateCallList = function (latestMarkers, map, nearby) {
   const callList = document.getElementById("call-list");
   let calcHour = -1;
   const sortedMarkersArr = latestMarkers.getLayers();
-  const index = sortedMarkersArr.findIndex((circleMarker) => {
-    const receivedTimeAgo = circleMarker.options.data.receivedTimeAgo;
-    return receivedTimeAgo > 2910;
-  });
 
-  let slicedData;
-  if (index !== 0 && index !== 1) {
-    slicedData = sortedMarkersArr.slice(0, index);
-  }
-  if (slicedData.length === 0) return;
-  slicedData.forEach((circleMarker) => {
+  sortedMarkersArr.forEach((circleMarker) => {
     callTypeTotals[circleMarker.options.data.callType] =
       (callTypeTotals[circleMarker.options.data.callType] || 0) + 1;
     const receivedTimeAgo = circleMarker.options.data.receivedTimeAgo;
