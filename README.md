@@ -6,7 +6,7 @@ Live Link: https://urbanitesf.netlify.app
 
 ## Application Description
 
-Urbanite SF is a San Francisco law enforcement dispatched calls for service incident mapping web app inspired by Citizen App. The site was developed by Rob Littlefield.
+Urbanite SF is a San Francisco law enforcement dispatched calls for service incident mapping web app. Built as a lightweight & straightforward alternative to other incident mapping apps with pay-walls and ads, Urbanite SF additionally provides call priority, status, exact response time, and CAD ID #. No user data is stored. The site was developed by Rob Littlefield.
 
 ## Features
 
@@ -23,7 +23,7 @@ Urbanite SF is a San Francisco law enforcement dispatched calls for service inci
 
 ## App Components
 
-Urbanite SF was written using vanilla JavaScript. Includes "live" Police data, which is delayed 10 minutes and filtered for sensitive information. I
+Urbanite SF was written using vanilla JavaScript. Includes "live" Police data, which is delayed 10 minutes and filtered for sensitive information.
 
 ## Future Work
 

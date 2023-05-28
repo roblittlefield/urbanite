@@ -89,9 +89,9 @@ export const colorMap = new Map([
   ["STABBING", "#f46d43"], // Orage
   ["PERSON W/KNIFE", "#f46d43"],
   ["FIGHT W/WEAPONS", "#f46d43"],
-  ["FIGHT NO WEAPON", "#f46d43"],
+  ["AGG ASSAULT / ADW", "#f46d43"], // YellowOrange
 
-  ["AGG ASSAULT / ADW", "#fdae61"], // YellowOrange
+  ["FIGHT NO WEAPON", "#fdae61"],
   ["ASSAULT / BATTERY", "#fdae61"],
   ["STRONGARM ROBBERY", "#f0fe8b"], // Orange
   ["GRAND THEFT", "#f0fe8b"], // Yellow
