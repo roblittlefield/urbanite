@@ -31,7 +31,7 @@ export default class circleMarkers {
           ? `SFPD response time: ${
               call.responseTime > 30 ? `${responseTimeF} 😬` : responseTimeF
             }`
-          : dispatchedTimeAgoF !== "NaNh" && dispatchedTimeAgoF
+          : dispatchedTimeAgoF
           ? `SFPD dispatched ${dispatchedTimeAgoF} ago`
           : call.enteredTime
           ? `call entry in SFPD queue ${call.enteredTimeAgo} ago`
@@ -82,7 +82,7 @@ export default class circleMarkers {
           ? "<br>Officer observed"
           : call.responseTime
           ? `<br>Response time: ${responseTimeF}`
-          : dispatchedTimeAgoF !== "NaNh" && dispatchedTimeAgoF
+          : dispatchedTimeAgoF
           ? `<br>Dispatched ${dispatchedTimeAgoF} ago`
           : call.enteredTime
           ? `<br>Call entry in queue ${call.enteredTimeAgo} ago`
@@ -118,13 +118,13 @@ export default class circleMarkers {
           neighborhood: call.neighborhoodFormatted,
           receivedTime: receivedTimeF,
           // entryTime: enteredTime,
-          entryTimeAgo: call.enteredTimeAgo,
+          enteredTimeAgo: call.enteredTimeAgo,
           // dispatchTime: dispatchedTime,
-          dispatchedTimeAgo: dispatchedTimeAgoF,
+          dispatchedTimeAgoF: dispatchedTimeAgoF,
           responseTime: call.responseTime,
           address: call.properCaseAddress,
           callType: call.callTypeFormatted,
-          receivedTimeAgo: call.receivedTimeAgo,
+          receivedTimeAgoF: receivedTimeAgoF,
           // callTypeCode: call.callTypeCode,
           // desc: call.desc,
           onView: call.onView,

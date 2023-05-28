@@ -30,10 +30,9 @@ export const updateCallList = function (latestMarkers, map, nearby) {
   }
   if (slicedData.length === 0) return;
   slicedData.forEach((circleMarker) => {
-    const receivedTimeAgo = circleMarker.options.data.receivedTimeAgo;
-    const receivedTimeAgoF = minsHoursFormat(receivedTimeAgo);
+    const receivedTimeAgoF = circleMarker.options.data.receivedTimeAgoF;
 
-    const hours = Math.floor(receivedTimeAgo / 60);
+    const hours = Math.floor(circleMarker.options.data.receivedTimeAgo / 60);
     if (hours > calcHour) {
       calcHour = hours;
       const minutesNumber = document.createElement("span");
@@ -91,7 +90,7 @@ export const updateCallList = function (latestMarkers, map, nearby) {
         circleMarker.options.data.sensitive ? "  *sensitive call" : ""
       }</h3>
           <i><p>
-          ${receivedTimeAgo === NaN ? "" : `${receivedTimeAgoF} ago in`} 
+          ${receivedTimeAgoF === NaN ? "" : `${receivedTimeAgoF} ago in`} 
           ${circleMarker.options.data.neighborhood}, priority ${
         circleMarker.options.data.priority
       }</p>
@@ -100,9 +99,9 @@ export const updateCallList = function (latestMarkers, map, nearby) {
              ? `Officer observed`
              : responseTime
              ? `Response time: ${responseTimeF}`
-             : circleMarker.options.data.dispatchTime
-             ? `Dispatched ${circleMarker.options.data.dispatchedTimeAgo} ago`
-             : circleMarker.options.data.entryTime
+             : circleMarker.options.data.dispatchedTimeAgoF
+             ? `Dispatched ${circleMarker.options.data.dispatchedTimeAgoF} ago`
+             : circleMarker.options.data.enteredTimeAgo
              ? `Call entry in queue ${circleMarker.options.data.enteredTimeAgo} ago`
              : `Call received, pending entry`
          }${
