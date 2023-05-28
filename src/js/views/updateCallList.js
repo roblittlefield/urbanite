@@ -125,6 +125,7 @@ export const updateCallList = function (latestMarkers, map, nearby) {
       callList.appendChild(callBox);
     }
   });
+  if (!nearby) console.log(callTypeTotals);
 };
 
 export const controlOpenCallList = function (
@@ -182,5 +183,4 @@ export const controlOpenCallList = function (
       isEventListenerAdded = true;
     }
   }
-  console.log(callTypeTotals);
 };

@@ -1,6 +1,6 @@
 import { formatDate, minsHoursFormat } from "../helpers.js";
 import { colorMap } from "../config.js";
-const overlapOffset = 0.00005;
+const overlapOffset = 0.00007;
 
 export default class circleMarkers {
   constructor() {
@@ -98,9 +98,6 @@ export default class circleMarkers {
       this.police48Layer.eachLayer(function (layer) {
         if (layer.getLatLng().equals(callLatlng)) {
           callLatlng[0] += overlapOffset;
-          // callLatlng[1] += overlapOffset;;
-
-          layer.setLatLng(callLatlng);
         }
       });
 
