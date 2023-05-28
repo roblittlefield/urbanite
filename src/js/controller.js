@@ -168,7 +168,6 @@ const controlProjectInfo = function () {
     ) {
       toggleVisibleItems();
       toggleVisibleInfo();
-      console.log(`toggled visible`);
     }
   };
 
@@ -203,8 +202,17 @@ contactFormElement.addEventListener("submit", (e) => {
   e.preventDefault();
   contactFormContainerElement.classList.add("hidden");
   toggleVisibleItems();
+  document.body.style.zoom = "1";
 });
 
+document.addEventListener("gesturestart", (e) => {
+  e.preventDefault();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.ctrlKey && (e.key === "+" || e.key === "-")) {
+    e.preventDefault();
+  }
+});
 const init = async function () {
   try {
     initGetUrlParam();
