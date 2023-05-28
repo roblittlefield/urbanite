@@ -15,7 +15,6 @@ import {
   loadNearbyListButton,
   loadProjectInfoButton,
   toggleVisibleInfo,
-  loadContactFormLink,
 } from "./views/buttonsView.js";
 import getURLParameter from "./views/hashURL.js";
 import { async } from "regenerator-runtime";
@@ -30,12 +29,6 @@ const infoContainer = document.getElementById("project-info-container");
 const latestButton = document.getElementById("latest-list-btn");
 const nearbyButton = document.getElementById("nearby-list-btn");
 const sfDataSource = document.getElementById("addSFDataSource");
-const contactFormContainerElement = document.getElementById(
-  "contact-form-container"
-);
-const openContactFormElement = document.getElementById("open-contact-form");
-const contactFormElement = document.getElementById("contact-form");
-const submitButton = document.getElementById("form-submit-btn");
 
 let urlCAD;
 const initGetUrlParam = function () {
@@ -99,6 +92,7 @@ const controlCircleMarkers = async function () {
       data,
       position
     );
+    //////
 
     initPopupNieghborhood(position, police48Layer, urlCAD, map);
     loadLatestListButton(controlOpenCallList);
@@ -162,9 +156,7 @@ const controlProjectInfo = function () {
     const clickTarget = event.target;
     if (
       !infoContainer.classList.contains("hidden") &&
-      !infoContainer.contains(clickTarget) &&
-      clickTarget !== openContactFormElement &&
-      clickTarget !== submitButton
+      !infoContainer.contains(clickTarget)
     ) {
       toggleVisibleItems();
       toggleVisibleInfo();
@@ -176,42 +168,6 @@ const controlProjectInfo = function () {
   }, 200);
 };
 
-const controlContactForm = function () {
-  contactFormContainerElement.classList.remove("hidden");
-  toggleVisibleInfo();
-  const handleClick = (event) => {
-    const clickTarget = event.target;
-    if (
-      !contactFormContainerElement.classList.contains("hidden") &&
-      !contactFormContainerElement.contains(clickTarget) &&
-      clickTarget !== openContactFormElement &&
-      clickTarget !== submitButton
-    ) {
-      toggleVisibleItems();
-      console.log(`toggled visible items from click out not submit`);
-      contactFormContainerElement.classList.add("hidden");
-    }
-  };
-  setTimeout(() => {
-    window.addEventListener("click", handleClick);
-  }, 600);
-};
-
-contactFormElement.addEventListener("submit", (e) => {
-  contactFormElement.reset();
-  e.preventDefault();
-  contactFormContainerElement.classList.add("hidden");
-  document.body.style.transform = "scale(1)";
-});
-
-document.addEventListener("gesturestart", (e) => {
-  e.preventDefault();
-});
-document.addEventListener("keydown", (e) => {
-  if (e.ctrlKey && (e.key === "+" || e.key === "-")) {
-    e.preventDefault();
-  }
-});
 const init = async function () {
   try {
     initGetUrlParam();
@@ -219,7 +175,6 @@ const init = async function () {
     await controlCircleMarkers();
     loadChangeMapButton(controlChangeMap);
     loadProjectInfoButton(controlProjectInfo);
-    loadContactFormLink(controlContactForm);
     // getWeather();
     sfDataSource.classList.remove("hidden");
   } catch (err) {
