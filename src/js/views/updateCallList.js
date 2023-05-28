@@ -30,9 +30,10 @@ export const updateCallList = function (latestMarkers, map, nearby) {
   }
   if (slicedData.length === 0) return;
   slicedData.forEach((circleMarker) => {
-    const receivedTimeAgoF = circleMarker.options.data.receivedTimeAgoF;
+    const receivedTimeAgo = circleMarker.options.data.receivedTimeAgo;
+    const receivedTimeAgoF = minsHoursFormat(receivedTimeAgo);
 
-    const hours = Math.floor(circleMarker.options.data.receivedTimeAgo / 60);
+    const hours = Math.floor(receivedTimeAgo / 60);
     if (hours > calcHour) {
       calcHour = hours;
       const minutesNumber = document.createElement("span");
@@ -90,7 +91,7 @@ export const updateCallList = function (latestMarkers, map, nearby) {
         circleMarker.options.data.sensitive ? "  *sensitive call" : ""
       }</h3>
           <i><p>
-          ${receivedTimeAgoF === NaN ? "" : `${receivedTimeAgoF} ago in`} 
+          ${receivedTimeAgo === NaN ? "" : `${receivedTimeAgoF} ago in`} 
           ${circleMarker.options.data.neighborhood}, priority ${
         circleMarker.options.data.priority
       }</p>

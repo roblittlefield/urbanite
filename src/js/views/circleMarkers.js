@@ -124,7 +124,7 @@ export default class circleMarkers {
           responseTime: call.responseTime,
           address: call.properCaseAddress,
           callType: call.callTypeFormatted,
-          receivedTimeAgoF: receivedTimeAgoF,
+          receivedTimeAgo: call.receivedTimeAgo,
           // callTypeCode: call.callTypeCode,
           // desc: call.desc,
           onView: call.onView,
