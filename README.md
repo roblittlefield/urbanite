@@ -2,8 +2,7 @@
 
 # Urbanite SF
 
-[live Link][live]
-[live]: https://urbanitesf.netlify.app
+Live Link: https://urbanitesf.netlify.app
 
 ## Application Description
 
