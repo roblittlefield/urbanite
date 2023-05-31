@@ -153,7 +153,7 @@ export const callTypeConversionMap = new Map([
   ["DRUNK DRIVER", "Drunk driver"],
 
   ["STOLEN VEHICLE", "Stolen vehicle"],
-  ["AUTO BOOST / STRIP", "Car break-in"],
+  ["AUTO BOOST / STRIP", "Car break-in/strip"],
 
   ["H&R INJURY ACCIDENT", "Hit and run with injuries"],
   ["H&R VEH ACCIDENT", "Hit and run with no injuries"],

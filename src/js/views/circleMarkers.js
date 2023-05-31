@@ -1,6 +1,6 @@
 import { formatDate, minsHoursFormat } from "../helpers.js";
 import { colorMap } from "../config.js";
-const overlapOffset = 0.00007;
+const overlapOffset = 0.00008;
 
 export default class circleMarkers {
   constructor() {
@@ -102,7 +102,7 @@ export default class circleMarkers {
       });
 
       const marker = L.circleMarker(callLatlng, {
-        radius: window.innerWidth <= 758 ? 3 : 4,
+        radius: window.innerWidth <= 758 ? 5 : 5,
         keepInView: false,
         fillColor: colorMap.get(call.call_type) || "#0000000",
         color: "#333333",
