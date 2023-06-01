@@ -1,15 +1,4 @@
 /*----CALLS LIST----*/
-#overlay {
-  backdrop-filter: blur(4px);
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  touch-action: none;
-  pointer-events: none;
-  z-index: 5;
-}
-
 #project-info-container {
   position: fixed;
   top: 50%;

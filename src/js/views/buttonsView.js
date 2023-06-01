@@ -8,7 +8,6 @@ const countNearbyContainer = document.getElementById("nearby-info");
 const neighborhoodContainer = document.getElementById("neighborhood-text");
 const infoContainer = document.getElementById("project-info-container");
 const lastUpdatedElement = document.getElementById("last-updated");
-const overlay = document.getElementById("overlay");
 
 export const loadChangeMapButton = function (handler) {
   changeMap.addEventListener("click", (e) => {
