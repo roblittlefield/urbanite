@@ -1,8 +1,6 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/8577fd5c-0a26-4efa-85cb-69155c7204d5/deploy-status)](https://app.netlify.com/sites/urbanitesf/deploys)
-
 # Urbanite SF
 
-Live Link: https://urbanitesf.netlify.app
+Live Link: https://urbanitesf.netlify.app [![Netlify Status](https://api.netlify.com/api/v1/badges/8577fd5c-0a26-4efa-85cb-69155c7204d5/deploy-status)](https://app.netlify.com/sites/urbanitesf/deploys)
 
 ## Application Description
 
