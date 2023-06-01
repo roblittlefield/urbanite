@@ -8,9 +8,6 @@ const callList = document.getElementById("call-list");
 let isEventListenerAdded = false;
 const callTypeTotals = {};
 const formattedDate = new Date().toLocaleString("en-US", {
-  // weekday: "long",
-  // month: "long",
-  // day: "numeric",
   hour: "numeric",
   minute: "numeric",
   hour12: true,

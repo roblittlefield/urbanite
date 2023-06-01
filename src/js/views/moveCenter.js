@@ -59,7 +59,7 @@ const addHandlerMoveCenter = function (police48Layer, map) {
           }
         });
       }
-    }, 5); // Delay of 5 ms
+    }, 7);
   });
 };
 

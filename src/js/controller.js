@@ -63,16 +63,14 @@ const controlMap = async function () {
     originalPosition = position;
     originalZoom = sfapi.getMapZoomLevel();
     map = L.map("map").setView(originalPosition, originalZoom);
-    const initLayer = L.tileLayer(sfapi.MAP_LAYERS[0]).addTo(map);
+    L.tileLayer(sfapi.MAP_LAYERS[0]).addTo(map);
     map.addEventListener("touchstart", function (e) {
       e.stopPropagation();
     });
-    if (!map) return;
     loadLastUpdated();
     getWeather(originalPosition);
     return map;
   } catch (err) {
-    console.error(err);
     throw err;
   }
 };
@@ -111,20 +109,13 @@ const controlCircleMarkers = async function () {
       : localStorage.getItem("openList") === "allSF"
       ? latestButton.click()
       : "";
-    // Call Count
     if (JSON.stringify(position) !== JSON.stringify(sfapi.getLatLngSF())) {
       countContainer.textContent =
         dataResult.countCallsNearby.toString() +
         ` calls nearby, ` +
         dataResult.countCallsNearbyRecent.toString() +
         ` past ${sfapi.timeElapNearby / 60}h`;
-      const circle = L.circle(position, {
-        radius: 500, // m
-        color: "white",
-        fillColor: "blue",
-        fillOpacity: 0.1,
-        weight: 1,
-      });
+      const circle = L.circle(position, sfapi.nearbyCircleOpt);
       circle.addTo(map);
     } else {
       countContainer.textContent =
@@ -164,7 +155,6 @@ const controlProjectInfo = function () {
       toggleVisibleInfo();
     }
   };
-
   setTimeout(() => {
     window.addEventListener("click", handleClick);
   }, 200);
@@ -179,7 +169,7 @@ const init = async function () {
     loadProjectInfoButton(controlProjectInfo);
     sfDataSource.classList.remove("hidden");
   } catch (err) {
-    console.error(`Init error: ${err}`);
+    console.error(err);
   }
 };
 

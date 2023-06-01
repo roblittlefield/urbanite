@@ -68,7 +68,6 @@ const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
       (async () => {
         try {
           const dataHistbyCAD = await fetchHistData(urlCAD);
-          ///
           dataHistbyCAD[0] ??
             showAlert(`Call pending DataSF archive entry, try later`);
           const coordsHist = [

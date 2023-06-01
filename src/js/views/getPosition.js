@@ -2,11 +2,9 @@ export const showAlert = function (message) {
   const alertElement = document.getElementById("alert");
   alertElement.classList.remove("hidden");
   alertElement.textContent = message;
-  // document.body.appendChild(alertElement);
   setTimeout(function () {
     if (alertElement.parentElement) {
       alertElement.classList.add("hidden");
-      // alertElement.removeChild(alertElement);
     }
   }, 3000);
 };

@@ -1,10 +1,10 @@
 import { SFDATA_API_KEY } from "../../apikeys.js";
 
 export const maxCalls = 700;
-export const timeElapSF = 120; // 6h
+export const timeElapSF = 120;
 export const nearbyRadius = 500;
-export const timeElapNearby = 180; // Nearby
-export const maxHoursAgo = 48; // 60h
+export const timeElapNearby = 180;
+export const maxHoursAgo = 48.5;
 export const centerPopupTolerance = 100;
 
 export const getLatLngSF = () => {
@@ -12,6 +12,14 @@ export const getLatLngSF = () => {
 };
 export const getMapZoomLevel = () => {
   return window.innerWidth <= 758 ? 14 : 15;
+};
+
+export const nearbyCircleOpt = {
+  radius: 500, // m
+  color: "white",
+  fillColor: "blue",
+  fillOpacity: 0.1,
+  weight: 1,
 };
 
 export const MAP_LAYERS = [
