@@ -32,7 +32,7 @@ Urbanite SF was written using vanilla JavaScript. Includes "live" Police data, w
 
 ## Code
 
-### Map
+### Loading Leaflet Map
 
 The first thing the app does upon load is ask for user's current position to load nearby calls. If the user is 500 or more feet outside of San Francisco city limits, or does not/cannot provide a location, the map loads in the center of the city without the nearby call count.
 
@@ -74,7 +74,7 @@ export const getPosition = function (defaultMapSF) {
 };
 ```
 
-### Data SF
+### Accessing Data SF Dataset
 
 The app then calls the DataSF Real-Time Law Enforcement Dispatched Calls for Service API using a filter the excludes common calls types that are not of interested, such as noise nuisance.
 
@@ -161,7 +161,7 @@ const closestZoom = function () {
 };
 ```
 
-### Explore Other Calls
+### Move to Explore Other Calls
 
 As the user navigates around the map using touch or a mouse, the circle marker that is closest to the X,Y center of the user's screen window is selected and its popup is opened to display the call details dynamically. With many calls in some neighborhoods, sometimes located very close to each other, this method of selecting calls makes fine tune call selection easy and intuitive.
 
@@ -228,6 +228,8 @@ const addHandlerMoveCenter = function (police48Layer, map) {
 };
 ```
 
+### Access Data SF Archives
+
 If the user clicks on a link in a text message or tweet that matches a call that may no longer be available because 48 hours have passed, the app first tries the real-time database, and if it can't find the call, the app looks for the call in the Data SF archive which goes back to 2018 and adds a new circle marker with call details to the map. As of now, Urbanite SF does not map other historic calls beyond 48 hours, but can retrieve individual historic calls.
 
 ```javascript
@@ -245,4 +247,55 @@ export const fetchHistData = async function (cad_number) {
     console.log(err);
   }
 };
+```
+
+### Registering a Service Worker
+
+The app registers a service worker in the user's navigator to cache the HTML, CSS, JavaScript files and images.
+
+```javascript
+<script type="module">
+          window.addEventListener('load', () => {
+            if ('serviceWorker' in navigator) {
+              navigator.serviceWorker
+              .register(new URL('/service-worker.js', import.meta.url), { type: 'module' })
+              .then((registration) => {
+                console.log('Service Worker registered:', registration);
+              })
+              .catch((error) => {
+                console.log('Service Worker registration failed:', error);
+              });
+            }
+          });
+          </script>
+```
+
+```javascript
+import { manifest, version } from "@parcel/service-worker";
+
+async function install() {
+  const cache = await caches.open(version);
+  console.log(version);
+  await cache.addAll(manifest);
+}
+
+addEventListener("install", (e) => e.waitUntil(install()));
+
+async function activate() {
+  const keys = await caches.keys();
+  await Promise.all(keys.map((key) => key !== version && caches.delete(key)));
+}
+
+addEventListener("activate", (e) => e.waitUntil(activate()));
+
+self.addEventListener("install", () => {
+  setTimeout(() => {
+    self.skipWaiting();
+    self.clients.matchAll().then((clients) => {
+      clients.forEach((client) => {
+        client.navigate(client.url);
+      });
+    });
+  }, 60000 * 10);
+});
 ```

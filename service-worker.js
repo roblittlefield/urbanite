@@ -15,7 +15,7 @@ async function activate() {
 
 addEventListener("activate", (e) => e.waitUntil(activate()));
 
-self.addEventListener("install", (event) => {
+self.addEventListener("install", () => {
   setTimeout(() => {
     self.skipWaiting();
     self.clients.matchAll().then((clients) => {
@@ -23,5 +23,5 @@ self.addEventListener("install", (event) => {
         client.navigate(client.url);
       });
     });
-  }, 1000 * 60 * 10);
+  }, 60000 * 10);
 });
