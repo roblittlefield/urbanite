@@ -4,6 +4,10 @@ Live Link: https://urbanitesf.netlify.app
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/8577fd5c-0a26-4efa-85cb-69155c7204d5/deploy-status)](https://app.netlify.com/sites/urbanitesf/deploys)
 
+## Press Mentions
+
+- [The Marina Times](https://twitter.com/TheMarinaTimes/status/1665401741821595649) - June 4, 2023
+
 ## Application Description
 
 Urbanite SF is a San Francisco law enforcement dispatched calls for service incident mapping web application. Built as a lightweight & straightforward alternative to other incident mapping apps with pay-walls and ads, Urbanite SF additionally provides call priority, status, exact response time, and CAD ID #. No user data is stored. The application was developed by Rob Littlefield.
