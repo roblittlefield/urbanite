@@ -113,7 +113,7 @@ export const colorMap = new Map([
   ["PROWLER", "#3288bd"],
   ["STALKING", "#3288bd"],
 
-  ["MENTALLY DISTURBED", "#66c2a5"], // Puke Green
+  ["MENTALLY DISTURBED", "#66c2a5"], // Yelow-Green
   ["INTOXICATED PERSON", "#66c2a5"],
   ["PERSON SCREAMING", "#66c2a5"],
   ["DRUNK DRIVER", "#66c2a5"],

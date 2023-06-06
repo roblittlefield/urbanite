@@ -209,9 +209,6 @@ body {
   touch-action: none;
   pointer-events: none;
 }
-/* #weather-label {
-  font-size: 12px;
-} */
 
 .weather {
   font-size: 23px;
