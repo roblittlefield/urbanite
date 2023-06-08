@@ -102,7 +102,7 @@ export default class circleMarkers {
       });
 
       const marker = L.circleMarker(callLatlng, {
-        radius: window.innerWidth <= 758 ? 5 : 5,
+        radius: window.innerWidth <= 758 ? 6 : 6,
         keepInView: false,
         fillColor: colorMap.get(call.call_type) || "#0000000",
         color: "#333333",
@@ -130,7 +130,7 @@ export default class circleMarkers {
         },
         autoPan: false,
         closeOnClick: false,
-        interactive: true, // Changing this to allow dot popup click
+        interactive: true,
         bubblingMouseEvents: false,
       }).bindPopup(popupContent, {
         closeButton: false,
