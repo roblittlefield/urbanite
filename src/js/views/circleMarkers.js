@@ -130,7 +130,7 @@ export default class circleMarkers {
         },
         autoPan: false,
         closeOnClick: false,
-        interactive: false,
+        interactive: true, // Changing this to allow dot popup click
         bubblingMouseEvents: false,
       }).bindPopup(popupContent, {
         closeButton: false,
