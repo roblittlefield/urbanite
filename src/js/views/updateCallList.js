@@ -28,6 +28,8 @@ export const updateCallList = function (latestMarkers, map, nearby) {
     if (hours > calcHour) {
       calcHour = hours;
       const minutesNumber = document.createElement("span");
+      minutesNumber.style.display = "block";
+      minutesNumber.style.flexBasis = "100%";
       minutesNumber.classList.add("received-time-ago-hours");
       if (nearby) {
         minutesNumber.style.fontSize = "20px";
