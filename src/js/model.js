@@ -52,6 +52,9 @@ export const dataProcess = function (position, dataRaw, callTypeMap, paramMap) {
     const dispatchedTimeAgo = Math.round((now - dispatchedTime) / 60000);
     const onSceneTime = new Date(call.onSceneTime);
     const responseTime = Math.round((onSceneTime - receivedTime) / 60000);
+    const responseTimeExact = Number(
+      ((onSceneTime - receivedTime) / 60000).toFixed(2)
+    );
     const properCaseAddress = textProperCase(call.address);
     const neighborhoodFormatted = neighborhoodFormat(call.neighborhood);
     const callTypeFormatted = callTypeConversionMap.get(callType) || callType;
@@ -78,6 +81,7 @@ export const dataProcess = function (position, dataRaw, callTypeMap, paramMap) {
       enteredTimeAgo,
       dispatchedTimeAgo,
       responseTime,
+      responseTimeExact,
       properCaseAddress,
       neighborhoodFormatted,
       callTypeFormatted,

@@ -112,6 +112,10 @@ body {
   top: 114px;
 }
 
+#response-times-list-btn {
+  top: 149px;
+}
+
 #nearby-info,
 .weather {
   background-color: rgba(255, 255, 255, 0.7);
@@ -121,6 +125,7 @@ body {
 #latest-list-btn,
 #nearby-list-btn,
 #nearby-info,
+#response-times-list-btn,
 #neighborhood-text,
 #project-info-btn,
 .weather {
@@ -143,7 +148,8 @@ body {
 #change-map-btn,
 #latest-list-btn,
 #nearby-list-btn,
-#project-info-btn {
+#project-info-btn,
+#response-times-list-btn {
   font-weight: bold;
   text-align: center;
   right: 13px;

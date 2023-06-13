@@ -29,21 +29,21 @@
         <button id="change-map-btn">Map</button>
         <button id="latest-list-btn">All SF</button>
         <button id="nearby-list-btn">Nearby</button>
+        <button id="response-times-list-btn">RTs</button>
         <div id="nearby-container">
           <div id="nearby-info"></div>
         </div>
-        <div id="response-times-container">
-          <div id="response-times">
-
-          </div>
-        </div>
         <div id="last-updated"></div>
         <div id="neighborhood-text"></div>
-        <div id="overlay" class="hidden" ></div>
         <div class="hidden" id="call-list-container">
           <h2 id="call-list-heading"></h2>
           <ul id="call-list"></ul>
           <h4 id="call-list-subheading"></h4>
+        </div>
+        <div class="hidden" id="response-times-container">
+          <h2 id="response-times-heading">Median SFPD Response Times, Last 48h</h2>
+          <h3 id="response-times-subheading">'Priority A' Calls (Target = 8 mins, May 2023 = 8.75 mins)</h3>
+          <ul id = "response-times-list"></ul>
         </div>
         <div class="hidden" id="project-info-container">
           <div id="project-info">

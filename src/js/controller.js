@@ -4,7 +4,11 @@ import L from "leaflet";
 import * as model from "./model.js";
 import * as sfapi from "./config.js";
 import circleMarkers from "./views/circleMarkers.js";
-import { updateCallList, controlOpenCallList } from "./views/updateCallList.js";
+import {
+  updateCallList,
+  controlOpenCallList,
+  calcMedian,
+} from "./views/updateCallList.js";
 import { getPosition, loadLastUpdated } from "./views/getPosition.js";
 import initPopupNieghborhood from "./views/initPopupNeighborhood.js";
 import getWeather from "./views/getWeather.js";
@@ -15,6 +19,7 @@ import {
   loadNearbyListButton,
   loadProjectInfoButton,
   toggleVisibleInfo,
+  loadResponseTimesButton,
 } from "./views/buttonsView.js";
 import getURLParameter from "./views/hashURL.js";
 import { async } from "regenerator-runtime";
@@ -104,6 +109,8 @@ const controlCircleMarkers = async function () {
     );
     updateCallList(nearbyLayer, map, true);
     updateCallList(police48Layer, map, false);
+    calcMedian();
+    loadResponseTimesButton();
     localStorage.getItem("openList") === "nearby"
       ? nearbyButton.click()
       : localStorage.getItem("openList") === "allSF"
@@ -117,6 +124,7 @@ const controlCircleMarkers = async function () {
         ` past ${sfapi.timeElapNearby / 60}h`;
       const circle = L.circle(position, sfapi.nearbyCircleOpt);
       circle.addTo(map);
+      circle.getElement().style.pointerEvents = "none";
     } else {
       countContainer.textContent =
         dataResult.countCallsRecent.toString() +

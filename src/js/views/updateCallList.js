@@ -1,12 +1,22 @@
 import { minsHoursFormat } from "../helpers";
-import { toggleVisibleList, toggleVisibleItems } from "./buttonsView";
+import {
+  toggleVisibleList,
+  toggleVisibleItems,
+  toggleResponseTimesList,
+} from "./buttonsView";
 let lastLoadedList;
 const callListHeading = document.getElementById("call-list-heading");
 const callListSubHeading = document.getElementById("call-list-subheading");
 const latestContainer = document.getElementById("call-list-container");
+const responseTimesContainer = document.getElementById(
+  "response-times-container"
+);
 const callList = document.getElementById("call-list");
 let isEventListenerAdded = false;
 const callTypeTotals = {};
+const callNeighborhoodCount = {};
+const callNeighborhoodTime = {};
+const callNeighborhoodMedian = {};
 const formattedDate = new Date().toLocaleString("en-US", {
   hour: "numeric",
   minute: "numeric",
@@ -21,6 +31,19 @@ export const updateCallList = function (latestMarkers, map, nearby) {
   sortedMarkersArr.forEach((circleMarker) => {
     callTypeTotals[circleMarker.options.data.callType] =
       (callTypeTotals[circleMarker.options.data.callType] || 0) + 1;
+    if (circleMarker.options.data.responseTimeExact) {
+      callNeighborhoodCount[circleMarker.options.data.neighborhood] =
+        (callNeighborhoodCount[circleMarker.options.data.neighborhood] || 0) +
+        1;
+      if (circleMarker.options.data.priority === "A") {
+        if (!callNeighborhoodTime[circleMarker.options.data.neighborhood])
+          callNeighborhoodTime[circleMarker.options.data.neighborhood] = [];
+        callNeighborhoodTime[circleMarker.options.data.neighborhood].push(
+          circleMarker.options.data.responseTimeExact
+        );
+      }
+    }
+
     const receivedTimeAgo = circleMarker.options.data.receivedTimeAgo;
     const receivedTimeAgoF = minsHoursFormat(receivedTimeAgo);
 
@@ -147,6 +170,7 @@ export const controlOpenCallList = function (
   ) {
     callList.scrollTop = 0;
   }
+  if (nearby) latestContainer.classList.add("nearby-list");
   if (nearby) map.setView(originalPosition, originalZoom);
   localStorage.setItem("openList", nearby ? "nearby" : "allSF");
   const handleClick = (event) => {
@@ -157,6 +181,7 @@ export const controlOpenCallList = function (
     ) {
       toggleVisibleItems();
       toggleVisibleList();
+      if (nearby) latestContainer.classList.remove("nearby-list");
       const callBoxCallList = nearby ? "nearby-call-box" : "allSF-call-box";
       const callBoxes = document.getElementsByClassName(callBoxCallList);
       for (let i = 0; i < callBoxes.length; i++) {
@@ -173,4 +198,58 @@ export const controlOpenCallList = function (
       isEventListenerAdded = true;
     }
   }
+};
+
+const updateResponseTimesList = function (callNeighborhoodMedian) {
+  const sortedCallNeighborhoodMedian = {};
+  Object.keys(callNeighborhoodMedian)
+    .sort()
+    .forEach((key) => {
+      sortedCallNeighborhoodMedian[key] = callNeighborhoodMedian[key];
+    });
+  const responseList = document.getElementById("response-times-list");
+  Object.entries(sortedCallNeighborhoodMedian).forEach(([key, value]) => {
+    const responseBox = document.createElement("li");
+    responseBox.innerHTML =
+      Number(value) <= 8
+        ? `<p style="color: #D3D3D3">${key}  ${value} mins </p>`
+        : Number(value) < 12
+        ? `<p style="color: #f0fe8b">${key}  ${value} mins </p>`
+        : Number(value) < 15
+        ? `<p style="color: #f46d43">${key}  ${value} mins </p>`
+        : `<p style="color: #f46d43">${key}  ${value} mins </p>`;
+    responseList.appendChild(responseBox);
+  });
+  const handleResponseTimesClick = (event) => {
+    const clickTarget = event.target;
+    if (
+      !responseTimesContainer.classList.contains("hidden") &&
+      !responseTimesContainer.contains(clickTarget)
+    ) {
+      toggleVisibleItems();
+      toggleResponseTimesList();
+    }
+  };
+  window.addEventListener("click", handleResponseTimesClick);
+};
+
+export const calcMedian = function () {
+  const overallArr = [].concat(...Object.values(callNeighborhoodTime));
+  const overallMid = Math.floor(overallArr.length / 2);
+  const overallNums = [...overallArr].sort((a, b) => a - b);
+  const overallMedian =
+    overallArr.length % 2 !== 0
+      ? overallNums[overallMid]
+      : (overallNums[overallMid - 1] + overallNums[overallMid]) / 2;
+  Object.keys(callNeighborhoodTime).forEach((neighborhood) => {
+    const arr = callNeighborhoodTime[neighborhood];
+    const mid = Math.floor(arr.length / 2);
+    const nums = [...arr].sort((a, b) => a - b);
+    const median =
+      arr.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
+    callNeighborhoodMedian[neighborhood] = median.toFixed(1);
+  });
+  callNeighborhoodMedian["All San Francisco [Overall]"] =
+    overallMedian.toFixed(2);
+  updateResponseTimesList(callNeighborhoodMedian);
 };

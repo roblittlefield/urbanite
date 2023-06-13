@@ -3,7 +3,11 @@ const projectInfoButton = document.getElementById("project-info-btn");
 const changeMap = document.getElementById("change-map-btn");
 const latestButton = document.getElementById("latest-list-btn");
 const nearbyButton = document.getElementById("nearby-list-btn");
+const responseButton = document.getElementById("response-times-list-btn");
 const latestContainer = document.getElementById("call-list-container");
+const responseTimesContainer = document.getElementById(
+  "response-times-container"
+);
 const countNearbyContainer = document.getElementById("nearby-info");
 const neighborhoodContainer = document.getElementById("neighborhood-text");
 const infoContainer = document.getElementById("project-info-container");
@@ -52,12 +56,23 @@ export const loadProjectInfoButton = function (handler) {
   });
 };
 
+export const loadResponseTimesButton = function () {
+  responseButton.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const btn = e.target.closest("#response-times-list-btn");
+    if (!btn) return;
+    toggleResponseTimesList();
+    toggleVisibleItems();
+  });
+};
+
 export const toggleVisibleItems = function () {
   temperatureContainer.classList.toggle("hidden");
+  projectInfoButton.classList.toggle("hidden");
   changeMap.classList.toggle("hidden");
   latestButton.classList.toggle("hidden");
   nearbyButton.classList.toggle("hidden");
-  projectInfoButton.classList.toggle("hidden");
+  responseButton.classList.toggle("hidden");
   countNearbyContainer.classList.toggle("hidden");
   neighborhoodContainer.classList.toggle("hidden");
   lastUpdatedElement.classList.toggle("hidden");
@@ -65,6 +80,10 @@ export const toggleVisibleItems = function () {
 
 export const toggleVisibleList = function () {
   latestContainer.classList.toggle("hidden");
+};
+
+export const toggleResponseTimesList = function () {
+  responseTimesContainer.classList.toggle("hidden");
 };
 
 export const toggleVisibleInfo = function () {
