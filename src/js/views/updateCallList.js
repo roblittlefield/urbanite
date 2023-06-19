@@ -26,7 +26,11 @@ const formattedDate = new Date().toLocaleString("en-US", {
 export const updateCallList = function (latestMarkers, map, nearby) {
   const callList = document.getElementById("call-list");
   let calcHour = -1;
-  const sortedMarkersArr = latestMarkers.getLayers();
+  const markersArr = latestMarkers.getLayers();
+
+  const sortedMarkersArr = markersArr.sort(
+    (a, b) => a.options.data.receivedTimeAgo - b.options.data.receivedTimeAgo
+  );
 
   sortedMarkersArr.forEach((circleMarker) => {
     callTypeTotals[circleMarker.options.data.callType] =

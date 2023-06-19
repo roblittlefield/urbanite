@@ -91,7 +91,7 @@ export const dataProcess = function (position, dataRaw, callTypeMap, paramMap) {
   });
 
   const data = dataPreSort
-    .sort((a, b) => a.receivedTimeAgo - b.receivedTimeAgo)
+    .sort((a, b) => b.receivedTimeAgo - a.receivedTimeAgo)
     .slice(0, maxCalls);
   return { data, countCallsNearby, countCallsRecent, countCallsNearbyRecent };
 };

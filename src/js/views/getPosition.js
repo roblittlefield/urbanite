@@ -6,7 +6,7 @@ export const showAlert = function (message) {
     if (alertElement.parentElement) {
       alertElement.classList.add("hidden");
     }
-  }, 3000);
+  }, 2500);
 };
 
 export const getPosition = function (defaultMapSF) {
