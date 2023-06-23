@@ -185,7 +185,7 @@ export const controlOpenCallList = function (
     ) {
       toggleVisibleItems();
       toggleVisibleList();
-      if (nearby) latestContainer.classList.remove("nearby-list");
+      latestContainer.classList.remove("nearby-list");
       const callBoxCallList = nearby ? "nearby-call-box" : "allSF-call-box";
       const callBoxes = document.getElementsByClassName(callBoxCallList);
       for (let i = 0; i < callBoxes.length; i++) {
