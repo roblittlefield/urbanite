@@ -48,7 +48,7 @@
         <div class="hidden" id="project-info-container">
           <div id="project-info">
             <h2 id="project-info-heading">Welcome to Urbanite SF 🌁  </h2>
-            <p>Explore the last 48 hours of law enforcement dispatched calls for service in San Francisco.<br><br>&bull; Move around the map to different neighborhoods<br>&bull; See call details + reponse times<br>&bull; Change the map skin<br>&bull; Open the list of latest calls<br>&bull; Share links with others<br><br> Reloads every 10 minutes. Links to raw data redirect when DataSF archives.</a><br><br>A personal project designed and developed in the Mission 🌯🌴🌴 using vanilla Javascript. <br><br>Information for ease of access purposes only. Do your own research and form your own opinions.<br><br>Mentions: <a href="https://twitter.com/TheMarinaTimes/status/1665401741821595649">The Marina Times</a></p>
+            <p>Explore the last 48 hours of law enforcement dispatched calls for service in San Francisco.<br><br>&bull; Move around the map to different neighborhoods<br>&bull; See call details & disposition<br>&bull; Change the map skin<br>&bull; Open the list of latest calls<br>&bull; View nearby calls<br>&bull; Compare response times by neighborhood<br>&bull; Share links with others<br><br> Reloads every 10 minutes. Links to raw data redirect when DataSF archives.</a><br><br>A personal project designed and developed in the Mission 🌯🌴🌴 using vanilla Javascript. <br><br>Information for ease of access purposes only. Do your own research and form your own opinions.<br><br>Mentions: <a href="https://twitter.com/TheMarinaTimes/status/1665401741821595649">The Marina Times</a>, <a href="https://twitter.com/sflive415/status/1672679531247812609">SF Live 415</a></p>
           </div></div>
           <div class="hidden" id="addSFDataSource">
             <a href="https://datasf.gitbook.io/datasf-dataset-explainers/law-enforcement-dispatched-calls-for-service" class="centered-link">
@@ -67,7 +67,7 @@
                 // console.log('Service Worker registered:', registration);
               })
               .catch((error) => {
-                // console.log('Service Worker registration failed:', error);
+                console.log('Service Worker registration failed:', error);
               });
             }
           });

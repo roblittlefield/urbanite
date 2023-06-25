@@ -1,5 +1,6 @@
 export const showAlert = function (message) {
   const alertElement = document.getElementById("alert");
+  alertElement.textContent = "";
   alertElement.classList.remove("hidden");
   alertElement.textContent = message;
   setTimeout(function () {
@@ -9,7 +10,8 @@ export const showAlert = function (message) {
   }, 2500);
 };
 
-export const getPosition = function (defaultMapSF) {
+export const getPosition = async function () {
+  showAlert(`Getting your location & loading nearby calls...`);
   return new Promise((resolve, reject) => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -27,7 +29,7 @@ export const getPosition = function (defaultMapSF) {
             longitude < expandedMinLongitude ||
             longitude > expandedMaxLongitude
           ) {
-            showAlert(`Outside San Francisco, loading city center 🌉`);
+            showAlert(`Nearby only works in San Francisco, sorry! 🌉`);
             reject(new Error("Location outside SF"));
           } else {
             resolve([latitude, longitude]);
@@ -35,15 +37,18 @@ export const getPosition = function (defaultMapSF) {
         },
         () => {
           showAlert(`Share your location to see nearby calls 🌉`);
-          resolve(defaultMapSF);
+          reject(new Error("Couldn't find position"));
         }
       );
     } else {
       showAlert(`Share your location to see nearby calls 🌉`);
-      resolve(defaultMapSF);
+      reject(new Error("Couldn't find position"));
     }
+  }).catch((err) => {
+    throw err;
   });
 };
+
 export const loadLastUpdated = function () {
   const lastUpdatedElement = document.getElementById("last-updated");
   const currentDate = new Date();

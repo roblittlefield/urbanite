@@ -8,7 +8,7 @@ export const maxHoursAgo = 48.5;
 export const centerPopupTolerance = 100;
 
 export const getLatLngSF = () => {
-  return window.innerWidth <= 758 ? [37.758, -122.43] : [37.762, -122.445];
+  return window.innerWidth <= 758 ? [37.764, -122.419] : [37.764, -122.424];
 };
 export const getMapZoomLevel = () => {
   return window.innerWidth <= 758 ? 14 : 15;

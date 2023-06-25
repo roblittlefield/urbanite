@@ -27,7 +27,6 @@ import { async } from "regenerator-runtime";
 let map;
 let originalPosition;
 let originalZoom;
-let position;
 
 const countContainer = document.getElementById("nearby-info");
 const infoContainer = document.getElementById("project-info-container");
@@ -64,8 +63,7 @@ document.addEventListener("visibilitychange", () => {
 
 const controlMap = async function () {
   try {
-    position = await getPosition(sfapi.getLatLngSF());
-    originalPosition = position;
+    originalPosition = sfapi.getLatLngSF();
     originalZoom = sfapi.getMapZoomLevel();
     map = L.map("map").setView(originalPosition, originalZoom);
     L.tileLayer(sfapi.MAP_LAYERS[0]).addTo(map);
@@ -80,6 +78,7 @@ const controlMap = async function () {
   }
 };
 
+let allCalls = {};
 const controlCircleMarkers = async function () {
   try {
     const responsePolice48h = await model.fetchApi(
@@ -87,52 +86,75 @@ const controlCircleMarkers = async function () {
     );
     const dataApiPolice48h = await responsePolice48h.json();
     const dataResult = model.dataProcess(
-      position,
+      originalPosition,
       dataApiPolice48h,
       sfapi.includedCallTypesPDlive,
       sfapi.PARAM_MAP_POLICE_48h
     );
     const data = dataResult.data;
     const circleMarkersInst = new circleMarkers();
-    const [police48Layer, nearbyLayer] = circleMarkersInst.addCircleMarkers(
+    const [police48Layer] = circleMarkersInst.addCircleMarkers(
       data,
-      position
+      originalPosition
     );
+    allCalls = police48Layer;
 
-    initPopupNieghborhood(position, police48Layer, urlCAD, map);
+    initPopupNieghborhood(originalPosition, police48Layer, urlCAD, map);
     loadLatestListButton(controlOpenCallList);
-    loadNearbyListButton(
-      controlOpenCallList,
-      originalPosition,
-      originalZoom,
-      map
-    );
-    updateCallList(nearbyLayer, map, true);
+    loadNearbyListButton(loadNearbyCalls);
     updateCallList(police48Layer, map, false);
     calcMedian();
     loadResponseTimesButton();
-    localStorage.getItem("openList") === "nearby"
+    localStorage.getItem("openList") === "nearby" && position
       ? nearbyButton.click()
       : localStorage.getItem("openList") === "allSF"
       ? latestButton.click()
       : "";
-    if (JSON.stringify(position) !== JSON.stringify(sfapi.getLatLngSF())) {
+    countContainer.textContent =
+      dataResult.countCallsRecent.toString() +
+      ` calls past ${sfapi.timeElapSF / 60}h`;
+    return map, police48Layer;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+let countCallsNearby = 0;
+let countCallsNearbyRecent = 0;
+let position;
+let nearbyClicked = false;
+const loadNearbyCalls = async function () {
+  const message = "Latest Nearby Dispatched Calls";
+  let nearbyLayer = L.layerGroup();
+  try {
+    if (!position) position = await getPosition();
+    if (!nearbyClicked) {
+      const positionLatLng = L.latLng(position[0], position[1]);
+      allCalls.eachLayer((marker) => {
+        var latlng = marker.getLatLng();
+        const distance = positionLatLng.distanceTo(latlng);
+        if (distance < sfapi.nearbyRadius) {
+          countCallsNearby++;
+          marker.addTo(nearbyLayer);
+          if (marker.options.data.receivedTimeAgo <= sfapi.timeElapNearby) {
+            countCallsNearbyRecent++;
+          }
+        }
+      });
       countContainer.textContent =
-        dataResult.countCallsNearby.toString() +
+        countCallsNearby.toString() +
         ` calls nearby, ` +
-        dataResult.countCallsNearbyRecent.toString() +
+        countCallsNearbyRecent.toString() +
         ` past ${sfapi.timeElapNearby / 60}h`;
       const circle = L.circle(position, sfapi.nearbyCircleOpt);
       circle.addTo(map);
       circle.getElement().style.pointerEvents = "none";
-    } else {
-      countContainer.textContent =
-        dataResult.countCallsRecent.toString() +
-        ` calls past ${sfapi.timeElapSF / 60}h`;
+      nearbyClicked = true;
     }
-    return map;
+    updateCallList(nearbyLayer, map, true);
+    controlOpenCallList(message, true, position, originalZoom, map);
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 
@@ -171,7 +193,7 @@ const controlProjectInfo = function () {
 const init = async function () {
   try {
     initGetUrlParam();
-    const map = await controlMap();
+    await controlMap();
     await controlCircleMarkers();
     loadChangeMapButton(controlChangeMap);
     loadProjectInfoButton(controlProjectInfo);

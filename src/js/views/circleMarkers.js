@@ -1,15 +1,13 @@
 import { formatDate, minsHoursFormat } from "../helpers.js";
 import { colorMap } from "../config.js";
-const overlapOffset = 0.00008;
+const overlapOffset = 0.00009;
 
 export default class circleMarkers {
   constructor() {
     this.police48Layer = L.layerGroup();
-    this.nearbyLayer = L.layerGroup();
   }
 
-  addCircleMarkers(data, position) {
-    const positionLatLng = L.latLng(position[0], position[1]);
+  addCircleMarkers(data) {
     data.map((call) => {
       const receivedTimeF = formatDate(call.receivedTime);
       const responseTimeF = minsHoursFormat(call.responseTime);
@@ -137,13 +135,8 @@ export default class circleMarkers {
         closeButton: false,
         disableAnimation: true,
       });
-      const markerLatLng = callLatlng;
-      const distance = positionLatLng.distanceTo(markerLatLng);
-      if (distance < 500) {
-        marker.addTo(this.nearbyLayer);
-      }
       marker.addTo(this.police48Layer);
     });
-    return [this.police48Layer, this.nearbyLayer];
+    return [this.police48Layer];
   }
 }

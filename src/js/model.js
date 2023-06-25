@@ -3,8 +3,6 @@ import {
   callTypeConversionMap,
   DISPOSITION_REF_POLICE,
   timeElapSF,
-  timeElapNearby,
-  nearbyRadius,
 } from "./config";
 import {
   standardizeData,
@@ -27,8 +25,6 @@ export const fetchApi = async function (url) {
 export const dataProcess = function (position, dataRaw, callTypeMap, paramMap) {
   const now = Date.now();
   let countCallsRecent = 0;
-  let countCallsNearby = 0;
-  let countCallsNearbyRecent = 0;
 
   const dataFiltered = dataRaw.filter((callRaw) => {
     const isCallTypeIncluded = callTypeMap.includes(
@@ -64,15 +60,8 @@ export const dataProcess = function (position, dataRaw, callTypeMap, paramMap) {
       Number(call.coords.coordinates[1]),
       Number(call.coords.coordinates[0]),
     ];
-    const distance = positionLatLng.distanceTo(callLatLng);
     if (receivedTimeAgo <= timeElapSF) {
       countCallsRecent++;
-    }
-    if (distance <= nearbyRadius) {
-      countCallsNearby++;
-      if (receivedTimeAgo <= timeElapNearby) {
-        countCallsNearbyRecent++;
-      }
     }
 
     return {
@@ -93,7 +82,7 @@ export const dataProcess = function (position, dataRaw, callTypeMap, paramMap) {
   const data = dataPreSort
     .sort((a, b) => b.receivedTimeAgo - a.receivedTimeAgo)
     .slice(0, maxCalls);
-  return { data, countCallsNearby, countCallsRecent, countCallsNearbyRecent };
+  return { data, countCallsRecent };
 };
 
 export const fetchHistData = async function (cad_number) {

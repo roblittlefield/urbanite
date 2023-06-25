@@ -32,18 +32,14 @@ export const loadLatestListButton = function (handler) {
   });
 };
 
-export const loadNearbyListButton = function (
-  handler,
-  originalPosition,
-  originalZoom,
-  map
-) {
-  const message = "Latest Nearby Dispatched Calls";
+let nearbyClicked = false;
+export const loadNearbyListButton = function (handler) {
   nearbyButton.addEventListener("click", (e) => {
     e.stopPropagation();
     const btn = e.target.closest("#nearby-list-btn");
     if (!btn) return;
-    handler(message, true, originalPosition, originalZoom, map);
+    handler(nearbyClicked);
+    nearbyClicked = true;
   });
 };
 
