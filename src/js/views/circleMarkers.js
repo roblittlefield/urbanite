@@ -1,6 +1,6 @@
 import { formatDate, minsHoursFormat } from "../helpers.js";
 import { colorMap } from "../config.js";
-const overlapOffset = 0.00009;
+const overlapOffset = 0.00008;
 
 export default class circleMarkers {
   constructor() {
