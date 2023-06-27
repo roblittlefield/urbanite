@@ -33,6 +33,7 @@ const infoContainer = document.getElementById("project-info-container");
 const latestButton = document.getElementById("latest-list-btn");
 const nearbyButton = document.getElementById("nearby-list-btn");
 const sfDataSource = document.getElementById("addSFDataSource");
+const alertElement = document.getElementById("alert");
 
 let urlCAD;
 const initGetUrlParam = function () {
@@ -66,7 +67,10 @@ const controlMap = async function () {
     originalPosition = sfapi.getLatLngSF();
     originalZoom = sfapi.getMapZoomLevel();
     map = L.map("map").setView(originalPosition, originalZoom);
-    L.tileLayer(sfapi.MAP_LAYERS[0]).addTo(map);
+    const mapLayer = localStorage.getItem("map");
+    mapLayer
+      ? L.tileLayer(sfapi.MAP_LAYERS[mapLayer]).addTo(map)
+      : L.tileLayer(sfapi.MAP_LAYERS[0]).addTo(map);
     map.addEventListener("touchstart", function (e) {
       e.stopPropagation();
     });
@@ -151,6 +155,7 @@ const loadNearbyCalls = async function () {
       circle.addTo(map);
       circle.getElement().style.pointerEvents = "none";
       nearbyClicked = true;
+      alertElement.classList.add("hidden");
     }
     updateCallList(nearbyLayer, map, true);
     controlOpenCallList(message, true, position, originalZoom, map);
@@ -167,8 +172,10 @@ const controlChangeMap = function () {
     L.tileLayer(sfapi.MAP_LAYERS[currentLayer]).remove();
     currentLayer = (currentLayer + 1) % sfapi.MAP_LAYERS.length;
     L.tileLayer(sfapi.MAP_LAYERS[currentLayer]).addTo(map);
+    localStorage.setItem("map", currentLayer);
   });
   L.tileLayer(sfapi.MAP_LAYERS[currentLayer]).addTo(map);
+  localStorage.setItem("map", currentLayer);
   L.tileLayer(sfapi.MAP_LAYERS[currentLayer - 1]).remove();
 };
 

@@ -7,7 +7,7 @@ export const showAlert = function (message) {
     if (alertElement.parentElement) {
       alertElement.classList.add("hidden");
     }
-  }, 2500);
+  }, 25000);
 };
 
 export const getPosition = async function () {

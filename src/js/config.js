@@ -34,22 +34,23 @@ const API_URL_POLICE_48h = "https://data.sfgov.org/resource/gnap-fj3t.json";
 
 const excludedCallTypes = [
   "PASSING CALL",
-  "NOISE NUISANCE",
   "TRAF VIOLATION CITE",
   "TRAF VIOLATION TOW",
   "WELL BEING CHECK",
-  "COMPLAINT UNKN",
   "CITIZEN STANDBY",
   "MEET W/CITIZEN",
   "MEET W/CITY EMPLOYEE",
-  "VEHICLE ALARM",
-  "WANTED VEHICLE / SUB",
-  "HOMELESS COMPLAINT",
   "TRAFFIC HAZARD",
   "INVESTIGATION DETAIL",
-  "PERSON DUMPING",
   "TOW TRUCK",
+  "COMPLAINT UNKN",
+  "VEHICLE ALARM",
+  "HOMELESS COMPLAINT",
+  "PERSON DUMPING",
   "MISSING ADULT",
+  "NOISE NUISANCE",
+  // "SUSPICIOUS PERSON",
+  // "WANTED VEHICLE / SUB",
 ];
 
 export const includedCallTypesPDlive = [
@@ -86,6 +87,8 @@ export const includedCallTypesPDlive = [
   "DEMO / PROTEST",
   "ARREST MADE",
   "RESISTING ARREST",
+  "WANTED VEHICLE / SUB",
+  "SUSPICIOUS PERSON",
 ];
 
 export const colorMap = new Map([
@@ -113,12 +116,15 @@ export const colorMap = new Map([
   ["PROWLER", "#3288bd"],
   ["STALKING", "#3288bd"],
 
+  ["WANTED VEHICLE / SUB", "#00af7c"], // Green
+  ["SUSPICIOUS PERSON", "#00af7c"],
+
   ["MENTALLY DISTURBED", "#66c2a5"], // Yelow-Green
   ["INTOXICATED PERSON", "#66c2a5"],
   ["PERSON SCREAMING", "#66c2a5"],
   ["DRUNK DRIVER", "#66c2a5"],
 
-  ["STOLEN VEHICLE", "#f598ea"],
+  ["STOLEN VEHICLE", "#a358ea"],
   ["AUTO BOOST / STRIP", "#f598ea"], // Pink
 
   ["H&R INJURY ACCIDENT", "#3288bd"],
@@ -154,6 +160,9 @@ export const callTypeConversionMap = new Map([
   ["TRESPASSER", "Trespasser"],
   ["PROWLER", "Prowler"],
   ["STALKING", "Stalking"],
+
+  ["WANTED VEHICLE / SUB", "Wanted Vehicle / Person"],
+  ["SUSPICIOUS PERSON", "Suspicious Person"],
 
   ["MENTALLY DISTURBED", "Mentally disturbed person"],
   ["INTOXICATED PERSON", "Intoxicated person"],
