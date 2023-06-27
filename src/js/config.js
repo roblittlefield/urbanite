@@ -89,6 +89,7 @@ export const includedCallTypesPDlive = [
   "RESISTING ARREST",
   "WANTED VEHICLE / SUB",
   "SUSPICIOUS PERSON",
+  "FIRE",
 ];
 
 export const colorMap = new Map([
@@ -97,14 +98,16 @@ export const colorMap = new Map([
   ["PERSON W/GUN", "#d53e5c"],
   ["SHOT SPOTTER", "#d53e5c"],
 
-  ["STABBING", "#f46d43"], // Orage
+  ["STABBING", "#f46d43"], // Orange
   ["PERSON W/KNIFE", "#f46d43"],
   ["FIGHT W/WEAPONS", "#f46d43"],
   ["AGG ASSAULT / ADW", "#f46d43"], // YellowOrange
+  ["FIRE", "#f46d43"],
 
-  ["FIGHT NO WEAPON", "#fdae61"],
+  ["FIGHT NO WEAPON", "#fdae61"], // YellowOrange
   ["ASSAULT / BATTERY", "#fdae61"],
-  ["STRONGARM ROBBERY", "#f0fe8b"], // Orange
+
+  ["STRONGARM ROBBERY", "#f0fe8b"],
   ["GRAND THEFT", "#f0fe8b"], // Yellow
   ["PURSE SNATCH", "#f0fe8b"],
   ["ROBBERY", "#f0fe8b"],
@@ -156,6 +159,7 @@ export const callTypeConversionMap = new Map([
   ["BURGLARY", "Burglary"],
   ["PERSON BREAKING IN", "Person breaking in"],
   ["SILENT HOLDUP ALARM", "Silent hold-up alarm"],
+  ["FIRE", "Fire"],
 
   ["TRESPASSER", "Trespasser"],
   ["PROWLER", "Prowler"],
