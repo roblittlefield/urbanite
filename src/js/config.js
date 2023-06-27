@@ -1,6 +1,6 @@
 import { SFDATA_API_KEY } from "../../apikeys.js";
 
-export const maxCalls = 700;
+export const maxCalls = 4000;
 export const timeElapSF = 120;
 export const nearbyRadius = 500;
 export const timeElapNearby = 180;

@@ -92,6 +92,7 @@ const controlCircleMarkers = async function () {
       sfapi.PARAM_MAP_POLICE_48h
     );
     const data = dataResult.data;
+    console.log(`${data.length} calls`);
     const circleMarkersInst = new circleMarkers();
     const [police48Layer] = circleMarkersInst.addCircleMarkers(
       data,
