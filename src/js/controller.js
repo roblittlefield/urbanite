@@ -79,7 +79,7 @@ const controlMap = async function () {
   }
 };
 
-let allCalls = {};
+let police48Layer;
 const controlCircleMarkers = async function () {
   try {
     loadLastUpdated();
@@ -96,12 +96,8 @@ const controlCircleMarkers = async function () {
     const data = dataResult.data;
     console.log(`${data.length} calls`);
     const circleMarkersInst = new circleMarkers();
-    const [police48Layer] = circleMarkersInst.addCircleMarkers(
-      data,
-      originalPosition
-    );
-    allCalls = {};
-    allCalls = police48Layer;
+    console.log(police48Layer);
+    police48Layer = circleMarkersInst.addCircleMarkers(data, originalPosition);
     document.getElementById("call-list").innerHTML = "";
     updateCallList(police48Layer, map, false);
     calcMedian();
@@ -140,7 +136,7 @@ const loadNearbyCalls = async function () {
     let nearbyLayer = L.layerGroup();
     timedPositionReset();
     const positionLatLng = L.latLng(position[0], position[1]);
-    allCalls.eachLayer((marker) => {
+    police48Layer.eachLayer((marker) => {
       const distance = positionLatLng.distanceTo(marker.getLatLng());
       if (distance < sfapi.nearbyRadius) {
         countCallsNearby++;
@@ -219,7 +215,7 @@ const controlCarBreakins = async function () {
   try {
     let carBreakinCount = 0;
     let carStolenCount = 0;
-    await allCalls.eachLayer((marker) => {
+    await police48Layer.eachLayer((marker) => {
       if (
         marker.options.data.callType !== "Car break-in/strip" &&
         marker.options.data.callType !== "Stolen vehicle"
@@ -239,7 +235,7 @@ const controlCarBreakins = async function () {
     carSubtextElement.classList.remove("hidden");
     const interval = firstCarBreakin ? 6000 : 8000;
     setTimeout(async () => {
-      allCalls.eachLayer((marker) => {
+      police48Layer.eachLayer((marker) => {
         if (
           marker.options.data.callType !== "Car break-in/strip" &&
           marker.options.data.callType !== "Stolen vehicle"

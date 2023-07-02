@@ -140,6 +140,6 @@ export default class circleMarkers {
       });
       marker.addTo(this.police48Layer);
     });
-    return [this.police48Layer];
+    return this.police48Layer;
   }
 }
