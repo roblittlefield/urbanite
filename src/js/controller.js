@@ -72,7 +72,6 @@ const controlMap = async function () {
     map.addEventListener("touchstart", function (e) {
       e.stopPropagation();
     });
-    loadLastUpdated();
     getWeather(originalPosition);
     return map;
   } catch (err) {
@@ -83,6 +82,7 @@ const controlMap = async function () {
 let allCalls = {};
 const controlCircleMarkers = async function () {
   try {
+    loadLastUpdated();
     const responsePolice48h = await model.fetchApi(
       sfapi.API_URL_POLICE_48h_FILTERED
     );
@@ -116,6 +116,7 @@ const controlCircleMarkers = async function () {
       if (localStorage.getItem("openList") === "allSF")
         document.getElementById("latest-list-btn").click();
     }
+    if (initLoaded) police48Layer.addTo(map);
     if (initLoaded && position) loadNearbyCalls();
     initLoaded = true;
     return map, police48Layer;
