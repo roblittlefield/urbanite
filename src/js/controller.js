@@ -213,46 +213,50 @@ const controlProjectInfo = function () {
 };
 
 let firstCarBreakin = true;
-const controlCarBreakins = function () {
-  let carBreakinCount = 0;
-  let carStolenCount = 0;
-  allCalls.eachLayer((marker) => {
-    if (
-      marker.options.data.callType !== "Car break-in/strip" &&
-      marker.options.data.callType !== "Stolen vehicle"
-    ) {
-      marker.remove();
-    }
-    if (marker.options.data.callType === "Car break-in/strip")
-      carBreakinCount++;
-    if (marker.options.data.callType === "Stolen vehicle") carStolenCount++;
-  });
-  map.setView([37.7611, -122.447], window.innerWidth <= 758 ? 12 : 13);
-  carCountElement.innerHTML = `${carBreakinCount} car break-ins & ${carStolenCount} stolen cars reported in 48h`;
-  carCountElement.classList.remove("hidden");
-  lastUpdatedElement.style.bottom = "20px";
-  toggleVisibleItems();
-  lastUpdatedElement.classList.remove("hidden");
-  carSubtextElement.classList.remove("hidden");
-  const interval = firstCarBreakin ? 6000 : 8000;
-  setTimeout(async () => {
-    allCalls.eachLayer((marker) => {
+const controlCarBreakins = async function () {
+  try {
+    let carBreakinCount = 0;
+    let carStolenCount = 0;
+    await allCalls.eachLayer((marker) => {
       if (
         marker.options.data.callType !== "Car break-in/strip" &&
         marker.options.data.callType !== "Stolen vehicle"
-      )
-        marker.addTo(map);
+      ) {
+        marker.remove();
+      }
+      if (marker.options.data.callType === "Car break-in/strip")
+        carBreakinCount++;
+      if (marker.options.data.callType === "Stolen vehicle") carStolenCount++;
     });
-    originalZoom = sfapi.getMapZoomLevel();
-    originalPosition = sfapi.getLatLngSF();
-    map.setView(map.getCenter(), originalZoom);
-    carCountElement.classList.add("hidden");
-    carSubtextElement.classList.add("hidden");
-    lastUpdatedElement.style.bottom = "54px";
+    map.setView([37.7611, -122.447], window.innerWidth <= 758 ? 12 : 13);
+    carCountElement.innerHTML = `${carBreakinCount} car break-ins & ${carStolenCount} stolen cars reported in 48h`;
+    carCountElement.classList.remove("hidden");
+    lastUpdatedElement.style.bottom = "20px";
     toggleVisibleItems();
     lastUpdatedElement.classList.remove("hidden");
-    firstCarBreakin = false;
-  }, interval);
+    carSubtextElement.classList.remove("hidden");
+    const interval = firstCarBreakin ? 6000 : 8000;
+    setTimeout(async () => {
+      allCalls.eachLayer((marker) => {
+        if (
+          marker.options.data.callType !== "Car break-in/strip" &&
+          marker.options.data.callType !== "Stolen vehicle"
+        )
+          marker.addTo(map);
+      });
+      originalZoom = sfapi.getMapZoomLevel();
+      originalPosition = sfapi.getLatLngSF();
+      map.setView(map.getCenter(), originalZoom);
+      carCountElement.classList.add("hidden");
+      carSubtextElement.classList.add("hidden");
+      lastUpdatedElement.style.bottom = "54px";
+      toggleVisibleItems();
+      lastUpdatedElement.classList.remove("hidden");
+      firstCarBreakin = false;
+    }, interval);
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 const init = async function () {
