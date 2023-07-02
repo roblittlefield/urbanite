@@ -41,7 +41,7 @@ const initGetUrlParam = function () {
   urlCAD = getURLParameter("cad_number");
 };
 
-const interval = 60000;
+const interval = 60000 / 5;
 
 function reloadData() {
   localStorage.setItem("last-load", new Date());
@@ -226,10 +226,12 @@ const controlCarBreakins = async function () {
         ) {
           map.removeLayer(marker);
         }
-        if (marker.options.data.callType === "Car break-in/strip")
-          carBreakinCount++;
-        if (marker.options.data.callType === "Stolen vehicle") carStolenCount++;
       }
+    });
+    police48Layer.eachLayer((marker) => {
+      if (marker.options.data.callType === "Car break-in/strip")
+        carBreakinCount++;
+      if (marker.options.data.callType === "Stolen vehicle") carStolenCount++;
     });
     map.setView([37.7611, -122.447], window.innerWidth <= 758 ? 12 : 13);
     carCountElement.innerHTML = `${carBreakinCount} car break-ins &<br> ${carStolenCount} stolen cars in 48h`;
