@@ -79,9 +79,13 @@ const controlMap = async function () {
   }
 };
 
-let police48Layer;
+let police48Layer = L.layerGroup();
 const controlCircleMarkers = async function () {
   try {
+    if (initLoaded) {
+      map.removeLayer(police48Layer);
+      police48Layer.clearLayers();
+    }
     loadLastUpdated();
     const responsePolice48h = await model.fetchApi(
       sfapi.API_URL_POLICE_48h_FILTERED
@@ -96,8 +100,7 @@ const controlCircleMarkers = async function () {
     const data = dataResult.data;
     console.log(`${data.length} calls`);
     const circleMarkersInst = new circleMarkers();
-    console.log(police48Layer);
-    police48Layer = circleMarkersInst.addCircleMarkers(data, originalPosition);
+    police48Layer = circleMarkersInst.addCircleMarkers(data, police48Layer);
     document.getElementById("call-list").innerHTML = "";
     updateCallList(police48Layer, map, false);
     calcMedian();
@@ -116,7 +119,6 @@ const controlCircleMarkers = async function () {
     if (initLoaded) police48Layer.addTo(map);
     if (initLoaded && position) loadNearbyCalls();
     initLoaded = true;
-    return map, police48Layer;
   } catch (err) {
     console.error(err);
   }
@@ -215,19 +217,22 @@ const controlCarBreakins = async function () {
   try {
     let carBreakinCount = 0;
     let carStolenCount = 0;
-    await police48Layer.eachLayer((marker) => {
-      if (
-        marker.options.data.callType !== "Car break-in/strip" &&
-        marker.options.data.callType !== "Stolen vehicle"
-      ) {
-        marker.remove();
+    await map.eachLayer(function (marker) {
+      if (marker instanceof L.CircleMarker && marker !== map) {
+        const callType = marker.options.data.callType;
+        if (
+          callType !== "Car break-in/strip" &&
+          callType !== "Stolen vehicle"
+        ) {
+          map.removeLayer(marker);
+        }
+        if (marker.options.data.callType === "Car break-in/strip")
+          carBreakinCount++;
+        if (marker.options.data.callType === "Stolen vehicle") carStolenCount++;
       }
-      if (marker.options.data.callType === "Car break-in/strip")
-        carBreakinCount++;
-      if (marker.options.data.callType === "Stolen vehicle") carStolenCount++;
     });
     map.setView([37.7611, -122.447], window.innerWidth <= 758 ? 12 : 13);
-    carCountElement.innerHTML = `${carBreakinCount} car break-ins & ${carStolenCount} stolen cars reported in 48h`;
+    carCountElement.innerHTML = `${carBreakinCount} car break-ins &<br> ${carStolenCount} stolen cars in 48h`;
     carCountElement.classList.remove("hidden");
     lastUpdatedElement.style.bottom = "20px";
     toggleVisibleItems();

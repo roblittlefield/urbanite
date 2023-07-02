@@ -3,11 +3,7 @@ import { colorMap } from "../config.js";
 const overlapOffset = 0.00008;
 
 export default class circleMarkers {
-  constructor() {
-    this.police48Layer = L.layerGroup();
-  }
-
-  addCircleMarkers(data) {
+  addCircleMarkers(data, police48Layer) {
     data.map((call) => {
       const receivedTimeF = formatDate(call.receivedTime);
       const responseTimeF = minsHoursFormat(call.responseTime);
@@ -95,11 +91,13 @@ export default class circleMarkers {
         Number(call.coords.coordinates[1]),
         Number(call.coords.coordinates[0]),
       ];
-      this.police48Layer.eachLayer(function (layer) {
-        if (layer.getLatLng().equals(callLatlng)) {
-          callLatlng[0] += overlapOffset;
-        }
-      });
+      if (police48Layer) {
+        police48Layer.eachLayer(function (layer) {
+          if (layer.getLatLng().equals(callLatlng)) {
+            callLatlng[0] += overlapOffset;
+          }
+        });
+      }
 
       const marker = L.circleMarker(callLatlng, {
         radius: window.innerWidth <= 758 ? 6 : 6,
@@ -138,8 +136,8 @@ export default class circleMarkers {
         closeButton: false,
         disableAnimation: true,
       });
-      marker.addTo(this.police48Layer);
+      marker.addTo(police48Layer);
     });
-    return this.police48Layer;
+    return police48Layer;
   }
 }
