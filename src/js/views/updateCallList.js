@@ -158,7 +158,7 @@ export const updateCallList = function (latestMarkers, map, nearby) {
     hour12: true,
   });
   callListSubHeading.textContent = `Last updated: ` + formattedDate;
-  if (!nearby) console.log(callTypeTotals);
+  // if (!nearby) console.log(callTypeTotals);
 };
 
 export const controlOpenCallList = function (

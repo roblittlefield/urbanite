@@ -393,8 +393,8 @@
   touch-action: none;
   background-color: rgba(255, 255, 255, 0.7);
   font-size: 12px;
-  top: 90px;
-  z-index: 3;
+  top: 41px;
+  z-index: 2;
   text-align: center;
   touch-action: none;
   pointer-events: none;
@@ -414,4 +414,14 @@
   transition: transform 0.5s ease;
   left: 50%;
   transform: translate(-50%, +50%);
+}
+
+@media screen and (max-width: 450px) {
+  #car-breakins-text {
+    font-size: 20px;
+  }
+
+  #car-breakins-subtext {
+    top: 31px;
+  }
 }

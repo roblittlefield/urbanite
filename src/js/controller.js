@@ -41,7 +41,7 @@ const initGetUrlParam = function () {
   urlCAD = getURLParameter("cad_number");
 };
 
-const interval = 60000;
+const interval = 60000 / 5;
 
 function reloadData() {
   localStorage.setItem("last-load", new Date());
@@ -79,11 +79,15 @@ const controlMap = async function () {
   }
 };
 
-let police48Layer = L.layerGroup();
+let police48Layer;
 const controlCircleMarkers = async function () {
   try {
+    police48Layer = L.layerGroup();
     if (initLoaded) {
-      map.removeLayer(police48Layer);
+      police48Layer.removeFrom(map);
+      police48Layer.eachLayer((layer) => {
+        police48Layer.removeLayer(layer);
+      });
       police48Layer.clearLayers();
     }
     loadLastUpdated();
@@ -218,7 +222,11 @@ const controlCarBreakins = async function () {
     let carBreakinCount = 0;
     let carStolenCount = 0;
     await map.eachLayer(function (marker) {
-      if (marker instanceof L.CircleMarker && marker !== map) {
+      if (
+        marker instanceof L.CircleMarker &&
+        !(marker instanceof L.Circle) &&
+        marker !== map
+      ) {
         const callType = marker.options.data.callType;
         if (
           callType !== "Car break-in/strip" &&
@@ -234,7 +242,7 @@ const controlCarBreakins = async function () {
       if (marker.options.data.callType === "Stolen vehicle") carStolenCount++;
     });
     map.setView([37.7611, -122.447], window.innerWidth <= 758 ? 12 : 13);
-    carCountElement.innerHTML = `${carBreakinCount} car break-ins &<br> ${carStolenCount} stolen cars in 48h`;
+    carCountElement.innerHTML = `${carBreakinCount} car break-ins & ${carStolenCount} stolen cars in 48h`;
     carCountElement.classList.remove("hidden");
     lastUpdatedElement.style.bottom = "20px";
     toggleVisibleItems();
@@ -252,9 +260,11 @@ const controlCarBreakins = async function () {
       originalZoom = sfapi.getMapZoomLevel();
       originalPosition = sfapi.getLatLngSF();
       map.setView(
-        map.getCenter() === [37.7611, -122.447]
-          ? originalPosition
-          : map.getCenter(),
+        !map.getCenter().equals(L.latLng(37.7611, -122.447))
+          ? map.getCenter()
+          : position
+          ? position
+          : originalPosition,
         originalZoom
       );
       carCountElement.classList.add("hidden");
