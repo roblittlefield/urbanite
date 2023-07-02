@@ -41,7 +41,7 @@ const initGetUrlParam = function () {
   urlCAD = getURLParameter("cad_number");
 };
 
-const interval = 60000 / 5;
+const interval = 60000;
 
 function reloadData() {
   localStorage.setItem("last-load", new Date());
