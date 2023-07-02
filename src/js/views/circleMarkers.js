@@ -12,7 +12,9 @@ export default class circleMarkers {
       const receivedTimeF = formatDate(call.receivedTime);
       const responseTimeF = minsHoursFormat(call.responseTime);
       const dispatchedTimeAgoF = minsHoursFormat(call.dispatchedTimeAgo);
-      const receivedTimeAgoF = minsHoursFormat(call.receivedTimeAgo);
+      const receivedTimeAgoF = minsHoursFormat(
+        Math.round(call.receivedTimeAgo)
+      );
       const disposition =
         call.dispositionMeaning !== "" && call.dispositionMeaning !== "Unknown"
           ? `${call.dispositionMeaning}`
@@ -121,7 +123,8 @@ export default class circleMarkers {
           responseTimeExact: call.responseTimeExact,
           address: call.properCaseAddress,
           callType: call.callTypeFormatted,
-          receivedTimeAgo: call.receivedTimeAgo,
+          receivedTimeAgo: Math.round(call.receivedTimeAgo),
+          receivedTimeAgoExact: call.receivedTimeAgo,
           // callTypeCode: call.callTypeCode,
           // desc: call.desc,
           onView: call.onView,

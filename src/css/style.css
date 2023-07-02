@@ -116,6 +116,10 @@ body {
   top: 149px;
 }
 
+#car-breakins-btn {
+  top: 184px;
+}
+
 #nearby-info,
 .weather {
   background-color: rgba(255, 255, 255, 0.7);
@@ -125,9 +129,10 @@ body {
 #latest-list-btn,
 #nearby-list-btn,
 #nearby-info,
-#response-times-list-btn,
 #neighborhood-text,
 #project-info-btn,
+#response-times-list-btn,
+#car-breakins-btn,
 .weather {
   user-select: none;
   touch-action: none;
@@ -149,7 +154,8 @@ body {
 #latest-list-btn,
 #nearby-list-btn,
 #project-info-btn,
-#response-times-list-btn {
+#response-times-list-btn,
+#car-breakins-btn {
   font-weight: bold;
   text-align: center;
   right: 13px;
@@ -169,7 +175,8 @@ body {
 #change-map-btn:active,
 #latest-list-btn:active,
 #nearby-list-btn:active,
-#project-info-btn:active {
+#project-info-btn:active,
+#car-breakins-btn:active {
   box-shadow: none;
   outline: none;
   transform: scale(1.025);

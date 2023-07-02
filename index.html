@@ -29,12 +29,15 @@
         <button id="change-map-btn">Map</button>
         <button id="latest-list-btn">All SF</button>
         <button id="nearby-list-btn">Nearby</button>
-        <button id="response-times-list-btn">RTs</button>
+        <button id="response-times-list-btn">RTs ⏱</button>
+        <button id="car-breakins-btn">🚙 ⚒️</button>
         <div id="nearby-container">
           <div id="nearby-info"></div>
         </div>
         <div id="last-updated"></div>
         <div id="neighborhood-text"></div>
+        <div class="hidden" id="car-breakins-text"></div>
+        <div class="hidden" id="car-breakins-subtext">(Does not include online reports or unreported.)</div>
         <div class="hidden" id="call-list-container">
           <h2 id="call-list-heading"></h2>
           <ul id="call-list"></ul>
@@ -48,7 +51,7 @@
         <div class="hidden" id="project-info-container">
           <div id="project-info">
             <h2 id="project-info-heading">Welcome to Urbanite SF 🌁  </h2>
-            <p>Explore the last 48 hours of law enforcement dispatched calls for service in San Francisco.<br><br>&bull; Move around the map to different neighborhoods<br>&bull; See call details & disposition<br>&bull; Change the map skin<br>&bull; Open the list of latest calls<br>&bull; View nearby calls<br>&bull; Compare response times by neighborhood<br>&bull; Share links with others<br><br> Reloads every 10 minutes. Links to raw data redirect when DataSF archives.</a><br><br>A personal project designed and developed in the Mission 🌯🌴🌴 using vanilla Javascript. <br><br>Information for ease of access purposes only. Do your own research and form your own opinions.</p>
+            <p>Explore the last 48 hours of law enforcement dispatched calls for service in San Francisco.<br><br>&bull; Move around the map to different neighborhoods<br>&bull; See call details & disposition<br>&bull; Change the map skin<br>&bull; Open the list of latest calls<br>&bull; View nearby calls<br>&bull; Compare response times by neighborhood<br>&bull; Share links with others<br><br> Data reloads every minute. Links to raw data redirect when DataSF archives.</a><br><br>A personal project designed and developed in the Mission 🌯🌴🌴 using vanilla Javascript. <br><br>Information for ease of access purposes only. Do your own research and form your own opinions.</p>
           </div></div>
           <div class="hidden" id="addSFDataSource">
             <a href="https://datasf.gitbook.io/datasf-dataset-explainers/law-enforcement-dispatched-calls-for-service" class="centered-link">

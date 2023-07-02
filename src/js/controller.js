@@ -20,6 +20,7 @@ import {
   loadProjectInfoButton,
   toggleVisibleInfo,
   loadResponseTimesButton,
+  loadCarBreakinsButton,
 } from "./views/buttonsView.js";
 import getURLParameter from "./views/hashURL.js";
 import { async } from "regenerator-runtime";
@@ -27,38 +28,37 @@ import { async } from "regenerator-runtime";
 let map;
 let originalPosition;
 let originalZoom;
+let initLoaded = false;
 
 const countContainer = document.getElementById("nearby-info");
 const infoContainer = document.getElementById("project-info-container");
-const latestButton = document.getElementById("latest-list-btn");
-const nearbyButton = document.getElementById("nearby-list-btn");
-const sfDataSource = document.getElementById("addSFDataSource");
-const alertElement = document.getElementById("alert");
+const lastUpdatedElement = document.getElementById("last-updated");
+const carCountElement = document.getElementById("car-breakins-text");
+const carSubtextElement = document.getElementById("car-breakins-subtext");
 
 let urlCAD;
 const initGetUrlParam = function () {
   urlCAD = getURLParameter("cad_number");
 };
 
-const interval = 60000 * 10;
-function reloadPage() {
+const interval = 60000;
+
+function reloadData() {
   localStorage.setItem("last-load", new Date());
-  location.reload();
+  reInit();
+  setTimeout(reloadData, interval);
 }
+
 const lastLoad = localStorage.getItem("last-load");
 const remainingTime = lastLoad
   ? interval - (new Date() - new Date(lastLoad))
   : interval;
-setTimeout(reloadPage, remainingTime);
+setTimeout(reloadData, remainingTime);
 
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") {
-    const now = new Date();
     const lastLoad = localStorage.getItem("last-load");
-    if (!lastLoad || now - new Date(lastLoad) > 60000 * 10) {
-      localStorage.setItem("last-load", now);
-      location.reload();
-    }
+    if (!lastLoad || new Date() - new Date(lastLoad) > 60000) reloadData();
   }
 });
 
@@ -68,9 +68,7 @@ const controlMap = async function () {
     originalZoom = sfapi.getMapZoomLevel();
     map = L.map("map").setView(originalPosition, originalZoom);
     const mapLayer = localStorage.getItem("map");
-    mapLayer
-      ? L.tileLayer(sfapi.MAP_LAYERS[mapLayer]).addTo(map)
-      : L.tileLayer(sfapi.MAP_LAYERS[0]).addTo(map);
+    L.tileLayer(sfapi.MAP_LAYERS[mapLayer ? mapLayer : 0]).addTo(map);
     map.addEventListener("touchstart", function (e) {
       e.stopPropagation();
     });
@@ -92,7 +90,7 @@ const controlCircleMarkers = async function () {
     const dataResult = model.dataProcess(
       originalPosition,
       dataApiPolice48h,
-      sfapi.includedCallTypesPDlive,
+      sfapi.includedCallTypes,
       sfapi.PARAM_MAP_POLICE_48h
     );
     const data = dataResult.data;
@@ -103,65 +101,82 @@ const controlCircleMarkers = async function () {
       originalPosition
     );
     allCalls = police48Layer;
-
-    initPopupNieghborhood(originalPosition, police48Layer, urlCAD, map);
-    loadLatestListButton(controlOpenCallList);
-    loadNearbyListButton(loadNearbyCalls);
+    document.getElementById("call-list").innerHTML = "";
     updateCallList(police48Layer, map, false);
     calcMedian();
-    loadResponseTimesButton();
-    localStorage.getItem("openList") === "nearby" && position
-      ? nearbyButton.click()
-      : localStorage.getItem("openList") === "allSF"
-      ? latestButton.click()
-      : "";
     countContainer.textContent =
       dataResult.countCallsRecent.toString() +
       ` calls past ${sfapi.timeElapSF / 60}h`;
+    if (!initLoaded) {
+      initPopupNieghborhood(originalPosition, police48Layer, urlCAD, map);
+      loadLatestListButton(openCallList);
+      loadNearbyListButton(loadNearbyCalls, openCallList);
+      loadResponseTimesButton();
+      loadCarBreakinsButton(controlCarBreakins);
+      if (localStorage.getItem("openList") === "allSF")
+        document.getElementById("latest-list-btn").click();
+    }
+    if (initLoaded && position) loadNearbyCalls();
+    initLoaded = true;
     return map, police48Layer;
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 };
 
-let countCallsNearby = 0;
-let countCallsNearbyRecent = 0;
-let position;
-let nearbyClicked = false;
+let [countCallsNearby, countCallsNearbyRecent, position, nearbyClicked] = [
+  0,
+  0,
+  null,
+  false,
+];
 const loadNearbyCalls = async function () {
-  const message = "Latest Nearby Dispatched Calls";
-  let nearbyLayer = L.layerGroup();
   try {
     if (!position) position = await getPosition();
-    if (!nearbyClicked) {
-      const positionLatLng = L.latLng(position[0], position[1]);
-      allCalls.eachLayer((marker) => {
-        var latlng = marker.getLatLng();
-        const distance = positionLatLng.distanceTo(latlng);
-        if (distance < sfapi.nearbyRadius) {
-          countCallsNearby++;
-          marker.addTo(nearbyLayer);
-          if (marker.options.data.receivedTimeAgo <= sfapi.timeElapNearby) {
-            countCallsNearbyRecent++;
-          }
+    console.log(`finding calls near ${position}`);
+    getWeather(position);
+    let nearbyLayer = L.layerGroup();
+    timedPositionReset();
+    const positionLatLng = L.latLng(position[0], position[1]);
+    allCalls.eachLayer((marker) => {
+      const distance = positionLatLng.distanceTo(marker.getLatLng());
+      if (distance < sfapi.nearbyRadius) {
+        countCallsNearby++;
+        marker.addTo(nearbyLayer);
+        if (marker.options.data.receivedTimeAgo <= sfapi.timeElapNearby) {
+          countCallsNearbyRecent++;
         }
-      });
-      countContainer.textContent =
-        countCallsNearby.toString() +
-        ` calls nearby, ` +
-        countCallsNearbyRecent.toString() +
-        ` past ${sfapi.timeElapNearby / 60}h`;
-      const circle = L.circle(position, sfapi.nearbyCircleOpt);
-      circle.addTo(map);
+      }
+    });
+    countContainer.textContent =
+      countCallsNearby.toString() +
+      ` calls nearby, ` +
+      countCallsNearbyRecent.toString() +
+      ` past ${sfapi.timeElapNearby / 60}h`;
+
+    if (!nearbyClicked) {
+      const circle = L.circle(position, sfapi.nearbyCircleOpt).addTo(map);
       circle.getElement().style.pointerEvents = "none";
-      nearbyClicked = true;
-      alertElement.classList.add("hidden");
     }
+    document.getElementById("alert").classList.add("hidden");
     updateCallList(nearbyLayer, map, true);
-    controlOpenCallList(message, true, position, originalZoom, map);
+    nearbyClicked = true;
   } catch (err) {
     throw err;
   }
+};
+
+const openCallList = function (nearby) {
+  const message = `Latest ${nearby ? "Nearby" : "All SF"} Dispatch Calls`;
+  nearby
+    ? controlOpenCallList(message, true, position, originalZoom, map)
+    : controlOpenCallList(message, false);
+};
+
+const timedPositionReset = function () {
+  setTimeout(() => {
+    position = null;
+  }, 60000 * 10);
 };
 
 let currentLayer = 0;
@@ -182,7 +197,6 @@ const controlChangeMap = function () {
 const controlProjectInfo = function () {
   toggleVisibleInfo();
   toggleVisibleItems();
-
   const handleClick = (event) => {
     const clickTarget = event.target;
     if (
@@ -198,6 +212,49 @@ const controlProjectInfo = function () {
   }, 200);
 };
 
+let firstCarBreakin = true;
+const controlCarBreakins = function () {
+  let carBreakinCount = 0;
+  let carStolenCount = 0;
+  allCalls.eachLayer((marker) => {
+    if (
+      marker.options.data.callType !== "Car break-in/strip" &&
+      marker.options.data.callType !== "Stolen vehicle"
+    ) {
+      marker.remove();
+    }
+    if (marker.options.data.callType === "Car break-in/strip")
+      carBreakinCount++;
+    if (marker.options.data.callType === "Stolen vehicle") carStolenCount++;
+  });
+  map.setView([37.7611, -122.447], window.innerWidth <= 758 ? 12 : 13);
+  carCountElement.innerHTML = `${carBreakinCount} car break-ins & ${carStolenCount} stolen cars reported in 48h`;
+  carCountElement.classList.remove("hidden");
+  lastUpdatedElement.style.bottom = "20px";
+  toggleVisibleItems();
+  lastUpdatedElement.classList.remove("hidden");
+  carSubtextElement.classList.remove("hidden");
+  const interval = firstCarBreakin ? 6000 : 8000;
+  setTimeout(async () => {
+    allCalls.eachLayer((marker) => {
+      if (
+        marker.options.data.callType !== "Car break-in/strip" &&
+        marker.options.data.callType !== "Stolen vehicle"
+      )
+        marker.addTo(map);
+    });
+    originalZoom = sfapi.getMapZoomLevel();
+    originalPosition = sfapi.getLatLngSF();
+    map.setView(map.getCenter(), originalZoom);
+    carCountElement.classList.add("hidden");
+    carSubtextElement.classList.add("hidden");
+    lastUpdatedElement.style.bottom = "54px";
+    toggleVisibleItems();
+    lastUpdatedElement.classList.remove("hidden");
+    firstCarBreakin = false;
+  }, interval);
+};
+
 const init = async function () {
   try {
     initGetUrlParam();
@@ -205,10 +262,18 @@ const init = async function () {
     await controlCircleMarkers();
     loadChangeMapButton(controlChangeMap);
     loadProjectInfoButton(controlProjectInfo);
-    sfDataSource.classList.remove("hidden");
+    document.getElementById("addSFDataSource").classList.remove("hidden");
   } catch (err) {
     console.error(err);
   }
 };
 
 init();
+
+const reInit = async function () {
+  try {
+    await controlCircleMarkers();
+  } catch (err) {
+    console.error(err);
+  }
+};

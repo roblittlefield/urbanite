@@ -2,12 +2,14 @@ const temperatureContainer = document.querySelector(".weather");
 const projectInfoButton = document.getElementById("project-info-btn");
 const changeMap = document.getElementById("change-map-btn");
 const latestButton = document.getElementById("latest-list-btn");
+const latestContainer = document.getElementById("call-list-container");
 const nearbyButton = document.getElementById("nearby-list-btn");
 const responseButton = document.getElementById("response-times-list-btn");
-const latestContainer = document.getElementById("call-list-container");
 const responseTimesContainer = document.getElementById(
   "response-times-container"
 );
+const carBreaksinsButton = document.getElementById("car-breakins-btn");
+
 const countNearbyContainer = document.getElementById("nearby-info");
 const neighborhoodContainer = document.getElementById("neighborhood-text");
 const infoContainer = document.getElementById("project-info-container");
@@ -23,23 +25,29 @@ export const loadChangeMapButton = function (handler) {
 };
 
 export const loadLatestListButton = function (handler) {
-  const message = "Latest All SF Dispatched Calls";
   latestButton.addEventListener("click", (e) => {
     e.stopPropagation();
     const btn = e.target.closest("#latest-list-btn");
     if (!btn) return;
-    handler(message, false);
+    handler(false);
   });
 };
 
-let nearbyClicked = false;
-export const loadNearbyListButton = function (handler) {
+export const loadNearbyListButton = function (loader, handler) {
   nearbyButton.addEventListener("click", (e) => {
     e.stopPropagation();
     const btn = e.target.closest("#nearby-list-btn");
     if (!btn) return;
-    handler(nearbyClicked);
-    nearbyClicked = true;
+    nearbyButton.disabled = true;
+    (async function () {
+      try {
+        await loader();
+        handler(true);
+        nearbyButton.disabled = false;
+      } catch (err) {
+        console.error(err);
+      }
+    })();
   });
 };
 
@@ -61,6 +69,21 @@ export const loadResponseTimesButton = function () {
     toggleVisibleItems();
   });
 };
+let firstCarBreakin = true;
+export const loadCarBreakinsButton = function (handler) {
+  carBreaksinsButton.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const btn = e.target.closest("#car-breakins-btn");
+    if (!btn) return;
+    carBreaksinsButton.disabled = true;
+    const interval = firstCarBreakin ? 6005 : 8005;
+    handler();
+    setTimeout(function () {
+      carBreaksinsButton.disabled = false;
+      firstCarBreakin = false;
+    }, interval);
+  });
+};
 
 export const toggleVisibleItems = function () {
   temperatureContainer.classList.toggle("hidden");
@@ -69,6 +92,7 @@ export const toggleVisibleItems = function () {
   latestButton.classList.toggle("hidden");
   nearbyButton.classList.toggle("hidden");
   responseButton.classList.toggle("hidden");
+  carBreaksinsButton.classList.toggle("hidden");
   countNearbyContainer.classList.toggle("hidden");
   neighborhoodContainer.classList.toggle("hidden");
   lastUpdatedElement.classList.toggle("hidden");
@@ -85,5 +109,3 @@ export const toggleResponseTimesList = function () {
 export const toggleVisibleInfo = function () {
   infoContainer.classList.toggle("hidden");
 };
-
-const addSFDataSourceElement = document.querySelector(".addSFDataSource");

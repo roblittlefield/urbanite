@@ -53,13 +53,13 @@ const excludedCallTypes = [
   // "WANTED VEHICLE / SUB",
 ];
 
-export const includedCallTypesPDlive = [
+export const includedCallTypes = [
   "FIGHT NO WEAPON",
   "TRESPASSER",
   "BURGLARY",
   "AUTO BOOST / STRIP",
-  "ASSAULT / BATTERY",
   "STOLEN VEHICLE",
+  "ASSAULT / BATTERY",
   "MENTALLY DISTURBED",
   "PERSON W/GUN",
   "INJURY VEH ACCIDENT",
@@ -107,7 +107,7 @@ export const colorMap = new Map([
   ["FIGHT NO WEAPON", "#fdae61"], // YellowOrange
   ["ASSAULT / BATTERY", "#fdae61"],
 
-  ["STRONGARM ROBBERY", "#f0fe8b"],
+  ["STRONGARM ROBBERY", "#b4c15a"],
   ["GRAND THEFT", "#f0fe8b"], // Yellow
   ["PURSE SNATCH", "#f0fe8b"],
   ["ROBBERY", "#f0fe8b"],
@@ -120,7 +120,7 @@ export const colorMap = new Map([
   ["STALKING", "#3288bd"],
 
   ["WANTED VEHICLE / SUB", "#00af7c"], // Green
-  ["SUSPICIOUS PERSON", "#00af7c"],
+  ["SUSPICIOUS PERSON", "#888888"],
 
   ["MENTALLY DISTURBED", "#66c2a5"], // Yelow-Green
   ["INTOXICATED PERSON", "#66c2a5"],
@@ -131,11 +131,11 @@ export const colorMap = new Map([
   ["AUTO BOOST / STRIP", "#f598ea"], // Pink
 
   ["H&R INJURY ACCIDENT", "#3288bd"],
-  ["H&R VEH ACCIDENT", "#888888"], // Black
+  ["H&R VEH ACCIDENT", "#3288bd"], // Black
   ["INJURY VEH ACCIDENT", "#3288bd"],
-  ["ARREST MADE", "#888888"],
-  ["RESISTING ARREST", "#888888"],
-  ["CITIZEN ARREST", "#888888"],
+  ["ARREST MADE", "#00af7c"],
+  ["RESISTING ARREST", "#00af7c"],
+  ["CITIZEN ARREST", "#00af7c"],
   ["DEMO / PROTEST", "#a098f5"],
 ]);
 
@@ -145,7 +145,7 @@ export const callTypeConversionMap = new Map([
   ["PERSON W/GUN", "Person with gun"],
   ["SHOT SPOTTER", "Shot Spotter"],
 
-  ["STABBING", "Stabbing"],
+  ["STABBING", "*Stabbing*"],
   ["PERSON W/KNIFE", "Person with knife"],
   ["FIGHT W/WEAPONS", "Fight with weapons"],
   ["FIGHT NO WEAPON", "Fight"],
@@ -165,8 +165,8 @@ export const callTypeConversionMap = new Map([
   ["PROWLER", "Prowler"],
   ["STALKING", "Stalking"],
 
-  ["WANTED VEHICLE / SUB", "Wanted Vehicle / Person"],
-  ["SUSPICIOUS PERSON", "Suspicious Person"],
+  ["WANTED VEHICLE / SUB", "Wanted vehicle / person"],
+  ["SUSPICIOUS PERSON", "Suspicious person"],
 
   ["MENTALLY DISTURBED", "Mentally disturbed person"],
   ["INTOXICATED PERSON", "Intoxicated person"],
@@ -176,13 +176,13 @@ export const callTypeConversionMap = new Map([
   ["STOLEN VEHICLE", "Stolen vehicle"],
   ["AUTO BOOST / STRIP", "Car break-in/strip"],
 
-  ["H&R INJURY ACCIDENT", "Hit and run with injuries"],
-  ["H&R VEH ACCIDENT", "Hit and run with no injuries"],
+  ["H&R INJURY ACCIDENT", "Hit & run with injuries"],
+  ["H&R VEH ACCIDENT", "Hit & run with no injuries"],
   ["INJURY VEH ACCIDENT", "Car crash with injuries"],
   ["ARREST MADE", "Arrest made"],
   ["RESISTING ARREST", "Resisting arrest"],
   ["CITIZEN ARREST", "Citizen arrest"],
-  ["DEMO / PROTEST", "Demonstration / Protest"],
+  ["DEMO / PROTEST", "Demonstration / protest"],
 ]);
 
 const filterExpression = excludedCallTypes

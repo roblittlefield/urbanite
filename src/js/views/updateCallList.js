@@ -13,25 +13,26 @@ const responseTimesContainer = document.getElementById(
 );
 const callList = document.getElementById("call-list");
 let isEventListenerAdded = false;
-const callTypeTotals = {};
-const callNeighborhoodCount = {};
-const callNeighborhoodTime = {};
-const callNeighborhoodMedian = {};
-const formattedDate = new Date().toLocaleString("en-US", {
-  hour: "numeric",
-  minute: "numeric",
-  hour12: true,
-});
+// const callTypeTotals = {};
+// let callNeighborhoodCount = {};
+let callNeighborhoodTime = {};
+// let callNeighborhoodMedian = {};
+// let formattedDate = new Date().toLocaleString("en-US", {
+//   hour: "numeric",
+//   minute: "numeric",
+//   hour12: true,
+// });
 
 export const updateCallList = function (latestMarkers, map, nearby) {
-  const callList = document.getElementById("call-list");
+  const callTypeTotals = {};
+  const callNeighborhoodCount = {};
+  // let callNeighborhoodTime = {};
   let calcHour = -1;
   const markersArr = latestMarkers.getLayers();
-
   const sortedMarkersArr = markersArr.sort(
-    (a, b) => a.options.data.receivedTimeAgo - b.options.data.receivedTimeAgo
+    (a, b) =>
+      a.options.data.receivedTimeAgoExact - b.options.data.receivedTimeAgoExact
   );
-
   sortedMarkersArr.forEach((circleMarker) => {
     callTypeTotals[circleMarker.options.data.callType] =
       (callTypeTotals[circleMarker.options.data.callType] || 0) + 1;
@@ -47,10 +48,8 @@ export const updateCallList = function (latestMarkers, map, nearby) {
         );
       }
     }
-
     const receivedTimeAgo = circleMarker.options.data.receivedTimeAgo;
     const receivedTimeAgoF = minsHoursFormat(receivedTimeAgo);
-
     const hours = Math.floor(receivedTimeAgo / 60);
     if (hours > calcHour) {
       calcHour = hours;
@@ -93,11 +92,13 @@ export const updateCallList = function (latestMarkers, map, nearby) {
       const callBox = document.createElement("li");
       callBox.classList.add("call-box");
       callBox.classList.add("hidden");
+
       if (nearby) {
         callBox.classList.add("nearby-call-box");
       } else {
         callBox.classList.add("allSF-call-box");
       }
+
       callBox.innerHTML = `
         <h3 style="color: ${
           circleMarker.options.fillColor === "#000000"
@@ -133,6 +134,7 @@ export const updateCallList = function (latestMarkers, map, nearby) {
         </p>
           <p>${circleMarker.options.data.address}</p>
         `;
+
       callBox.addEventListener("click", () => {
         toggleVisibleList();
         toggleVisibleItems();
@@ -142,6 +144,20 @@ export const updateCallList = function (latestMarkers, map, nearby) {
       callList.appendChild(callBox);
     }
   });
+  if (localStorage.getItem("openList") === "nearby") {
+    const nearbyCallBoxes = document.querySelectorAll(".nearby-call-box");
+    nearbyCallBoxes.forEach((el) => el.classList.remove("hidden"));
+  }
+  if (localStorage.getItem("openList") === "allSF") {
+    const allCallBoxes = document.querySelectorAll(".allSF-call-box");
+    allCallBoxes.forEach((el) => el.classList.remove("hidden"));
+  }
+  let formattedDate = new Date().toLocaleString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  });
+  callListSubHeading.textContent = `Last updated: ` + formattedDate;
   if (!nearby) console.log(callTypeTotals);
 };
 
@@ -165,7 +181,6 @@ export const controlOpenCallList = function (
     callBoxes[i].classList.remove("hidden");
   }
   callListHeading.textContent = message;
-  callListSubHeading.textContent = `Last updated: ` + formattedDate;
   toggleVisibleItems();
   toggleVisibleList();
   if (
@@ -204,14 +219,16 @@ export const controlOpenCallList = function (
   }
 };
 
+let callNeighborhoodMedian = {};
 const updateResponseTimesList = function (callNeighborhoodMedian) {
   const sortedCallNeighborhoodMedian = {};
+  const responseList = document.getElementById("response-times-list");
+  responseList.innerHTML = "";
   Object.keys(callNeighborhoodMedian)
     .sort()
     .forEach((key) => {
       sortedCallNeighborhoodMedian[key] = callNeighborhoodMedian[key];
     });
-  const responseList = document.getElementById("response-times-list");
   Object.entries(sortedCallNeighborhoodMedian).forEach(([key, value]) => {
     const responseBox = document.createElement("li");
     responseBox.innerHTML =
