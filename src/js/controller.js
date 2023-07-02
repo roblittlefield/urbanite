@@ -41,7 +41,7 @@ const initGetUrlParam = function () {
   urlCAD = getURLParameter("cad_number");
 };
 
-const interval = 60000;
+const interval = 60000 / 5;
 
 function reloadData() {
   localStorage.setItem("last-load", new Date());
@@ -79,7 +79,7 @@ const controlMap = async function () {
   }
 };
 
-let police48Layer;
+let police48Layer = L.layerGroup();
 const controlCircleMarkers = async function () {
   try {
     police48Layer = L.layerGroup();
