@@ -41,7 +41,7 @@ const initGetUrlParam = function () {
   urlCAD = getURLParameter("cad_number");
 };
 
-const interval = 60000 / 3;
+const interval = 60000;
 
 function reloadData() {
   localStorage.setItem("last-load", new Date());
@@ -248,7 +248,12 @@ const controlCarBreakins = async function () {
       });
       originalZoom = sfapi.getMapZoomLevel();
       originalPosition = sfapi.getLatLngSF();
-      map.setView(map.getCenter(), originalZoom);
+      map.setView(
+        map.getCenter() === [37.7611, -122.447]
+          ? originalPosition
+          : map.getCenter(),
+        originalZoom
+      );
       carCountElement.classList.add("hidden");
       carSubtextElement.classList.add("hidden");
       lastUpdatedElement.style.bottom = "54px";
