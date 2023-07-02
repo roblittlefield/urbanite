@@ -158,7 +158,7 @@ export const updateCallList = function (latestMarkers, map, nearby) {
     hour12: true,
   });
   callListSubHeading.textContent = `Last updated: ` + formattedDate;
-  // if (!nearby) console.log(callTypeTotals);
+  if (!nearby) console.log(callTypeTotals);
 };
 
 export const controlOpenCallList = function (
@@ -270,7 +270,7 @@ export const calcMedian = function () {
       arr.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
     callNeighborhoodMedian[neighborhood] = median.toFixed(1);
   });
-  callNeighborhoodMedian["All San Francisco [Overall]"] =
+  callNeighborhoodMedian["All San Francisco (Overall)"] =
     overallMedian.toFixed(2);
   updateResponseTimesList(callNeighborhoodMedian);
 };
