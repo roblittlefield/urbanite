@@ -145,7 +145,7 @@ export const callTypeConversionMap = new Map([
   ["PERSON W/GUN", "Person with gun"],
   ["SHOT SPOTTER", "Shot Spotter"],
 
-  ["STABBING", "*Stabbing*"],
+  ["STABBING", "Stabbing"],
   ["PERSON W/KNIFE", "Person with knife"],
   ["FIGHT W/WEAPONS", "Fight with weapons"],
   ["FIGHT NO WEAPON", "Fight"],
