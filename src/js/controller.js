@@ -10,7 +10,10 @@ import {
   calcMedian,
 } from "./views/updateCallList.js";
 import { getPosition, loadLastUpdated } from "./views/getPosition.js";
-import initPopupNieghborhood from "./views/initPopupNeighborhood.js";
+import {
+  initPopupNieghborhood,
+  closestZoom,
+} from "./views/initPopupNeighborhood.js";
 import getWeather from "./views/getWeather.js";
 import {
   loadChangeMapButton,
@@ -55,10 +58,15 @@ const remainingTime = lastLoad
   : interval;
 setTimeout(reloadData, remainingTime);
 
+setTimeout(() => {
+  window.location.reload();
+}, 60000 * 15);
+
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") {
     const lastLoad = localStorage.getItem("last-load");
-    if (!lastLoad || new Date() - new Date(lastLoad) > 60000) reloadData();
+    if (!lastLoad || new Date() - new Date(lastLoad) > 60000 * 10)
+      window.location.reload();
   }
 });
 
@@ -116,6 +124,7 @@ const controlCircleMarkers = async function () {
       ` calls past ${sfapi.timeElapSF / 60}h`;
     if (!initLoaded) {
       initPopupNieghborhood(originalPosition, police48Layer, urlCAD, map);
+      // closestZoom(position, police48Layer);
       loadLatestListButton(openCallList);
       loadNearbyListButton(loadNearbyCalls, openCallList);
       loadResponseTimesButton();
@@ -166,7 +175,7 @@ const loadNearbyCalls = async function () {
       circle.getElement().style.pointerEvents = "none";
     }
     document.getElementById("alert").classList.add("hidden");
-    updateCallList(nearbyLayer, map, true);
+    updateCallList(nearbyLayer, map, true, openPopup);
     nearbyClicked = true;
   } catch (err) {
     throw err;
@@ -176,8 +185,8 @@ const loadNearbyCalls = async function () {
 const openCallList = function (nearby) {
   const message = `Latest ${nearby ? "Nearby" : "All SF"} Dispatch Calls`;
   nearby
-    ? controlOpenCallList(message, true, position, originalZoom, map)
-    : controlOpenCallList(message, false);
+    ? controlOpenCallList(message, true, openPopup, position, originalZoom, map)
+    : controlOpenCallList(message, false, openPopup);
 };
 
 const timedPositionReset = function () {
@@ -280,6 +289,10 @@ const controlCarBreakins = async function () {
   } catch (err) {
     console.error(err);
   }
+};
+
+const openPopup = function () {
+  closestZoom([map.getCenter().lat, map.getCenter().lng], police48Layer);
 };
 
 const init = async function () {

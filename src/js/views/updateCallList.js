@@ -164,7 +164,8 @@ export const updateCallList = function (latestMarkers, map, nearby) {
 export const controlOpenCallList = function (
   message,
   nearby,
-  originalPosition,
+  openPopup,
+  position,
   originalZoom,
   map
 ) {
@@ -190,7 +191,7 @@ export const controlOpenCallList = function (
     callList.scrollTop = 0;
   }
   if (nearby) latestContainer.classList.add("nearby-list");
-  if (nearby) map.setView(originalPosition, originalZoom);
+  if (nearby) map.setView(position, originalZoom);
   localStorage.setItem("openList", nearby ? "nearby" : "allSF");
   const handleClick = (event) => {
     const clickTarget = event.target;
@@ -200,6 +201,7 @@ export const controlOpenCallList = function (
     ) {
       toggleVisibleItems();
       toggleVisibleList();
+      openPopup();
       latestContainer.classList.remove("nearby-list");
       const callBoxCallList = nearby ? "nearby-call-box" : "allSF-call-box";
       const callBoxes = document.getElementsByClassName(callBoxCallList);

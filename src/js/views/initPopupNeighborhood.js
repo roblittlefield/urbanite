@@ -9,39 +9,8 @@ import {
 import addHandlerMoveCenter from "./moveCenter.js";
 import { showAlert } from "./getPosition.js";
 
-const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
-  let minDistance = Infinity;
-  let nearestMarker = null;
+export const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
   const now = Date.now();
-
-  const closestZoom = function () {
-    police48Layer.eachLayer((layer) => {
-      if (layer instanceof L.CircleMarker) {
-        const latLng = layer.getLatLng();
-        const distance = Math.sqrt(
-          Math.pow(position[0] - latLng.lat, 2) +
-            Math.pow(position[1] - latLng.lng, 2)
-        );
-        if (distance < minDistance) {
-          minDistance = distance;
-          nearestMarker = layer;
-        }
-      }
-    });
-
-    police48Layer.eachLayer((layer) => {
-      if (layer instanceof L.CircleMarker) {
-        if (layer === nearestMarker) {
-          layer.openPopup();
-          const { neighborhood } = layer.options.data;
-          const neighborhoodText = document.getElementById("neighborhood-text");
-          neighborhoodText.textContent = neighborhood;
-        } else {
-          layer.closePopup();
-        }
-      }
-    });
-  };
   let liveDataIncludesCAD = false;
   if (urlCAD) {
     police48Layer.addTo(map);
@@ -171,9 +140,38 @@ const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
     }
   } else {
     police48Layer.addTo(map);
-    closestZoom();
+    closestZoom(position, police48Layer);
     addHandlerMoveCenter(police48Layer, map);
   }
 };
 
-export default initPopupNieghborhood;
+export const closestZoom = function (position, police48Layer) {
+  let minDistance = Infinity;
+  let nearestMarker = null;
+  police48Layer.eachLayer((layer) => {
+    if (layer instanceof L.CircleMarker) {
+      const latLng = layer.getLatLng();
+      const distance = Math.sqrt(
+        Math.pow(position[0] - latLng.lat, 2) +
+          Math.pow(position[1] - latLng.lng, 2)
+      );
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearestMarker = layer;
+      }
+    }
+  });
+
+  police48Layer.eachLayer((layer) => {
+    if (layer instanceof L.CircleMarker) {
+      if (layer === nearestMarker) {
+        layer.openPopup();
+        const { neighborhood } = layer.options.data;
+        const neighborhoodText = document.getElementById("neighborhood-text");
+        neighborhoodText.textContent = neighborhood;
+      } else {
+        layer.closePopup();
+      }
+    }
+  });
+};
