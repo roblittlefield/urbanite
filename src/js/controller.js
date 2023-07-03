@@ -67,6 +67,9 @@ const controlMap = async function () {
     originalPosition = sfapi.getLatLngSF();
     originalZoom = sfapi.getMapZoomLevel();
     map = L.map("map").setView(originalPosition, originalZoom);
+    map.eachLayer((layer) => {
+      map.removeLayer(layer);
+    });
     const mapLayer = localStorage.getItem("map");
     L.tileLayer(sfapi.MAP_LAYERS[mapLayer ? mapLayer : 0]).addTo(map);
     map.addEventListener("touchstart", function (e) {
