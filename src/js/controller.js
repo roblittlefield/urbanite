@@ -32,6 +32,7 @@ let map;
 let originalPosition;
 let originalZoom;
 let initLoaded = false;
+window.moving = false;
 
 const countContainer = document.getElementById("nearby-info");
 const infoContainer = document.getElementById("project-info-container");
@@ -125,9 +126,9 @@ const controlCircleMarkers = async function () {
     if (!initLoaded) {
       initPopupNieghborhood(originalPosition, police48Layer, urlCAD, map);
       // closestZoom(position, police48Layer);
-      loadLatestListButton(openCallList);
-      loadNearbyListButton(loadNearbyCalls, openCallList);
-      loadResponseTimesButton();
+      loadLatestListButton(openCallList, closeAllPopups);
+      loadNearbyListButton(loadNearbyCalls, openCallList, closeAllPopups);
+      loadResponseTimesButton(closeAllPopups);
       loadCarBreakinsButton(controlCarBreakins);
       if (localStorage.getItem("openList") === "allSF")
         document.getElementById("latest-list-btn").click();
@@ -140,19 +141,15 @@ const controlCircleMarkers = async function () {
   }
 };
 
-let [countCallsNearby, countCallsNearbyRecent, position, nearbyClicked] = [
-  0,
-  0,
-  null,
-  false,
-];
+let position;
+let nearbyClicked = false;
 const loadNearbyCalls = async function () {
+  let [countCallsNearby, countCallsNearbyRecent] = [0, 0];
   try {
     if (!position) position = await getPosition();
     console.log(`finding calls near ${position}`);
     getWeather(position);
     let nearbyLayer = L.layerGroup();
-    timedPositionReset();
     const positionLatLng = L.latLng(position[0], position[1]);
     police48Layer.eachLayer((marker) => {
       const distance = positionLatLng.distanceTo(marker.getLatLng());
@@ -182,17 +179,19 @@ const loadNearbyCalls = async function () {
   }
 };
 
+const closeAllPopups = function () {
+  police48Layer.eachLayer((layer) => {
+    if (layer instanceof L.CircleMarker) {
+      layer.closePopup();
+    }
+  });
+};
+
 const openCallList = function (nearby) {
   const message = `Latest ${nearby ? "Nearby" : "All SF"} Dispatch Calls`;
   nearby
     ? controlOpenCallList(message, true, openPopup, position, originalZoom, map)
     : controlOpenCallList(message, false, openPopup);
-};
-
-const timedPositionReset = function () {
-  setTimeout(() => {
-    position = null;
-  }, 60000 * 10);
 };
 
 let currentLayer = 0;
@@ -253,14 +252,15 @@ const controlCarBreakins = async function () {
         carBreakinCount++;
       if (marker.options.data.callType === "Stolen vehicle") carStolenCount++;
     });
-    map.setView([37.7611, -122.447], window.innerWidth <= 758 ? 12 : 13);
+    const carLatLng = [37.7611, -122.447];
+    map.setView(carLatLng, window.innerWidth <= 758 ? 12 : 13);
     carCountElement.innerHTML = `${carBreakinCount} car break-ins & ${carStolenCount} stolen cars in 48h`;
     carCountElement.classList.remove("hidden");
     lastUpdatedElement.style.bottom = "20px";
     toggleVisibleItems();
     lastUpdatedElement.classList.remove("hidden");
     carSubtextElement.classList.remove("hidden");
-    const interval = firstCarBreakin ? 6000 : 8000;
+    const interval = firstCarBreakin ? 6000 : 10000;
     setTimeout(async () => {
       police48Layer.eachLayer((marker) => {
         if (
@@ -271,12 +271,14 @@ const controlCarBreakins = async function () {
       });
       originalZoom = sfapi.getMapZoomLevel();
       originalPosition = sfapi.getLatLngSF();
+      const tolerance = 0.0005;
       map.setView(
-        !map.getCenter().equals(L.latLng(37.7611, -122.447))
-          ? map.getCenter()
-          : position
+        Math.abs(map.getCenter().lat - carLatLng[0]) <= tolerance &&
+          Math.abs(map.getCenter().lng - carLatLng[1]) <= tolerance
           ? position
-          : originalPosition,
+            ? position
+            : originalPosition
+          : map.getCenter(),
         originalZoom
       );
       carCountElement.classList.add("hidden");

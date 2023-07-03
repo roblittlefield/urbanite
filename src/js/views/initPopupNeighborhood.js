@@ -25,6 +25,10 @@ export const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
           toggleVisibleList();
         }
         layer.openPopup();
+        moving = true;
+        setTimeout(() => {
+          moving = false;
+        }, 3000);
         map.flyTo(layer.getLatLng(), 15);
         addHandlerMoveCenter(police48Layer, map);
         const { neighborhood } = layer.options.data;
@@ -130,6 +134,10 @@ export const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
           });
           markerHist.addTo(police48Layer);
           police48Layer.addTo(map);
+          moving = true;
+          setTimeout(() => {
+            moving = false;
+          }, 3000);
           map.flyTo(coordsHist, 15);
           addHandlerMoveCenter(police48Layer, map);
           markerHist.openPopup();
@@ -165,6 +173,10 @@ export const closestZoom = function (position, police48Layer) {
   police48Layer.eachLayer((layer) => {
     if (layer instanceof L.CircleMarker) {
       if (layer === nearestMarker) {
+        moving = true;
+        setTimeout(() => {
+          moving = false;
+        }, 2000);
         layer.openPopup();
         const { neighborhood } = layer.options.data;
         const neighborhoodText = document.getElementById("neighborhood-text");

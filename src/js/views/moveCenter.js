@@ -5,12 +5,12 @@ let isPopupOpen = false;
 const addHandlerMoveCenter = function (police48Layer, map) {
   let timer = null;
   map.on("move", () => {
+    if (moving) return;
     clearTimeout(timer);
     timer = setTimeout(() => {
       const { x, y } = map.getSize();
       const centerX = x / 2;
       const centerY = y / 2;
-
       let minDistance = Infinity;
       let closestCoords = null;
 

@@ -24,16 +24,17 @@ export const loadChangeMapButton = function (handler) {
   });
 };
 
-export const loadLatestListButton = function (handler) {
+export const loadLatestListButton = function (handler, closeAllPopups) {
   latestButton.addEventListener("click", (e) => {
     e.stopPropagation();
     const btn = e.target.closest("#latest-list-btn");
     if (!btn) return;
+    closeAllPopups();
     handler(false);
   });
 };
 
-export const loadNearbyListButton = function (loader, handler) {
+export const loadNearbyListButton = function (loader, handler, closeAllPopups) {
   nearbyButton.addEventListener("click", (e) => {
     e.stopPropagation();
     const btn = e.target.closest("#nearby-list-btn");
@@ -42,6 +43,7 @@ export const loadNearbyListButton = function (loader, handler) {
     (async function () {
       try {
         await loader();
+        closeAllPopups();
         handler(true);
         nearbyButton.disabled = false;
       } catch (err) {
@@ -60,13 +62,14 @@ export const loadProjectInfoButton = function (handler) {
   });
 };
 
-export const loadResponseTimesButton = function () {
+export const loadResponseTimesButton = function (closeAllPopups) {
   responseButton.addEventListener("click", (e) => {
     e.stopPropagation();
     const btn = e.target.closest("#response-times-list-btn");
     if (!btn) return;
     toggleResponseTimesList();
     toggleVisibleItems();
+    closeAllPopups();
   });
 };
 let firstCarBreakin = true;

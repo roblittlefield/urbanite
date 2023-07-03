@@ -13,20 +13,11 @@ const responseTimesContainer = document.getElementById(
 );
 const callList = document.getElementById("call-list");
 let isEventListenerAdded = false;
-// const callTypeTotals = {};
-// let callNeighborhoodCount = {};
 let callNeighborhoodTime = {};
-// let callNeighborhoodMedian = {};
-// let formattedDate = new Date().toLocaleString("en-US", {
-//   hour: "numeric",
-//   minute: "numeric",
-//   hour12: true,
-// });
 
 export const updateCallList = function (latestMarkers, map, nearby) {
   const callTypeTotals = {};
   const callNeighborhoodCount = {};
-  // let callNeighborhoodTime = {};
   let calcHour = -1;
   const markersArr = latestMarkers.getLayers();
   const sortedMarkersArr = markersArr.sort(
@@ -138,6 +129,10 @@ export const updateCallList = function (latestMarkers, map, nearby) {
       callBox.addEventListener("click", () => {
         toggleVisibleList();
         toggleVisibleItems();
+        moving = true;
+        setTimeout(() => {
+          moving = false;
+        }, 3000);
         map.flyTo(circleMarker.getLatLng(), 14);
         circleMarker.openPopup();
       });
@@ -191,7 +186,14 @@ export const controlOpenCallList = function (
     callList.scrollTop = 0;
   }
   if (nearby) latestContainer.classList.add("nearby-list");
-  if (nearby) map.setView(position, originalZoom);
+  if (nearby) {
+    moving = true;
+    setTimeout(() => {
+      moving = false;
+    }, 3000);
+    map.setView(position, originalZoom);
+  }
+
   localStorage.setItem("openList", nearby ? "nearby" : "allSF");
   const handleClick = (event) => {
     const clickTarget = event.target;
