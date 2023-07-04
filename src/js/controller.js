@@ -65,12 +65,12 @@ setTimeout(reloadData, remainingTime);
 
 setTimeout(() => {
   window.location.reload();
-}, 60000 * 15);
+}, 60000 * 15.1);
 
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") {
     const lastLoad = localStorage.getItem("last-load");
-    if (!lastLoad || new Date() - new Date(lastLoad) > 60000 * 10)
+    if (!lastLoad || new Date() - new Date(lastLoad) > 60000 * 10.1)
       window.location.reload();
   }
 });
@@ -79,6 +79,7 @@ const controlMap = async function () {
   try {
     originalPosition = sfapi.getLatLngSF();
     originalZoom = sfapi.getMapZoomLevel();
+    if (map) map.remove();
     map = L.map("map").setView(originalPosition, originalZoom);
     map.eachLayer((layer) => {
       map.removeLayer(layer);
