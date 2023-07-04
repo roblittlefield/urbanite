@@ -137,6 +137,9 @@ export default class circleMarkers {
         disableAnimation: true,
       });
       marker.addTo(police48Layer);
+      // if (call.callTypeFormatted === "Shooting") {
+      //   //send Notification
+      // }
     });
     return police48Layer;
   }

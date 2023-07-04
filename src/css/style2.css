@@ -374,8 +374,7 @@
   user-select: none;
   padding: 0px 5px 2px 5px;
   font-family: Tahoma, Arial, Helvetica, sans-serif;
-  /* color: rgba(222, 16, 215, 0.84); */
-  color: rgba(72, 72, 72, 0.85);
+  color: rgba(39, 39, 39, 0.84);
   text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.8);
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
   vertical-align: center;
@@ -401,7 +400,6 @@
   user-select: none;
   padding: 0px 5px 2px 5px;
   font-family: Tahoma, Arial, Helvetica, sans-serif;
-  /* color: rgba(222, 16, 215, 0.84); */
   color: rgba(72, 72, 72, 0.85);
   text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.8);
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
@@ -422,6 +420,6 @@
   }
 
   #car-breakins-subtext {
-    top: 31px;
+    top: 31.2px;
   }
 }

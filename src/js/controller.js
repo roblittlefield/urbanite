@@ -48,9 +48,13 @@ const initGetUrlParam = function () {
 const interval = 60000;
 
 function reloadData() {
-  localStorage.setItem("last-load", new Date());
-  reInit();
-  setTimeout(reloadData, interval);
+  if (showingCarBreakin) {
+    setTimeout(reloadData, 11000);
+  } else {
+    localStorage.setItem("last-load", new Date());
+    reInit();
+    setTimeout(reloadData, interval);
+  }
 }
 
 const lastLoad = localStorage.getItem("last-load");
@@ -125,7 +129,6 @@ const controlCircleMarkers = async function () {
       ` calls past ${sfapi.timeElapSF / 60}h`;
     if (!initLoaded) {
       initPopupNieghborhood(originalPosition, police48Layer, urlCAD, map);
-      // closestZoom(position, police48Layer);
       loadLatestListButton(openCallList, closeAllPopups);
       loadNearbyListButton(loadNearbyCalls, openCallList, closeAllPopups);
       loadResponseTimesButton(closeAllPopups);
@@ -180,7 +183,7 @@ const loadNearbyCalls = async function () {
 };
 
 const closeAllPopups = function () {
-  police48Layer.eachLayer((layer) => {
+  map.eachLayer((layer) => {
     if (layer instanceof L.CircleMarker) {
       layer.closePopup();
     }
@@ -188,7 +191,7 @@ const closeAllPopups = function () {
 };
 
 const openCallList = function (nearby) {
-  const message = `Latest ${nearby ? "Nearby" : "All SF"} Dispatch Calls`;
+  const message = `Latest ${nearby ? "Nearby" : "All SF"} Dispatched Calls`;
   nearby
     ? controlOpenCallList(message, true, openPopup, position, originalZoom, map)
     : controlOpenCallList(message, false, openPopup);
@@ -228,10 +231,12 @@ const controlProjectInfo = function () {
 };
 
 let firstCarBreakin = true;
+let showingCarBreakin = false;
 const controlCarBreakins = async function () {
   try {
     let carBreakinCount = 0;
     let carStolenCount = 0;
+    showingCarBreakin = true;
     await map.eachLayer(function (marker) {
       if (
         marker instanceof L.CircleMarker &&
@@ -287,6 +292,7 @@ const controlCarBreakins = async function () {
       toggleVisibleItems();
       lastUpdatedElement.classList.remove("hidden");
       firstCarBreakin = false;
+      showingCarBreakin = false;
     }, interval);
   } catch (err) {
     console.error(err);
