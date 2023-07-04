@@ -45,7 +45,13 @@ const initGetUrlParam = function () {
   urlCAD = getURLParameter("cad_number");
 };
 
+// setTimeout(() => {
+//   window.location.reload();
+// }, 60000 * 15.1);
+
 const interval = 60000;
+localStorage.setItem("last-load", new Date());
+setTimeout(reloadData, interval);
 
 function reloadData() {
   if (showingCarBreakin) {
@@ -57,21 +63,12 @@ function reloadData() {
   }
 }
 
-const lastLoad = localStorage.getItem("last-load");
-const remainingTime = lastLoad
-  ? interval - (new Date() - new Date(lastLoad))
-  : interval;
-setTimeout(reloadData, remainingTime);
-
-setTimeout(() => {
-  window.location.reload();
-}, 60000 * 15.1);
-
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") {
     const lastLoad = localStorage.getItem("last-load");
     if (!lastLoad || new Date() - new Date(lastLoad) > 60000 * 10.1)
-      window.location.reload();
+      // window.location.reload();
+      reloadData();
   }
 });
 
