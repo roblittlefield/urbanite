@@ -25,8 +25,9 @@ export const nearbyCircleOpt = {
 export const MAP_LAYERS = [
   "https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.jpg",
   "https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg",
-  "https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png",
+  "https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png",
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+  "https://cdn.lima-labs.com/{z}/{x}/{y}.png?api=demo",
   "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
 ];
 
