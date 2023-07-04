@@ -61,7 +61,7 @@ export default class circleMarkers {
       \u2022 ${receivedTimeAgoF} <a href="sms:&body=${encodeURIComponent(
         textMessageContent
       )}">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IMessage_logo.svg/20px-IMessage_logo.svg.png" alt="iMessage / text" style="height:20px; position: absolute; bottom: 0px; left: calc(50% - 27px); transform: translate(-50%, -50%);">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IMessage_logo.svg/20px-IMessage_logo.svg.png" alt="iMessage / text" style=" height:20px; position: absolute; bottom: 0px; left: calc(50% - 27px); transform: translate(-50%, -50%);">
       </a>
       <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweetContent
