@@ -91,7 +91,7 @@ const controlMap = async function () {
   }
 };
 
-let police48Layer = L.layerGroup();
+let police48Layer = ``;
 const controlCircleMarkers = async function () {
   try {
     police48Layer = L.layerGroup();
