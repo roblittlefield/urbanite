@@ -49,8 +49,6 @@ const excludedCallTypes = [
   "PERSON DUMPING",
   "MISSING ADULT",
   "NOISE NUISANCE",
-  // "SUSPICIOUS PERSON",
-  // "WANTED VEHICLE / SUB",
 ];
 
 export const includedCallTypes = [

@@ -59,7 +59,7 @@ const addHandlerMoveCenter = function (police48Layer, map) {
           }
         });
       }
-    }, 7);
+    }, 5);
   });
 };
 
