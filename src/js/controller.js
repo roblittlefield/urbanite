@@ -96,15 +96,14 @@ const controlMap = async function () {
 let police48Layer = ``;
 const controlCircleMarkers = async function () {
   try {
-    if (police48Layer) {
+    police48Layer = L.layerGroup();
+    if (initLoaded) {
       police48Layer.removeFrom(map);
       police48Layer.eachLayer((layer) => {
         police48Layer.removeLayer(layer);
       });
       police48Layer.clearLayers();
     }
-    police48Layer = ``;
-    police48Layer = L.layerGroup();
     loadLastUpdated();
     const responsePolice48h = await model.fetchApi(
       sfapi.API_URL_POLICE_48h_FILTERED
