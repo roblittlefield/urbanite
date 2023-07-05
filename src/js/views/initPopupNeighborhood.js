@@ -13,7 +13,7 @@ export const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
   const now = Date.now();
   let liveDataIncludesCAD = false;
   if (urlCAD) {
-    police48Layer.addTo(map);
+    // police48Layer.addTo(map);
     police48Layer.eachLayer((layer) => {
       if (layer.options.data.cadNumber === urlCAD) {
         liveDataIncludesCAD = true;
@@ -147,7 +147,7 @@ export const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
       })();
     }
   } else {
-    police48Layer.addTo(map);
+    // police48Layer.addTo(map);
     closestZoom(position, police48Layer);
     addHandlerMoveCenter(police48Layer, map);
   }

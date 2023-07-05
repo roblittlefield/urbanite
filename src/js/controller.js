@@ -96,14 +96,15 @@ const controlMap = async function () {
 let police48Layer = ``;
 const controlCircleMarkers = async function () {
   try {
-    police48Layer = L.layerGroup();
-    if (initLoaded) {
+    if (police48Layer) {
       police48Layer.removeFrom(map);
       police48Layer.eachLayer((layer) => {
         police48Layer.removeLayer(layer);
       });
       police48Layer.clearLayers();
     }
+    police48Layer = ``;
+    police48Layer = L.layerGroup();
     loadLastUpdated();
     const responsePolice48h = await model.fetchApi(
       sfapi.API_URL_POLICE_48h_FILTERED
@@ -125,6 +126,7 @@ const controlCircleMarkers = async function () {
     countContainer.textContent =
       dataResult.countCallsRecent.toString() +
       ` calls past ${sfapi.timeElapSF / 60}h`;
+    police48Layer.addTo(map);
     if (!initLoaded) {
       initPopupNieghborhood(originalPosition, police48Layer, urlCAD, map);
       loadLatestListButton(openCallList, closeAllPopups);
@@ -134,7 +136,6 @@ const controlCircleMarkers = async function () {
       if (localStorage.getItem("openList") === "allSF")
         document.getElementById("latest-list-btn").click();
     }
-    if (initLoaded) police48Layer.addTo(map);
     if (initLoaded && position) loadNearbyCalls();
     initLoaded = true;
   } catch (err) {
