@@ -47,7 +47,7 @@ const initGetUrlParam = function () {
 
 setTimeout(() => {
   window.location.reload();
-}, 60000 * 15.1);
+}, 60000 * 30.1);
 
 const interval = 60000;
 localStorage.setItem("last-load", new Date());
@@ -55,7 +55,7 @@ setTimeout(reloadData, interval);
 
 function reloadData() {
   if (showingCarBreakin) {
-    setTimeout(reloadData, 11000);
+    setTimeout(reloadData, 15000);
   } else {
     localStorage.setItem("last-load", new Date());
     reInit();
@@ -66,7 +66,7 @@ function reloadData() {
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") {
     const lastLoad = localStorage.getItem("last-load");
-    if (!lastLoad || new Date() - new Date(lastLoad) > 60000 * 10.1)
+    if (!lastLoad || new Date() - new Date(lastLoad) > 60000 * 30.1)
       window.location.reload();
     // reloadData();
   }
