@@ -49,7 +49,7 @@ setTimeout(() => {
   window.location.reload();
 }, 60000 * 30.1);
 
-const interval = 60000;
+const interval = 60000 / 5;
 localStorage.setItem("last-load", new Date());
 setTimeout(reloadData, interval);
 
@@ -235,6 +235,7 @@ const controlCarBreakins = async function () {
     let carBreakinCount = 0;
     let carStolenCount = 0;
     showingCarBreakin = true;
+    const originalLatLngs = {};
     await map.eachLayer(function (marker) {
       if (
         marker instanceof L.CircleMarker &&
@@ -246,7 +247,10 @@ const controlCarBreakins = async function () {
           callType !== "Car break-in/strip" &&
           callType !== "Stolen vehicle"
         ) {
-          map.removeLayer(marker);
+          const originalLatLng = marker.getLatLng();
+          originalLatLngs[marker._leaflet_id] = originalLatLng;
+          marker.setLatLng([9999, 9999]);
+          // map.removeLayer(marker);
         }
       }
     });
@@ -265,13 +269,36 @@ const controlCarBreakins = async function () {
     carSubtextElement.classList.remove("hidden");
     const interval = firstCarBreakin ? 6000 : 10000;
     setTimeout(async () => {
-      police48Layer.eachLayer((marker) => {
+      await map.eachLayer(function (marker) {
         if (
-          marker.options.data.callType !== "Car break-in/strip" &&
-          marker.options.data.callType !== "Stolen vehicle"
-        )
-          marker.addTo(map);
+          marker instanceof L.CircleMarker &&
+          !(marker instanceof L.Circle) &&
+          marker !== map
+        ) {
+          const callType = marker.options.data.callType;
+          if (
+            callType !== "Car break-in/strip" &&
+            callType !== "Stolen vehicle"
+          ) {
+            const originalLatLng = originalLatLngs[marker._leaflet_id];
+            marker.setLatLng(originalLatLng);
+            // map.removeLayer(marker);
+          }
+        }
       });
+      // for (const id in originalLatLngs) {
+      //   const marker = map.getLayer(id);
+      //   const originalLatLng = originalLatLngs[id];
+      //   console.log(marker);
+      //   marker.setLatLng(originalLatLng);
+      // }
+      // await police48Layer.eachLayer((marker) => {
+      //   if (
+      //     marker.options.data.callType !== "Car break-in/strip" &&
+      //     marker.options.data.callType !== "Stolen vehicle"
+      //   )
+      //     marker.addTo(map);
+      // });
       originalZoom = sfapi.getMapZoomLevel();
       originalPosition = sfapi.getLatLngSF();
       const tolerance = 0.0005;
