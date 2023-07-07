@@ -49,7 +49,7 @@ setTimeout(() => {
   window.location.reload();
 }, 60000 * 30.1);
 
-const interval = 60000 / 5;
+const interval = 60000;
 localStorage.setItem("last-load", new Date());
 setTimeout(reloadData, interval);
 
@@ -93,17 +93,17 @@ const controlMap = async function () {
   }
 };
 
-let police48Layer = ``;
+let police48Layer = "";
 const controlCircleMarkers = async function () {
   try {
     police48Layer = L.layerGroup();
-    if (initLoaded) {
-      police48Layer.removeFrom(map);
-      police48Layer.eachLayer((layer) => {
-        police48Layer.removeLayer(layer);
-      });
-      police48Layer.clearLayers();
-    }
+    // if (initLoaded) {
+    // police48Layer.removeFrom(map);
+    // police48Layer.eachLayer((layer) => {
+    //   police48Layer.removeLayer(layer);
+    // });
+    // police48Layer.clearLayers();
+    // }
     loadLastUpdated();
     const responsePolice48h = await model.fetchApi(
       sfapi.API_URL_POLICE_48h_FILTERED
