@@ -135,6 +135,9 @@ export const updateCallList = function (latestMarkers, map, nearby) {
         }, 3000);
         map.flyTo(circleMarker.getLatLng(), 14);
         circleMarker.openPopup();
+        const { neighborhood } = circleMarker.options.data;
+        const neighborhoodText = document.getElementById("neighborhood-text");
+        neighborhoodText.textContent = neighborhood;
       });
       callList.appendChild(callBox);
     }
