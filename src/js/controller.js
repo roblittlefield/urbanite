@@ -66,9 +66,9 @@ function reloadData() {
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") {
     const lastLoad = localStorage.getItem("last-load");
-    if (!lastLoad || new Date() - new Date(lastLoad) > 60000 * 30.1)
-      window.location.reload();
-    // reloadData();
+    if (!lastLoad || new Date() - new Date(lastLoad) > 60000)
+      // window.location.reload();
+      reloadData();
   }
 });
 
