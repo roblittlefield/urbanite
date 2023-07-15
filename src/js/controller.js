@@ -63,14 +63,19 @@ function reloadData() {
   }
 }
 
+let isPageVisible = true;
 document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "visible") {
+  isPageVisible = !document.hidden;
+});
+setInterval(() => {
+  if (isPageVisible) {
     const lastLoad = localStorage.getItem("last-load");
-    if (!lastLoad || new Date() - new Date(lastLoad) > 60000)
+    if (!lastLoad || new Date() - new Date(lastLoad) > 60000) {
       // window.location.reload();
       reloadData();
+    }
   }
-});
+}, 1000);
 
 const controlMap = async function () {
   try {
@@ -97,13 +102,7 @@ let police48Layer = "";
 const controlCircleMarkers = async function () {
   try {
     police48Layer = L.layerGroup();
-    // if (initLoaded) {
     // police48Layer.removeFrom(map);
-    // police48Layer.eachLayer((layer) => {
-    //   police48Layer.removeLayer(layer);
-    // });
-    // police48Layer.clearLayers();
-    // }
     loadLastUpdated();
     const responsePolice48h = await model.fetchApi(
       sfapi.API_URL_POLICE_48h_FILTERED
@@ -250,7 +249,6 @@ const controlCarBreakins = async function () {
           const originalLatLng = marker.getLatLng();
           originalLatLngs[marker._leaflet_id] = originalLatLng;
           marker.setLatLng([9999, 9999]);
-          // map.removeLayer(marker);
         }
       }
     });
@@ -282,23 +280,9 @@ const controlCarBreakins = async function () {
           ) {
             const originalLatLng = originalLatLngs[marker._leaflet_id];
             marker.setLatLng(originalLatLng);
-            // map.removeLayer(marker);
           }
         }
       });
-      // for (const id in originalLatLngs) {
-      //   const marker = map.getLayer(id);
-      //   const originalLatLng = originalLatLngs[id];
-      //   console.log(marker);
-      //   marker.setLatLng(originalLatLng);
-      // }
-      // await police48Layer.eachLayer((marker) => {
-      //   if (
-      //     marker.options.data.callType !== "Car break-in/strip" &&
-      //     marker.options.data.callType !== "Stolen vehicle"
-      //   )
-      //     marker.addTo(map);
-      // });
       originalZoom = sfapi.getMapZoomLevel();
       originalPosition = sfapi.getLatLngSF();
       const tolerance = 0.0005;
