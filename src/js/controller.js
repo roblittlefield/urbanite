@@ -101,6 +101,9 @@ const controlMap = async function () {
 let police48Layer = "";
 const controlCircleMarkers = async function () {
   try {
+    if (police48Layer) {
+      map.removeLayer(police48Layer);
+    }
     police48Layer = "";
     police48Layer = L.layerGroup();
     loadLastUpdated();
