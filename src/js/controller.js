@@ -49,7 +49,7 @@ setTimeout(() => {
   window.location.reload();
 }, 60000 * 30.1);
 
-const interval = 60000;
+const interval = 60000 * 3;
 localStorage.setItem("last-load", new Date());
 setTimeout(reloadData, interval);
 
@@ -63,19 +63,15 @@ function reloadData() {
   }
 }
 
-let isPageVisible = true;
 document.addEventListener("visibilitychange", () => {
-  isPageVisible = !document.hidden;
-});
-setInterval(() => {
-  if (isPageVisible) {
+  if (!document.hidden) {
     const lastLoad = localStorage.getItem("last-load");
-    if (!lastLoad || new Date() - new Date(lastLoad) > 60000) {
+    if (!lastLoad || new Date() - new Date(lastLoad) > 60000 * 3) {
       // window.location.reload();
       reloadData();
     }
   }
-}, 1000);
+});
 
 const controlMap = async function () {
   try {
@@ -268,7 +264,7 @@ const controlCarBreakins = async function () {
     toggleVisibleItems();
     lastUpdatedElement.classList.remove("hidden");
     carSubtextElement.classList.remove("hidden");
-    const interval = firstCarBreakin ? 6000 : 10000;
+    const interval = firstCarBreakin ? 6000 : 12000;
     setTimeout(async () => {
       await map.eachLayer(function (marker) {
         if (

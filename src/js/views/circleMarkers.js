@@ -21,7 +21,7 @@ export default class circleMarkers {
         call.receivedTimeAgo <= 6
           ? `${receivedTimeAgoF} ago`
           : `${formatDate(call.receivedTime)}`
-      }, ${
+      }, Priority ${call.priority}, ${
         call.onView === "Y"
           ? "SFPD officer observed"
           : call.responseTime
@@ -35,9 +35,7 @@ export default class circleMarkers {
           : "call received by SFPD"
       }${
         disposition ? `, ${disposition.toLowerCase()}` : ""
-      } #SanFrancisco https://urbanitesf.netlify.app/?cad_number=${
-        call.cadNumber
-      }`;
+      } https://urbanitesf.netlify.app/?cad_number=${call.cadNumber}`;
       const textMessageContent = `"${call.callTypeFormatted} at ${
         call.properCaseAddress
       } in ${call.neighborhoodFormatted} ${receivedTimeAgoF} ago, ${
