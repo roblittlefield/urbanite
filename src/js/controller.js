@@ -67,8 +67,8 @@ document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
     const lastLoad = localStorage.getItem("last-load");
     if (!lastLoad || new Date() - new Date(lastLoad) > 60000 * 3) {
-      // window.location.reload();
-      reloadData();
+      window.location.reload(true);
+      // reloadData();
     }
   }
 });
