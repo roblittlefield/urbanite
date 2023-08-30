@@ -46,7 +46,7 @@ const initGetUrlParam = function () {
 };
 
 setTimeout(() => {
-  window.location.reload();
+  window.location.reload(true);
 }, 60000 * 30.1);
 
 const interval = 60000 * 3;
