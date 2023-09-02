@@ -49,7 +49,7 @@ setTimeout(() => {
   window.location.reload(true);
 }, 60000 * 30.1);
 
-const interval = 60000 * 3;
+const interval = 60000 * 10;
 localStorage.setItem("last-load", new Date());
 setTimeout(reloadData, interval);
 
