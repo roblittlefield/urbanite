@@ -33,6 +33,7 @@ export const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
         const { neighborhood } = layer.options.data;
         const neighborhoodText = document.getElementById("neighborhood-text");
         neighborhoodText.textContent = neighborhood;
+        layer.openPopup();
       }
     });
     if (!liveDataIncludesCAD) {
