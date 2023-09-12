@@ -69,7 +69,7 @@ export default class circleMarkers {
       <br>${call.properCaseAddress}
       <br>Priority ${
         call.priority
-      } #<a href="https://data.sfgov.org/resource/gnap-fj3t.json?cad=${
+      } #<a href="https://data.sfgov.org/resource/gnap-fj3t.json?cad_number=${
         call.cadNumber
       }" target="_blank">${call.cadNumber}</a>
       ${
