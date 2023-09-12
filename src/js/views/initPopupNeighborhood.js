@@ -72,7 +72,7 @@ export const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
                 ? ""
                 : `<br>${resolutionHist}`
               : ""
-          } #SanFrancisco https://urbanitesf.netlify.app/?cad_number=${cad_numberHist}`;
+          } #SanFrancisco https://urbanitesf.netlify.app/?cad=${cad_numberHist}`;
 
           const textMessageContent = `"${incident_descHist} at ${addressHist} in ${neighborhoodHist} ${receivedTimeAgo} ago${
             resolutionHist
@@ -80,7 +80,7 @@ export const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
                 ? ""
                 : `, ${resolutionHist}`
               : ""
-          }, Case #${cad_numberHist}" https://urbanitesf.netlify.app/?cad_number=${cad_numberHist}`;
+          }, Case #${cad_numberHist}" https://urbanitesf.netlify.app/?cad=${cad_numberHist}`;
 
           const popupContent = `
           <div>
@@ -88,7 +88,7 @@ export const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
             \u2022 ${receivedTimeAgoF} 
             <br>${formatDate(received_datetimeHist)}
             <br>${addressHist}
-            <br>Case #<a href="https://data.sfgov.org/resource/wg3w-h783.json?cad_number=${cad_numberHist}" target="_blank">${cad_numberHist}</a>
+            <br>Case #<a href="https://data.sfgov.org/resource/wg3w-h783.json?cad=${cad_numberHist}" target="_blank">${cad_numberHist}</a>
             ${
               resolutionHist
                 ? resolutionHist === "Open or Active"

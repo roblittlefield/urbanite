@@ -42,7 +42,10 @@ const carSubtextElement = document.getElementById("car-breakins-subtext");
 
 let urlCAD;
 const initGetUrlParam = function () {
-  urlCAD = getURLParameter("cad_number");
+  urlCAD = getURLParameter("cad");
+  if (!urlCAD) {
+    urlCAD = getURLParameter("cad_number");
+  }
 };
 
 setTimeout(() => {

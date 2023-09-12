@@ -35,7 +35,7 @@ export default class circleMarkers {
           : "call received by SFPD"
       }${
         disposition ? `, ${disposition.toLowerCase()}` : ""
-      } https://urbanitesf.netlify.app/?cad_number=${call.cadNumber}`;
+      } https://urbanitesf.netlify.app/?cad=${call.cadNumber}`;
       const textMessageContent = `"${call.callTypeFormatted} at ${
         call.properCaseAddress
       } in ${call.neighborhoodFormatted} ${receivedTimeAgoF} ago, ${
@@ -52,7 +52,7 @@ export default class circleMarkers {
           : "call received"
       }${
         disposition ? `, ${disposition.toLowerCase()}` : ""
-      }" via https://urbanitesf.netlify.app/?cad_number=${call.cadNumber}`;
+      }" via https://urbanitesf.netlify.app/?cad=${call.cadNumber}`;
       const popupContent = `
     <div>
       <b>${call.callTypeFormatted}</b>
@@ -69,7 +69,7 @@ export default class circleMarkers {
       <br>${call.properCaseAddress}
       <br>Priority ${
         call.priority
-      } #<a href="https://data.sfgov.org/resource/gnap-fj3t.json?cad_number=${
+      } #<a href="https://data.sfgov.org/resource/gnap-fj3t.json?cad=${
         call.cadNumber
       }" target="_blank">${call.cadNumber}</a>
       ${
