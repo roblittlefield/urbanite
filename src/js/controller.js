@@ -50,7 +50,7 @@ const initGetUrlParam = function () {
 
 setTimeout(() => {
   window.location.reload(true);
-}, 60000 * 30.1);
+}, 60000 * 30);
 
 const interval = 60000 * 10;
 localStorage.setItem("last-load", new Date());
