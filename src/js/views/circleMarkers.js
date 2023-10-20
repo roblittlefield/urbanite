@@ -25,9 +25,7 @@ export default class circleMarkers {
         call.onView === "Y"
           ? "SFPD officer observed"
           : call.responseTime
-          ? `SFPD response time: ${
-              call.responseTime > 30 ? `${responseTimeF} 😬` : responseTimeF
-            }`
+          ? `SFPD response time: ${responseTimeF}`
           : dispatchedTimeAgoF
           ? `SFPD dispatched ${dispatchedTimeAgoF} ago`
           : call.enteredTime
@@ -42,9 +40,7 @@ export default class circleMarkers {
         call.onView === "Y"
           ? "officer observed"
           : call.responseTime
-          ? `SFPD response time: ${
-              call.responseTime > 30 ? `${responseTimeF} 😬` : responseTimeF
-            }`
+          ? `SFPD response time: ${responseTimeF}`
           : dispatchedTimeAgoF
           ? `dispatched ${dispatchedTimeAgoF} ago`
           : call.enteredTime
