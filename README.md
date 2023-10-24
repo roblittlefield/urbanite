@@ -15,6 +15,7 @@ Urbanite SF is a San Francisco law enforcement dispatched calls for service inci
 ## Features
 
 - Move around the map to open calls in different neighborhoods
+- See SF Police Station locations marked on the map
 - See what neighborhood the call is in at the bottom
 - View call details and response times
 - Change the map skin
@@ -129,6 +130,214 @@ this.police48Layer.eachLayer(function (layer) {
   }
 });
 ```
+
+### Adding Call Circle Markers & Leaflet Popup Content
+
+```javascript
+addCircleMarkers(data, police48Layer) {
+    data.map((call) => {
+      const receivedTimeF = formatDate(call.receivedTime);
+      const responseTimeF = minsHoursFormat(call.responseTime);
+      const dispatchedTimeAgoF = minsHoursFormat(call.dispatchedTimeAgo);
+      const receivedTimeAgoF = minsHoursFormat(
+        Math.round(call.receivedTimeAgo)
+      );
+      const disposition =
+        call.dispositionMeaning !== "" && call.dispositionMeaning !== "Unknown"
+          ? `${call.dispositionMeaning}`
+          : "";
+      const tweetContent = `${call.callTypeFormatted} at ${
+        call.properCaseAddress
+      } in ${call.neighborhoodFormatted} ${
+        call.receivedTimeAgo <= 6
+          ? `${receivedTimeAgoF} ago`
+          : `${formatDate(call.receivedTime)}`
+      }, Priority ${call.priority}, ${
+        call.onView === "Y"
+          ? "SFPD officer observed"
+          : call.responseTime
+          ? `SFPD response time: ${responseTimeF}`
+          : dispatchedTimeAgoF
+          ? `SFPD dispatched ${dispatchedTimeAgoF} ago`
+          : call.enteredTime
+          ? `call entry in SFPD queue ${call.enteredTimeAgo} ago`
+          : "call received by SFPD"
+      }${
+        disposition ? `, ${disposition.toLowerCase()}` : ""
+      } https://urbanitesf.netlify.app/?cad=${call.cadNumber}`;
+      const textMessageContent = `"${call.callTypeFormatted} at ${
+        call.properCaseAddress
+      } in ${call.neighborhoodFormatted} ${receivedTimeAgoF} ago, ${
+        call.onView === "Y"
+          ? "officer observed"
+          : call.responseTime
+          ? `SFPD response time: ${responseTimeF}`
+          : dispatchedTimeAgoF
+          ? `dispatched ${dispatchedTimeAgoF} ago`
+          : call.enteredTime
+          ? `call entry in queue ${call.enteredTimeAgo} ago`
+          : "call received"
+      }${
+        disposition ? `, ${disposition.toLowerCase()}` : ""
+      }" via https://urbanitesf.netlify.app/?cad=${call.cadNumber}`;
+      const popupContent = `
+    <div>
+      <b>${call.callTypeFormatted}</b>
+      \u2022 ${receivedTimeAgoF} <a href="sms:&body=${encodeURIComponent(
+        textMessageContent
+      )}">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IMessage_logo.svg/20px-IMessage_logo.svg.png" alt="iMessage / text" style=" height:20px; position: absolute; bottom: 0px; left: calc(50% - 27px); transform: translate(-50%, -50%);">
+      </a>
+      <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        tweetContent
+      )}" target="_blank">
+      <img src="https://icons.iconarchive.com/icons/xenatt/the-circle/256/App-Twitter-icon.png" alt="Twitter Bird Icon" style=" height: 20px; position: absolute; bottom: 0px; left: calc(50% + 25px); transform: translate(-50%, -50%);">
+      </a>
+      <br>${call.properCaseAddress}
+      <br>Priority ${
+        call.priority
+      } #<a href="https://data.sfgov.org/resource/gnap-fj3t.json?cad_number=${
+        call.cadNumber
+      }" target="_blank">${call.cadNumber}</a>
+      ${
+        call.onView === "Y"
+          ? "<br>Officer observed"
+          : call.responseTime
+          ? `<br>Response time: ${responseTimeF}`
+          : dispatchedTimeAgoF
+          ? `<br>Dispatched ${dispatchedTimeAgoF} ago`
+          : call.enteredTime
+          ? `<br>Call entry in queue ${call.enteredTimeAgo} ago`
+          : "<br>Call received"
+      }<br>${disposition}
+  </div>
+`;
+      let callLatlng = [
+        Number(call.coords.coordinates[1]),
+        Number(call.coords.coordinates[0]),
+      ];
+      if (police48Layer) {
+        police48Layer.eachLayer(function (layer) {
+          if (layer.getLatLng().equals(callLatlng)) {
+            callLatlng[0] += overlapOffset;
+          }
+        });
+      }
+
+      const marker = L.circleMarker(callLatlng, {
+        radius: window.innerWidth <= 758 ? 6 : 6,
+        keepInView: false,
+        fillColor: colorMap.get(call.call_type) || "#0000000",
+        color: "#333333",
+        weight: 1,
+        opacity: 0.6,
+        fillOpacity: 0.9,
+        data: {
+          cadNumber: call.cadNumber,
+          // receivedTimeCalc: call.receivedTime,
+          disposition: call.dispositionMeaning,
+          neighborhood: call.neighborhoodFormatted,
+          receivedTime: receivedTimeF,
+          // entryTime: enteredTime,
+          enteredTimeAgo: call.enteredTimeAgo,
+          // dispatchTime: dispatchedTime,
+          dispatchedTimeAgoF: dispatchedTimeAgoF,
+          responseTime: call.responseTime,
+          responseTimeExact: call.responseTimeExact,
+          address: call.properCaseAddress,
+          callType: call.callTypeFormatted,
+          receivedTimeAgo: Math.round(call.receivedTimeAgo),
+          receivedTimeAgoExact: call.receivedTimeAgo,
+          // callTypeCode: call.callTypeCode,
+          // desc: call.desc,
+          onView: call.onView,
+          priority: call.priority,
+        },
+        autoPan: false,
+        closeOnClick: false,
+        interactive: true,
+        bubblingMouseEvents: false,
+      }).bindPopup(popupContent, {
+        closeButton: false,
+        disableAnimation: true,
+      });
+      marker.addTo(police48Layer);
+      // if (call.callTypeFormatted === "Shooting") {
+      //   //send Notification
+      // }
+    });
+    return police48Layer;
+  }
+```
+
+### Loading Calls Nearby User
+```javascript
+export const showAlert = function (message) {
+  const alertElement = document.getElementById("alert");
+  alertElement.textContent = "";
+  alertElement.classList.remove("hidden");
+  alertElement.textContent = message;
+  setTimeout(function () {
+    if (alertElement.parentElement) {
+      alertElement.classList.add("hidden");
+    }
+  }, 2500);
+};
+
+export const getPosition = async function () {
+  showAlert(`Getting your location & loading nearby calls...`);
+  return new Promise((resolve, reject) => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+
+          const expandedMinLatitude = 37.6398 - 0.0045;
+          const expandedMaxLatitude = 37.9298 + 0.0045;
+          const expandedMinLongitude = -123.1738 - 0.0045;
+          const expandedMaxLongitude = -122.2815 + 0.0045;
+
+          if (
+            latitude < expandedMinLatitude ||
+            latitude > expandedMaxLatitude ||
+            longitude < expandedMinLongitude ||
+            longitude > expandedMaxLongitude
+          ) {
+            showAlert(`Nearby only works in San Francisco, sorry! 🌉`);
+            reject(new Error("Location outside SF"));
+          } else {
+            resolve([latitude, longitude]);
+          }
+        },
+        () => {
+          showAlert(`Share your location to see nearby calls 🌉`);
+          reject(new Error("Couldn't find position"));
+        }
+      );
+    } else {
+      showAlert(`Share your location to see nearby calls 🌉`);
+      reject(new Error("Couldn't find position"));
+    }
+  }).catch((err) => {
+    throw err;
+  });
+};
+
+export const loadLastUpdated = function () {
+  const lastUpdatedElement = document.getElementById("last-updated");
+  const currentDate = new Date();
+  const formattedDate = currentDate.toLocaleString("en-US", {
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+    timeZoneName: "short",
+  });
+  lastUpdatedElement.textContent = `${formattedDate}`;
+};
+```
+
 
 ### Zoom to Closest Nearby Call
 
