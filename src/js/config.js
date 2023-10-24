@@ -190,7 +190,7 @@ export const callTypeConversionMap = new Map([
 const filterExpression = excludedCallTypes
   .map((callType) => `call_type_final_desc != '${callType}'`)
   .join(" and ");
-export const API_URL_POLICE_48h_FILTERED = `${API_URL_POLICE_48h}?$where=${filterExpression} AND intersection_point IS NOT NULL&$$app_token=${SFDATA_API_KEY}&$limit=2500`;
+export const API_URL_POLICE_48h_FILTERED = `${API_URL_POLICE_48h}?$where=${filterExpression} AND intersection_point IS NOT NULL&$$app_token=${SFDATA_API_KEY}&$limit=3000`;
 
 export const PARAM_MAP_POLICE_48h = {
   cadNumber: "cad_number",
@@ -232,3 +232,25 @@ export const DISPOSITION_REF_POLICE = {
   UTL: "Unable to locate",
   VAS: "Car alarm",
 };
+
+export const STATION_LOCATIONS = [
+  [37.76293, -122.42198], // Mission
+  [37.79873, -122.40966], // Central
+  [37.77264, -122.38936], // Southern/HQ
+  [37.78016, -122.43245], // Northern
+  [37.72975, -122.39802], // Bayview
+  [37.72466, -122.4463], // Ingleside
+  [37.74374, -122.48147], // Taraval
+  [37.78368, -122.41291], // Tenderloin
+];
+
+export const STATION_NAMES = [
+  "<strong>Mission<br>Station</strong><br>415-558-5400",
+  "<strong>Central<br>Station</strong><br>415-315-2400",
+  "<strong>Southern<br>Station /<br>SFPD HQ</strong><br>415-553-0123",
+  "<strong>Northern<br>Station</strong><br>415-614-3400",
+  "<strong>Bayview<br>Station</strong><br>415-671-2300",
+  "<strong>Ingleside<br>Station</strong><br>415-404-4000",
+  "<strong>Taraval<br>Station</strong><br>415-759-3100",
+  "<strong>Tenderloin<br>Station</strong><br>415-345-7300",
+];

@@ -28,6 +28,12 @@ body {
   display: none !important;
 }
 
+.station-marker {
+  background: transparent;
+  border: none;
+  font-size: x-large;
+}
+
 #addSFDataSource {
   user-select: none;
   box-sizing: border-box;
@@ -251,6 +257,7 @@ body {
   background-color: transparent;
   transition: padding 0.5s;
 }
+
 .leaflet-popup-content-small-padding {
   padding: 0.1px 0px 0px 0px;
   background-color: transparent;
@@ -305,4 +312,11 @@ body {
   border-radius: 4px;
   touch-action: none;
   pointer-events: none;
+}
+
+.station-popup .leaflet-popup-content {
+  padding: 0.1px 0px 0.1px 0px !important;
+  background-color: transparent;
+  transition: padding 0.5s;
+  text-align: center;
 }

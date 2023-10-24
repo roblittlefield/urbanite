@@ -4,6 +4,7 @@ import L from "leaflet";
 import * as model from "./model.js";
 import * as sfapi from "./config.js";
 import circleMarkers from "./views/circleMarkers.js";
+import addStations from "./views/sfpdStations.js";
 import {
   updateCallList,
   controlOpenCallList,
@@ -91,6 +92,7 @@ const controlMap = async function () {
       e.stopPropagation();
     });
     getWeather(originalPosition);
+    addStations(map);
     return map;
   } catch (err) {
     throw err;
