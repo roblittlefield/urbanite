@@ -27,6 +27,7 @@ import {
   loadCarBreakinsButton,
 } from "./views/buttonsView.js";
 import getURLParameter from "./views/hashURL.js";
+import addHandlerMoveCenter from "./views/moveCenter.js";
 import { async } from "regenerator-runtime";
 
 let map;
@@ -54,7 +55,7 @@ const initGetUrlParam = function () {
 };
 
 /**
- * Refreshes the current page after a specified delay.
+ * Refreshes the current page with a hard reload after 30 minutes.
  *
  * @param {Function} callback - The function to execute when the timeout elapses.
  * @param {number} delay - The delay time in milliseconds before executing the callback.
@@ -71,17 +72,19 @@ setTimeout(() => {
 localStorage.setItem("last-load", new Date());
 
 /**
- * Schedule a data reload at the specified interval.
- * @param {number} interval - The interval in milliseconds between data reloads.
+ * Schedule a data reload after 10 minutes.
+ *
+ * @param {number} reload_interval - The interval in milliseconds between data reloads.
  * @param {function} callback - The function to execute when the timeout elapses.
  */
-setTimeout(reloadData, 60000 * 10);
+let reload_interval = 60000 * 10;
+setTimeout(reloadData, reload_interval);
 
 /**
  * Reloads data based on the current state and scheduling.
  *
  * @param {boolean} showingCarBreakin - A flag indicating whether car break-ins are being shown.
- * @param {number} interval - The interval in milliseconds for data reload.
+ * @param {number} reload_interval - The interval in milliseconds for data reload.
  */
 function reloadData() {
   if (showingCarBreakin) {
@@ -89,7 +92,7 @@ function reloadData() {
   } else {
     localStorage.setItem("last-load", new Date());
     reInit();
-    setTimeout(reloadData, interval);
+    setTimeout(reloadData, reload_interval);
   }
 }
 
@@ -100,11 +103,11 @@ function reloadData() {
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
     /**
-     * This block checks the last load time in local storage and reloads the page if it's been inactive for more than 5 minutes.
+     * On visibility change, this block checks the last load time in local storage and reloads the page if it's been for more than 10 minutes.
      * @param {string} lastLoad - The timestamp of the last page load.
      */
     const lastLoad = localStorage.getItem("last-load");
-    if (!lastLoad || new Date() - new Date(lastLoad) > 60000 * 5) {
+    if (!lastLoad || new Date() - new Date(lastLoad) > 60000 * 10) {
       window.location.reload(true);
       // reloadData();
     }
@@ -232,6 +235,9 @@ const controlCircleMarkers = async function () {
       loadCarBreakinsButton(controlCarBreakins);
       if (localStorage.getItem("openList") === "allSF")
         document.getElementById("latest-list-btn").click();
+    } else {
+      addHandlerMoveCenter(callsLayer, map);
+      openPopup();
     }
 
     // If user location is known, update the nearby calls list

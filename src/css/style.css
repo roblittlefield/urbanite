@@ -10,6 +10,8 @@ body {
   touch-action: none;
 }
 
+/*----Leaflet Styling----*/
+
 #map {
   position: absolute;
   top: 0;
@@ -100,6 +102,15 @@ body {
   word-wrap: normal;
 }
 
+/* -----Buttons----- 
+1 - 9px
+2 - 44px
+3 - 79px
+4 - 114px
+5 - 149px
+6 - 184px 
+*/
+
 #project-info-btn {
   top: 9px;
 }
@@ -108,19 +119,19 @@ body {
   top: 44px;
 }
 #latest-list-btn {
-  top: 79px;
-}
-
-#nearby-list-btn {
-  top: 114px;
-}
-
-#response-times-list-btn {
   top: 149px;
 }
 
-#car-breakins-btn {
+#nearby-list-btn {
   top: 184px;
+}
+
+#response-times-list-btn {
+  top: 79px;
+}
+
+#car-breakins-btn {
+  top: 114px;
 }
 
 #nearby-info,
