@@ -15,6 +15,11 @@ const neighborhoodContainer = document.getElementById("neighborhood-text");
 const infoContainer = document.getElementById("project-info-container");
 const lastUpdatedElement = document.getElementById("last-updated");
 
+/**
+ * Load and initialize the "Change Map" button with a click event handler.
+ *
+ * @param {function} handler - The event handler function to be executed when the button is clicked.
+ */
 export const loadChangeMapButton = function (handler) {
   changeMap.addEventListener("click", (e) => {
     const btn = e.target.closest("#change-map-btn");
@@ -24,6 +29,12 @@ export const loadChangeMapButton = function (handler) {
   });
 };
 
+/**
+ * Load and initialize the "Latest List" button with a click event handler and a function to close all popups.
+ *
+ * @param {function} handler - The event handler function to be executed when the button is clicked.
+ * @param {function} closeAllPopups - The function to close all popups before executing the event handler.
+ */
 export const loadLatestListButton = function (handler, closeAllPopups) {
   latestButton.addEventListener("click", (e) => {
     e.stopPropagation();
@@ -34,6 +45,13 @@ export const loadLatestListButton = function (handler, closeAllPopups) {
   });
 };
 
+/**
+ * Load and initialize the "Nearby List" button with a click event handler, data loader, and a function to close all popups.
+ *
+ * @param {function} loader - The data loading function to be executed when the button is clicked.
+ * @param {function} handler - The event handler function to be executed after data loading and before closing popups.
+ * @param {function} closeAllPopups - The function to close all popups before executing the event handler.
+ */
 export const loadNearbyListButton = function (loader, handler, closeAllPopups) {
   nearbyButton.addEventListener("click", (e) => {
     e.stopPropagation();
@@ -53,6 +71,11 @@ export const loadNearbyListButton = function (loader, handler, closeAllPopups) {
   });
 };
 
+/**
+ * Load and initialize the "Project Info" button with a click event handler.
+ *
+ * @param {function} handler - The event handler function to be executed when the button is clicked.
+ */
 export const loadProjectInfoButton = function (handler) {
   projectInfoButton.addEventListener("click", (e) => {
     e.stopPropagation();
@@ -62,6 +85,11 @@ export const loadProjectInfoButton = function (handler) {
   });
 };
 
+/**
+ * Load and initialize the "Response Times" button with a click event handler.
+ *
+ * @param {function} closeAllPopups - The function to close all popups before executing the event handler.
+ */
 export const loadResponseTimesButton = function (closeAllPopups) {
   responseButton.addEventListener("click", (e) => {
     e.stopPropagation();
@@ -72,6 +100,12 @@ export const loadResponseTimesButton = function (closeAllPopups) {
     closeAllPopups();
   });
 };
+
+/**
+ * Load and initialize the "Car Break-ins" button with a click event handler.
+ *
+ * @param {function} handler - The event handler function to be executed when the button is clicked.
+ */
 let firstCarBreakin = true;
 export const loadCarBreakinsButton = function (handler) {
   carBreaksinsButton.addEventListener("click", (e) => {
@@ -88,6 +122,10 @@ export const loadCarBreakinsButton = function (handler) {
   });
 };
 
+/**
+ * Toggle the visibility of various UI elements on the web app.
+ * Elements such as temperature, buttons, and other containers are toggled between hidden and visible states.
+ */
 export const toggleVisibleItems = function () {
   temperatureContainer.classList.toggle("hidden");
   projectInfoButton.classList.toggle("hidden");
@@ -101,14 +139,26 @@ export const toggleVisibleItems = function () {
   lastUpdatedElement.classList.toggle("hidden");
 };
 
+/**
+ * Toggle the visibility of the "ALL SF" latest list container.
+ * Hides or shows the container where the latest list of calls is displayed.
+ */
 export const toggleVisibleList = function () {
   latestContainer.classList.toggle("hidden");
 };
 
+/**
+ * Toggle the visibility of the "Response Times" list container.
+ * Hides or shows the container where the response times list is displayed.
+ */
 export const toggleResponseTimesList = function () {
   responseTimesContainer.classList.toggle("hidden");
 };
 
+/**
+ * Toggle the visibility of the site "About" information container.
+ * Hides or shows the container that displays information or details about the web app.
+ */
 export const toggleVisibleInfo = function () {
   infoContainer.classList.toggle("hidden");
 };

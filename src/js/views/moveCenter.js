@@ -2,7 +2,13 @@ import { centerPopupTolerance } from "../config.js";
 let currentPopup = null;
 let isPopupOpen = false;
 
-const addHandlerMoveCenter = function (police48Layer, map) {
+/**
+ * Add a handler to move the center of the map based on the location of markers and open popups.
+ *
+ * @param {L.LayerGroup} callsLayer - The layer group containing markers to be used for centering the map.
+ * @param {L.Map} map - The Leaflet map instance to which the handler is added.
+ */
+const addHandlerMoveCenter = function (callsLayer, map) {
   let timer = null;
   map.on("move", () => {
     if (moving) return;
@@ -14,7 +20,7 @@ const addHandlerMoveCenter = function (police48Layer, map) {
       let minDistance = Infinity;
       let closestCoords = null;
 
-      police48Layer.eachLayer((layer) => {
+      callsLayer.eachLayer((layer) => {
         const lat = layer._latlng.lat;
         const lng = layer._latlng.lng;
         const latlng = [lat, lng];
@@ -28,7 +34,7 @@ const addHandlerMoveCenter = function (police48Layer, map) {
         }
       });
       if (minDistance <= centerPopupTolerance) {
-        police48Layer.eachLayer((layer) => {
+        callsLayer.eachLayer((layer) => {
           if (layer instanceof L.CircleMarker) {
             const { x: markerX, y: markerY } = map.latLngToContainerPoint(
               layer.getLatLng()
@@ -53,7 +59,7 @@ const addHandlerMoveCenter = function (police48Layer, map) {
           }
         });
       } else {
-        police48Layer.eachLayer((layer) => {
+        callsLayer.eachLayer((layer) => {
           if (layer instanceof L.CircleMarker) {
             layer.closePopup();
           }

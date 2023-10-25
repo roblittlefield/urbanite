@@ -228,13 +228,10 @@
   text-align: start;
   height: 72px;
   font-size: auto;
-
   color: white;
   border-radius: 8px;
-
   padding: 2px 2px 3px 2px;
   margin: 4px 4px 0px 0px;
-
   cursor: pointer;
 }
 
@@ -363,36 +360,37 @@
 }
 
 #car-breakins-text {
-  touch-action: none;
-  background-color: rgba(255, 255, 255, 0.7);
-  font-size: 26px;
+  position: absolute;
   top: 0px;
+  left: 50%;
+  transform: translate(-50%, +50%);
+  width: auto;
+  height: auto;
   z-index: 3;
   text-align: center;
-  touch-action: none;
+  font-size: 26px;
   pointer-events: none;
   user-select: none;
   padding: 0px 5px 2px 5px;
   font-family: Tahoma, Arial, Helvetica, sans-serif;
   color: rgba(39, 39, 39, 0.84);
+  background-color: rgba(255, 255, 255, 0.7);
   text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.8);
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
   vertical-align: center;
-  position: absolute;
   white-space: nowrap;
   border-radius: 3px;
   border-radius: 5px;
   border: none;
   transition: transform 0.5s ease;
-  left: 50%;
-  transform: translate(-50%, +50%);
+  touch-action: none;
 }
 
 #car-breakins-subtext {
-  touch-action: none;
-  background-color: rgba(255, 255, 255, 0.7);
-  font-size: 12px;
+  position: fixed;
   top: 41px;
+  left: 50%;
+  font-size: 12px;
   z-index: 2;
   text-align: center;
   touch-action: none;
@@ -401,17 +399,17 @@
   padding: 0px 5px 2px 5px;
   font-family: Tahoma, Arial, Helvetica, sans-serif;
   color: rgba(72, 72, 72, 0.85);
+  background-color: rgba(255, 255, 255, 0.7);
   text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.8);
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
   vertical-align: center;
-  position: fixed;
   white-space: nowrap;
   border-radius: 3px;
   border-radius: 5px;
   border: none;
   transition: transform 0.5s ease;
-  left: 50%;
   transform: translate(-50%, +50%);
+  touch-action: none;
 }
 
 @media screen and (max-width: 450px) {

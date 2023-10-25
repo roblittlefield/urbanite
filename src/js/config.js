@@ -1,5 +1,6 @@
 import { SFDATA_API_KEY } from "../../apikeys.js";
 
+// SFPD calls mapping key parameters
 export const maxCalls = 4000;
 export const timeElapSF = 120;
 export const nearbyRadius = 500;
@@ -7,13 +8,17 @@ export const timeElapNearby = 180;
 export const maxHoursAgo = 48.5;
 export const centerPopupTolerance = 100;
 
+// Defaulet Leaflet map starting coordinates for desktop and mobile
 export const getLatLngSF = () => {
   return window.innerWidth <= 758 ? [37.764, -122.419] : [37.764, -122.424];
 };
+
+// Default Leaflet map starting zoom levels for desktop and mobile
 export const getMapZoomLevel = () => {
   return window.innerWidth <= 758 ? 14 : 15;
 };
 
+// Specifications for "nearby" transparent blue circle added to Leaflet map
 export const nearbyCircleOpt = {
   radius: 500, // m
   color: "white",
@@ -22,6 +27,7 @@ export const nearbyCircleOpt = {
   weight: 1,
 };
 
+// Leaflet map tile URL addresses
 export const MAP_LAYERS = [
   "https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png",
   "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png",
@@ -33,8 +39,10 @@ export const MAP_LAYERS = [
   "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
 ];
 
+// SFPD Real-Time calls base URL
 const API_URL_POLICE_48h = "https://data.sfgov.org/resource/gnap-fj3t.json";
 
+// List of excluded SFPD call types
 const excludedCallTypes = [
   "PASSING CALL",
   "TRAF VIOLATION CITE",
@@ -54,6 +62,7 @@ const excludedCallTypes = [
   "NOISE NUISANCE",
 ];
 
+// List of included SFPD call types
 export const includedCallTypes = [
   "FIGHT NO WEAPON",
   "TRESPASSER",
@@ -93,6 +102,7 @@ export const includedCallTypes = [
   "FIRE",
 ];
 
+// Dictionary of SFPD call circle marker colors by call type
 export const colorMap = new Map([
   ["SHOOTING", "#d53e5c"], // Crimson
   ["SHOTS FIRED", "#d53e5c"],
@@ -141,6 +151,7 @@ export const colorMap = new Map([
   ["DEMO / PROTEST", "#a098f5"],
 ]);
 
+// Mapping of SFPD call types to more readible / easy to understand descriptive call types
 export const callTypeConversionMap = new Map([
   ["SHOOTING", "Shooting"],
   ["SHOTS FIRED", "Shots fired"],
@@ -176,7 +187,7 @@ export const callTypeConversionMap = new Map([
   ["DRUNK DRIVER", "Drunk driver"],
 
   ["STOLEN VEHICLE", "Stolen vehicle"],
-  ["AUTO BOOST / STRIP", "Car break-in/strip"],
+  ["AUTO BOOST / STRIP", "Car break-in / strip"],
 
   ["H&R INJURY ACCIDENT", "Hit & run with injuries"],
   ["H&R VEH ACCIDENT", "Hit & run with no injuries"],
@@ -187,11 +198,13 @@ export const callTypeConversionMap = new Map([
   ["DEMO / PROTEST", "Demonstration / protest"],
 ]);
 
+// SFPD Real-Time combined address for API call
 const filterExpression = excludedCallTypes
   .map((callType) => `call_type_final_desc != '${callType}'`)
   .join(" and ");
 export const API_URL_POLICE_48h_FILTERED = `${API_URL_POLICE_48h}?$where=${filterExpression} AND intersection_point IS NOT NULL&$$app_token=${SFDATA_API_KEY}&$limit=3000`;
 
+// SFPD calls JSON data parameters
 export const PARAM_MAP_POLICE_48h = {
   cadNumber: "cad_number",
   rowid: "id",
@@ -212,6 +225,7 @@ export const PARAM_MAP_POLICE_48h = {
   sensitive: "sensitive_call",
 };
 
+// SFPD Call disposition / conclusion dictionary
 export const DISPOSITION_REF_POLICE = {
   ABA: "Officer abated",
   ADM: "Officer admonished",
@@ -233,10 +247,11 @@ export const DISPOSITION_REF_POLICE = {
   VAS: "Car alarm",
 };
 
+// SF Police station locations (latitude / longitude coordinates)
 export const STATION_LOCATIONS = [
   [37.76293, -122.42198], // Mission
-  [37.79873, -122.40966], // Central
-  [37.77264, -122.38936], // Southern/HQ
+  [37.7987, -122.4099], // Central
+  [37.772527, -122.38904], // Southern/HQ
   [37.78016, -122.43245], // Northern
   [37.72975, -122.39802], // Bayview
   [37.72466, -122.4463], // Ingleside
@@ -244,6 +259,7 @@ export const STATION_LOCATIONS = [
   [37.78368, -122.41291], // Tenderloin
 ];
 
+// Police station Leaflet custom marker pop-up content
 export const STATION_NAMES = [
   "<strong>Mission<br>Station</strong><br>415-558-5400",
   "<strong>Central<br>Station</strong><br>415-315-2400",

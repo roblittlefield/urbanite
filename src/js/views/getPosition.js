@@ -1,8 +1,15 @@
+/**
+ * Displays an alert message on the web page and hides it after a short duration.
+ *
+ * @param {string} message - The message to be displayed in the alert.
+ */
 export const showAlert = function (message) {
   const alertElement = document.getElementById("alert");
   alertElement.textContent = "";
   alertElement.classList.remove("hidden");
   alertElement.textContent = message;
+
+  // Hide alert after 2.5 seconds
   setTimeout(function () {
     if (alertElement.parentElement) {
       alertElement.classList.add("hidden");
@@ -10,6 +17,12 @@ export const showAlert = function (message) {
   }, 2500);
 };
 
+/**
+ * Gets the user's geolocation and displays relevant messages.
+ *
+ * @returns {Promise<Array<number>} - A promise that resolves to an array with the user's latitude and longitude.
+ * @throws {Error} - If the user's location is outside of San Francisco or if location access is denied.
+ */
 export const getPosition = async function () {
   showAlert(`Getting your location & loading nearby calls...`);
   return new Promise((resolve, reject) => {
@@ -18,11 +31,13 @@ export const getPosition = async function () {
         (position) => {
           const { latitude, longitude } = position.coords;
 
+          // SF city bounds by latitude and longitude boundaries
           const expandedMinLatitude = 37.6398 - 0.0045;
           const expandedMaxLatitude = 37.9298 + 0.0045;
           const expandedMinLongitude = -123.1738 - 0.0045;
           const expandedMaxLongitude = -122.2815 + 0.0045;
 
+          // Checking if user location is outside of SF
           if (
             latitude < expandedMinLatitude ||
             latitude > expandedMaxLatitude ||
@@ -49,9 +64,17 @@ export const getPosition = async function () {
   });
 };
 
+/**
+ * Loads and updates the last updated timestamp in the user interface.
+ */
 export const loadLastUpdated = function () {
+  // Get the HTML element with the id "last-updated"
   const lastUpdatedElement = document.getElementById("last-updated");
+
+  // Create a new JavaScript Date object representing the current date and time
   const currentDate = new Date();
+
+  // Format the date as a string in a user-friendly format
   const formattedDate = currentDate.toLocaleString("en-US", {
     month: "long",
     day: "numeric",
@@ -60,5 +83,7 @@ export const loadLastUpdated = function () {
     hour12: true,
     timeZoneName: "short",
   });
+
+  // Update the text content of the lastUpdatedElement with the formatted date
   lastUpdatedElement.textContent = `${formattedDate}`;
 };

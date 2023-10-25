@@ -9,13 +9,24 @@ import {
 import addHandlerMoveCenter from "./moveCenter.js";
 import { showAlert } from "./getPosition.js";
 
-export const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
+/**
+ * Initialize the neighborhood popup based on a specified CAD number or nearby location.
+ *
+ * @param {number[]} position - The position (latitude, longitude) on the map.
+ * @param {L.LayerGroup} callsLayer - The layer group containing police data markers.
+ * @param {string} urlCAD - The CAD (Computer-Aided Dispatch) number for the incident (if available).
+ * @param {L.Map} map - The Leaflet map instance.
+ */
+export const initPopupNieghborhood = (position, callsLayer, urlCAD, map) => {
   const now = Date.now();
   let liveDataIncludesCAD = false;
   if (urlCAD) {
-    police48Layer.eachLayer((layer) => {
+    // Check if the CAD number exists in the live data
+    callsLayer.eachLayer((layer) => {
       if (layer.options.data.cadNumber === urlCAD) {
         liveDataIncludesCAD = true;
+
+        // Check the list view in local storage and toggle items accordingly
         if (
           localStorage.getItem("openList") === "nearby" ||
           localStorage.getItem("openList") === "allSF"
@@ -23,13 +34,15 @@ export const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
           toggleVisibleItems();
           toggleVisibleList();
         }
+
+        // Open the popup, trigger map movement, and set the neighborhood
         layer.openPopup();
         moving = true;
         setTimeout(() => {
           moving = false;
         }, 3000);
         map.flyTo(layer.getLatLng(), 15);
-        addHandlerMoveCenter(police48Layer, map);
+        addHandlerMoveCenter(callsLayer, map);
         const { neighborhood } = layer.options.data;
         const neighborhoodText = document.getElementById("neighborhood-text");
         neighborhoodText.textContent = neighborhood;
@@ -39,7 +52,10 @@ export const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
     if (!liveDataIncludesCAD) {
       (async () => {
         try {
+          // Fetch historical data for the specified CAD number
           const dataHistbyCAD = await fetchHistData(urlCAD);
+
+          // If historical data exists, display it
           dataHistbyCAD[0] ??
             showAlert(`Call pending DataSF archive entry, try later`);
           const coordsHist = [
@@ -62,6 +78,7 @@ export const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
           const addressHist = textProperCase(dataHistbyCAD[0].intersection);
           const resolutionHist = dataHistbyCAD[0].resolution;
 
+          // Create Twitter message content based on historical call data
           const tweetContent = `${incident_descHist} at ${addressHist} in ${neighborhoodHist} ${
             receivedTimeAgo <= 6
               ? `${receivedTimeAgoF} ago`
@@ -72,8 +89,9 @@ export const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
                 ? ""
                 : `<br>${resolutionHist}`
               : ""
-          } #SanFrancisco https://urbanitesf.netlify.app/?cad=${cad_numberHist}`;
+          } https://urbanitesf.netlify.app/?cad=${cad_numberHist}`;
 
+          // Create text message / iMessage content based on historical call data
           const textMessageContent = `"${incident_descHist} at ${addressHist} in ${neighborhoodHist} ${receivedTimeAgo} ago${
             resolutionHist
               ? resolutionHist === "Open or Active"
@@ -82,6 +100,7 @@ export const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
               : ""
           }, Case #${cad_numberHist}" https://urbanitesf.netlify.app/?cad=${cad_numberHist}`;
 
+          // Create Leaflet marker pop-up content based on historical call data
           const popupContent = `
           <div>
             <b>${incident_descHist}</b>
@@ -106,7 +125,7 @@ export const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
               </a>
               </div>
       `;
-
+          // Create an ad-hoc circle marker for the historical call, incluidng pop-up content
           const markerHist = L.circleMarker(coordsHist, {
             radius: window.innerWidth <= 758 ? 3 : 4,
             keepInView: false,
@@ -132,14 +151,14 @@ export const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
             closeButton: false,
             disableAnimation: true,
           });
-          markerHist.addTo(police48Layer);
-          police48Layer.addTo(map);
+          markerHist.addTo(callsLayer);
+          callsLayer.addTo(map);
           moving = true;
           setTimeout(() => {
             moving = false;
           }, 3000);
           map.flyTo(coordsHist, 15);
-          addHandlerMoveCenter(police48Layer, map);
+          addHandlerMoveCenter(callsLayer, map);
           markerHist.openPopup();
         } catch (error) {
           console.log(error);
@@ -147,15 +166,22 @@ export const initPopupNieghborhood = (position, police48Layer, urlCAD, map) => {
       })();
     }
   } else {
-    closestZoom(position, police48Layer);
-    addHandlerMoveCenter(police48Layer, map);
+    // If no archived historical call found, just popup the closest call to position (map center)
+    closestZoom(position, callsLayer);
+    addHandlerMoveCenter(callsLayer, map);
   }
 };
 
-export const closestZoom = function (position, police48Layer) {
+/**
+ * Find and zoom to the closest marker in the given layer group to a specified position.
+ *
+ * @param {number[]} position - The position (latitude, longitude) to find the closest marker to.
+ * @param {L.LayerGroup} callsLayer - The layer group containing markers to search for the closest one.
+ */
+export const closestZoom = function (position, callsLayer) {
   let minDistance = Infinity;
   let nearestMarker = null;
-  police48Layer.eachLayer((layer) => {
+  callsLayer.eachLayer((layer) => {
     if (layer instanceof L.CircleMarker) {
       const latLng = layer.getLatLng();
       const distance = Math.sqrt(
@@ -169,7 +195,7 @@ export const closestZoom = function (position, police48Layer) {
     }
   });
 
-  police48Layer.eachLayer((layer) => {
+  callsLayer.eachLayer((layer) => {
     if (layer instanceof L.CircleMarker) {
       if (layer === nearestMarker) {
         moving = true;

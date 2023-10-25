@@ -3,7 +3,7 @@ import "core-js/stable";
 import L from "leaflet";
 import * as model from "./model.js";
 import * as sfapi from "./config.js";
-import circleMarkers from "./views/circleMarkers.js";
+import { addCircleMarkers } from "./views/circleMarkers.js";
 import addStations from "./views/sfpdStations.js";
 import {
   updateCallList,
@@ -41,6 +41,10 @@ const lastUpdatedElement = document.getElementById("last-updated");
 const carCountElement = document.getElementById("car-breakins-text");
 const carSubtextElement = document.getElementById("car-breakins-subtext");
 
+/**
+ * Initializes the 'urlCAD' variable by retrieving the value of the 'cad' parameter from the URL.
+ * If 'cad' parameter is not found, it attempts to retrieve 'cad_number', for older posts.
+ */
 let urlCAD;
 const initGetUrlParam = function () {
   urlCAD = getURLParameter("cad");
@@ -49,14 +53,36 @@ const initGetUrlParam = function () {
   }
 };
 
+/**
+ * Refreshes the current page after a specified delay.
+ *
+ * @param {Function} callback - The function to execute when the timeout elapses.
+ * @param {number} delay - The delay time in milliseconds before executing the callback.
+ */
 setTimeout(() => {
   window.location.reload(true);
 }, 60000 * 30);
 
-const interval = 60000 * 10;
+/**
+ * Sets a local storage item to record the last load time and schedules a data reload.
+ *
+ * @param {string} key - The key for the local storage item.
+ */
 localStorage.setItem("last-load", new Date());
-setTimeout(reloadData, interval);
 
+/**
+ * Schedule a data reload at the specified interval.
+ * @param {number} interval - The interval in milliseconds between data reloads.
+ * @param {function} callback - The function to execute when the timeout elapses.
+ */
+setTimeout(reloadData, 60000 * 10);
+
+/**
+ * Reloads data based on the current state and scheduling.
+ *
+ * @param {boolean} showingCarBreakin - A flag indicating whether car break-ins are being shown.
+ * @param {number} interval - The interval in milliseconds for data reload.
+ */
 function reloadData() {
   if (showingCarBreakin) {
     setTimeout(reloadData, 15000);
@@ -67,70 +93,139 @@ function reloadData() {
   }
 }
 
+/**
+ * Adds an event listener for visibility change to reload the page when it becomes visible after a period of inactivity.
+ * @param {Event} event - The visibility change event object.
+ */
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
+    /**
+     * This block checks the last load time in local storage and reloads the page if it's been inactive for more than 5 minutes.
+     * @param {string} lastLoad - The timestamp of the last page load.
+     */
     const lastLoad = localStorage.getItem("last-load");
-    if (!lastLoad || new Date() - new Date(lastLoad) > 60000 * 3) {
+    if (!lastLoad || new Date() - new Date(lastLoad) > 60000 * 5) {
       window.location.reload(true);
       // reloadData();
     }
   }
 });
 
+/**
+ * Initializes the map by creating a Leaflet map, setting its view, and adding layers.
+ * @async
+ * @function controlMap
+ * @param {number} delay - The delay in milliseconds for stations to add to map.
+ * @returns {L.Map} The Leaflet map instance.
+ * @throws {Error} If an error occurs during map initialization.
+ */
 const controlMap = async function () {
   try {
+    // Get the original position and zoom level
     originalPosition = sfapi.getLatLngSF();
     originalZoom = sfapi.getMapZoomLevel();
+
+    // Remove any existing map
     if (map) map.remove();
+
+    // Create a new Leaflet map and set its view
     map = L.map("map").setView(originalPosition, originalZoom);
+
+    // Remove all existing map layers
     map.eachLayer((layer) => {
       map.removeLayer(layer);
     });
+
+    // Get the user preferred map layer from localStorage or use the default.
     const mapLayer = localStorage.getItem("map");
-    L.tileLayer(sfapi.MAP_LAYERS[mapLayer ? mapLayer : 0]).addTo(map);
+
+    // Determine which default map to use based on dark/light mode of browser.
+    let initialMapLayer = window.matchMedia("(prefers-color-scheme: dark")
+      .maches
+      ? 1
+      : 0;
+    L.tileLayer(sfapi.MAP_LAYERS[mapLayer ? mapLayer : initialMapLayer]).addTo(
+      map
+    );
+
+    // Prevent touchstart event propagation
     map.addEventListener("touchstart", function (e) {
       e.stopPropagation();
     });
+
+    // Get weather information for the original position
     getWeather(originalPosition);
-    addStations(map);
+
+    // Add stations to the map after 2 seconds
+    setTimeout(function () {
+      addStations(map);
+    }, 1100);
+
+    // Return the created map instance
     return map;
   } catch (err) {
+    // If an error occurs, throw it
     throw err;
   }
 };
 
-let police48Layer = "";
+/**
+ * Controls the display of circle markers on the map, showing recent police calls.
+ *
+ * @async
+ * @function controlCircleMarkers
+ */
+let callsLayer = "";
 const controlCircleMarkers = async function () {
   try {
-    if (police48Layer) {
-      map.removeLayer(police48Layer);
+    // Remove any current Leaflet marker layers
+    if (callsLayer) {
+      map.removeLayer(callsLayer);
     }
-    police48Layer = "";
-    police48Layer = L.layerGroup();
+    callsLayer = "";
+    callsLayer = L.layerGroup();
+
+    // Load time stamp on page
     loadLastUpdated();
-    const responsePolice48h = await model.fetchApi(
+
+    // Retrieve data from Data SF
+    const responseSFPDAPI = await model.fetchApi(
       sfapi.API_URL_POLICE_48h_FILTERED
     );
-    const dataApiPolice48h = await responsePolice48h.json();
+
+    // Converto JSON data
+    const dataSFPDraw = await responseSFPDAPI.json();
+
+    // Process data and filter by included call types
     const dataResult = model.dataProcess(
       originalPosition,
-      dataApiPolice48h,
+      dataSFPDraw,
       sfapi.includedCallTypes,
       sfapi.PARAM_MAP_POLICE_48h
     );
     const data = dataResult.data;
+    // Console log the number of calls
     console.log(`${data.length} calls`);
-    const circleMarkersInst = new circleMarkers();
-    police48Layer = circleMarkersInst.addCircleMarkers(data, police48Layer);
+
+    // Add calls to map as circle markers
+    callsLayer = addCircleMarkers(data, callsLayer);
+
+    // Update call list popup with latest data
     document.getElementById("call-list").innerHTML = "";
-    updateCallList(police48Layer, map, false);
+    updateCallList(callsLayer, map, false);
+
+    // Calculate median SFPD response time
     calcMedian();
+
+    // Call count of calls specific time
     countContainer.textContent =
       dataResult.countCallsRecent.toString() +
       ` calls past ${sfapi.timeElapSF / 60}h`;
-    police48Layer.addTo(map);
+    callsLayer.addTo(map);
+
+    // Load buttons and metrics if initial website load
     if (!initLoaded) {
-      initPopupNieghborhood(originalPosition, police48Layer, urlCAD, map);
+      initPopupNieghborhood(originalPosition, callsLayer, urlCAD, map);
       loadLatestListButton(openCallList, closeAllPopups);
       loadNearbyListButton(loadNearbyCalls, openCallList, closeAllPopups);
       loadResponseTimesButton(closeAllPopups);
@@ -138,24 +233,35 @@ const controlCircleMarkers = async function () {
       if (localStorage.getItem("openList") === "allSF")
         document.getElementById("latest-list-btn").click();
     }
+
+    // If user location is known, update the nearby calls list
     if (initLoaded && position) loadNearbyCalls();
+
+    // Mark the initial load as complete
     initLoaded = true;
   } catch (err) {
+    // Catch any errors
     console.error(err);
   }
 };
 
+// Load calls nearby user
 let position;
 let nearbyClicked = false;
 const loadNearbyCalls = async function () {
   let [countCallsNearby, countCallsNearbyRecent] = [0, 0];
   try {
+    // Get the user position if it does not exist yet
     if (!position) position = await getPosition();
     console.log(`finding calls near ${position}`);
+
+    // Get the nearby weather
     getWeather(position);
+
+    // Calculate distance from user to the calls
     let nearbyLayer = L.layerGroup();
     const positionLatLng = L.latLng(position[0], position[1]);
-    police48Layer.eachLayer((marker) => {
+    callsLayer.eachLayer((marker) => {
       const distance = positionLatLng.distanceTo(marker.getLatLng());
       if (distance < sfapi.nearbyRadius) {
         countCallsNearby++;
@@ -171,6 +277,7 @@ const loadNearbyCalls = async function () {
       countCallsNearbyRecent.toString() +
       ` past ${sfapi.timeElapNearby / 60}h`;
 
+    // Open nearby call list
     if (!nearbyClicked) {
       const circle = L.circle(position, sfapi.nearbyCircleOpt).addTo(map);
       circle.getElement().style.pointerEvents = "none";
@@ -183,6 +290,7 @@ const loadNearbyCalls = async function () {
   }
 };
 
+// Close all Leaflet popups
 const closeAllPopups = function () {
   map.eachLayer((layer) => {
     if (layer instanceof L.CircleMarker) {
@@ -191,55 +299,122 @@ const closeAllPopups = function () {
   });
 };
 
+/**
+ * Open a call list based on the user's choice to view nearby or all SF dispatched calls.
+ *
+ * @param {boolean} nearby - Indicates whether to open a call list for nearby calls (true) or all SF calls (false).
+ */
 const openCallList = function (nearby) {
+  /**
+   * Constructs a message based on the nearby parameter to specify the type of call list to open.
+   *
+   * @param {boolean} nearby - Indicates whether to display nearby calls (true) or all SF calls (false).
+   * @returns {string} A message indicating the type of call list.
+   */
   const message = `Latest ${nearby ? "Nearby" : "All SF"} Dispatched Calls`;
   nearby
     ? controlOpenCallList(message, true, openPopup, position, originalZoom, map)
     : controlOpenCallList(message, false, openPopup);
 };
 
+/**
+ * Switch between different map layers and update the currently displayed layer.
+ */
 let currentLayer = 0;
 const controlChangeMap = function () {
+  /**
+   * The index of the currently displayed map layer.
+   * @type {number}
+   */
   currentLayer = (currentLayer + 1) % sfapi.MAP_LAYERS.length;
+
+  // Create a new map layer based on the current index
   const newLayer = L.tileLayer(sfapi.MAP_LAYERS[currentLayer]);
+
+  // Handle tile loading errors for the new layer
   newLayer.on("tileerror", function (e) {
+    // Remove the new layer with an error and switch to the next one
     L.tileLayer(sfapi.MAP_LAYERS[currentLayer]).remove();
     currentLayer = (currentLayer + 1) % sfapi.MAP_LAYERS.length;
     L.tileLayer(sfapi.MAP_LAYERS[currentLayer]).addTo(map);
     localStorage.setItem("map", currentLayer);
   });
+
+  // Add the new layer to the map and update the saved map choice in local storage
   L.tileLayer(sfapi.MAP_LAYERS[currentLayer]).addTo(map);
   localStorage.setItem("map", currentLayer);
+
+  // Remove the previous map layer so only 1 layer remains
   L.tileLayer(sfapi.MAP_LAYERS[currentLayer - 1]).remove();
 };
 
+/**
+ * Toggle the visibility of project information and handle click events to close it.
+ */
 const controlProjectInfo = function () {
+  // Toggle the visibility of project information and other items
   toggleVisibleInfo();
   toggleVisibleItems();
+
+  /**
+   * Handle clicks outside of the project information container to close it.
+   *
+   * @param {Event} event - The click event.
+   */
   const handleClick = (event) => {
     const clickTarget = event.target;
     if (
       !infoContainer.classList.contains("hidden") &&
       !infoContainer.contains(clickTarget)
     ) {
+      // Is user clicks outside the popup, close the popup and add back the buttons and info
       toggleVisibleItems();
       toggleVisibleInfo();
     }
   };
+
+  // Set up a click event listener to close the project information when clicking outside
   setTimeout(() => {
     window.addEventListener("click", handleClick);
   }, 200);
 };
 
+/**
+ * Control the display of car break-ins and stolen vehicle incidents on the map.
+ *
+ * @async
+ */
 let firstCarBreakin = true;
 let showingCarBreakin = false;
 const controlCarBreakins = async function () {
   try {
+    /**
+     * The number of car break-ins.
+     * @type {number}
+     */
     let carBreakinCount = 0;
+
+    /**
+     * The number of stolen vehicle incidents.
+     * @type {number}
+     */
     let carStolenCount = 0;
+
+    /**
+     * Indicates whether car break-ins and stolen vehicle incidents are currently being displayed.
+     * @type {boolean}
+     */
     showingCarBreakin = true;
+
+    /**
+     * Original latitude and longitude positions for CircleMarker layers.
+     * @type {Object}
+     */
     const originalLatLngs = {};
+
+    // Hide non-car break-in / stolen vehicle incidents on the map
     await map.eachLayer(function (marker) {
+      // Check if the layer is a CircleMarker and not other map elements
       if (
         marker instanceof L.CircleMarker &&
         !(marker instanceof L.Circle) &&
@@ -247,7 +422,7 @@ const controlCarBreakins = async function () {
       ) {
         const callType = marker.options.data.callType;
         if (
-          callType !== "Car break-in/strip" &&
+          callType !== "Car break-in / strip" &&
           callType !== "Stolen vehicle"
         ) {
           const originalLatLng = marker.getLatLng();
@@ -256,30 +431,41 @@ const controlCarBreakins = async function () {
         }
       }
     });
-    police48Layer.eachLayer((marker) => {
-      if (marker.options.data.callType === "Car break-in/strip")
+
+    // Count car break-ins and stolen vehicle incidents in the callsLayer
+    callsLayer.eachLayer((marker) => {
+      if (marker.options.data.callType === "Car break-in / strip")
         carBreakinCount++;
       if (marker.options.data.callType === "Stolen vehicle") carStolenCount++;
     });
+
+    // Go to the center of SF on the map and zoom out
     const carLatLng = [37.7611, -122.447];
     map.setView(carLatLng, window.innerWidth <= 758 ? 12 : 13);
+
+    // Update the top banner with total counts
     carCountElement.innerHTML = `${carBreakinCount} car break-ins & ${carStolenCount} stolen cars in 48h`;
-    carCountElement.classList.remove("hidden");
     lastUpdatedElement.style.bottom = "20px";
+
+    // Hide the unrelated buttons and metrics
     toggleVisibleItems();
-    lastUpdatedElement.classList.remove("hidden");
-    carSubtextElement.classList.remove("hidden");
+    [lastUpdatedElement, carSubtextElement, carCountElement].forEach(
+      (element) => element.classList.remove("hidden")
+    );
+
+    // Wait 6 seconds the first time, then 12 seconds each time after that before returning to the normal view
     const interval = firstCarBreakin ? 6000 : 12000;
     setTimeout(async () => {
       await map.eachLayer(function (marker) {
         if (
+          // Add all circle markers back and remove the car break-ins and car theft circle markers
           marker instanceof L.CircleMarker &&
           !(marker instanceof L.Circle) &&
           marker !== map
         ) {
           const callType = marker.options.data.callType;
           if (
-            callType !== "Car break-in/strip" &&
+            callType !== "Car break-in / strip" &&
             callType !== "Stolen vehicle"
           ) {
             const originalLatLng = originalLatLngs[marker._leaflet_id];
@@ -287,8 +473,19 @@ const controlCarBreakins = async function () {
           }
         }
       });
+      // Get the original map position and zoom
       originalZoom = sfapi.getMapZoomLevel();
       originalPosition = sfapi.getLatLngSF();
+
+      /**
+       * Adjust the map view based on user interaction or tolerance.
+       *
+       * This function checks if the map has been zoomed in or out, or if it has moved by an amount greater than the tolerance. If any of these conditions are met, it adjusts the map view accordingly.
+       *
+       * @param {number} tolerance - The amount the user must move to prevent returning to the original map position.
+       * @param {Object} [position] - The new map position the user has moved to.
+       * @param {Object} originalPosition - The original user position.
+       */
       const tolerance = 0.0005;
       map.setView(
         Math.abs(map.getCenter().lat - carLatLng[0]) <= tolerance &&
@@ -312,29 +509,60 @@ const controlCarBreakins = async function () {
   }
 };
 
+/**
+ * Open a map popup by zooming to the closest zoom level.
+ *
+ * This function calculates and sets the closest zoom level to display a map popup at the current map center coordinates.
+ */
 const openPopup = function () {
-  closestZoom([map.getCenter().lat, map.getCenter().lng], police48Layer);
+  // Calculate the closest zoom level and zoom to it
+  closestZoom([map.getCenter().lat, map.getCenter().lng], callsLayer);
 };
 
+/**
+ * Initialize the map and associate features.
+ *
+ * This function performs the initial setup for the map and its features. It calls various control functions to set up the map, circle markers, and other components.
+ *
+ * @async
+ */
 const init = async function () {
   try {
+    // Initialize URL parameters
     initGetUrlParam();
+
+    // Control map features
     await controlMap();
+
+    // Control circle markers
     await controlCircleMarkers();
+
+    // Load and configure map change button and the project info button
     loadChangeMapButton(controlChangeMap);
     loadProjectInfoButton(controlProjectInfo);
+
+    // Remove the "hidden" class from the "addSFDataSource" element to display it
     document.getElementById("addSFDataSource").classList.remove("hidden");
   } catch (err) {
     console.error(err);
   }
 };
 
-init();
-
+/**
+ * Reinitialize circle markers on the map.
+ *
+ * This function reinitializes and updates the circle markers on the map.
+ *
+ * @async
+ */
 const reInit = async function () {
   try {
+    // Control circle markers to reinitialize
     await controlCircleMarkers();
   } catch (err) {
     console.error(err);
   }
 };
+
+// Initialize the web app on first load
+init();
