@@ -90,7 +90,7 @@ const controlMap = async function () {
     // Get weather information for the original position
     getWeather(originalPosition);
 
-    // Add stations to the map after 2 seconds
+    // Add stations to the map after 1100 ms
     setTimeout(function () {
       addStations(map);
     }, 1100);
@@ -141,7 +141,7 @@ export const API_URL_POLICE_48h_FILTERED = `${API_URL_POLICE_48h}?$where=${filte
 
 ### Controlling the Loading of Circle Markers, Buttons, Weather & Statistics
 
-The app loads the rest of the functions, including the Leaflet markers, the site buttons, the weather, and the median response time statistics popup is calculated and generated. It also calls the addMoveCenter function, which causes the call closest to the center of the user's screen to open it's popup as the user moves around.
+The app then loads the Leaflet markers, the site buttons, the weather, and the median response times are calculated for the response time popup. The app also calls the addMoveCenter function, which causes the call closest to the center of the user's screen to open it's popup as the user moves around.
 
 ```javascript
 /**
@@ -226,7 +226,7 @@ const controlCircleMarkers = async function () {
 
 ### Circle Markers Created using Calls Data
 
-The app adds the law enforcement dispatched calls for service to the map as colored circle markers, as well as San Francisco Police Stations, denoted by '👮'. Each circle marker has popup content that is created and bound to the marker, including text message content and Tweet/X content.
+The app adds the law enforcement dispatched calls for service to the map as colored circle markers, as well as San Francisco Police Stations, denoted by 👮. Each circle marker has popup content that is created and bound to the marker, including text message content and Tweet/X content.
 
 ```javascript
 /**
@@ -687,7 +687,7 @@ export const closestZoom = function (position, callsLayer) {
 
 ### Access Data SF Archives
 
-If the user clicks on a link in a text message or tweet that matches a call that may no longer be available because 48 hours have passed, the app first tries the real-time database, and if it can't find the call, the app looks for the call in the Data SF archive which goes back to 2018 and adds a new circle marker with call details to the map. As of now, Urbanite SF does not map other historic calls beyond 48 hours, but can retrieve individual historic calls.
+If the user clicks on a link in a text message or Tweet/X that matches a call that may no longer be available because 48 hours have passed, the app first tries the real-time database, and if it can't find the call, the app looks for the call in the Data SF archive which goes back to 2018 and adds a new circle marker with call details to the map. Urbanite SF does not map other historic calls beyond 48 hours, but can retrieve individual historic calls.
 
 ```javascript
 /**
