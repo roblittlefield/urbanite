@@ -331,7 +331,7 @@ const controlChangeMap = function () {
    * The index of the currently displayed map layer.
    * @type {number}
    */
-  currentLayer =
+  let currentLayer =
     ((+localStorage.getItem("map") || 0) + 1) % sfapi.MAP_LAYERS.length;
 
   // Create a new map layer based on the current index
