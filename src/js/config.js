@@ -29,14 +29,14 @@ export const nearbyCircleOpt = {
 
 // Leaflet map tile URL addresses
 export const MAP_LAYERS = [
-  "https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png",
-  "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png",
-  "https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg",
-  "https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}{r}.png",
-  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-  "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png",
-  "https://cdn.lima-labs.com/{z}/{x}/{y}.png?api=demo",
-  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  "https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png", // Gray/Green
+  "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png", // Dark
+  "https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg", // Watercolor
+  "https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}{r}.png", // Black n White
+  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", // Satellite Photos
+  "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png", // Light
+  "https://cdn.lima-labs.com/{z}/{x}/{y}.png?api=demo", // Urban
+  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", // Open Street Map Urban
 ];
 
 // SFPD Real-Time calls base URL
@@ -202,7 +202,7 @@ export const callTypeConversionMap = new Map([
 const filterExpression = excludedCallTypes
   .map((callType) => `call_type_final_desc != '${callType}'`)
   .join(" and ");
-export const API_URL_POLICE_48h_FILTERED = `${API_URL_POLICE_48h}?$where=${filterExpression} AND intersection_point IS NOT NULL&$$app_token=${SFDATA_API_KEY}&$limit=3000`;
+export const API_URL_POLICE_48h_FILTERED = `${API_URL_POLICE_48h}?$where=${filterExpression} AND intersection_point IS NOT NULL&$$app_token=${SFDATA_API_KEY}&$limit=4000`;
 
 // SFPD calls JSON data parameters
 export const PARAM_MAP_POLICE_48h = {

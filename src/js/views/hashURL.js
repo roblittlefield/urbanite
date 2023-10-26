@@ -5,6 +5,7 @@
  * @returns {string|null} - The value of the URL parameter, or null if not found.
  */
 const getURLParameter = function (cad_number) {
+  // Search the URL parameters
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(cad_number);
 };

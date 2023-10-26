@@ -144,7 +144,7 @@ const controlMap = async function () {
 
     // Determine which default map to use based on dark/light mode of browser.
     let initialMapLayer = window.matchMedia("(prefers-color-scheme: dark")
-      .maches
+      .matches
       ? 1
       : 0;
     L.tileLayer(sfapi.MAP_LAYERS[mapLayer ? mapLayer : initialMapLayer]).addTo(
@@ -326,13 +326,13 @@ const openCallList = function (nearby) {
 /**
  * Switch between different map layers and update the currently displayed layer.
  */
-let currentLayer = 0;
 const controlChangeMap = function () {
   /**
    * The index of the currently displayed map layer.
    * @type {number}
    */
-  currentLayer = (currentLayer + 1) % sfapi.MAP_LAYERS.length;
+  currentLayer =
+    ((+localStorage.getItem("map") || 0) + 1) % sfapi.MAP_LAYERS.length;
 
   // Create a new map layer based on the current index
   const newLayer = L.tileLayer(sfapi.MAP_LAYERS[currentLayer]);

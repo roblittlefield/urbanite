@@ -14,17 +14,16 @@ Urbanite SF is a San Francisco law enforcement dispatched calls for service inci
 
 ## Features
 
-- Move around the map to open calls in different neighborhoods
-- See SF Police Station locations marked on the map
-- See what neighborhood the call is in at the bottom
-- View call details and response times
-- Change the map skin
-- Share location to see nearby weather and calls
-- See San Francisco weather and San Francisco city-wide recent call count if not in San Francisco or do not share location
-- Open the list of latest calls in all San Francisco or just nearby
-- Share links with others via Twitter or Text Mesage / iMessage
-- View fresh data as map reloads every 10 minutes
-- Access call data when DataSF archives the call after 48 hours
+- **Explore Different Neighborhoods**: Navigate the map to access calls in various neighborhoods.
+- **Identify Police Stations**: Locate San Francisco Police Station positions marked on the map.
+- **Neighborhood Indicator**: Find out the neighborhood of each call at the bottom of the screen.
+- **Call Details and Response Times**: Review call details, including response times.
+- **Customize Map Style**: Personalize your map by changing its appearance.
+- **Weather and Nearby Calls**: Share your location to view local weather and nearby calls. If not in San Francisco or if location sharing is disabled, get an overview of San Francisco's current weather and recent city-wide call count.
+- **Browse Recent Calls**: Access a list of the latest calls in San Francisco, or narrow it down to calls in your vicinity.
+- **Share Easily**: Share links with others through Twitter or Text Messages / iMessages.
+- **Frequent Updates**: Stay up to date with fresh data as the map refreshes every 10 minutes.
+- **Data Accessibility**: Access call data even when DataSF archives calls after 48 hours.
 
 ## Components
 
@@ -32,6 +31,10 @@ Urbanite SF was written using vanilla JavaScript. Includes "live" Police data, w
 
 ## Future Work
 
+- ~~Add median response times by neighborhood~~
+- ~~Twitter/X bot in Python / Google Cloud Functions for severe calls~~ [@SFPDcallsBot](https://twitter.com/SFPDcallsBot)
+- ~~Twitter/X bot in Python / Google Cloud Functions for call breakings~~ [@SFbippinBot](https://twitter.com/SFbippinBot)
+- ~~Add Police Stations to map~~
 - Add historic calls on map upon zoom-in
 - Add historic Fire Dept calls
 
@@ -39,251 +42,537 @@ Urbanite SF was written using vanilla JavaScript. Includes "live" Police data, w
 
 ### Loading Leaflet Map
 
-The first thing the app does upon load is ask for user's current position to load nearby calls. If the user is 500 or more feet outside of San Francisco city limits, or does not/cannot provide a location, the map loads in the center of the city without the nearby call count.
+The root site opens to a map in the center of San Francisco, provided by Leaflet. This is the default load location. The app looks to see if the user has a map skin preference saved in local storage, and if so, loads that map skin tile layer. If not, the app looks to see if the browser is in light or dark mode, and then loads the light or dark map skin tile layer accordingly.
 
 ```javascript
-export const getPosition = function (defaultMapSF) {
-  return new Promise((resolve, reject) => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
+/**
+ * Initializes the map by creating a Leaflet map, setting its view, and adding layers.
+ * @async
+ * @function controlMap
+ * @param {number} delay - The delay in milliseconds for stations to add to map.
+ * @returns {L.Map} The Leaflet map instance.
+ * @throws {Error} If an error occurs during map initialization.
+ */
+const controlMap = async function () {
+  try {
+    // Get the original position and zoom level
+    originalPosition = sfapi.getLatLngSF();
+    originalZoom = sfapi.getMapZoomLevel();
 
-          const expandedMinLatitude = 37.6398 - 0.0045; // 500 feet
-          const expandedMaxLatitude = 37.9298 + 0.0045;
-          const expandedMinLongitude = -123.1738 - 0.0045;
-          const expandedMaxLongitude = -122.2815 + 0.0045;
+    // Remove any existing map
+    if (map) map.remove();
 
-          if (
-            latitude < expandedMinLatitude ||
-            latitude > expandedMaxLatitude ||
-            longitude < expandedMinLongitude ||
-            longitude > expandedMaxLongitude
-          ) {
-            showAlert(`Outside San Francisco, loading city center 🌉`);
-            reject(new Error("Location outside SF"));
-          } else {
-            resolve([latitude, longitude]);
-          }
-        },
-        () => {
-          showAlert(`Share your location to see nearby calls 🌉`);
-          resolve(defaultMapSF);
-        }
-      );
+    // Create a new Leaflet map and set its view
+    map = L.map("map").setView(originalPosition, originalZoom);
+
+    // Remove all existing map layers
+    map.eachLayer((layer) => {
+      map.removeLayer(layer);
+    });
+
+    // Get the user preferred map layer from localStorage or use the default.
+    const mapLayer = localStorage.getItem("map");
+
+    // Determine which default map to use based on dark/light mode of browser.
+    let initialMapLayer = window.matchMedia("(prefers-color-scheme: dark")
+      .matches
+      ? 1
+      : 0;
+    L.tileLayer(sfapi.MAP_LAYERS[mapLayer ? mapLayer : initialMapLayer]).addTo(
+      map
+    );
+
+    // Prevent touchstart event propagation
+    map.addEventListener("touchstart", function (e) {
+      e.stopPropagation();
+    });
+
+    // Get weather information for the original position
+    getWeather(originalPosition);
+
+    // Add stations to the map after 2 seconds
+    setTimeout(function () {
+      addStations(map);
+    }, 1100);
+
+    // Return the created map instance
+    return map;
+  } catch (err) {
+    // If an error occurs, throw it
+    throw err;
+  }
+};
+```
+
+### Accessing Data SF
+
+After the map loads, the app calls the Data SF Real-Time Law Enforcement Dispatched Calls for Service API using a filter the excludes common calls types that are not of interest, such as noise nuisance. The application will retrieve up to 4,000 calls, although the typical range of calls retrieved usually falls between 750 and 1,000.
+
+```javascript
+// SFPD Real-Time calls base URL
+const API_URL_POLICE_48h = "https://data.sfgov.org/resource/gnap-fj3t.json";
+
+// List of excluded SFPD call types
+const excludedCallTypes = [
+  "PASSING CALL",
+  "TRAF VIOLATION CITE",
+  "TRAF VIOLATION TOW",
+  "WELL BEING CHECK",
+  "CITIZEN STANDBY",
+  "MEET W/CITIZEN",
+  "MEET W/CITY EMPLOYEE",
+  "TRAFFIC HAZARD",
+  "INVESTIGATION DETAIL",
+  "TOW TRUCK",
+  "COMPLAINT UNKN",
+  "VEHICLE ALARM",
+  "HOMELESS COMPLAINT",
+  "PERSON DUMPING",
+  "MISSING ADULT",
+  "NOISE NUISANCE",
+];
+
+// SFPD Real-Time combined address for API call
+const filterExpression = excludedCallTypes
+  .map((callType) => `call_type_final_desc != '${callType}'`)
+  .join(" and ");
+export const API_URL_POLICE_48h_FILTERED = `${API_URL_POLICE_48h}?$where=${filterExpression} AND intersection_point IS NOT NULL&$$app_token=${SFDATA_API_KEY}&$limit=4000`;
+```
+
+### Controlling the Loading of Circle Markers, Buttons, Weather & Statistics
+
+The app loads the rest of the functions, including the Leaflet markers, the site buttons, the weather, and the median response time statistics popup is calculated and generated. It also calls the addMoveCenter function, which causes the call closest to the center of the user's screen to open it's popup as the user moves around.
+
+```javascript
+/**
+ * Controls the display of circle markers on the map, showing recent police calls.
+ *
+ * @async
+ * @function controlCircleMarkers
+ */
+let callsLayer = "";
+const controlCircleMarkers = async function () {
+  try {
+    // Remove any current Leaflet marker layers
+    if (callsLayer) {
+      map.removeLayer(callsLayer);
+    }
+    callsLayer = "";
+    callsLayer = L.layerGroup();
+
+    // Load time stamp on page
+    loadLastUpdated();
+
+    // Retrieve data from Data SF
+    const responseSFPDAPI = await model.fetchApi(
+      sfapi.API_URL_POLICE_48h_FILTERED
+    );
+
+    // Converto JSON data
+    const dataSFPDraw = await responseSFPDAPI.json();
+
+    // Process data and filter by included call types
+    const dataResult = model.dataProcess(
+      originalPosition,
+      dataSFPDraw,
+      sfapi.includedCallTypes,
+      sfapi.PARAM_MAP_POLICE_48h
+    );
+    const data = dataResult.data;
+    // Console log the number of calls
+    console.log(`${data.length} calls`);
+
+    // Add calls to map as circle markers
+    callsLayer = addCircleMarkers(data, callsLayer);
+
+    // Update call list popup with latest data
+    document.getElementById("call-list").innerHTML = "";
+    updateCallList(callsLayer, map, false);
+
+    // Calculate median SFPD response time
+    calcMedian();
+
+    // Call count of calls specific time
+    countContainer.textContent =
+      dataResult.countCallsRecent.toString() +
+      ` calls past ${sfapi.timeElapSF / 60}h`;
+    callsLayer.addTo(map);
+
+    // Load buttons and metrics if initial website load
+    if (!initLoaded) {
+      initPopupNieghborhood(originalPosition, callsLayer, urlCAD, map);
+      loadLatestListButton(openCallList, closeAllPopups);
+      loadNearbyListButton(loadNearbyCalls, openCallList, closeAllPopups);
+      loadResponseTimesButton(closeAllPopups);
+      loadCarBreakinsButton(controlCarBreakins);
+      if (localStorage.getItem("openList") === "allSF")
+        document.getElementById("latest-list-btn").click();
     } else {
-      showAlert(`Share your location to see nearby calls 🌉`);
-      resolve(defaultMapSF);
+      addHandlerMoveCenter(callsLayer, map);
+      openPopup();
+    }
+
+    // If user location is known, update the nearby calls list
+    if (initLoaded && position) loadNearbyCalls();
+
+    // Mark the initial load as complete
+    initLoaded = true;
+  } catch (err) {
+    // Catch any errors
+    console.error(err);
+  }
+};
+```
+
+### Circle Markers Created using Calls Data
+
+The app adds the law enforcement dispatched calls for service to the map as colored circle markers, as well as San Francisco Police Stations, denoted by '👮'. Each circle marker has popup content that is created and bound to the marker, including text message content and Tweet/X content.
+
+```javascript
+/**
+ * Add circle markers to the Leaflet map based on provided data.
+ *
+ * @param {Array} data - An array of SFPD data to create circle markers from.
+ * @param {L.LayerGroup} callsLayer - The layer group to which markers are added.
+ * @returns {L.LayerGroup} The updated layer group with added markers.
+ */
+export function addCircleMarkers(data, callsLayer) {
+  data.map((call) => {
+    // Collecting all the time milestones: received time, response time, dispatched time ago, received time ago
+    const receivedTimeF = formatDate(call.receivedTime);
+    const responseTimeF = minsHoursFormat(call.responseTime);
+    const dispatchedTimeAgoF = minsHoursFormat(call.dispatchedTimeAgo);
+    const receivedTimeAgoF = minsHoursFormat(Math.round(call.receivedTimeAgo));
+
+    // Collect call conclusion/disposition, if available yet
+    const disposition =
+      call.dispositionMeaning !== "" && call.dispositionMeaning !== "Unknown"
+        ? `${call.dispositionMeaning}`
+        : "";
+
+    // Create Tweet / X message content from call data
+    const tweetContent = `${call.callTypeFormatted} at ${
+      call.properCaseAddress
+    } in ${call.neighborhoodFormatted} ${
+      call.receivedTimeAgo <= 6
+        ? `${receivedTimeAgoF} ago`
+        : `${formatDate(call.receivedTime)}`
+    }, Priority ${call.priority}, ${
+      call.onView === "Y"
+        ? "SFPD officer observed"
+        : call.responseTime
+        ? `SFPD response time: ${responseTimeF}`
+        : dispatchedTimeAgoF
+        ? `SFPD dispatched ${dispatchedTimeAgoF} ago`
+        : call.enteredTime
+        ? `call entry in SFPD queue ${call.enteredTimeAgo} ago`
+        : "call received by SFPD"
+    }${
+      disposition ? `, ${disposition.toLowerCase()}` : ""
+    } https://urbanitesf.netlify.app/?cad=${call.cadNumber}`;
+
+    // Create text message / iMessage content from call data
+    const textMessageContent = `"${call.callTypeFormatted} at ${
+      call.properCaseAddress
+    } in ${call.neighborhoodFormatted} ${receivedTimeAgoF} ago, ${
+      call.onView === "Y"
+        ? "officer observed"
+        : call.responseTime
+        ? `SFPD response time: ${responseTimeF}`
+        : dispatchedTimeAgoF
+        ? `dispatched ${dispatchedTimeAgoF} ago`
+        : call.enteredTime
+        ? `call entry in queue ${call.enteredTimeAgo} ago`
+        : "call received"
+    }${
+      disposition ? `, ${disposition.toLowerCase()}` : ""
+    }" via https://urbanitesf.netlify.app/?cad=${call.cadNumber}`;
+
+    // Create call circle marker pop-up content
+    const popupContent = `
+  <div>
+    <b>${call.callTypeFormatted}</b>
+    \u2022 ${receivedTimeAgoF} <a href="sms:&body=${encodeURIComponent(
+      textMessageContent
+    )}">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IMessage_logo.svg/20px-IMessage_logo.svg.png" alt="iMessage / text" style=" height:20px; position: absolute; bottom: 0px; left: calc(50% - 27px); transform: translate(-50%, -50%);">
+    </a>
+    <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      tweetContent
+    )}" target="_blank">
+    <img src="https://icons.iconarchive.com/icons/xenatt/the-circle/256/App-Twitter-icon.png" alt="Twitter Bird Icon" style=" height: 20px; position: absolute; bottom: 0px; left: calc(50% + 25px); transform: translate(-50%, -50%);">
+    </a>
+    <br>${call.properCaseAddress}
+    <br>Priority ${
+      call.priority
+    } #<a href="https://data.sfgov.org/resource/gnap-fj3t.json?cad_number=${
+      call.cadNumber
+    }" target="_blank">${call.cadNumber}</a>
+    ${
+      call.onView === "Y"
+        ? "<br>Officer observed"
+        : call.responseTime
+        ? `<br>Response time: ${responseTimeF}`
+        : dispatchedTimeAgoF
+        ? `<br>Dispatched ${dispatchedTimeAgoF} ago`
+        : call.enteredTime
+        ? `<br>Call entry in queue ${call.enteredTimeAgo} ago`
+        : "<br>Call received"
+    }<br>${disposition}
+</div>
+`;
+    // Get the call latitude / longitude coordinates
+    let callLatlng = [
+      Number(call.coords.coordinates[1]),
+      Number(call.coords.coordinates[0]),
+    ];
+
+    // Offset the call if it overlaps with another below it
+    if (callsLayer) {
+      callsLayer.eachLayer(function (layer) {
+        if (layer.getLatLng().equals(callLatlng)) {
+          callLatlng[0] += overlapOffset;
+        }
+      });
+    }
+
+    // Create a new circle marker with the combined call data
+    const marker = L.circleMarker(callLatlng, {
+      radius: window.innerWidth <= 758 ? 6 : 6,
+      keepInView: false,
+      fillColor: colorMap.get(call.call_type) || "#0000000",
+      color: "#333333",
+      weight: 1,
+      opacity: 0.6,
+      fillOpacity: 0.9,
+      data: {
+        cadNumber: call.cadNumber,
+        disposition: call.dispositionMeaning,
+        neighborhood: call.neighborhoodFormatted,
+        receivedTime: receivedTimeF,
+        enteredTimeAgo: call.enteredTimeAgo,
+        dispatchedTimeAgoF: dispatchedTimeAgoF,
+        responseTime: call.responseTime,
+        responseTimeExact: call.responseTimeExact,
+        address: call.properCaseAddress,
+        callType: call.callTypeFormatted,
+        receivedTimeAgo: Math.round(call.receivedTimeAgo),
+        receivedTimeAgoExact: call.receivedTimeAgo,
+        onView: call.onView,
+        priority: call.priority,
+      },
+      autoPan: false,
+      closeOnClick: false,
+      interactive: true,
+      bubblingMouseEvents: false,
+    }).bindPopup(popupContent, {
+      closeButton: false,
+      disableAnimation: true,
+    });
+
+    // Add the circle marker to the calls layer
+    marker.addTo(callsLayer);
+  });
+  return callsLayer;
+}
+```
+
+### Add Police Stations to Map
+
+```javascript
+/**
+ * Adds police station markers to the map.
+ *
+ * @param {L.Map} map - The Leaflet map object to which the police station markers will be added.
+ */
+export default function addStations(map) {
+  // Go through station locations and get the lat/long coordinates for each station
+  STATION_LOCATIONS.forEach((station, index) => {
+    let popupContent = `${STATION_NAMES[index]}`;
+    let stationIcon = L.divIcon({
+      className: "station-marker",
+      html: "👮",
+      iconSize: [30, 30],
+    });
+
+    // Create a custom marker, add the popup content (station name and phone number), add to the map
+    L.marker([station[0], station[1]], {
+      icon: stationIcon,
+    })
+      .bindPopup(popupContent, {
+        closeButton: false,
+        disableAnimation: true,
+        autoPan: false,
+        className: "station-popup",
+      })
+      .addTo(map);
+  });
+}
+```
+
+### Move to Explore Other Calls
+
+As the user navigates around the map using touch or a mouse, the circle marker that is closest to the X,Y center of the user's screen window is selected and its popup is opened to display the call details dynamically. With many calls in some neighborhoods, sometimes located very close to each other, this method of selecting calls makes fine tune call selection easy and intuitive.
+
+```javascript
+/**
+ * Add a handler to move the center of the map based on the location of markers and open popups.
+ *
+ * @param {L.LayerGroup} callsLayer - The layer group containing markers to be used for centering the map.
+ * @param {L.Map} map - The Leaflet map instance to which the handler is added.
+ */
+const addHandlerMoveCenter = function (callsLayer, map) {
+  let timer = null;
+  map.on("move", () => {
+    // Check if the 'moving' flag is set; if true, exit the function
+    if (moving) return;
+
+    // Clear any previously scheduled timer to avoid rapid execution
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      // Get the dimensions of the map
+      const { x, y } = map.getSize();
+
+      // Calculate the center of the map
+      const centerX = x / 2;
+      const centerY = y / 2;
+
+      // Initialize variables to find the closest marker
+      let minDistance = Infinity;
+      let closestCoords = null;
+
+      // Iterate over each layer in 'callsLayer'
+      callsLayer.eachLayer((layer) => {
+        // Extract latitude and longitude from the marker's _latlng property
+        const lat = layer._latlng.lat;
+        const lng = layer._latlng.lng;
+        const latlng = [lat, lng];
+
+        // Convert the marker's latitude and longitude to screen coordinates
+        const { x: markerX, y: markerY } = map.latLngToContainerPoint(latlng);
+
+        // Calculate the distance between the marker and the map center
+        const distance = Math.sqrt(
+          Math.pow(markerX - centerX, 2) + Math.pow(markerY - centerY, 2)
+        );
+
+        // Update 'minDistance' and 'closestCoords' if the current marker is closer
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestCoords = [markerX, markerY];
+        }
+      });
+
+      // Check if the closest marker is within a tolerance of the map center
+      if (minDistance <= centerPopupTolerance) {
+        callsLayer.eachLayer((layer) => {
+          if (layer instanceof L.CircleMarker) {
+            // Convert the marker's latitude and longitude to screen coordinates
+            const { x: markerX, y: markerY } = map.latLngToContainerPoint(
+              layer.getLatLng()
+            );
+            // Check if the marker's screen coordinates are close to the closest marker's coordinates
+            if (
+              Math.abs(markerX - closestCoords[0]) < 1e-6 &&
+              Math.abs(markerY - closestCoords[1]) < 1e-6
+            ) {
+              if (!isPopupOpen && currentPopup !== layer) {
+                layer.openPopup();
+                isPopupOpen = true;
+                currentPopup = layer;
+              }
+              // Get the 'neighborhood' data from the marker's options
+              const { neighborhood } = layer.options.data;
+              const neighborhoodText =
+                document.getElementById("neighborhood-text");
+              neighborhoodText.textContent = neighborhood;
+            } else if (currentPopup === layer) {
+              // Close the popup if it's already open
+              isPopupOpen = false;
+              layer.closePopup();
+            }
+          }
+        });
+      } else {
+        // If no marker is close to the center, close all popups
+        callsLayer.eachLayer((layer) => {
+          if (layer instanceof L.CircleMarker) {
+            layer.closePopup();
+          }
+        });
+      }
+    }, 5);
+  });
+};
+```
+
+### Load Calls Nearby User
+
+The 'Nearby' feature requests the user's location. Once permission is granted, it loads calls within a 500-meter radius of the user's location. A list of these calls is displayed, and a blue circle is added to the map, indicating the user's location and encompassing the relevant calls.
+
+```javascript
+// Load calls nearby user
+let position;
+let nearbyClicked = false;
+const loadNearbyCalls = async function () {
+  let [countCallsNearby, countCallsNearbyRecent] = [0, 0];
+  try {
+    // Get the user position if it does not exist yet
+    if (!position) position = await getPosition();
+    console.log(`finding calls near ${position}`);
+
+    // Get the nearby weather
+    getWeather(position);
+
+    // Calculate distance from user to the calls
+    let nearbyLayer = L.layerGroup();
+    const positionLatLng = L.latLng(position[0], position[1]);
+    callsLayer.eachLayer((marker) => {
+      const distance = positionLatLng.distanceTo(marker.getLatLng());
+      if (distance < sfapi.nearbyRadius) {
+        countCallsNearby++;
+        marker.addTo(nearbyLayer);
+        if (marker.options.data.receivedTimeAgo <= sfapi.timeElapNearby) {
+          countCallsNearbyRecent++;
+        }
+      }
+    });
+    countContainer.textContent =
+      countCallsNearby.toString() +
+      ` calls nearby, ` +
+      countCallsNearbyRecent.toString() +
+      ` past ${sfapi.timeElapNearby / 60}h`;
+
+    // Open nearby call list
+    if (!nearbyClicked) {
+      const circle = L.circle(position, sfapi.nearbyCircleOpt).addTo(map);
+      circle.getElement().style.pointerEvents = "none";
+    }
+    document.getElementById("alert").classList.add("hidden");
+    updateCallList(nearbyLayer, map, true, openPopup);
+    nearbyClicked = true;
+  } catch (err) {
+    throw err;
+  }
+};
+
+// Close all Leaflet popups
+const closeAllPopups = function () {
+  map.eachLayer((layer) => {
+    if (layer instanceof L.CircleMarker) {
+      layer.closePopup();
     }
   });
 };
 ```
 
-### Accessing Data SF Dataset
-
-The app then calls the DataSF Real-Time Law Enforcement Dispatched Calls for Service API using a filter the excludes common calls types that are not of interested, such as noise nuisance.
-
 ```javascript
-const excludedCallTypes = [
-  "PASSING CALL",
-  "NOISE NUISANCE",
-  "TRAF VIOLATION CITE",
-  "TRAF VIOLATION TOW",
-  "WELL BEING CHECK",
-  "COMPLAINT UNKN",
-  "CITIZEN STANDBY",
-  "MEET W/CITIZEN",
-  "MEET W/CITY EMPLOYEE",
-  "VEHICLE ALARM",
-  "WANTED VEHICLE / SUB",
-  "HOMELESS COMPLAINT",
-  "TRAFFIC HAZARD",
-  "INVESTIGATION DETAIL",
-  "PERSON DUMPING",
-  "TOW TRUCK",
-  "MISSING ADULT",
-];
-const filterExpression = excludedCallTypes
-  .map((callType) => `call_type_final_desc != '${callType}'`)
-  .join(" and ");
-export const API_URL_POLICE_48h_FILTERED = `${API_URL_POLICE_48h}?$where=${filterExpression} AND intersection_point IS NOT NULL&$$app_token=${SFDATA_API_KEY}&$limit=2500`;
-```
-
-### Nearby Calls & Offsetting Overlapping Calls
-
-The data is then processed and sorted by received date, and Leaflet map circle markers are created for each call. A list of nearby calls is created based on calls within 500 meters. Tweet and Text Message content is generated and assigned to the popups along with a hyperlink to raw call data by ID number, called CAD. If two circle markers overlap, then the second one is offset North by a few feet.
-
-```javascript
-const distance = positionLatLng.distanceTo(markerLatLng);
-if (distance < 500) {
-  marker.addTo(this.nearbyLayer);
-}
-////
-const overlapOffset = 0.00008;
-let callLatlng = [
-  Number(call.coords.coordinates[1]),
-  Number(call.coords.coordinates[0]),
-];
-this.police48Layer.eachLayer(function (layer) {
-  if (layer.getLatLng().equals(callLatlng)) {
-    callLatlng[0] += overlapOffset;
-  }
-});
-```
-
-### Adding Call Circle Markers & Leaflet Popup Content
-
-```javascript
-addCircleMarkers(data, police48Layer) {
-    data.map((call) => {
-      const receivedTimeF = formatDate(call.receivedTime);
-      const responseTimeF = minsHoursFormat(call.responseTime);
-      const dispatchedTimeAgoF = minsHoursFormat(call.dispatchedTimeAgo);
-      const receivedTimeAgoF = minsHoursFormat(
-        Math.round(call.receivedTimeAgo)
-      );
-      const disposition =
-        call.dispositionMeaning !== "" && call.dispositionMeaning !== "Unknown"
-          ? `${call.dispositionMeaning}`
-          : "";
-      const tweetContent = `${call.callTypeFormatted} at ${
-        call.properCaseAddress
-      } in ${call.neighborhoodFormatted} ${
-        call.receivedTimeAgo <= 6
-          ? `${receivedTimeAgoF} ago`
-          : `${formatDate(call.receivedTime)}`
-      }, Priority ${call.priority}, ${
-        call.onView === "Y"
-          ? "SFPD officer observed"
-          : call.responseTime
-          ? `SFPD response time: ${responseTimeF}`
-          : dispatchedTimeAgoF
-          ? `SFPD dispatched ${dispatchedTimeAgoF} ago`
-          : call.enteredTime
-          ? `call entry in SFPD queue ${call.enteredTimeAgo} ago`
-          : "call received by SFPD"
-      }${
-        disposition ? `, ${disposition.toLowerCase()}` : ""
-      } https://urbanitesf.netlify.app/?cad=${call.cadNumber}`;
-      const textMessageContent = `"${call.callTypeFormatted} at ${
-        call.properCaseAddress
-      } in ${call.neighborhoodFormatted} ${receivedTimeAgoF} ago, ${
-        call.onView === "Y"
-          ? "officer observed"
-          : call.responseTime
-          ? `SFPD response time: ${responseTimeF}`
-          : dispatchedTimeAgoF
-          ? `dispatched ${dispatchedTimeAgoF} ago`
-          : call.enteredTime
-          ? `call entry in queue ${call.enteredTimeAgo} ago`
-          : "call received"
-      }${
-        disposition ? `, ${disposition.toLowerCase()}` : ""
-      }" via https://urbanitesf.netlify.app/?cad=${call.cadNumber}`;
-      const popupContent = `
-    <div>
-      <b>${call.callTypeFormatted}</b>
-      \u2022 ${receivedTimeAgoF} <a href="sms:&body=${encodeURIComponent(
-        textMessageContent
-      )}">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IMessage_logo.svg/20px-IMessage_logo.svg.png" alt="iMessage / text" style=" height:20px; position: absolute; bottom: 0px; left: calc(50% - 27px); transform: translate(-50%, -50%);">
-      </a>
-      <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(
-        tweetContent
-      )}" target="_blank">
-      <img src="https://icons.iconarchive.com/icons/xenatt/the-circle/256/App-Twitter-icon.png" alt="Twitter Bird Icon" style=" height: 20px; position: absolute; bottom: 0px; left: calc(50% + 25px); transform: translate(-50%, -50%);">
-      </a>
-      <br>${call.properCaseAddress}
-      <br>Priority ${
-        call.priority
-      } #<a href="https://data.sfgov.org/resource/gnap-fj3t.json?cad_number=${
-        call.cadNumber
-      }" target="_blank">${call.cadNumber}</a>
-      ${
-        call.onView === "Y"
-          ? "<br>Officer observed"
-          : call.responseTime
-          ? `<br>Response time: ${responseTimeF}`
-          : dispatchedTimeAgoF
-          ? `<br>Dispatched ${dispatchedTimeAgoF} ago`
-          : call.enteredTime
-          ? `<br>Call entry in queue ${call.enteredTimeAgo} ago`
-          : "<br>Call received"
-      }<br>${disposition}
-  </div>
-`;
-      let callLatlng = [
-        Number(call.coords.coordinates[1]),
-        Number(call.coords.coordinates[0]),
-      ];
-      if (police48Layer) {
-        police48Layer.eachLayer(function (layer) {
-          if (layer.getLatLng().equals(callLatlng)) {
-            callLatlng[0] += overlapOffset;
-          }
-        });
-      }
-
-      const marker = L.circleMarker(callLatlng, {
-        radius: window.innerWidth <= 758 ? 6 : 6,
-        keepInView: false,
-        fillColor: colorMap.get(call.call_type) || "#0000000",
-        color: "#333333",
-        weight: 1,
-        opacity: 0.6,
-        fillOpacity: 0.9,
-        data: {
-          cadNumber: call.cadNumber,
-          // receivedTimeCalc: call.receivedTime,
-          disposition: call.dispositionMeaning,
-          neighborhood: call.neighborhoodFormatted,
-          receivedTime: receivedTimeF,
-          // entryTime: enteredTime,
-          enteredTimeAgo: call.enteredTimeAgo,
-          // dispatchTime: dispatchedTime,
-          dispatchedTimeAgoF: dispatchedTimeAgoF,
-          responseTime: call.responseTime,
-          responseTimeExact: call.responseTimeExact,
-          address: call.properCaseAddress,
-          callType: call.callTypeFormatted,
-          receivedTimeAgo: Math.round(call.receivedTimeAgo),
-          receivedTimeAgoExact: call.receivedTimeAgo,
-          // callTypeCode: call.callTypeCode,
-          // desc: call.desc,
-          onView: call.onView,
-          priority: call.priority,
-        },
-        autoPan: false,
-        closeOnClick: false,
-        interactive: true,
-        bubblingMouseEvents: false,
-      }).bindPopup(popupContent, {
-        closeButton: false,
-        disableAnimation: true,
-      });
-      marker.addTo(police48Layer);
-      // if (call.callTypeFormatted === "Shooting") {
-      //   //send Notification
-      // }
-    });
-    return police48Layer;
-  }
-```
-
-### Loading Calls Nearby User
-```javascript
-export const showAlert = function (message) {
-  const alertElement = document.getElementById("alert");
-  alertElement.textContent = "";
-  alertElement.classList.remove("hidden");
-  alertElement.textContent = message;
-  setTimeout(function () {
-    if (alertElement.parentElement) {
-      alertElement.classList.add("hidden");
-    }
-  }, 2500);
-};
-
+/**
+ * Gets the user's geolocation and displays relevant messages.
+ *
+ * @returns {Promise<Array<number>} - A promise that resolves to an array with the user's latitude and longitude.
+ * @throws {Error} - If the user's location is outside of San Francisco or if location access is denied.
+ */
 export const getPosition = async function () {
   showAlert(`Getting your location & loading nearby calls...`);
   return new Promise((resolve, reject) => {
@@ -292,11 +581,13 @@ export const getPosition = async function () {
         (position) => {
           const { latitude, longitude } = position.coords;
 
+          // SF city bounds by latitude and longitude boundaries
           const expandedMinLatitude = 37.6398 - 0.0045;
           const expandedMaxLatitude = 37.9298 + 0.0045;
           const expandedMinLongitude = -123.1738 - 0.0045;
           const expandedMaxLongitude = -122.2815 + 0.0045;
 
+          // Checking if user location is outside of SF
           if (
             latitude < expandedMinLatitude ||
             latitude > expandedMaxLatitude ||
@@ -322,36 +613,39 @@ export const getPosition = async function () {
     throw err;
   });
 };
-
-export const loadLastUpdated = function () {
-  const lastUpdatedElement = document.getElementById("last-updated");
-  const currentDate = new Date();
-  const formattedDate = currentDate.toLocaleString("en-US", {
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-    timeZoneName: "short",
-  });
-  lastUpdatedElement.textContent = `${formattedDate}`;
-};
 ```
-
 
 ### Zoom to Closest Nearby Call
 
 The closest circle marker to the user's current location is calculated and then its popup content is opened to show the call details. The bottom label neighborhood text is also updated to match the neighborhood of the closest popup.
 
 ```javascript
-const closestZoom = function () {
-  police48Layer.eachLayer((layer) => {
+/**
+ * Find and zoom to the closest marker in the given layer group to a specified position.
+ *
+ * @param {number[]} position - The position (latitude, longitude) to find the closest marker to.
+ * @param {L.LayerGroup} callsLayer - The layer group containing markers to search for the closest one.
+ */
+// Export a function called closestZoom that takes 'position' and 'callsLayer' as parameters
+export const closestZoom = function (position, callsLayer) {
+  // Initialize 'minDistance' to positive infinity and 'nearestMarker' to null
+  let minDistance = Infinity;
+  let nearestMarker = null;
+
+  // Iterate over each layer in 'callsLayer'
+  callsLayer.eachLayer((layer) => {
+    // Check if the current layer is an instance of a CircleMarker
     if (layer instanceof L.CircleMarker) {
+      // Get the latitude and longitude of the current layer
       const latLng = layer.getLatLng();
+
+      // Calculate the distance between 'position' and the current marker's position
       const distance = Math.sqrt(
         Math.pow(position[0] - latLng.lat, 2) +
           Math.pow(position[1] - latLng.lng, 2)
       );
+
+      // Update 'minDistance' and 'nearestMarker' if the current marker is closer
       if (distance < minDistance) {
         minDistance = distance;
         nearestMarker = layer;
@@ -359,14 +653,31 @@ const closestZoom = function () {
     }
   });
 
-  police48Layer.eachLayer((layer) => {
+  // Iterate over each layer in 'callsLayer' again
+  callsLayer.eachLayer((layer) => {
+    // Check if the current layer is an instance of a CircleMarker
     if (layer instanceof L.CircleMarker) {
+      // Check if the current layer is the nearest marker found earlier
       if (layer === nearestMarker) {
+        // Set a flag 'moving' to true and schedule it to be reset to false after 2 seconds
+        moving = true;
+        setTimeout(() => {
+          moving = false;
+        }, 2000);
+
+        // Open a popup for the nearest marker
         layer.openPopup();
+
+        // Get the 'neighborhood' data from the marker's options
         const { neighborhood } = layer.options.data;
+
+        // Find the HTML element with the id 'neighborhood-text'
         const neighborhoodText = document.getElementById("neighborhood-text");
+
+        // Update the text content of the 'neighborhood-text' element
         neighborhoodText.textContent = neighborhood;
       } else {
+        // If the current layer is not the nearest marker, close its popup
         layer.closePopup();
       }
     }
@@ -374,76 +685,24 @@ const closestZoom = function () {
 };
 ```
 
-### Move to Explore Other Calls
-
-As the user navigates around the map using touch or a mouse, the circle marker that is closest to the X,Y center of the user's screen window is selected and its popup is opened to display the call details dynamically. With many calls in some neighborhoods, sometimes located very close to each other, this method of selecting calls makes fine tune call selection easy and intuitive.
-
-```javascript
-const addHandlerMoveCenter = function (police48Layer, map) {
-  let timer = null;
-  map.on("move", () => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      const { x, y } = map.getSize();
-      const centerX = x / 2;
-      const centerY = y / 2;
-
-      let minDistance = Infinity;
-      let closestCoords = null;
-
-      police48Layer.eachLayer((layer) => {
-        const lat = layer._latlng.lat;
-        const lng = layer._latlng.lng;
-        const latlng = [lat, lng];
-        const { x: markerX, y: markerY } = map.latLngToContainerPoint(latlng);
-        const distance = Math.sqrt(
-          Math.pow(markerX - centerX, 2) + Math.pow(markerY - centerY, 2)
-        );
-        if (distance < minDistance) {
-          minDistance = distance;
-          closestCoords = [markerX, markerY];
-        }
-      });
-      if (minDistance <= centerPopupTolerance) {
-        police48Layer.eachLayer((layer) => {
-          if (layer instanceof L.CircleMarker) {
-            const { x: markerX, y: markerY } = map.latLngToContainerPoint(
-              layer.getLatLng()
-            );
-            if (
-              Math.abs(markerX - closestCoords[0]) < 1e-6 &&
-              Math.abs(markerY - closestCoords[1]) < 1e-6
-            ) {
-              if (!isPopupOpen && currentPopup !== layer) {
-                layer.openPopup();
-                isPopupOpen = true;
-                currentPopup = layer;
-              }
-              const { neighborhood } = layer.options.data;
-              const neighborhoodText =
-                document.getElementById("neighborhood-text");
-              neighborhoodText.textContent = neighborhood;
-            } else if (currentPopup === layer) {
-              isPopupOpen = false;
-              layer.closePopup();
-            }
-          }
-        });
-      } else {
-        police48Layer.eachLayer((layer) => {
-          if (layer instanceof L.CircleMarker) {
-            layer.closePopup();
-          }
-        });
-      }
-    }, 7);
-  });
-};
-```
-
 ### Access Data SF Archives
 
 If the user clicks on a link in a text message or tweet that matches a call that may no longer be available because 48 hours have passed, the app first tries the real-time database, and if it can't find the call, the app looks for the call in the Data SF archive which goes back to 2018 and adds a new circle marker with call details to the map. As of now, Urbanite SF does not map other historic calls beyond 48 hours, but can retrieve individual historic calls.
+
+```javascript
+/**
+ * Get the value of a URL parameter by its name.
+ *
+ * @param {string} cad_number - The name of the URL parameter to retrieve.
+ * @returns {string|null} - The value of the URL parameter, or null if not found.
+ */
+const getURLParameter = function (cad_number) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(cad_number);
+};
+
+export default getURLParameter;
+```
 
 ```javascript
 export const fetchHistData = async function (cad_number) {

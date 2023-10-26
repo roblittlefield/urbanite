@@ -178,16 +178,26 @@ export const initPopupNieghborhood = (position, callsLayer, urlCAD, map) => {
  * @param {number[]} position - The position (latitude, longitude) to find the closest marker to.
  * @param {L.LayerGroup} callsLayer - The layer group containing markers to search for the closest one.
  */
+// Export a function called closestZoom that takes 'position' and 'callsLayer' as parameters
 export const closestZoom = function (position, callsLayer) {
+  // Initialize 'minDistance' to positive infinity and 'nearestMarker' to null
   let minDistance = Infinity;
   let nearestMarker = null;
+
+  // Iterate over each layer in 'callsLayer'
   callsLayer.eachLayer((layer) => {
+    // Check if the current layer is an instance of a CircleMarker
     if (layer instanceof L.CircleMarker) {
+      // Get the latitude and longitude of the current layer
       const latLng = layer.getLatLng();
+
+      // Calculate the distance between 'position' and the current marker's position
       const distance = Math.sqrt(
         Math.pow(position[0] - latLng.lat, 2) +
           Math.pow(position[1] - latLng.lng, 2)
       );
+
+      // Update 'minDistance' and 'nearestMarker' if the current marker is closer
       if (distance < minDistance) {
         minDistance = distance;
         nearestMarker = layer;
@@ -195,18 +205,31 @@ export const closestZoom = function (position, callsLayer) {
     }
   });
 
+  // Iterate over each layer in 'callsLayer' again
   callsLayer.eachLayer((layer) => {
+    // Check if the current layer is an instance of a CircleMarker
     if (layer instanceof L.CircleMarker) {
+      // Check if the current layer is the nearest marker found earlier
       if (layer === nearestMarker) {
+        // Set a flag 'moving' to true and schedule it to be reset to false after 2 seconds
         moving = true;
         setTimeout(() => {
           moving = false;
         }, 2000);
+
+        // Open a popup for the nearest marker
         layer.openPopup();
+
+        // Get the 'neighborhood' data from the marker's options
         const { neighborhood } = layer.options.data;
+
+        // Find the HTML element with the id 'neighborhood-text'
         const neighborhoodText = document.getElementById("neighborhood-text");
+
+        // Update the text content of the 'neighborhood-text' element
         neighborhoodText.textContent = neighborhood;
       } else {
+        // If the current layer is not the nearest marker, close its popup
         layer.closePopup();
       }
     }
