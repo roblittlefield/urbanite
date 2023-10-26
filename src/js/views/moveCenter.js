@@ -53,7 +53,7 @@ const addHandlerMoveCenter = function (callsLayer, map) {
       // Check if the closest marker is within a tolerance of the map center
       if (minDistance <= centerPopupTolerance) {
         callsLayer.eachLayer((layer) => {
-          if (layer instanceof L.CircleMarker) {
+          if (layer instanceof L.CircleMarker || layer instanceof L.Marker) {
             // Convert the marker's latitude and longitude to screen coordinates
             const { x: markerX, y: markerY } = map.latLngToContainerPoint(
               layer.getLatLng()

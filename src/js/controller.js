@@ -422,7 +422,9 @@ const controlCarBreakins = async function () {
     await map.eachLayer(function (marker) {
       // Check if the layer is a CircleMarker and not other map elements
       if (
-        marker instanceof L.CircleMarker &&
+        ((marker instanceof L.Marker &&
+          marker.options.icon.options.className === "response-marker") ||
+          marker instanceof L.CircleMarker) &&
         !(marker instanceof L.Circle) &&
         marker !== map
       ) {

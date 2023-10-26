@@ -18,11 +18,11 @@ export default function addStations(map) {
     // Create a custom marker, add the popup content (station name and phone number), add to the map
     L.marker([station[0], station[1]], {
       icon: stationIcon,
+      autoPan: false,
     })
       .bindPopup(popupContent, {
         closeButton: false,
         disableAnimation: true,
-        autoPan: false,
         className: "station-popup",
       })
       .addTo(map);

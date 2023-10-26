@@ -110,47 +110,106 @@ export function addCircleMarkers(data, callsLayer) {
       });
     }
 
-    // Create a new circle marker with the combined call data
-    const marker = L.circleMarker(callLatlng, {
-      radius: window.innerWidth <= 758 ? 6 : 6,
-      keepInView: false,
-      fillColor: colorMap.get(call.call_type) || "#0000000",
-      color: "#333333",
-      weight: 1,
-      opacity: 0.6,
-      fillOpacity: 0.9,
-      data: {
-        cadNumber: call.cadNumber,
-        // receivedTimeCalc: call.receivedTime,
-        disposition: call.dispositionMeaning,
-        neighborhood: call.neighborhoodFormatted,
-        receivedTime: receivedTimeF,
-        // entryTime: enteredTime,
-        enteredTimeAgo: call.enteredTimeAgo,
-        // dispatchTime: dispatchedTime,
-        dispatchedTimeAgoF: dispatchedTimeAgoF,
-        responseTime: call.responseTime,
-        responseTimeExact: call.responseTimeExact,
-        address: call.properCaseAddress,
-        callType: call.callTypeFormatted,
-        receivedTimeAgo: Math.round(call.receivedTimeAgo),
-        receivedTimeAgoExact: call.receivedTimeAgo,
-        // callTypeCode: call.callTypeCode,
-        // desc: call.desc,
-        onView: call.onView,
-        priority: call.priority,
-      },
-      autoPan: false,
-      closeOnClick: false,
-      interactive: true,
-      bubblingMouseEvents: false,
-    }).bindPopup(popupContent, {
-      closeButton: false,
-      disableAnimation: true,
-    });
+    // Generat the marker data
+    let markerData = {
+      cadNumber: call.cadNumber,
+      // receivedTimeCalc: call.receivedTime,
+      disposition: call.dispositionMeaning,
+      neighborhood: call.neighborhoodFormatted,
+      receivedTime: receivedTimeF,
+      // entryTime: enteredTime,
+      enteredTimeAgo: call.enteredTimeAgo,
+      // dispatchTime: dispatchedTime,
+      dispatchedTimeAgoF: dispatchedTimeAgoF,
+      responseTime: call.responseTime,
+      responseTimeExact: call.responseTimeExact,
+      address: call.properCaseAddress,
+      callType: call.callTypeFormatted,
+      receivedTimeAgo: Math.round(call.receivedTimeAgo),
+      receivedTimeAgoExact: call.receivedTimeAgo,
+      // callTypeCode: call.callTypeCode,
+      // desc: call.desc,
+      onView: call.onView,
+      priority: call.priority,
+    };
 
+    // Add the icon or circle marker
+    // Dispatched less than 2 hours ago but not on-scene yet
+    let recentlyDispatched =
+      isNaN(call.responseTime) &&
+      (call.dispatchedTimeAgo <= 120 ||
+        (call.priority === "B" && call.dispatchedTimeAgo <= 180) ||
+        (call.priority === "A" && call.dispatchedTimeAgo <= 500));
+
+    // Arrived on scene to respond less () minutes ago
+    let onSceneTimeAgo = call.receivedTimeAgo - call.responseTime;
+    let recentlyResponded =
+      isFinite(call.responseTime) &&
+      (onSceneTimeAgo < 20 ||
+        (call.priority === "B" && onSceneTimeAgo < 40) ||
+        (call.priority === "A" && onSceneTimeAgo < 60));
+
+    // Create content for recent calls
+    if (recentlyDispatched || recentlyResponded) {
+      let emojiIcon = "";
+      let popupContentResponding = "";
+      if (recentlyDispatched) {
+        emojiIcon = "🚨";
+        popupContentResponding =
+          "<i>~~Currently Responding~~</i>" + popupContent;
+      } else {
+        emojiIcon = "🚓";
+        popupContentResponding = "<i>~~Recently On-Scene~~</i>" + popupContent;
+      }
+
+      // If SFPD still responding, use a police car emoji instead of a circle marker
+      let respondingIcon = L.divIcon({
+        className: "response-marker",
+        html: emojiIcon,
+        iconSize: [30, 30],
+      });
+
+      // Edit the pop-up content to mention SFPD is responding
+      L.marker(callLatlng, {
+        icon: respondingIcon,
+        keepInView: false,
+        fillColor: colorMap.get(call.call_type) || "#0000000",
+        data: markerData,
+        autoPan: false,
+        closeOnClick: false,
+        interactive: true,
+        bubblingMouseEvents: false,
+      })
+        .bindPopup(popupContentResponding, {
+          closeButton: false,
+          disableAnimation: true,
+          autoPan: false,
+          // className: "station-popup",
+        })
+        .addTo(callsLayer);
+    } else {
+      // Create a new circle marker with the combined call data
+      L.circleMarker(callLatlng, {
+        radius: window.innerWidth <= 758 ? 6 : 6,
+        keepInView: false,
+        fillColor: colorMap.get(call.call_type) || "#0000000",
+        color: "#333333",
+        weight: 1,
+        opacity: 0.6,
+        fillOpacity: 0.9,
+        data: markerData,
+        autoPan: false,
+        closeOnClick: false,
+        interactive: true,
+        bubblingMouseEvents: false,
+      })
+        .bindPopup(popupContent, {
+          closeButton: false,
+          disableAnimation: true,
+        })
+        .addTo(callsLayer);
+    }
     // Add the circle marker to the calls layer
-    marker.addTo(callsLayer);
     // Possible future work with notifications:
     // if (call.callTypeFormatted === "Shooting") {
     //   //send Notification

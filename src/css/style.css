@@ -30,10 +30,17 @@ body {
   display: none !important;
 }
 
+/* For SF Police Stations and Responding Cop Car Emoji */
 .station-marker {
   background: transparent;
   border: none;
   font-size: x-large;
+}
+
+.response-marker {
+  background: transparent;
+  border: none;
+  font-size: large;
 }
 
 #addSFDataSource {
