@@ -72,7 +72,7 @@ setTimeout(() => {
 localStorage.setItem("last-load", new Date());
 
 /**
- * Schedule a data reload after 10 minutes.
+ * Schedule a data reload after 5 minutes.
  *
  * @param {number} reload_interval - The interval in milliseconds between data reloads.
  * @param {function} callback - The function to execute when the timeout elapses.
@@ -103,7 +103,7 @@ function reloadData() {
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
     /**
-     * On visibility change, this block checks the last load time in local storage and reloads the page if it's been for more than 10 minutes.
+     * On visibility change, this block checks the last load time in local storage and reloads the page if it's been for more than 5 minutes.
      * @param {string} lastLoad - The timestamp of the last page load.
      */
     const lastLoad = localStorage.getItem("last-load");
