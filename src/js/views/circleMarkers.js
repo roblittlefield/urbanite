@@ -10,7 +10,7 @@ const overlapOffset = 0.00008;
  * @param {L.LayerGroup} callsLayer - The layer group to which markers are added.
  * @returns {L.LayerGroup} The updated layer group with added markers.
  */
-export function addCircleMarkers(data, callsLayer) {
+export function addCircleMarkers(data, callsLayer, respCircleLayer) {
   data.map((call) => {
     // Collecting all the time milestones: received time, response time, dispatched time ago, received time ago
     const receivedTimeF = formatDate(call.receivedTime);
