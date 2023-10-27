@@ -182,6 +182,7 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
           case "Person screaming":
           case "Prowler":
           case "Stalking":
+          case "Trespasser":
           case "Person screaming":
           case "Intoxicated person":
           case "Drunk driver":
