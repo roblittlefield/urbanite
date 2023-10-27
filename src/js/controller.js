@@ -187,6 +187,8 @@ const controlCircleMarkers = async function () {
     }
     callsLayer = "";
     callsLayer = L.layerGroup();
+    respCircleLayer = "";
+    respCircleLayer = L.layerGroup();
 
     // Load time stamp on page
     loadLastUpdated();
@@ -211,7 +213,11 @@ const controlCircleMarkers = async function () {
     console.log(`${data.length} calls`);
 
     // Add calls to map as circle markers
-    callsLayer = addCircleMarkers(data, callsLayer);
+    [callsLayer, respCircleLayer] = addCircleMarkers(
+      data,
+      callsLayer,
+      respCircleLayer
+    );
 
     // Update call list popup with latest data
     document.getElementById("call-list").innerHTML = "";
@@ -225,6 +231,7 @@ const controlCircleMarkers = async function () {
       dataResult.countCallsRecent.toString() +
       ` calls past ${sfapi.timeElapSF / 60}h`;
     callsLayer.addTo(map);
+    respCircleLayer.addTo(map);
 
     // Load buttons and metrics if initial website load
     if (!initLoaded) {

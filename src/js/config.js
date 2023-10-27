@@ -27,6 +27,15 @@ export const nearbyCircleOpt = {
   weight: 1,
 };
 
+// Specifications for police "recently on-scene" blue circle added to Leaflet map
+export const onSceneCircleOpt = {
+  radius: 120, // m
+  color: "#989898",
+  fillColor: "red",
+  fillOpacity: 0.17,
+  weight: 1,
+};
+
 // Leaflet map tile URL addresses
 export const MAP_LAYERS = [
   "https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png", // Gray/Green

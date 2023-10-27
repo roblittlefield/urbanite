@@ -43,6 +43,10 @@ body {
   font-size: large;
 }
 
+.response-marker-popup-text {
+  color: blue;
+}
+
 #addSFDataSource {
   position: fixed;
   bottom: 0;

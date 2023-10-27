@@ -1,5 +1,5 @@
 import { formatDate, minsHoursFormat } from "../helpers.js";
-import { colorMap } from "../config.js";
+import { colorMap, onSceneCircleOpt } from "../config.js";
 // Amount to offset each circle marker by when there are multiple at the same location (stacks the circle markers North a bit)
 const overlapOffset = 0.00008;
 
@@ -134,14 +134,14 @@ export function addCircleMarkers(data, callsLayer) {
     };
 
     // Add the icon or circle marker
-    // Dispatched less than 2 hours ago but not on-scene yet
+    // Dispatched but not on-scene yet
     let recentlyDispatched =
       isNaN(call.responseTime) &&
       (call.dispatchedTimeAgo <= 120 ||
         (call.priority === "B" && call.dispatchedTimeAgo <= 180) ||
         (call.priority === "A" && call.dispatchedTimeAgo <= 500));
 
-    // Arrived on scene to respond less () minutes ago
+    // Recently arrived on-scene
     let onSceneTimeAgo = call.receivedTimeAgo - call.responseTime;
     let recentlyResponded =
       isFinite(call.responseTime) &&
@@ -156,10 +156,14 @@ export function addCircleMarkers(data, callsLayer) {
       if (recentlyDispatched) {
         emojiIcon = "🚨";
         popupContentResponding =
-          "<i>~~Currently Responding~~</i>" + popupContent;
+          "<i><span class='response-marker-popup-text'>~~Currently Responding~~</span></i>" +
+          popupContent;
       } else {
         emojiIcon = "🚓";
-        popupContentResponding = "<i>~~Recently On-Scene~~</i>" + popupContent;
+        popupContentResponding =
+          "<i><span class='response-marker-popup-text'>~~Recently On-Scene~~</span></i>" +
+          popupContent;
+        L.circle(callLatlng, onSceneCircleOpt).addTo(respCircleLayer);
       }
 
       // If SFPD still responding, use a police car emoji instead of a circle marker
@@ -215,5 +219,5 @@ export function addCircleMarkers(data, callsLayer) {
     //   //send Notification
     // }
   });
-  return callsLayer;
+  return [callsLayer, respCircleLayer];
 }
