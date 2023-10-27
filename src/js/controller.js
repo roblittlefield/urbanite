@@ -77,7 +77,7 @@ localStorage.setItem("last-load", new Date());
  * @param {number} reload_interval - The interval in milliseconds between data reloads.
  * @param {function} callback - The function to execute when the timeout elapses.
  */
-let reload_interval = 60000 * 10;
+let reload_interval = 60000 * 5;
 setTimeout(reloadData, reload_interval);
 
 /**
@@ -107,7 +107,7 @@ document.addEventListener("visibilitychange", () => {
      * @param {string} lastLoad - The timestamp of the last page load.
      */
     const lastLoad = localStorage.getItem("last-load");
-    if (!lastLoad || new Date() - new Date(lastLoad) > 60000 * 10) {
+    if (!lastLoad || new Date() - new Date(lastLoad) > 60000 * 5) {
       window.location.reload(true);
       // reloadData();
     }
