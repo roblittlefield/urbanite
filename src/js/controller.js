@@ -186,6 +186,9 @@ const controlCircleMarkers = async function () {
     if (callsLayer) {
       map.removeLayer(callsLayer);
     }
+    if (respCircleLayer) {
+      map.removeLayer(respCircleLayer);
+    }
     callsLayer = "";
     callsLayer = L.layerGroup();
     respCircleLayer = "";

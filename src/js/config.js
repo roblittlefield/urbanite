@@ -22,8 +22,8 @@ export const getMapZoomLevel = () => {
 export const nearbyCircleOpt = {
   radius: 500, // m
   color: "white",
-  fillColor: "blue",
-  fillOpacity: 0.1,
+  fillColor: "yellow",
+  fillOpacity: 0.2,
   weight: 1,
 };
 
@@ -31,7 +31,7 @@ export const nearbyCircleOpt = {
 export const onSceneCircleOpt = {
   radius: 120, // m
   color: "#989898",
-  fillColor: "red",
+  fillColor: "blue",
   fillOpacity: 0.17,
   weight: 1,
 };

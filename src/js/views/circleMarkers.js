@@ -137,31 +137,85 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
     // Dispatched but not on-scene yet
     let recentlyDispatched =
       isNaN(call.responseTime) &&
-      (call.dispatchedTimeAgo <= 120 ||
-        (call.priority === "B" && call.dispatchedTimeAgo <= 180) ||
+      (call.dispatchedTimeAgo <= 150 ||
+        (call.priority === "B" && call.dispatchedTimeAgo <= 300) ||
         (call.priority === "A" && call.dispatchedTimeAgo <= 500));
 
     // Recently arrived on-scene
     let onSceneTimeAgo = call.receivedTimeAgo - call.responseTime;
     let recentlyResponded =
       isFinite(call.responseTime) &&
-      (onSceneTimeAgo < 20 ||
-        (call.priority === "B" && onSceneTimeAgo < 40) ||
-        (call.priority === "A" && onSceneTimeAgo < 60));
+      (onSceneTimeAgo < 15 ||
+        (call.priority === "B" && onSceneTimeAgo < 25) ||
+        (call.priority === "A" && onSceneTimeAgo < 30));
 
     // Create content for recent calls
     if (recentlyDispatched || recentlyResponded) {
       let emojiIcon = "";
       let popupContentResponding = "";
       if (recentlyDispatched) {
-        emojiIcon = "🚨";
+        switch (call.callTypeFormatted) {
+          case "Fire":
+            emojiIcon = "🔥";
+            break;
+          case "Stolen vehicle":
+            emojiIcon = "🚙";
+            break;
+          case "Car break-in / strip":
+          case "Grand theft":
+            emojiIcon = "🛠️";
+            break;
+          case "Fight":
+          case "Fight with weapons":
+            emojiIcon = "🤼";
+            break;
+          case "Demonstration / protest":
+            emojiIcon = "📢";
+            break;
+          case "Hit & run with injuries":
+          case "Car crash with injuries":
+            emojiIcon = "🚑";
+            break;
+          case "Suspicious person":
+          case "Mentally disturbed person":
+          case "Wanted vehicle / person":
+          case "Person screaming":
+          case "Prowler":
+          case "Stalking":
+          case "Person screaming":
+          case "Intoxicated person":
+          case "Drunk driver":
+            emojiIcon = "👀";
+            break;
+          case "Burglary":
+          case "Person breaking in":
+            emojiIcon = "🥷";
+            break;
+          case "Arrest made":
+          case "Resisting arrest":
+            emojiIcon = "👮";
+            break;
+          case "Person with knife":
+            emojiIcon = "🔪";
+            break;
+          case "Purse snatch":
+            emojiIcon = "👜";
+            break;
+          case "Shot Spotter":
+            emojiIcon = "🔫";
+            break;
+          default:
+            emojiIcon = "🚨";
+        }
         popupContentResponding =
-          "<i><span class='response-marker-popup-text'>~~Currently Responding~~</span></i>" +
+          "<i><b><span class='response-marker-popup-text'>Currently Responding</span></b></i>" +
           popupContent;
       } else {
         emojiIcon = "🚓";
         popupContentResponding =
-          "<i><span class='response-marker-popup-text'>~~Recently On-Scene~~</span></i>" +
+          "<i><b><span class='response-marker-popup-text'>Arrived On-Scene " +
+          onSceneTimeAgo.toFixed(0) +
+          "m ago</span></b></i>" +
           popupContent;
         L.circle(callLatlng, onSceneCircleOpt).addTo(respCircleLayer);
       }
