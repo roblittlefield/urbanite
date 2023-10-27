@@ -179,6 +179,7 @@ const controlMap = async function () {
  * @function controlCircleMarkers
  */
 let callsLayer = "";
+let respCircleLayer = "";
 const controlCircleMarkers = async function () {
   try {
     // Remove any current Leaflet marker layers
