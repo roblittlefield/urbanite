@@ -62,7 +62,7 @@ const initGetUrlParam = function () {
  */
 setTimeout(() => {
   window.location.reload(true);
-}, 60000 * 30);
+}, 60000 * 10);
 
 /**
  * Sets a local storage item to record the last load time and schedules a data reload.
