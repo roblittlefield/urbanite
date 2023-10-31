@@ -235,6 +235,16 @@
   cursor: pointer;
 }
 
+/* .call-box-no-merit p {
+  color: gray !important;
+} */
+
+.call-box-no-merit p,
+.call-box-no-merit h3 {
+  text-decoration: line-through;
+  /* opacity: 0.6; */
+}
+
 .call-box:active {
   transform: scale(1.025);
   transform-origin: left;

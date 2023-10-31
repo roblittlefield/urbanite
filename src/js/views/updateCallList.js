@@ -95,6 +95,8 @@ export const updateCallList = function (latestMarkers, map, nearby) {
       const callBox = document.createElement("li");
       callBox.classList.add("call-box");
       callBox.classList.add("hidden");
+      if (circleMarker.options.data.disposition === "No merit")
+        callBox.classList.add("call-box-no-merit");
 
       if (nearby) {
         callBox.classList.add("nearby-call-box");
