@@ -25,10 +25,10 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
         : "";
 
     // Create Tweet / X message content from call data
-    const tweetContent = `${call.callTypeFormatted} at ${
-      call.properCaseAddress
-    } in ${call.neighborhoodFormatted} ${
-      call.receivedTimeAgo <= 6
+    const tweetContent = `${call.neighborhoodFormatted.toUpperCase()}: ${
+      call.callTypeFormatted
+    } near ${call.properCaseAddress} ${
+      call.receivedTimeAgo < 120
         ? `${receivedTimeAgoF} ago`
         : `${formatDate(call.receivedTime)}`
     }, Priority ${call.priority}, ${
