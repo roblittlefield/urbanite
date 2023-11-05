@@ -266,6 +266,8 @@ export const STATION_LOCATIONS = [
   [37.72466, -122.4463], // Ingleside
   [37.74374, -122.48147], // Taraval
   [37.78368, -122.41291], // Tenderloin
+  [37.76779, -122.4552], // Park
+  [37.78003, -122.46447], // Richmond
 ];
 
 // Police station Leaflet custom marker pop-up content
