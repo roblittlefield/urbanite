@@ -280,4 +280,6 @@ export const STATION_NAMES = [
   "<strong>Ingleside<br>Station</strong><br>415-404-4000",
   "<strong>Taraval<br>Station</strong><br>415-759-3100",
   "<strong>Tenderloin<br>Station</strong><br>415-345-7300",
+  "<strong>Park<br>Station</strong><br>415-242-3000",
+  "<strong>Richmond<br>Station</strong><br>415-666-8000",
 ];
