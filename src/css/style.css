@@ -85,7 +85,10 @@ body {
   margin-right: 3px;
 }
 
-#addSFDataSource a:visited {
+#addSFDataSource a,
+#addSFDataSource a:visited,
+.leaflet-control-attribution a,
+.leaflet-control-attribution a:visited {
   color: #0057b7;
 }
 
@@ -262,10 +265,6 @@ body {
   border-radius: 4px 0 0 0;
   user-select: none;
   box-sizing: border-box;
-}
-
-.leaflet-control-attribution a:visited {
-  color: #0057b7;
 }
 
 .leaflet-popup-content {
