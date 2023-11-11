@@ -35,6 +35,19 @@ let originalPosition;
 let originalZoom;
 let initLoaded = false;
 window.moving = false;
+// Check for dark-mode and if there is a user preference. If the user preference matches the current mode, use it, oth
+const storedMapLayer = +localStorage.getItem("map");
+const prefersDarkMode = window.matchMedia(
+  "(prefers-color-scheme: dark)"
+).matches;
+let mapLayer = prefersDarkMode
+  ? [1, 3].includes(storedMapLayer)
+    ? storedMapLayer
+    : 1
+  : [0, 2, 4, 5].includes(storedMapLayer)
+  ? storedMapLayer
+  : 0;
+localStorage.setItem("mapNumber", mapLayer);
 
 const countContainer = document.getElementById("nearby-info");
 const infoContainer = document.getElementById("project-info-container");
@@ -139,17 +152,7 @@ const controlMap = async function () {
       map.removeLayer(layer);
     });
 
-    // Get the user preferred map layer from localStorage or use the default.
-    const mapLayer = localStorage.getItem("map");
-
-    // Determine which default map to use based on dark/light mode of browser.
-    let initialMapLayer = window.matchMedia("(prefers-color-scheme: dark")
-      .matches
-      ? 1
-      : 0;
-    L.tileLayer(sfapi.MAP_LAYERS[mapLayer ? mapLayer : initialMapLayer]).addTo(
-      map
-    );
+    L.tileLayer(sfapi.MAP_LAYERS[mapLayer]).addTo(map);
 
     // Prevent touchstart event propagation
     map.addEventListener("touchstart", function (e) {
@@ -343,7 +346,7 @@ const controlChangeMap = function () {
    * @type {number}
    */
   let currentLayer =
-    ((+localStorage.getItem("map") || 0) + 1) % sfapi.MAP_LAYERS.length;
+    ((+localStorage.getItem("mapNumber") || 0) + 1) % sfapi.MAP_LAYERS.length;
 
   // Create a new map layer based on the current index
   const newLayer = L.tileLayer(sfapi.MAP_LAYERS[currentLayer]);
@@ -354,12 +357,12 @@ const controlChangeMap = function () {
     L.tileLayer(sfapi.MAP_LAYERS[currentLayer]).remove();
     currentLayer = (currentLayer + 1) % sfapi.MAP_LAYERS.length;
     L.tileLayer(sfapi.MAP_LAYERS[currentLayer]).addTo(map);
-    localStorage.setItem("map", currentLayer);
+    localStorage.setItem("mapNumber", currentLayer);
   });
 
   // Add the new layer to the map and update the saved map choice in local storage
   L.tileLayer(sfapi.MAP_LAYERS[currentLayer]).addTo(map);
-  localStorage.setItem("map", currentLayer);
+  localStorage.setItem("mapNumber", currentLayer);
 
   // Remove the previous map layer so only 1 layer remains
   L.tileLayer(sfapi.MAP_LAYERS[currentLayer - 1]).remove();

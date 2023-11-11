@@ -43,9 +43,9 @@ export const MAP_LAYERS = [
   "https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg", // Watercolor
   "https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}{r}.png", // Black n White
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", // Satellite Photos
-  "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png", // Light
+  // "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png", // Light
   "https://cdn.lima-labs.com/{z}/{x}/{y}.png?api=demo", // Urban
-  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", // Open Street Map Urban
+  // "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", // Open Street Map Urban
 ];
 
 // SFPD Real-Time calls base URL
