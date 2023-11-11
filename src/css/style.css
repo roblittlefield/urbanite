@@ -336,13 +336,13 @@ body {
   text-align: center;
 }
 
-/* Dark Mode */
+/* ---- Dark Mode ---- */
 @media (prefers-color-scheme: dark) {
   .leaflet-popup-content-wrapper,
   .leaflet-popup-content-wrapper,
   .station-popup .leaflet-popup-content {
     color: rgba(255, 255, 255, 0.9);
-    background-color: rgba(20, 20, 20, 0.9);
+    background-color: rgba(30, 30, 30, 0.9);
     box-shadow: 0px 2px 4px rgba(210, 210, 210, 0.25);
   }
 
@@ -356,9 +356,9 @@ body {
   #neighborhood-text,
   #addSFDataSource,
   #last-updated {
-    background-color: rgba(30, 30, 30, 0.9);
+    background-color: rgba(30, 30, 30, 0.85);
     color: rgba(220, 220, 220, 0.84);
-    box-shadow: 0px 2px 4px rgba(220, 220, 220, 0.25);
+    box-shadow: 0px 2px 3px rgba(220, 220, 220, 0.25);
   }
 
   .leaflet-control-zoom-in,
