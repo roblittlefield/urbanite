@@ -381,9 +381,9 @@ body {
     background-color: #333333;
   }
 
-  .leaflet-control-attribution,
+  .leaflet-control-attribution a,
   .leaflet-control-attribution a:visited,
-  #addSFDataSource,
+  #addSFDataSource a,
   #addSFDataSource a:visited {
     color: #2d8ff8;
   }
