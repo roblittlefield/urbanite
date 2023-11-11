@@ -1,4 +1,4 @@
-const temperatureContainer = document.querySelector(".weather");
+const temperatureContainer = document.getElementById("weather");
 const projectInfoButton = document.getElementById("project-info-btn");
 const changeMap = document.getElementById("change-map-btn");
 const latestButton = document.getElementById("latest-list-btn");

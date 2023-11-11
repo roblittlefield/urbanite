@@ -146,7 +146,7 @@ body {
 }
 
 #nearby-info,
-.weather {
+#weather {
   background-color: rgba(255, 255, 255, 0.7);
 }
 
@@ -158,7 +158,7 @@ body {
 #project-info-btn,
 #response-times-list-btn,
 #car-breakins-btn,
-.weather {
+#weather {
   position: fixed;
   z-index: 3;
   color: rgba(39, 39, 39, 0.84);
@@ -238,10 +238,6 @@ body {
   pointer-events: none;
 }
 
-.dark-map {
-  background-color: #0057b7;
-}
-
 #containerTemp {
   grid-column: 1;
   grid-row: 1;
@@ -249,7 +245,7 @@ body {
   pointer-events: none;
 }
 
-.weather {
+#weather {
   top: 10.2px;
   left: 50px;
   font-size: 23px;
@@ -262,7 +258,7 @@ body {
   font-size: 12px;
   font-family: Tahoma, Arial, Helvetica, sans-serif;
   color: #0057b7 !important;
-  background-color: rgba(255, 255, 255, 0.65) !important;
+  background-color: rgba(255, 255, 255, 0.65);
   border-radius: 4px 0 0 0;
   user-select: none;
   box-sizing: border-box;
@@ -283,10 +279,12 @@ body {
   background-color: transparent;
 }
 
-.leaflet-popup-content-wrapper {
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
   padding: 0.1px;
   background-color: rgba(255, 255, 255, 0.9);
 }
+
 .leaflet-control-zoom-in {
   top: 9px;
 }
@@ -337,4 +335,56 @@ body {
   background-color: transparent;
   transition: padding 0.5s;
   text-align: center;
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .leaflet-popup-content-wrapper,
+  .leaflet-popup-content-wrapper,
+  .station-popup .leaflet-popup-content {
+    color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(20, 20, 20, 0.9);
+    box-shadow: 0px 2px 4px rgba(210, 210, 210, 0.25);
+  }
+
+  .leaflet-control-attribution {
+    background-color: rgba(0, 0, 0, 0.9) !important;
+  }
+
+  .leaflet-popup-tip,
+  #weather,
+  #nearby-info,
+  #neighborhood-text,
+  #addSFDataSource,
+  #last-updated {
+    background-color: rgba(30, 30, 30, 0.9);
+    color: rgba(220, 220, 220, 0.84);
+    box-shadow: 0px 2px 4px rgba(220, 220, 220, 0.25);
+  }
+
+  .leaflet-control-zoom-in,
+  .leaflet-control-zoom-out,
+  #change-map-btn,
+  #latest-list-btn,
+  #nearby-list-btn,
+  #project-info-btn,
+  #response-times-list-btn,
+  #car-breakins-btn {
+    background-image: linear-gradient(#303030, #1a1a1a);
+    color: rgba(237, 237, 237, 0.84) !important;
+    text-shadow: 0px 1px 0px rgba(39, 39, 39, 0.8);
+    box-shadow: 0px 2px 4px rgba(210, 210, 210, 0.25);
+  }
+
+  .leaflet-control-zoom-in:active,
+  .leaflet-control-zoom-out:active {
+    background-color: #333333;
+  }
+
+  .leaflet-control-attribution,
+  .leaflet-control-attribution a:visited,
+  #addSFDataSource,
+  #addSFDataSource a:visited {
+    color: #2d8ff8;
+  }
 }
