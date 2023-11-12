@@ -145,9 +145,9 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
     let onSceneTimeAgo = call.receivedTimeAgo - call.responseTime;
     let recentlyResponded =
       isFinite(call.responseTime) &&
-      (onSceneTimeAgo < 15 ||
-        (call.priority === "B" && onSceneTimeAgo < 25) ||
-        (call.priority === "A" && onSceneTimeAgo < 30));
+      (onSceneTimeAgo < 30 ||
+        (call.priority === "B" && onSceneTimeAgo < 35) ||
+        (call.priority === "A" && onSceneTimeAgo < 45));
 
     // Create content for recent calls
     if (recentlyDispatched || recentlyResponded) {

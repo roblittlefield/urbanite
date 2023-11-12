@@ -30,7 +30,7 @@ export const nearbyCircleOpt = {
 // Specifications for police "recently on-scene" blue circle added to Leaflet map
 export const onSceneCircleOpt = {
   radius: 120, // m
-  color: "#989898",
+  color: "rgba(0, 0, 255, 0.6)",
   fillColor: "blue",
   fillOpacity: 0.17,
   weight: 1,

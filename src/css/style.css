@@ -260,17 +260,27 @@ body {
   width: 65px;
   font-size: 12px;
   font-family: Tahoma, Arial, Helvetica, sans-serif;
-  color: #0057b7 !important;
   background-color: rgba(255, 255, 255, 0.65);
   border-radius: 4px 0 0 0;
   user-select: none;
   box-sizing: border-box;
 }
 
+.leaflet-control-attribution a,
+.leaflet-control-attribution a:visited,
+#addSFDataSource a,
+#addSFDataSource a:visited {
+  color: #3288bd;
+}
+
 .leaflet-popup-content {
   padding: 0px 0px 0px 0px;
   background-color: transparent;
   transition: padding 0.5s;
+}
+
+.leaflet-popup-content a {
+  color: #3288bd;
 }
 
 .leaflet-popup-content-small-padding {
@@ -346,10 +356,6 @@ body {
     box-shadow: 0px 2px 4px rgba(210, 210, 210, 0.25);
   }
 
-  .leaflet-control-attribution {
-    background-color: rgba(0, 0, 0, 0.9) !important;
-  }
-
   .leaflet-popup-tip,
   #weather,
   #nearby-info,
@@ -358,6 +364,7 @@ body {
   #last-updated {
     background-color: rgba(30, 30, 30, 0.85);
     color: rgba(220, 220, 220, 0.84);
+    text-shadow: rgba(30, 30, 30, 0.85);
     box-shadow: 0px 2px 3px rgba(220, 220, 220, 0.25);
   }
 
@@ -380,10 +387,7 @@ body {
     background-color: #333333;
   }
 
-  .leaflet-control-attribution a,
-  .leaflet-control-attribution a:visited,
-  #addSFDataSource a,
-  #addSFDataSource a:visited {
-    color: #2d8ff8;
+  .leaflet-control-attribution {
+    background-color: rgba(0, 0, 0, 0.9) !important;
   }
 }
