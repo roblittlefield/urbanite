@@ -41,10 +41,12 @@ const prefersDarkMode = window.matchMedia(
   "(prefers-color-scheme: dark)"
 ).matches;
 let mapLayer = prefersDarkMode
-  ? [1, 3].includes(storedMapLayer)
+  ? // ? [1, 3].includes(storedMapLayer) // Dark Maps
+    [2].includes(storedMapLayer) // Dark Maps
     ? storedMapLayer
-    : 1
-  : [0, 2, 4, 5].includes(storedMapLayer)
+    : 2
+  : // : [0, 2, 4, 5].includes(storedMapLayer) // Light Maps
+  [0, 1, 3].includes(storedMapLayer) // Light Maps
   ? storedMapLayer
   : 0;
 localStorage.setItem("mapNumber", mapLayer);
