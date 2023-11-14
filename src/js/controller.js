@@ -40,13 +40,18 @@ const storedMapLayer = +localStorage.getItem("map");
 const prefersDarkMode = window.matchMedia(
   "(prefers-color-scheme: dark)"
 ).matches;
+// let mapLayer = prefersDarkMode
+//   ? // ? [1, 3].includes(storedMapLayer) // Dark Maps
+//     [2].includes(storedMapLayer) // Dark Maps
+//     ? storedMapLayer
+//     : 2
+//   : // : [0, 2, 4, 5].includes(storedMapLayer) // Light Maps
+//   [0, 1, 3].includes(storedMapLayer) // Light Maps
+//   ? storedMapLayer
+//   : 0;
 let mapLayer = prefersDarkMode
-  ? // ? [1, 3].includes(storedMapLayer) // Dark Maps
-    [2].includes(storedMapLayer) // Dark Maps
-    ? storedMapLayer
-    : 2
-  : // : [0, 2, 4, 5].includes(storedMapLayer) // Light Maps
-  [0, 1, 3].includes(storedMapLayer) // Light Maps
+  ? 2
+  : [0, 1, 3].includes(storedMapLayer) // Light Maps
   ? storedMapLayer
   : 0;
 localStorage.setItem("mapNumber", mapLayer);
