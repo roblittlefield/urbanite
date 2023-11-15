@@ -44,7 +44,7 @@ body {
 }
 
 .response-marker-popup-text {
-  color: blue;
+  color: rgb(0, 0, 255);
 }
 
 #addSFDataSource {
@@ -165,7 +165,7 @@ body {
   position: fixed;
   z-index: 3;
   color: rgba(39, 39, 39, 0.84);
-  text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.8);
+  text-shadow: 0px 1px 2px rgba(255, 255, 255, 0.8);
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
   font-family: Tahoma, Arial, Helvetica, sans-serif;
   white-space: nowrap;
@@ -228,13 +228,13 @@ body {
 }
 
 #neighborhood-text {
-  bottom: 90px;
+  bottom: 87.8px;
   left: 50%;
   transform: translate(-50%, 50%);
   z-index: 3;
   background-color: rgba(255, 255, 255, 0.7);
   border-radius: 8px;
-  padding: 1px 8px 4px 8px;
+  padding: 1px 10px 4px 10px;
   font-size: 40px;
   text-align: center;
   touch-action: none;
@@ -325,7 +325,7 @@ body {
   color: white;
   line-height: 1.4;
   position: fixed;
-  bottom: 48px;
+  bottom: 44px;
   left: 50%;
   transform: translate(-50%, 50%);
   z-index: 2;
@@ -333,7 +333,7 @@ body {
   background-color: rgba(255, 255, 255, 0.7);
   text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.7);
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-  padding: 4px 8px 6px 8px;
+  padding: 4px 10px 6px 10px;
   border-radius: 4px;
   touch-action: none;
   pointer-events: none;
@@ -388,5 +388,9 @@ body {
   .leaflet-control-attribution,
   #addSFDataSource {
     background-color: rgba(30, 30, 30, 0.9) !important;
+  }
+
+  .response-marker-popup-text {
+    color: rgb(27, 27, 255);
   }
 }

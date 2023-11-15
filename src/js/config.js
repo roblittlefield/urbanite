@@ -40,8 +40,10 @@ export const onSceneCircleOpt = {
   radius: 120, // m
   color: "rgba(0, 0, 255, 0.6)",
   fillColor: "blue",
-  fillOpacity: 0.17,
-  weight: 1,
+  fillOpacity: 0.25,
+  opacity: 1,
+  weight: 0,
+  className: "response-circle",
 };
 
 // Leaflet map tile URL addresses

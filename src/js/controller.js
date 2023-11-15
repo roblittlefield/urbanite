@@ -313,7 +313,7 @@ const loadNearbyCalls = async function () {
         position,
         sfapi.exactPositionCircleOpt
       ).addTo(map);
-      circleExact.bindPopup("You are here.");
+      circleExact.bindPopup("You are here.", { closeButton: false });
       // circleExact.getElement().style.pointerEvents = "none";
     }
     document.getElementById("alert").classList.add("hidden");
@@ -466,6 +466,12 @@ const controlCarBreakins = async function () {
           marker.setLatLng([9999, 9999]);
         }
       }
+      if (
+        marker instanceof L.Circle &&
+        marker.options.className == "response-circle"
+      ) {
+        marker.setStyle({ opacity: 0, fillOpacity: 0 });
+      }
     });
 
     // Count car break-ins and stolen vehicle incidents in the callsLayer
@@ -494,8 +500,10 @@ const controlCarBreakins = async function () {
     setTimeout(async () => {
       await map.eachLayer(function (marker) {
         if (
-          // Add all circle markers back and remove the car break-ins and car theft circle markers
-          marker instanceof L.CircleMarker &&
+          // Add all circle markers back to the map
+          ((marker instanceof L.Marker &&
+            marker.options.icon.options.className === "response-marker") ||
+            marker instanceof L.CircleMarker) &&
           !(marker instanceof L.Circle) &&
           marker !== map
         ) {
@@ -507,6 +515,12 @@ const controlCarBreakins = async function () {
             const originalLatLng = originalLatLngs[marker._leaflet_id];
             marker.setLatLng(originalLatLng);
           }
+        }
+        if (
+          marker instanceof L.Circle &&
+          marker.options.className == "response-circle"
+        ) {
+          marker.setStyle({ opacity: 1, fillOpacity: 0.25 });
         }
       });
       // Get the original map position and zoom

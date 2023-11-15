@@ -214,7 +214,7 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
       } else {
         emojiIcon = "🚓";
         popupContentResponding =
-          "<i><b><span class='response-marker-popup-text'>Arrived On-Scene " +
+          "<i><b><span class='response-marker-popup-text'>On-Scene " +
           onSceneTimeAgo.toFixed(0) +
           "m ago</span></b></i>" +
           popupContent;
@@ -268,11 +268,6 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
         })
         .addTo(callsLayer);
     }
-    // Add the circle marker to the calls layer
-    // Possible future work with notifications:
-    // if (call.callTypeFormatted === "Shooting") {
-    //   //send Notification
-    // }
   });
   return [callsLayer, respCircleLayer];
 }
