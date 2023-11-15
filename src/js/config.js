@@ -23,7 +23,15 @@ export const nearbyCircleOpt = {
   radius: 500, // m
   color: "white",
   fillColor: "yellow",
-  fillOpacity: 0.2,
+  fillOpacity: 0.14,
+  weight: 1,
+};
+
+export const exactPositionCircleOpt = {
+  radius: 7, // m
+  color: "yellow",
+  fillColor: "yellow",
+  fillOpacity: 1,
   weight: 1,
 };
 

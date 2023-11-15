@@ -306,8 +306,15 @@ const loadNearbyCalls = async function () {
 
     // Open nearby call list
     if (!nearbyClicked) {
-      const circle = L.circle(position, sfapi.nearbyCircleOpt).addTo(map);
-      circle.getElement().style.pointerEvents = "none";
+      const circleNearby = L.circle(position, sfapi.nearbyCircleOpt).addTo(map);
+      circleNearby.getElement().style.pointerEvents = "none";
+
+      const circleExact = L.circle(
+        position,
+        sfapi.exactPositionCircleOpt
+      ).addTo(map);
+      circleExact.bindPopup("You are here.");
+      // circleExact.getElement().style.pointerEvents = "none";
     }
     document.getElementById("alert").classList.add("hidden");
     updateCallList(nearbyLayer, map, true, openPopup);

@@ -69,12 +69,12 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
     \u2022 ${receivedTimeAgoF} <a href="sms:&body=${encodeURIComponent(
       textMessageContent
     )}">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IMessage_logo.svg/20px-IMessage_logo.svg.png" alt="iMessage / text" style="height: 20px; position: absolute; top: calc(50% - 25px); right: -10px;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IMessage_logo.svg/20px-IMessage_logo.svg.png" alt="iMessage / text" style="height: 20px; position: absolute; top: calc(50% - 25px); right: -6px;">
     </a>
     <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(
       tweetContent
     )}" target="_blank">
-    <img src="https://icons.iconarchive.com/icons/xenatt/the-circle/256/App-Twitter-icon.png" alt="Twitter Bird Icon" style="height: 24px; position: absolute; top: calc(50% - -5px);  right: -12px;">
+    <img src="https://icons.iconarchive.com/icons/xenatt/the-circle/256/App-Twitter-icon.png" alt="Twitter Bird Icon" style="height: 24px; position: absolute; top: calc(50% - -5px);  right: -8px;">
     </a>
     <br>${call.properCaseAddress}
     <br>Priority ${

@@ -220,9 +220,9 @@ body {
 
 #nearby-info {
   left: 50px;
-  top: 48px;
+  top: 50px;
   font-size: 14px;
-  padding: 2px 6px 2px 6px;
+  padding: 4px 8px 4px 8px;
   touch-action: none;
   pointer-events: none;
 }
@@ -234,7 +234,7 @@ body {
   z-index: 3;
   background-color: rgba(255, 255, 255, 0.7);
   border-radius: 8px;
-  padding: 0 5px 2px 5px;
+  padding: 1px 8px 4px 8px;
   font-size: 40px;
   text-align: center;
   touch-action: none;
@@ -249,10 +249,10 @@ body {
 }
 
 #weather {
-  top: 10.2px;
+  top: 10px;
   left: 50px;
   font-size: 23px;
-  padding: 2px 6px 2px 6px;
+  padding: 4px 8px 4px 8px;
   text-align: center;
 }
 
@@ -325,7 +325,7 @@ body {
   color: white;
   line-height: 1.4;
   position: fixed;
-  bottom: 54px;
+  bottom: 48px;
   left: 50%;
   transform: translate(-50%, 50%);
   z-index: 2;
@@ -333,7 +333,7 @@ body {
   background-color: rgba(255, 255, 255, 0.7);
   text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.7);
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-  padding: 3px;
+  padding: 4px 8px 6px 8px;
   border-radius: 4px;
   touch-action: none;
   pointer-events: none;
@@ -349,23 +349,22 @@ body {
 /* ---- Dark Mode ---- */
 @media (prefers-color-scheme: dark) {
   .leaflet-popup-content-wrapper,
-  .leaflet-popup-content-wrapper,
-  .station-popup .leaflet-popup-content {
+  .station-popup .leaflet-popup-content,
+  .leaflet-popup-tip {
     color: rgba(255, 255, 255, 0.9);
     background-color: rgba(30, 30, 30, 0.9);
-    box-shadow: 0px 2px 4px rgba(210, 210, 210, 0.25);
+    box-shadow: 1px 1px 10px 1px rgba(244, 240, 240, 0.25);
   }
 
-  .leaflet-popup-tip,
   #weather,
   #nearby-info,
   #neighborhood-text,
   #addSFDataSource,
   #last-updated {
     background-color: rgba(30, 30, 30, 0.85);
-    color: rgba(220, 220, 220, 0.84);
-    text-shadow: rgba(30, 30, 30, 0.85);
-    box-shadow: 0px 2px 3px rgba(220, 220, 220, 0.25);
+    color: rgba(241, 241, 241, 0.84);
+    text-shadow: none;
+    box-shadow: 1px 1px 10px 1px rgba(244, 240, 240, 0.25);
   }
 
   .leaflet-control-zoom-in,
