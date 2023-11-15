@@ -353,18 +353,17 @@ body {
   .leaflet-popup-tip {
     color: rgba(255, 255, 255, 0.9);
     background-color: rgba(30, 30, 30, 0.9);
-    box-shadow: 1px 1px 10px 1px rgba(244, 240, 240, 0.25);
+    box-shadow: 1px 1px 6px 1px rgba(244, 240, 240, 0.25);
   }
 
   #weather,
   #nearby-info,
   #neighborhood-text,
-  #addSFDataSource,
   #last-updated {
     background-color: rgba(30, 30, 30, 0.85);
     color: rgba(241, 241, 241, 0.84);
     text-shadow: none;
-    box-shadow: 1px 1px 10px 1px rgba(244, 240, 240, 0.25);
+    box-shadow: 1px 1px 6px 1px rgba(244, 240, 240, 0.25);
   }
 
   .leaflet-control-zoom-in,
@@ -386,7 +385,8 @@ body {
     background-color: #333333;
   }
 
-  .leaflet-control-attribution {
-    background-color: rgba(0, 0, 0, 0.9) !important;
+  .leaflet-control-attribution,
+  #addSFDataSource {
+    background-color: rgba(30, 30, 30, 0.9) !important;
   }
 }
