@@ -138,8 +138,8 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
     let recentlyDispatched =
       isNaN(call.responseTime) &&
       (call.dispatchedTimeAgo <= 150 ||
-        (call.priority === "B" && call.dispatchedTimeAgo <= 300) ||
-        (call.priority === "A" && call.dispatchedTimeAgo <= 500));
+        (call.priority === "B" && call.dispatchedTimeAgo <= 90) ||
+        (call.priority === "A" && call.dispatchedTimeAgo <= 75));
 
     // Recently arrived on-scene
     let onSceneTimeAgo = call.receivedTimeAgo - call.responseTime;
