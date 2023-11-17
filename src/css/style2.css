@@ -235,10 +235,6 @@
   cursor: pointer;
 }
 
-/* .call-box-no-merit p {
-  color: gray !important;
-} */
-
 .call-box-no-merit p,
 .call-box-no-merit h3 {
   text-decoration: line-through;
@@ -424,11 +420,12 @@
 
 @media screen and (max-width: 450px) {
   #car-breakins-text {
-    font-size: 20px;
+    font-size: 17px;
   }
 
   #car-breakins-subtext {
-    top: 31.2px;
+    top: 39.4px;
+    font-size: 10px;
   }
 }
 
