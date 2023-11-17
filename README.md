@@ -24,6 +24,8 @@ Urbanite SF is a San Francisco law enforcement dispatched calls for service inci
 - **Share Easily**: Share links with others through Twitter or Text Messages / iMessages.
 - **Frequent Updates**: Stay up to date with fresh data as the map refreshes every 10 minutes.
 - **Data Accessibility**: Access call data even when DataSF archives calls after 48 hours.
+- **See Police Stations**: See all SFPD stations on the map
+- **See Current Calls Responding To: See which calls SFPD is currently responding to or recently responded to. 
 
 ## Components
 
@@ -35,8 +37,7 @@ Urbanite SF was written using vanilla JavaScript. Includes "live" Police data, w
 - ~~Twitter/X bot in Python / Google Cloud Functions for severe calls~~ [@SFPDcallsBot](https://twitter.com/SFPDcallsBot)
 - ~~Twitter/X bot in Python / Google Cloud Functions for call breakings~~ [@SFbippinBot](https://twitter.com/SFbippinBot)
 - ~~Add Police Stations to map~~
-- Add historic calls on map upon zoom-in
-- Add historic Fire Dept calls
+- Add Fire Dept calls if Data goes Live
 
 ## Code
 
