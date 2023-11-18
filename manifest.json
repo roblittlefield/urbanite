@@ -4,7 +4,8 @@
   "description": "Explore the latest San Francisco law enforcement dispatched calls for service near you.",
   "start_url": "/",
   "display": "standalone",
-
+  "background_color": "#989898",
+  "theme_color": "#989898",
   "icons": [
     {
       "src": "./icon-192x192.png",
