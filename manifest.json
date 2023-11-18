@@ -4,6 +4,7 @@
   "description": "Explore the latest San Francisco law enforcement dispatched calls for service near you.",
   "start_url": "/",
   "display": "standalone",
+
   "icons": [
     {
       "src": "./icon-192x192.png",
