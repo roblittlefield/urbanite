@@ -189,9 +189,9 @@ body {
 #weather {
   position: fixed;
   z-index: 3;
-  color: rgba(39, 39, 39, 0.84);
+  color: rgba(45, 45, 45, 0.86);
   text-shadow: 0px 1px 2px rgba(255, 255, 255, 0.8);
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 1px 2px 2px 2px rgba(0, 0, 0, 0.25);
   font-family: Tahoma, Arial, Helvetica, sans-serif;
   white-space: nowrap;
   border-radius: 5px;
@@ -214,7 +214,7 @@ body {
   color: rgba(72, 72, 72, 1);
   border: 1px solid #c5c5c5;
   background-image: linear-gradient(#f7f7f7, #e7e7e7);
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 1px 2px 2px 2px rgba(0, 0, 0, 0.25);
   width: 65px;
   height: 25px;
   right: 13px;
@@ -258,6 +258,7 @@ body {
   transform: translate(-50%, 50%);
   z-index: 3;
   background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 1px 2px 2px 2px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
   padding: 1px 10px 4px 10px;
   font-size: 40px;
@@ -334,6 +335,7 @@ body {
   background-image: linear-gradient(#f7f7f7, #e7e7e7);
   transition: transform 0.2s ease-in-out;
   user-select: none;
+  box-shadow: 1px 2px 2px 2px rgba(0, 0, 0, 0.25);
 }
 
 .leaflet-control-zoom-in:active,
@@ -358,7 +360,7 @@ body {
   color: rgba(39, 39, 39, 0.7);
   background-color: rgba(255, 255, 255, 0.7);
   text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.7);
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 1px 2px 2px 2px rgba(0, 0, 0, 0.25);
   padding: 4px 10px 6px 10px;
   border-radius: 4px;
   touch-action: none;
