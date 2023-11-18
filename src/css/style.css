@@ -148,6 +148,31 @@ body {
   top: 114px;
 }
 
+@media screen and (max-width: 400px) {
+  #project-info-btn {
+    top: 5px;
+  }
+
+  #change-map-btn {
+    top: 37px;
+  }
+  #latest-list-btn {
+    top: 133px;
+  }
+
+  #nearby-list-btn {
+    top: 165px;
+  }
+
+  #response-times-list-btn {
+    top: 69px;
+  }
+
+  #car-breakins-btn {
+    top: 101px;
+  }
+}
+
 #nearby-info,
 #weather {
   background-color: rgba(255, 255, 255, 0.7);
@@ -321,6 +346,7 @@ body {
 
 #last-updated {
   font-size: 12px;
+  text-align: center;
   font-family: Tahoma, Arial, Helvetica, sans-serif;
   color: white;
   line-height: 1.4;
@@ -339,6 +365,12 @@ body {
   pointer-events: none;
 }
 
+@media screen and (max-width: 370px) {
+  #last-updated {
+    bottom: 35px;
+  }
+}
+
 .station-popup .leaflet-popup-content {
   padding: 0.1px 0px 0.1px 0px !important;
   background-color: transparent;
@@ -351,9 +383,8 @@ body {
   .leaflet-popup-content-wrapper,
   .station-popup .leaflet-popup-content,
   .leaflet-popup-tip {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.94);
     background-color: rgba(30, 30, 30, 0.9);
-    box-shadow: 1px 1px 6px 1px rgba(244, 240, 240, 0.25);
   }
 
   #weather,
@@ -362,8 +393,6 @@ body {
   #last-updated {
     background-color: rgba(30, 30, 30, 0.85);
     color: rgba(241, 241, 241, 0.84);
-    text-shadow: none;
-    box-shadow: 1px 1px 6px 1px rgba(244, 240, 240, 0.35);
   }
 
   .leaflet-control-zoom-in,
@@ -376,8 +405,25 @@ body {
   #car-breakins-btn {
     background-image: linear-gradient(#303030, #1a1a1a);
     color: rgba(237, 237, 237, 0.84) !important;
-    text-shadow: 0px 1px 0px rgba(39, 39, 39, 0.8);
-    box-shadow: 1px 1px 6px 1px rgba(244, 240, 240, 0.35);
+  }
+
+  .leaflet-popup-content-wrapper,
+  .station-popup .leaflet-popup-content,
+  .leaflet-popup-tip,
+  #weather,
+  #nearby-info,
+  #neighborhood-text,
+  #last-updated,
+  .leaflet-control-zoom-in,
+  .leaflet-control-zoom-out,
+  #change-map-btn,
+  #latest-list-btn,
+  #nearby-list-btn,
+  #project-info-btn,
+  #response-times-list-btn,
+  #car-breakins-btn {
+    text-shadow: none;
+    box-shadow: 0px 0px 6px 2px rgba(244, 240, 240, 0.25);
   }
 
   .leaflet-control-zoom-in:active,
