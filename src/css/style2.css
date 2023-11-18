@@ -48,6 +48,31 @@
   line-height: 1.1;
 }
 
+@media screen and (max-width: 400px) {
+  #project-info h2 {
+    font-size: 0.9rem;
+    font-style: bold;
+    line-height: 0.5;
+  }
+
+  #project-info p {
+    font-size: 0.75rem;
+    line-height: 1;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  #project-info h2 {
+    font-size: 0.7rem;
+    line-height: 1;
+  }
+
+  #project-info p {
+    font-size: 0.68rem;
+    line-height: 1;
+  }
+}
+
 @media screen and (min-width: 768px) and (min-height: 600px) {
   #project-info p {
     font-size: 1.3rem;
