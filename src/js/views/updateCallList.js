@@ -55,56 +55,58 @@ export const updateCallList = function (latestMarkers, map, nearby) {
     const hours = Math.floor(receivedTimeAgo / 60);
     if (hours > calcHour) {
       calcHour = hours;
-      const minutesNumber = document.createElement("span");
-      minutesNumber.style.display = "block";
-      minutesNumber.style.flexBasis = "100%";
-      minutesNumber.classList.add("received-time-ago-hours");
+
+      // Test starts here
+      let minutesNumberHtml = `<span `;
       if (nearby) {
-        minutesNumber.style.fontSize = "20px";
-      }
-      if (calcHour === 0 && nearby) {
-        minutesNumber.textContent = `Last hour`;
-        minutesNumber.style.color = "Yellow";
-        minutesNumber.style.fontStyle = "italic";
-      }
-      if (calcHour !== 0) {
-        minutesNumber.textContent = `${calcHour} hour${
-          calcHour === 1 ? "" : "s"
-        } ago`;
-      }
-      nearby
-        ? calcHour === 1
-          ? (minutesNumber.style.color = "Yellow")
-          : calcHour === 2
-          ? (minutesNumber.style.color = "Yellow")
-          : ""
-        : "";
-      if (nearby) {
-        minutesNumber.classList.add("nearby-call-box");
+        minutesNumberHtml += `class="hidden received-time-ago-hours nearby-call-box" style="display: block; flex-basis: 100%; font-size: 20px !important; `;
+
+        if (calcHour < 3) {
+          minutesNumberHtml += ` color: yellow !important; font-style: italic;">`;
+        } else {
+          minutesNumberHtml += `">`;
+        }
+
+        if (calcHour === 0) {
+          minutesNumberHtml += `Last hour</span>`;
+        } else {
+          minutesNumberHtml += `${calcHour} hour${
+            calcHour === 1 ? "" : "s"
+          } ago</span>`;
+        }
       } else {
-        minutesNumber.classList.add("allSF-call-box");
+        minutesNumberHtml += `class="hidden received-time-ago-hours allSF-call-box" style="display: block; flex-basis: 100%;">`;
+        if (calcHour !== 0) {
+          minutesNumberHtml += `${calcHour} hour${
+            calcHour === 1 ? "" : "s"
+          } ago</span>`;
+        } else {
+          minutesNumberHtml += `</span>`;
+        }
       }
-      minutesNumber.classList.add("hidden");
-      callList.appendChild(minutesNumber);
+
+      callList.insertAdjacentHTML("beforeend", minutesNumberHtml);
     }
 
     const responseTime = circleMarker.options.data.responseTime;
     const responseTimeF = minsHoursFormat(responseTime);
     if (circleMarker.options.data) {
       // Create and add call box elements
-      const callBox = document.createElement("li");
-      callBox.classList.add("call-box");
-      callBox.classList.add("hidden");
-      if (circleMarker.options.data.disposition === "No merit")
-        callBox.classList.add("call-box-no-merit");
 
-      if (nearby) {
-        callBox.classList.add("nearby-call-box");
-      } else {
-        callBox.classList.add("allSF-call-box");
+      const callBoxClasses = ["call-box", "hidden"];
+      if (circleMarker.options.data.disposition === "No merit") {
+        callBoxClasses.push("call-box-no-merit");
       }
 
-      callBox.innerHTML = `
+      if (nearby) {
+        callBoxClasses.push("nearby-call-box");
+      } else {
+        callBoxClasses.push("allSF-call-box");
+      }
+
+      const callBoxClassString = callBoxClasses.join(" ");
+
+      const callBoxContent = `
         <h3 style="color: ${
           circleMarker.options.fillColor === "#000000"
             ? "#D3D3D3"
@@ -139,6 +141,10 @@ export const updateCallList = function (latestMarkers, map, nearby) {
         </p>
           <p>${circleMarker.options.data.address}</p>
         `;
+
+      const callBox = document.createElement("li");
+      callBox.className = callBoxClassString;
+      callBox.innerHTML = callBoxContent;
 
       // Add a click event listener to open popup and adjust the map view
       callBox.addEventListener("click", () => {
@@ -303,14 +309,20 @@ const updateResponseTimesList = function (callNeighborhoodMedian) {
     const responseBox = document.createElement("li");
 
     // Define the style based on response time value
-    responseBox.innerHTML =
-      Number(value) <= 8
-        ? `<p style="color: #D3D3D3">${key}  ${value} mins </p>`
-        : Number(value) < 12
-        ? `<p style="color: #f0fe8b">${key}  ${value} mins </p>`
-        : Number(value) < 15
-        ? `<p style="color: #f46d43">${key}  ${value} mins </p>`
-        : `<p style="color: #f46d43">${key}  ${value} mins </p>`;
+    let responseHtml = "";
+
+    if (Number(value) <= 8) {
+      responseHtml = `<p style="color: #D3D3D3">${key} ${value} mins </p>`;
+    } else if (Number(value) < 12) {
+      responseHtml = `<p style="color: #f0fe8b">${key} ${value} mins </p>`;
+    } else if (Number(value) < 15) {
+      responseHtml = `<p style="color: #f46d43">${key} ${value} mins </p>`;
+    } else {
+      responseHtml = `<p style="color: #f46d43">${key} ${value} mins </p>`;
+    }
+
+    // Set the HTML content
+    responseBox.innerHTML = responseHtml;
 
     // Add the response time box to the response times list
     responseList.appendChild(responseBox);
@@ -371,7 +383,7 @@ export const calcMedian = function () {
   });
 
   // Add the calculated overall median to the neighborhood medians
-  callNeighborhoodMedian["All San Francisco (Overall)"] =
+  callNeighborhoodMedian["All San Francisco (Citywide)"] =
     overallMedian.toFixed(2);
 
   // Update the response times list with the calculated median values

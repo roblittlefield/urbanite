@@ -63,13 +63,16 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
     }" via https://urbanitesf.netlify.app/?cad=${call.cadNumber}`;
 
     // Create call circle marker pop-up content
+
+    // X unicode logo
+    // <div class="x-com" style="height: 24px; position: absolute; top: calc(50% - -1px); right: -5.5px; font-size: 24px;">𝕏</div>
     const popupContent = `
   <div>
     <b>${call.callTypeFormatted}</b>
     \u2022 ${receivedTimeAgoF} <a href="sms:&body=${encodeURIComponent(
       textMessageContent
     )}">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IMessage_logo.svg/20px-IMessage_logo.svg.png" alt="iMessage / text" style="height: 20px; position: absolute; top: calc(50% - 25px); right: -6px;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IMessage_logo.svg/20px-IMessage_logo.svg.png" alt="iMessage / text" style="height: 20px; position: absolute; top: calc(50% - 24px); right: -6px;">
     </a>
     <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(
       tweetContent

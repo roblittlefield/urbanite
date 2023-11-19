@@ -309,6 +309,10 @@ body {
   color: #3288bd;
 }
 
+.leaflet-popup-content a .x-com {
+  color: rgba(0, 0, 0, 1);
+}
+
 .leaflet-popup-content-small-padding {
   padding: 0.1px 0px 0px 0px;
   background-color: transparent;
