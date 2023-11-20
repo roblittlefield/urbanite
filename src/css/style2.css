@@ -138,7 +138,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  max-height: 93%;
+  max-height: 95%;
   z-index: 10;
   display: flex;
   flex-direction: column;
@@ -237,7 +237,7 @@
   overscroll-behavior: none;
   flex-wrap: wrap;
   bottom: 3px;
-  width: 95%;
+  width: 96%;
 }
 #response-times-list {
   top: 7px;
