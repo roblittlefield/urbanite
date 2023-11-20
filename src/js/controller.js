@@ -36,7 +36,7 @@ let originalZoom;
 let initLoaded = false;
 window.moving = false;
 // Check for dark-mode and if there is a user preference. If the user preference matches the current mode, use it, oth
-const storedMapLayer = +localStorage.getItem("map");
+// const storedMapLayer = +localStorage.getItem("map");
 const prefersDarkMode = window.matchMedia(
   "(prefers-color-scheme: dark)"
 ).matches;
