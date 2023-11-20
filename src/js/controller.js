@@ -40,6 +40,7 @@ const storedMapLayer = +localStorage.getItem("map");
 const prefersDarkMode = window.matchMedia(
   "(prefers-color-scheme: dark)"
 ).matches;
+// Previous Map selector allowed saved maps but found it was more annoying than helpful
 // let mapLayer = prefersDarkMode
 //   ? // ? [1, 3].includes(storedMapLayer) // Dark Maps
 //     [2].includes(storedMapLayer) // Dark Maps
@@ -49,12 +50,8 @@ const prefersDarkMode = window.matchMedia(
 //   [0, 1, 3].includes(storedMapLayer) // Light Maps
 //   ? storedMapLayer
 //   : 0;
-let mapLayer = prefersDarkMode
-  ? 2
-  : [0, 1, 3].includes(storedMapLayer) // Light Maps
-  ? storedMapLayer
-  : 0;
-localStorage.setItem("mapNumber", mapLayer);
+let mapLayer = prefersDarkMode ? 2 : 0;
+// localStorage.setItem("mapNumber", mapLayer);
 
 const countContainer = document.getElementById("nearby-info");
 const infoContainer = document.getElementById("project-info-container");
@@ -82,39 +79,38 @@ const initGetUrlParam = function () {
  */
 setTimeout(() => {
   window.location.reload(true);
-}, 60000 * 10);
-
-/**
- * Sets a local storage item to record the last load time and schedules a data reload.
- *
- * @param {string} key - The key for the local storage item.
- */
-localStorage.setItem("last-load", new Date());
+}, 60000 * 30); // Updated delay to 30 minutes
 
 /**
  * Schedule a data reload after 5 minutes.
  *
- * @param {number} reload_interval - The interval in milliseconds between data reloads.
+ * @param {number} reloadInterval - The interval in milliseconds between data reloads.
  * @param {function} callback - The function to execute when the timeout elapses.
  */
-let reload_interval = 60000 * 5;
-setTimeout(reloadData, reload_interval);
+(function reloadTimeout() {
+  setTimeout(() => {
+    reloadData();
+    reloadTimeout();
+  }, 60000 * 5);
+})();
 
 /**
  * Reloads data based on the current state and scheduling.
  *
  * @param {boolean} showingCarBreakin - A flag indicating whether car break-ins are being shown.
- * @param {number} reload_interval - The interval in milliseconds for data reload.
  */
 function reloadData() {
   if (showingCarBreakin) {
-    setTimeout(reloadData, 15000);
+    setTimeout(reloadData, 20000);
   } else {
-    localStorage.setItem("last-load", new Date());
     reInit();
-    setTimeout(reloadData, reload_interval);
   }
 }
+
+let tenMinPassed = false;
+setTimeout(() => {
+  tenMinPassed = true;
+}, 60000 * 10);
 
 /**
  * Adds an event listener for visibility change to reload the page when it becomes visible after a period of inactivity.
@@ -123,13 +119,10 @@ function reloadData() {
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
     /**
-     * On visibility change, this block checks the last load time in local storage and reloads the page if it's been for more than 5 minutes.
-     * @param {string} lastLoad - The timestamp of the last page load.
+     * @param {boolean} tenMinPassed - A flag indicating whether five minutes have passed.
      */
-    const lastLoad = localStorage.getItem("last-load");
-    if (!lastLoad || new Date() - new Date(lastLoad) > 60000 * 5) {
+    if (tenMinPassed) {
       window.location.reload(true);
-      // reloadData();
     }
   }
 });
@@ -360,7 +353,8 @@ const controlChangeMap = function () {
    * @type {number}
    */
   let currentLayer =
-    ((+localStorage.getItem("mapNumber") || 0) + 1) % sfapi.MAP_LAYERS.length;
+    // ((+localStorage.getItem("mapNumber") || 0) + 1) % sfapi.MAP_LAYERS.length;
+    ((+mapLayer || 0) + 1) % sfapi.MAP_LAYERS.length;
 
   // Create a new map layer based on the current index
   const newLayer = L.tileLayer(sfapi.MAP_LAYERS[currentLayer]);
@@ -371,12 +365,14 @@ const controlChangeMap = function () {
     L.tileLayer(sfapi.MAP_LAYERS[currentLayer]).remove();
     currentLayer = (currentLayer + 1) % sfapi.MAP_LAYERS.length;
     L.tileLayer(sfapi.MAP_LAYERS[currentLayer]).addTo(map);
-    localStorage.setItem("mapNumber", currentLayer);
+    // localStorage.setItem("mapNumber", currentLayer);
+    mapLayer = currentLayer;
   });
 
   // Add the new layer to the map and update the saved map choice in local storage
   L.tileLayer(sfapi.MAP_LAYERS[currentLayer]).addTo(map);
-  localStorage.setItem("mapNumber", currentLayer);
+  // localStorage.setItem("mapNumber", currentLayer);
+  mapLayer = currentLayer;
 
   // Remove the previous map layer so only 1 layer remains
   L.tileLayer(sfapi.MAP_LAYERS[currentLayer - 1]).remove();
