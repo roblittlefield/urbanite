@@ -113,7 +113,23 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
       });
     }
 
-    // Generat the marker data
+    // Add the icon or circle marker
+    // Dispatched but not on-scene yet
+    let recentlyDispatched =
+      isNaN(call.responseTime) &&
+      (call.dispatchedTimeAgo <= 150 ||
+        (call.priority === "B" && call.dispatchedTimeAgo <= 90) ||
+        (call.priority === "A" && call.dispatchedTimeAgo <= 75));
+
+    // Recently arrived on scene
+    let onSceneTimeAgo = call.receivedTimeAgo - call.responseTime;
+    let recentlyResponded =
+      isFinite(call.responseTime) &&
+      (onSceneTimeAgo < 30 ||
+        (call.priority === "B" && onSceneTimeAgo < 35) ||
+        (call.priority === "A" && onSceneTimeAgo < 45));
+
+    // Generate the marker data
     let markerData = {
       cadNumber: call.cadNumber,
       // receivedTimeCalc: call.receivedTime,
@@ -134,23 +150,10 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
       // desc: call.desc,
       onView: call.onView,
       priority: call.priority,
+      // onSceneTimeAgo: onSceneTimeAgo,
+      recentlyResponded,
+      recentlyDispatched,
     };
-
-    // Add the icon or circle marker
-    // Dispatched but not on-scene yet
-    let recentlyDispatched =
-      isNaN(call.responseTime) &&
-      (call.dispatchedTimeAgo <= 150 ||
-        (call.priority === "B" && call.dispatchedTimeAgo <= 90) ||
-        (call.priority === "A" && call.dispatchedTimeAgo <= 75));
-
-    // Recently arrived on-scene
-    let onSceneTimeAgo = call.receivedTimeAgo - call.responseTime;
-    let recentlyResponded =
-      isFinite(call.responseTime) &&
-      (onSceneTimeAgo < 30 ||
-        (call.priority === "B" && onSceneTimeAgo < 35) ||
-        (call.priority === "A" && onSceneTimeAgo < 45));
 
     // Create content for recent calls
     if (recentlyDispatched || recentlyResponded) {
@@ -170,7 +173,7 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
             break;
           case "Fight":
           case "Fight with weapons":
-            emojiIcon = "🤼";
+            emojiIcon = "🥊";
             break;
           case "Demonstration / protest":
             emojiIcon = "📢";
@@ -182,14 +185,18 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
           case "Suspicious person":
           case "Mentally disturbed person":
           case "Wanted vehicle / person":
-          case "Person screaming":
           case "Prowler":
           case "Stalking":
           case "Trespasser":
-          case "Person screaming":
           case "Intoxicated person":
+          case "Citizen arrest":
+            emojiIcon = "👤";
+            break;
           case "Drunk driver":
-            emojiIcon = "👀";
+            emojiIcon = "😵";
+            break;
+          case "Person screaming":
+            emojiIcon = "🗣️";
             break;
           case "Burglary":
           case "Person breaking in":
@@ -206,6 +213,8 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
             emojiIcon = "👜";
             break;
           case "Shot Spotter":
+          case "Shots fired":
+          case "Person with gun":
             emojiIcon = "🔫";
             break;
           default:

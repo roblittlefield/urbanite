@@ -94,6 +94,12 @@ export const updateCallList = function (latestMarkers, map, nearby) {
       // Create and add call box elements
 
       const callBoxClasses = ["call-box", "hidden"];
+      circleMarker.options.data.recentlyResponded
+        ? callBoxClasses.push("recent-resp")
+        : circleMarker.options.data.recentlyDispatched
+        ? callBoxClasses.push("recent-disp")
+        : "";
+
       if (circleMarker.options.data.disposition === "No merit") {
         callBoxClasses.push("call-box-no-merit");
       }

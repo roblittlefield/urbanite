@@ -260,6 +260,14 @@
   cursor: pointer;
 }
 
+.recent-resp {
+  background-color: rgba(47, 47, 80, 1);
+}
+
+.recent-disp {
+  background-color: #4f4f4f;
+}
+
 .call-box-no-merit p,
 .call-box-no-merit h3 {
   text-decoration: line-through;
