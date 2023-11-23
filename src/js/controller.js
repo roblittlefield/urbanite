@@ -91,7 +91,8 @@ setTimeout(() => {
   setTimeout(() => {
     reloadData();
     reloadTimeout();
-  }, 60000 * 5);
+    // }, 60000 * 5);
+  }, 60000 * 10);
 })();
 
 /**
