@@ -27,6 +27,7 @@ import {
   loadCarBreakinsButton,
 } from "./views/buttonsView.js";
 import getURLParameter from "./views/hashURL.js";
+import loadAff from "./views/affiliate.js";
 import addHandlerMoveCenter from "./views/moveCenter.js";
 import { async } from "regenerator-runtime";
 
@@ -91,8 +92,7 @@ setTimeout(() => {
   setTimeout(() => {
     reloadData();
     reloadTimeout();
-    // }, 60000 * 5);
-  }, 60000 * 10);
+  }, 60000 * 5);
 })();
 
 /**
@@ -254,56 +254,6 @@ const controlCircleMarkers = async function () {
       addHandlerMoveCenter(callsLayer, map);
       openPopup();
     }
-
-    // Affiliate Link loading
-    let randAffNum = Math.floor(Math.random() * 6);
-    let affEls = "";
-    affEls = document.querySelectorAll(
-      ".affiliate-1, .affiliate-2, .affiliate-3, .affiliate-4, .affiliate-5, .affiliate-6"
-    );
-    affEls.forEach((el) => {
-      el.classList.add("hidden");
-    });
-    const getAff = function () {
-      randAffNum = (randAffNum + 1) % 6;
-      return affEls[randAffNum];
-    };
-    let affEl = getAff();
-    affEl.classList.remove("hidden");
-
-    (function affHide() {
-      setTimeout(() => {
-        affEl.classList.add("aff-hidden");
-        affEl.classList.remove("aff-visible");
-        document
-          .getElementsByClassName("affiliate-disclaimer")[0]
-          .classList.add("aff-hidden");
-        document
-          .getElementsByClassName("affiliate-disclaimer")[0]
-          .classList.remove("aff-visible");
-
-        setTimeout(() => {
-          affEl.classList.add("hidden");
-          affEl.classList.remove("aff-hidden");
-          affEl = getAff();
-          affEl.style.opacity = "0";
-          setTimeout(() => {
-            affEl.classList.remove("hidden");
-            setTimeout(() => {
-              affEl.classList.add("aff-visible");
-            }, 100);
-          }, 100);
-          document
-            .getElementsByClassName("affiliate-disclaimer")[0]
-            .classList.add("aff-visible");
-          document
-            .getElementsByClassName("affiliate-disclaimer")[0]
-            .classList.remove("aff-hidden");
-        }, 2300);
-
-        affHide();
-      }, 1000 * 20);
-    })();
 
     // If user location is known, update the nearby calls list
     if (initLoaded && position) loadNearbyCalls();
@@ -634,9 +584,12 @@ const init = async function () {
     // Control circle markers
     await controlCircleMarkers();
 
-    // Load and configure map change button and the project info button
+    // Load and configure map change button, the project info button
     loadChangeMapButton(controlChangeMap);
     loadProjectInfoButton(controlProjectInfo);
+
+    // Load affiliate links
+    loadAff();
 
     // Remove the "hidden" class from the "addSFDataSource" element to display it
     document.getElementById("addSFDataSource").classList.remove("hidden");
