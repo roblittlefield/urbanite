@@ -488,6 +488,7 @@ const controlCarBreakins = async function () {
 
     // Hide the unrelated buttons and metrics
     toggleVisibleItems();
+    document.getElementsByClassName("affiliate")[0].classList.add("hidden");
     [lastUpdatedElement, carSubtextElement, carCountElement].forEach(
       (element) => element.classList.remove("hidden")
     );
@@ -547,6 +548,9 @@ const controlCarBreakins = async function () {
       carSubtextElement.classList.add("hidden");
       lastUpdatedElement.style.bottom = "54px";
       toggleVisibleItems();
+      document
+        .getElementsByClassName("affiliate")[0]
+        .classList.remove("hidden");
       lastUpdatedElement.classList.remove("hidden");
       firstCarBreakin = false;
       showingCarBreakin = false;
