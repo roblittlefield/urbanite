@@ -255,11 +255,11 @@ const controlCircleMarkers = async function () {
     }
 
     // Affiliate Link loading
-    let randAffNum = Math.floor(Math.random() * 5);
+    let randAffNum = Math.floor(Math.random() * 6);
     const getAff = function () {
-      randAffNum = (randAffNum + 1) % 5;
+      randAffNum = (randAffNum + 1) % 6;
       return document.querySelectorAll(
-        ".affiliate-1, .affiliate-2, .affiliate-3, .affiliate-4, .affiliate-5"
+        ".affiliate-1, .affiliate-2, .affiliate-3, .affiliate-4, .affiliate-5, .affiliate-6"
       )[randAffNum];
     };
     let affEl = getAff();
