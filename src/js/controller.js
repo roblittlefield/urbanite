@@ -293,7 +293,7 @@ const controlCircleMarkers = async function () {
           document
             .getElementsByClassName("affiliate-disclaimer")[0]
             .classList.remove("aff-hidden");
-        }, 3700);
+        }, 2300);
 
         affHide();
       }, 1000 * 20);
