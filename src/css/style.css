@@ -43,7 +43,7 @@ body {
 .affiliate-disclaimer {
   font-style: italic;
   font-size: 5px;
-  color: rgba(45, 45, 45, 0.1);
+  color: rgba(45, 45, 45, 0.2);
   padding: 1px;
   text-decoration: none;
   font-family: Tahoma, Arial, Helvetica, sans-serif;
@@ -582,7 +582,7 @@ body {
   }
 
   .affiliate-disclaimer {
-    color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.2);
   }
   .affiliate-target-name-1,
   .affiliate-target-name-2,
