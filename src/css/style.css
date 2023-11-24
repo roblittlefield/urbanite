@@ -100,7 +100,7 @@ body {
 
 .affiliate-target-6 {
   top: 10px;
-  right: 119px;
+  right: 136px;
 }
 
 .affiliate-target-name-1,
@@ -119,31 +119,32 @@ body {
 }
 
 .affiliate-target-name-1 {
-  top: 55px;
+  top: 58px;
 }
 
 .affiliate-target-name-2 {
-  top: 80px;
+  top: 100px;
+  right: 144px;
 }
 
 .affiliate-target-name-3 {
-  top: 89px;
+  top: 105px;
   right: 130px;
 }
 
 .affiliate-target-name-4 {
-  top: 110px;
+  top: 114px;
   font-size: 13px;
 }
 
 .affiliate-target-name-5 {
-  top: 57px;
+  top: 61px;
   right: 140px;
 }
 
 .affiliate-target-name-6 {
-  top: 112px;
-  right: 125px;
+  top: 144px;
+  right: 136px;
 }
 
 @media screen and (max-width: 350px) {

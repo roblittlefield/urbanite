@@ -1,6 +1,7 @@
 const loadAff = function () {
   // Affiliate Link loading
-  let randAffNum = Math.floor(Math.random() * 6);
+  // let randAffNum = Math.floor(Math.random() * 6);
+  let randAffNum = 4;
   let affEls = "";
   affEls = document.querySelectorAll(
     ".affiliate-1, .affiliate-2, .affiliate-3, .affiliate-4, .affiliate-5, .affiliate-6"
