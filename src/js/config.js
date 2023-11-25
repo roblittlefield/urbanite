@@ -54,13 +54,13 @@ export const onSceneCircleOpt = {
 export const MAP_LAYERS = [
   // Light Mode
   // "https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png", // 0 Gray/Green
-  `https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Atlas (light)
+  `https://tile.jawg.io/f4092ed7-ed42-471b-84e3-a481315be2a6/{z}/{x}/{y}{r}.png?access-token=${JAWG_API_KEY}`, // Cusotom Jawg Lagoon
   "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", // OpenStreet.HOT (light)
   "https://cdn.lima-labs.com/{z}/{x}/{y}.png?api=demo", // 5 Urban
+  `https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Atlas (light)
   "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", // 6 Open Street Map Urban (light)
   `https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Neighborhood (light)
   `https://tile.jawg.io/jawg-lagoon/{z}/{x}/{y}{r}.png?access-token=${JAWG_API_KEY}`, // Jawg Lagoon
-  //
   // Dark Mode
   // "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png", // 1 Dark
   `https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=${JAWG_API_KEY}`, // Jawg Dark (ok)
