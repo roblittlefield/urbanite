@@ -54,24 +54,23 @@ export const onSceneCircleOpt = {
 export const MAP_LAYERS = [
   // Light Mode
   // "https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png", // 0 Gray/Green
-  `https://tile.jawg.io/jawg-lagoon/{z}/{x}/{y}{r}.png?access-token=${JAWG_API_KEY}`, // Jawg Lagoon
   `https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Atlas (light)
   "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", // OpenStreet.HOT (light)
+  "https://cdn.lima-labs.com/{z}/{x}/{y}.png?api=demo", // 5 Urban
   "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", // 6 Open Street Map Urban (light)
   `https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Neighborhood (light)
+  `https://tile.jawg.io/jawg-lagoon/{z}/{x}/{y}{r}.png?access-token=${JAWG_API_KEY}`, // Jawg Lagoon
   //
   // Dark Mode
   // "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png", // 1 Dark
   `https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=${JAWG_API_KEY}`, // Jawg Dark (ok)
   "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", // (very dark)
-  //
-  //
+  "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", // OpenTop (orange, gray, yellow)
+  `https://tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Spinal (black) Dark
   //
   // Fun Mode
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", // 4 Satellite Photos
-  "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", // OpenTop (orange, gray, yellow)
-  `https://tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Spinal (black) Dark
-  "https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png", // CycloOSM (light)
+  "https://{s}.tile-cyclosm.opens÷treetmap.fr/cyclosm/{z}/{x}/{y}.png", // CycloOSM (light)
   `https://tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Pioneer (light: gray, green)
   `https://tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Mobile Atlast (light: white w red lines)
   `https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Landscape (purple light gray)
@@ -80,7 +79,6 @@ export const MAP_LAYERS = [
   // "https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg", // 2 Watercolor
   // "https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}{r}.png", // 3 Black n White
   // "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png", // 5 Light
-  "https://cdn.lima-labs.com/{z}/{x}/{y}.png?api=demo", // 5 Urban
 ];
 
 // SFPD Real-Time calls base URL
