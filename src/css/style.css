@@ -590,7 +590,7 @@ body {
   .affiliate-target-name-4,
   .affiliate-target-name-5,
   .affiliate-target-name-6 {
-    /* color: rgba(255, 255, 255, 0.8); */
-    color: rgba(238, 9, 9, 0.8);
+    color: rgba(255, 255, 255, 0.8);
+    /* color: rgba(238, 9, 9, 0.8); */
   }
 }
