@@ -62,8 +62,8 @@ export const MAP_LAYERS = [
   `https://tile.jawg.io/f4092ed7-ed42-471b-84e3-a481315be2a6/{z}/{x}/{y}{r}.png?access-token=${JAWG_API_KEY}`, // Cusotom Jawg Lagoon
   // `https://tile.jawg.io/jawg-lagoon/{z}/{x}/{y}{r}.png?access-token=${JAWG_API_KEY}`, // Jawg Lagoon
   // Dark Mode
-  // "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png", // 1 Dark
-  `https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=${JAWG_API_KEY}`, // Jawg Dark (ok)
+  "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png", // 1 Dark
+  // `https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=${JAWG_API_KEY}`, // Jawg Dark (ok)
   "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", // (very dark)
   "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", // OpenTop (orange, gray, yellow)
   `https://tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Spinal (black) Dark
@@ -74,7 +74,6 @@ export const MAP_LAYERS = [
   `https://tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Pioneer (light: gray, green)
   `https://tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Mobile Atlast (light: white w red lines)
   `https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Landscape (purple light gray)
-  //
   //
   // "https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg", // 2 Watercolor
   // "https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}{r}.png", // 3 Black n White
