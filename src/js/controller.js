@@ -31,10 +31,6 @@ import loadAff from "./views/affiliate.js";
 import addHandlerMoveCenter from "./views/moveCenter.js";
 import { async } from "regenerator-runtime";
 
-if (navigator.language.startsWith("hi-IN")) {
-  window.location.href = "https://twitter.com/SFPDcallsBot";
-}
-
 let map;
 let originalPosition;
 let originalZoom;
