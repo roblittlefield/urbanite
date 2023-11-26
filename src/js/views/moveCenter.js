@@ -22,7 +22,7 @@ const addHandlerMoveCenter = function (callsLayer, map) {
 
       // Calculate the center of the map
       const centerX = x / 2;
-      const centerY = y / 2;
+      const centerY = y / 2 + 106;
 
       // Initialize variables to find the closest marker
       let minDistance = Infinity;

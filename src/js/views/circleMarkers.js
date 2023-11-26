@@ -73,7 +73,7 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
       textMessageContent
     )}">
     <a href="https://www.amazon.com/dp/B0BNP9LPHC?ref_=nw_us_gw_dm_all_azo_&_encoding=UTF8&tag=urbanitesf1-20&linkCode=ur2&linkId=51846f32b3389aac2091b5496ed48ba5&camp=1789&creative=9325">
-    <img src="https://cdn.akamai.steamstatic.com/steam/apps/1063730/header.jpg?t=1695753023" alt="Game" style="width: 176px; height: 75px; position: absolute; left: 50%; transform: translateX(-50%);  top: -80px; overflow: hidden; border-radius: 8px; border: 0.5px solid black;" class="affiliate-popup">
+    <img src="https://cdn.akamai.steamstatic.com/steam/apps/1063730/header.jpg?t=1695753023" alt="Game" style="width: 176px; height: 75px; position: absolute; left: 50%; transform: translateX(-50%);  top: -80px;" class="affiliate-popup">
     </a>
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IMessage_logo.svg/20px-IMessage_logo.svg.png" alt="iMessage / text" style="height: 20px; position: absolute; top: calc(50% - 24px); right: -6px;" class="text-message-btn">
     </a>
