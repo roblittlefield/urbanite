@@ -100,7 +100,7 @@ body {
 
 .affiliate-target-6 {
   top: 10px;
-  right: 136px;
+  right: 143px;
 }
 
 .affiliate-target-name-1,
@@ -552,11 +552,11 @@ body {
   }
 
   #nearby-list-btn {
-    box-shadow: 0px 0px 6px 3px rgb(005, 255, 0, 0.3) !important;
+    box-shadow: 0px 0px 6px 3px rgb(255, 255, 0, 0.6) !important;
   }
 
   #latest-list-btn {
-    box-shadow: 0px 0px 6px 3px rgba(0, 0, 255, 0.324) !important;
+    box-shadow: 0px 0px 6px 3px rgba(0, 0, 255, 0.62) !important;
   }
 
   .leaflet-popup-content-wrapper,
