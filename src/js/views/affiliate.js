@@ -4,7 +4,7 @@ const loadAff = function () {
     setTimeout(() => {
       document.querySelector(".affiliate-popup").classList.toggle("hidden");
       popupAffHide();
-    }, 20000);
+    }, 3300);
   })();
 
   // Affiliate Link loading
