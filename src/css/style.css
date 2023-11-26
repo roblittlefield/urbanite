@@ -353,8 +353,8 @@ body {
   background-image: linear-gradient(#f7f7f7, #e7e7e7);
   box-shadow: 1px 2px 2px 2px rgba(0, 0, 0, 0.25);
   width: 65px;
-  height: 25px;
-  right: 13px;
+  height: 26px;
+  right: 11px;
   padding: 0px 3px;
   border: none;
   cursor: pointer;
@@ -527,15 +527,17 @@ body {
   .station-popup .leaflet-popup-content,
   .leaflet-popup-tip {
     color: rgba(255, 255, 255, 0.94);
-    background-color: rgba(30, 30, 30, 0.9);
+    background-color: rgba(5, 5, 5, 0.93);
+    border: 0.6px solid black;
   }
 
   #weather,
   #nearby-info,
   #neighborhood-text,
   #last-updated {
-    background-color: rgba(30, 30, 30, 0.85);
-    color: rgba(241, 241, 241, 0.84);
+    background-color: rgba(5, 5, 5, 0.7);
+    color: rgba(250, 250, 250, 0.84);
+    border: 0.8px solid black;
   }
 
   .leaflet-control-zoom-in,
@@ -546,8 +548,9 @@ body {
   #project-info-btn,
   #response-times-list-btn,
   #car-breakins-btn {
-    background-image: linear-gradient(#303030, #1a1a1a);
-    color: rgba(237, 237, 237, 0.84) !important;
+    background-image: linear-gradient(#505050, #252525);
+    color: rgba(248, 248, 248, 0.84) !important;
+    border: 0.5px solid black;
   }
 
   .leaflet-popup-content-wrapper,
@@ -566,7 +569,7 @@ body {
   #response-times-list-btn,
   #car-breakins-btn {
     text-shadow: none;
-    box-shadow: 0px 0px 6px 2px rgba(244, 240, 240, 0.25);
+    /* box-shadow: 0px 0px 6px 2px rgba(244, 240, 240, 0.25); */
   }
 
   .leaflet-control-zoom-in:active,

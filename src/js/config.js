@@ -27,16 +27,16 @@ export const nearbyCircleOpt = {
   radius: 500, // m
   color: "white",
   fillColor: "yellow",
-  fillOpacity: 0.14,
+  fillOpacity: 0.2,
   weight: 1,
 };
 
 export const exactPositionCircleOpt = {
-  radius: 7, // m
-  color: "yellow",
-  fillColor: "yellow",
+  radius: 12, // m
+  color: "white",
+  fillColor: "#3288bd",
   fillOpacity: 1,
-  weight: 1,
+  weight: 3,
 };
 
 // Specifications for police "recently on-scene" blue circle added to Leaflet map
@@ -180,7 +180,7 @@ export const colorMap = new Map([
   ["PERSON SCREAMING", "#66c2a5"],
   ["DRUNK DRIVER", "#66c2a5"],
 
-  ["STOLEN VEHICLE", "#a358ea"],
+  ["STOLEN VEHICLE", "#a358ea"], // Purple
   ["AUTO BOOST / STRIP", "#f598ea"], // Pink
 
   ["H&R INJURY ACCIDENT", "#3288bd"],
