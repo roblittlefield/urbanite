@@ -10,9 +10,15 @@ let isPopupOpen = false;
  */
 const addHandlerMoveCenter = function (callsLayer, map) {
   let timer = null;
+  let popupAffTimer = null;
   map.on("move", () => {
     // Check if the 'moving' flag is set; if true, exit the function
     if (moving) return;
+    // Popup Affiliate
+    clearTimeout(popupAffTimer);
+    popupAffTimer = setTimeout(() => {
+      document.querySelector(".affiliate-popup").classList.add("hidden");
+    }, 2800);
 
     // Clear any previously scheduled timer to avoid rapid execution
     clearTimeout(timer);
