@@ -1,4 +1,12 @@
 const loadAff = function () {
+  // Popup Affiliate
+  (function popupAffHide() {
+    setTimeout(() => {
+      document.querySelector(".affiliate-popup").classList.toggle("hidden");
+      popupAffHide();
+    }, 20000);
+  })();
+
   // Affiliate Link loading
   let randAffNum = Math.floor(Math.random() * 6);
   // let randAffNum = 5;

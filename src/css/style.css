@@ -527,7 +527,7 @@ body {
   .station-popup .leaflet-popup-content,
   .leaflet-popup-tip {
     color: rgba(255, 255, 255, 0.94);
-    background-color: rgba(0, 0, 0, 0.99);
+    background-color: rgba(17, 17, 17, 0.93);
     border: 0.6px solid black;
   }
 
@@ -535,7 +535,7 @@ body {
   #nearby-info,
   #neighborhood-text,
   #last-updated {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(19, 19, 19, 0.8);
     color: rgba(250, 250, 250, 0.95);
   }
 
@@ -547,7 +547,7 @@ body {
   #project-info-btn,
   #response-times-list-btn,
   #car-breakins-btn {
-    background-image: linear-gradient(#252525, #000000);
+    background-image: linear-gradient(#2f2f2f, #101010);
     color: rgba(250, 250, 250, 0.95) !important;
   }
 
