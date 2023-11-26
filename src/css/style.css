@@ -93,10 +93,9 @@ body {
 }
 
 .affiliate-target-5 {
-  top: 15px;
-  /* backdrop-filter: blur(1px); */
-  border-radius: 30px;
-  right: 145px;
+  top: 20px;
+  border-radius: 10px;
+  right: 155px;
 }
 
 .affiliate-target-6 {
@@ -139,8 +138,8 @@ body {
 }
 
 .affiliate-target-name-5 {
-  top: 61px;
-  right: 140px;
+  top: 104px;
+  right: 153px;
 }
 
 .affiliate-target-name-6 {
