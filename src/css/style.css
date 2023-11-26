@@ -268,11 +268,13 @@ body {
   top: 44px;
 }
 #latest-list-btn {
-  top: 149px;
+  /* top: 149px; */
+  top: 184px;
 }
 
 #nearby-list-btn {
-  top: 184px;
+  /* top: 184px; */
+  top: 149px;
 }
 
 #response-times-list-btn {
