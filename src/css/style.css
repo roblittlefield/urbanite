@@ -583,9 +583,9 @@ body {
     /* box-shadow: 0px 0px 6px 2px rgba(244, 240, 240, 0.25); */
   }
 
-  .affiliate-popup {
+  /* .affiliate-popup {
     box-shadow: 0px 0px 16px 2px rgba(192, 19, 17, 0.6);
-  }
+  } */
 
   .leaflet-control-zoom-in:active,
   .leaflet-control-zoom-out:active {
