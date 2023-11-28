@@ -81,14 +81,14 @@ const initGetUrlParam = function () {
 };
 
 /**
- * Refreshes the current page with a hard reload after 15 minutes.
+ * Refreshes the current page with a hard reload after 10 minutes.
  *
  * @param {Function} callback - The function to execute when the timeout elapses.
  * @param {number} delay - The delay time in milliseconds before executing the callback.
  */
 setTimeout(() => {
   window.location.reload(true);
-}, 60000 * 15); // Updated delay to 15 minutes
+}, 60000 * 10);
 
 /**
  * Schedule a data reload after 5 minutes.
@@ -100,7 +100,7 @@ setTimeout(() => {
   setTimeout(() => {
     reloadData();
     reloadTimeout();
-  }, 60000 * 5);
+  }, 60000 * 7);
 })();
 
 /**
