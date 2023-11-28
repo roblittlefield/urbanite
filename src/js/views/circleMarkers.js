@@ -69,9 +69,8 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
     const popupContent = `
   <div>
     <b>${call.callTypeFormatted}</b>
-    <a href="https://www.amazon.com/dp/B0BNP9LPHC?ref_=nw_us_gw_dm_all_azo_&_encoding=UTF8&tag=urbanitesf1-20&linkCode=ur2&linkId=51846f32b3389aac2091b5496ed48ba5&camp=1789&creative=9325">
-    <a target="_blank" href="https://www.amazon.com/Jordan-Nike-Shoes-Red-White-DQ8426-060/dp/B08X1HPF1L/ref=sr_1_1?crid=1DRLUE1ZAK7Y2&amp;keywords=nike%252Bshoes%252Bmen%252Bjordan&amp;qid=1701059855&amp;sprefix=nike%252Bshoes%252Bmen%252B%252Caps%252C150&amp;sr=8-1&amp;th=1&_encoding=UTF8&tag=urbanitesf1-20&linkCode=ur2&linkId=a935340a0225120676f57a9eceda529d&camp=1789&creative=9325" rel="nofollow">
-    <img src="https://i.imgur.com/bKryy1D.png" alt="Nike Air Jordan" style="width: 172px; height: 98px; position: absolute; left: 50%; transform: translateX(-50%);  top: -101px;" class="affiliate-popup">
+    <a target="_blank" href="https://www.amazon.com/Dskeuzeew-Treadmill-Treadmills-Motorized-Light-Pink/dp/B0C6K757VR/ref=asc_df_B0CCCY9PRK/?tag=hyprod-20&amp;linkCode=df0&amp;hvadid=673692501349&amp;hvpos=&amp;hvnetw=g&amp;hvrand=5472284271446295383&amp;hvpone=&amp;hvptwo=&amp;hvqmt=&amp;hvdev=c&amp;hvdvcmdl=&amp;hvlocint=&amp;hvlocphy=9061275&amp;hvtargid=pla-2203551869241&amp;mcid=5ef82bab2ba136a181299398ef970c11&amp;th=1&_encoding=UTF8&tag=urbanitesf1-20&linkCode=ur2&linkId=13dc126873401a4b1a5419a560613739&camp=1789&creative=9325" rel="nofollow">
+    <img src="https://i.imgur.com/dXep8dm.png" alt="Under Desk Treadmill" style="width: 170px; height: 167px; position: absolute; left: 50%; transform: translateX(-50%);  top: -168px;" class="affiliate-popup">
     </a>
     \u2022 ${receivedTimeAgoF} <a href="sms:&body=${encodeURIComponent(
       textMessageContent
