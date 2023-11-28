@@ -77,7 +77,7 @@ body {
 }
 
 .affiliate-target-1 {
-  top: 15px;
+  top: 10px;
 }
 
 .affiliate-target-2 {
@@ -93,7 +93,7 @@ body {
 }
 
 .affiliate-target-5 {
-  top: 20px;
+  top: 10px;
 }
 
 .affiliate-target-6 {
@@ -116,30 +116,27 @@ body {
 }
 
 .affiliate-target-name-1 {
-  top: 60px;
-  right: 85.5px;
+  top: 95px;
 }
 
 .affiliate-target-name-2 {
-  top: 100px;
-  right: 86px;
+  top: 105px;
 }
 
 .affiliate-target-name-3 {
-  top: 97px;
+  top: 103px;
 }
 
 .affiliate-target-name-4 {
-  top: 102px;
+  top: 95px;
 }
 
 .affiliate-target-name-5 {
-  top: 104px;
-  right: 79px;
+  top: 95px;
 }
 
 .affiliate-target-name-6 {
-  top: 144px;
+  top: 102px;
 }
 
 @media screen and (max-width: 350px) {
