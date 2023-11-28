@@ -139,7 +139,7 @@ document.addEventListener("visibilitychange", () => {
 let inputSequence = "";
 function handleKeydown(event) {
   inputSequence += event.key;
-  if (inputSequence.includes("415")) {
+  if (inputSequence.includes("415") || inputSequence.includes("frisco")) {
     document.getElementById("affiliate").style.setProperty("display", "none");
     document.querySelector(".affiliate-popup").classList.add("hidden");
     sH(false);
