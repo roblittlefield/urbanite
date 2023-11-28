@@ -6,7 +6,7 @@ import {
   textProperCase,
   neighborhoodFormat,
 } from "../helpers.js";
-import addHandlerMoveCenter from "./moveCenter.js";
+import { addHandlerMoveCenter } from "./moveCenter.js";
 import { showAlert } from "./getPosition.js";
 
 /**
