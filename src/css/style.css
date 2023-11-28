@@ -262,15 +262,6 @@ body {
 #change-map-btn {
   top: 44px;
 }
-#latest-list-btn {
-  /* top: 149px; */
-  top: 184px;
-}
-
-#nearby-list-btn {
-  /* top: 184px; */
-  top: 149px;
-}
 
 #response-times-list-btn {
   top: 79px;
@@ -280,28 +271,41 @@ body {
   top: 114px;
 }
 
+#nearby-list-btn {
+  /* top: 184px; */
+  top: 149px;
+}
+
+#latest-list-btn {
+  /* top: 149px; */
+  top: 184px;
+}
+
 @media screen and (max-width: 400px) {
-  #project-info-btn {
-    top: 5px;
+  /* #project-info-btn {
+    top: 6px;
   }
 
   #change-map-btn {
-    top: 37px;
-  }
-  #latest-list-btn {
-    top: 133px;
-  }
-
-  #nearby-list-btn {
-    top: 165px;
-  }
+    top: 38px;
+  } */
 
   #response-times-list-btn {
-    top: 69px;
+    top: 82px;
+    left: 12px;
   }
 
   #car-breakins-btn {
-    top: 101px;
+    top: 82px;
+    left: 88px;
+  }
+
+  #nearby-list-btn {
+    top: 79px;
+  }
+
+  #latest-list-btn {
+    top: 114px;
   }
 }
 

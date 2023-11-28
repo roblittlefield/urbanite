@@ -81,14 +81,14 @@ const initGetUrlParam = function () {
 };
 
 /**
- * Refreshes the current page with a hard reload after 30 minutes.
+ * Refreshes the current page with a hard reload after 15 minutes.
  *
  * @param {Function} callback - The function to execute when the timeout elapses.
  * @param {number} delay - The delay time in milliseconds before executing the callback.
  */
 setTimeout(() => {
   window.location.reload(true);
-}, 60000 * 30); // Updated delay to 30 minutes
+}, 60000 * 15); // Updated delay to 15 minutes
 
 /**
  * Schedule a data reload after 5 minutes.
@@ -119,7 +119,7 @@ function reloadData() {
 let tenMinPassed = false;
 setTimeout(() => {
   tenMinPassed = true;
-}, 60000 * 10);
+}, 60000 * 3.5);
 
 /**
  * Adds an event listener for visibility change to reload the page when it becomes visible after a period of inactivity.
@@ -171,7 +171,7 @@ const controlMap = async function () {
     // Get weather information for the original position
     getWeather(originalPosition);
 
-    // Add stations to the map after 2 seconds
+    // Add stations to the map after 1100 ms
     setTimeout(function () {
       addStations(map);
     }, 1100);
@@ -554,7 +554,7 @@ const controlCarBreakins = async function () {
       );
       carCountElement.classList.add("hidden");
       carSubtextElement.classList.add("hidden");
-      lastUpdatedElement.style.bottom = "54px";
+      lastUpdatedElement.style.bottom = "28px";
       toggleVisibleItems();
       document.getElementById("affiliate").classList.remove("hidden");
       lastUpdatedElement.classList.remove("hidden");
