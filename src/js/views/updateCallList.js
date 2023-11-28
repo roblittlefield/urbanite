@@ -252,28 +252,38 @@ export const controlOpenCallList = function (
   // Store the selected list type in local storage so it opens back up if the page is closed
   localStorage.setItem("openList", nearby ? "nearby" : "allSF");
 
+  // Close the call box
+  const closeCallBox = () => {
+    // Close the call list if it's open
+    toggleVisibleItems();
+    toggleVisibleList();
+    openPopup();
+    latestContainer.classList.remove("nearby-list");
+
+    // Hide call boxes
+    const callBoxCallList = nearby ? "nearby-call-box" : "allSF-call-box";
+    const callBoxes = document.getElementsByClassName(callBoxCallList);
+    for (let i = 0; i < callBoxes.length; i++) {
+      callBoxes[i].classList.add("hidden");
+    }
+    // Remove the selected open list type from local storage
+    localStorage.removeItem("openList");
+  };
+
   // Define click event handler to close the call list when clicking outside
   const handleClick = (event) => {
     const clickTarget = event.target;
-
-    // Close the call list if it's open
     if (
       !latestContainer.classList.contains("hidden") &&
       !callList.contains(clickTarget)
     ) {
-      toggleVisibleItems();
-      toggleVisibleList();
-      openPopup();
-      latestContainer.classList.remove("nearby-list");
+      closeCallBox();
+    }
+  };
 
-      // Hide call boxes
-      const callBoxCallList = nearby ? "nearby-call-box" : "allSF-call-box";
-      const callBoxes = document.getElementsByClassName(callBoxCallList);
-      for (let i = 0; i < callBoxes.length; i++) {
-        callBoxes[i].classList.add("hidden");
-      }
-      // Remove the selected open list type from local storage
-      localStorage.removeItem("openList");
+  const handleEsc = () => {
+    if (!latestContainer.classList.contains("hidden")) {
+      closeCallBox();
     }
   };
 
@@ -282,6 +292,7 @@ export const controlOpenCallList = function (
     nearby ? (lastLoadedList = "nearby") : (lastLoadedList = "SF");
     if (!isEventListenerAdded) {
       window.addEventListener("click", handleClick);
+      window.addEventListener("keydown", handleEsc);
       isEventListenerAdded = true;
     }
   }

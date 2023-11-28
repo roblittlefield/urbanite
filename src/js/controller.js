@@ -316,7 +316,6 @@ const loadNearbyCalls = async function () {
         sfapi.exactPositionCircleOpt
       ).addTo(map);
       circleExact.bindPopup("You are here.", { closeButton: false });
-      // circleExact.getElement().style.pointerEvents = "none";
     }
     document.getElementById("alert").classList.add("hidden");
     updateCallList(nearbyLayer, map, true, openPopup);
