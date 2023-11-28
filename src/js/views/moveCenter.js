@@ -1,8 +1,8 @@
 import { centerPopupTolerance } from "../config.js";
 let currentPopup = null;
 let isPopupOpen = false;
-
 let aaT = true;
+
 export function sH(v) {
   aaT = v;
 }
@@ -13,7 +13,7 @@ export function sH(v) {
  * @param {L.LayerGroup} callsLayer - The layer group containing markers to be used for centering the map.
  * @param {L.Map} map - The Leaflet map instance to which the handler is added.
  */
-const addHandlerMoveCenter = function (callsLayer, map) {
+export const addHandlerMoveCenter = function (callsLayer, map) {
   let timer = null;
   let popupAffTimer = null;
   map.on("move", () => {
@@ -106,5 +106,3 @@ const addHandlerMoveCenter = function (callsLayer, map) {
     }, 5);
   });
 };
-
-export default addHandlerMoveCenter;
