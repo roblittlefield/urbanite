@@ -28,7 +28,7 @@ import {
 } from "./views/buttonsView.js";
 import getURLParameter from "./views/hashURL.js";
 import loadAff from "./views/affiliate.js";
-import addHandlerMoveCenter from "./views/moveCenter.js";
+import { addHandlerMoveCenter, sH } from "./views/moveCenter.js";
 import { async } from "regenerator-runtime";
 
 // if (
@@ -135,6 +135,24 @@ document.addEventListener("visibilitychange", () => {
     }
   }
 });
+
+let inputSequence = "";
+function handleKeydown(event) {
+  inputSequence += event.key;
+  if (inputSequence.includes("415")) {
+    document.getElementById("affiliate").style.setProperty("display", "none");
+    document.querySelector(".affiliate-popup").classList.add("hidden");
+    sH(false);
+    inputSequence = "";
+    window.removeEventListener("keydown", handleKeydown);
+  }
+  if (inputSequence.length > 3) {
+    setTimeout(() => {
+      inputSequence = "";
+    }, 1500);
+  }
+}
+window.addEventListener("keydown", handleKeydown);
 
 /**
  * Initializes the map by creating a Leaflet map, setting its view, and adding layers.

@@ -2,6 +2,11 @@ import { centerPopupTolerance } from "../config.js";
 let currentPopup = null;
 let isPopupOpen = false;
 
+let aaT = true;
+export function sH(v) {
+  aaT = v;
+}
+
 /**
  * Add a handler to move the center of the map based on the location of markers and open popups.
  *
@@ -16,6 +21,10 @@ const addHandlerMoveCenter = function (callsLayer, map) {
     if (moving) return;
     // Popup Affiliate
     clearTimeout(popupAffTimer);
+    if (!aaT) {
+      const popupElements = document.querySelectorAll(".affiliate-popup");
+      popupElements.forEach((el) => (el.style.display = "none"));
+    }
     popupAffTimer = setTimeout(() => {
       document.querySelector(".affiliate-popup").classList.add("hidden");
     }, 2800);

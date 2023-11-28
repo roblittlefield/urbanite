@@ -14,7 +14,7 @@ export const centerPopupTolerance = 100;
 
 // Defaulet Leaflet map starting coordinates for desktop and mobile
 export const getLatLngSF = () => {
-  return window.innerWidth <= 758 ? [37.764, -122.419] : [37.764, -122.424];
+  return window.innerWidth <= 758 ? [37.7653, -122.419] : [37.7653, -122.424];
 };
 
 // Default Leaflet map starting zoom levels for desktop and mobile

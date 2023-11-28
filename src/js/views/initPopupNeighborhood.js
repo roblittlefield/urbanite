@@ -193,8 +193,11 @@ export const closestZoom = function (position, callsLayer) {
 
       // Calculate the distance between 'position' and the current marker's position
       const distance = Math.sqrt(
-        Math.pow(position[0] - (latLng.lat + 0.0065), 2) +
-          Math.pow(position[1] - latLng.lng, 2)
+        Math.pow(
+          position[0] -
+            (latLng.lat + (window.innerWidth <= 400 ? 0.0065 : 0.001)),
+          2
+        ) + Math.pow(position[1] - latLng.lng, 2)
       );
 
       // Update 'minDistance' and 'nearestMarker' if the current marker is closer
