@@ -3,6 +3,7 @@ import {
   callTypeConversionMap,
   DISPOSITION_REF_POLICE,
   timeElapSF,
+  callnotesMap,
 } from "./config";
 import {
   standardizeData,
@@ -75,12 +76,11 @@ export const dataProcess = function (position, dataRaw, callTypeMap, paramMap) {
     const properCaseAddress = textProperCase(call.address);
     const neighborhoodFormatted = neighborhoodFormat(call.neighborhood);
     const callTypeFormatted = callTypeConversionMap.get(callType) || callType;
+    const callNotes =
+      callnotesMap.get(call.notes_original) ||
+      callnotesMap.get(call.notes_final);
     const dispositionMeaning = DISPOSITION_REF_POLICE[call.disposition] ?? "";
     const positionLatLng = L.latLng(position[0], position[1]);
-    const callLatLng = [
-      Number(call.coords.coordinates[1]),
-      Number(call.coords.coordinates[0]),
-    ];
     if (receivedTimeAgo <= timeElapSF) {
       countCallsRecent++;
     }
@@ -97,6 +97,7 @@ export const dataProcess = function (position, dataRaw, callTypeMap, paramMap) {
       callTypeFormatted,
       dispositionMeaning,
       positionLatLng,
+      callNotes,
     };
   });
 

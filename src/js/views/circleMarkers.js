@@ -18,6 +18,9 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
     const dispatchedTimeAgoF = minsHoursFormat(call.dispatchedTimeAgo);
     const receivedTimeAgoF = minsHoursFormat(Math.round(call.receivedTimeAgo));
 
+    // Collect call notes, if available yet
+    const callNotesStr = call.callNotes ? `: ${call.callNotes}` : "";
+
     // Collect call conclusion/disposition, if available yet
     const disposition =
       call.dispositionMeaning !== "" && call.dispositionMeaning !== "Unknown"
@@ -27,8 +30,8 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
     // Create Tweet / X message content from call data
     const tweetContent = `${call.neighborhoodFormatted.toUpperCase()}: ${
       call.callTypeFormatted
-    } near ${call.properCaseAddress} ${
-      call.receivedTimeAgo < 120
+    }${callNotesStr} near ${call.properCaseAddress} ${
+      call.receivedTimeAgo < 3200
         ? `${receivedTimeAgoF} ago`
         : `${formatDate(call.receivedTime)}`
     }, Priority ${call.priority}, ${
@@ -46,7 +49,7 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
     } https://urbanitesf.netlify.app/?cad=${call.cadNumber}`;
 
     // Create text message / iMessage content from call data
-    const textMessageContent = `"${call.callTypeFormatted} at ${
+    const textMessageContent = `"${call.callTypeFormatted}${callNotesStr} at ${
       call.properCaseAddress
     } in ${call.neighborhoodFormatted} ${receivedTimeAgoF} ago, ${
       call.onView === "Y"
@@ -81,7 +84,13 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
       tweetContent
     )}" target="_blank">
     <img src="https://icons.iconarchive.com/icons/xenatt/the-circle/256/App-Twitter-icon.png" alt="Twitter Bird Icon" style="height: 24px; position: absolute; top: calc(50% - -5px);  right: -8px;" class="twitter-btn">
-    </a>
+    </a>${
+      call.callNotes
+        ? `<br>${call.callNotes.charAt(0).toUpperCase()}${call.callNotes.slice(
+            1
+          )}`
+        : ``
+    }
     <br>${call.properCaseAddress}
     <br>Priority ${
       call.priority
@@ -156,6 +165,7 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
       // onSceneTimeAgo: onSceneTimeAgo,
       recentlyResponded,
       recentlyDispatched,
+      callNotes: call.callNotes,
     };
 
     // Create content for recent calls

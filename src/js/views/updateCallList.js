@@ -28,6 +28,22 @@ export const updateCallList = function (latestMarkers, map, nearby) {
   let calcHour = -1;
   const markersArr = latestMarkers.getLayers();
 
+  // Create Call Type String Length Dummy Element Span
+  const measureElement = document.createElement("span");
+  document.body.appendChild(measureElement);
+  measureElement.style.visibility = "hidden";
+  measureElement.style.whiteSpace = "nowrap";
+  measureElement.style.fontFamily = "Tahoma, Arial, Helvetica, sans-serif";
+  measureElement.style.fontSize = "16px";
+  function getStringVisualLength(str) {
+    measureElement.textContent = str;
+    return measureElement.offsetWidth;
+  }
+  let totalRoom = 200;
+  if (window.innerWidth >= 790) {
+    totalRoom = 218;
+  }
+
   // Sort markers by received time
   const sortedMarkersArr = markersArr.sort(
     (a, b) =>
@@ -36,8 +52,9 @@ export const updateCallList = function (latestMarkers, map, nearby) {
 
   // Iterate through the sorted markers and update call data
   sortedMarkersArr.forEach((circleMarker) => {
-    callTypeTotals[circleMarker.options.data.callType] =
-      (callTypeTotals[circleMarker.options.data.callType] || 0) + 1;
+    const callType = circleMarker.options.data.callType;
+
+    callTypeTotals[callType] = (callTypeTotals[callType] || 0) + 1;
     if (circleMarker.options.data.responseTimeExact) {
       callNeighborhoodCount[circleMarker.options.data.neighborhood] =
         (callNeighborhoodCount[circleMarker.options.data.neighborhood] || 0) +
@@ -91,8 +108,21 @@ export const updateCallList = function (latestMarkers, map, nearby) {
     const responseTime = circleMarker.options.data.responseTime;
     const responseTimeF = minsHoursFormat(responseTime);
     if (circleMarker.options.data) {
-      // Create and add call box elements
+      let callNotesTrim = "";
+      if (circleMarker.options.data.callNotes) {
+        const callTypeLength = getStringVisualLength(callType);
+        callNotesTrim = `: ${circleMarker.options.data.callNotes}`;
+        let callNotesLength = getStringVisualLength(callNotesTrim);
 
+        let extraRoom = totalRoom - callTypeLength - callNotesLength;
+        while (extraRoom < 0) {
+          callNotesTrim = callNotesTrim.slice(0, -1);
+          callNotesLength = getStringVisualLength(callNotesTrim);
+          extraRoom = totalRoom - callTypeLength - callNotesLength;
+        }
+      }
+
+      // Create and add call box elements
       const callBoxClasses = ["call-box", "hidden"];
       circleMarker.options.data.recentlyResponded
         ? callBoxClasses.push("recent-resp")
@@ -121,12 +151,12 @@ export const updateCallList = function (latestMarkers, map, nearby) {
             : circleMarker.options.fillColor === "#0000FF"
             ? "#66CCFF"
             : circleMarker.options.fillColor
-        };">${circleMarker.options.data.callType}${
+        };">${callType}${callNotesTrim}${
         circleMarker.options.data.sensitive ? "  *sensitive call" : ""
       }</h3>
           <i><p>
           ${receivedTimeAgo === NaN ? "" : `${receivedTimeAgoF} ago in`} 
-          ${circleMarker.options.data.neighborhood}, priority ${
+          ${circleMarker.options.data.neighborhood}, Priority ${
         circleMarker.options.data.priority
       }</p>
          </i><p>${
@@ -186,6 +216,7 @@ export const updateCallList = function (latestMarkers, map, nearby) {
   });
   callListSubHeading.textContent = `Last updated: ` + formattedDate;
   if (!nearby) console.log(callTypeTotals);
+  document.body.removeChild(measureElement);
 };
 
 /**
