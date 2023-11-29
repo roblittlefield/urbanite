@@ -277,7 +277,10 @@ export const controlOpenCallList = function (
     setTimeout(() => {
       moving = false;
     }, 3000);
-    map.setView(position, originalZoom);
+    map.setView(
+      [position[0] + (window.innerWidth <= 450 ? 0.004 : 0.002), position[1]],
+      originalZoom
+    );
   }
 
   // Store the selected list type in local storage so it opens back up if the page is closed

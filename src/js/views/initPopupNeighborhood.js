@@ -195,7 +195,7 @@ export const closestZoom = function (position, callsLayer) {
       const distance = Math.sqrt(
         Math.pow(
           position[0] -
-            (latLng.lat + (window.innerWidth <= 450 ? 0.0065 : 0.002)),
+            (latLng.lat + (window.innerWidth <= 450 ? 0.004 : 0.002)),
           2
         ) + Math.pow(position[1] - latLng.lng, 2)
       );
