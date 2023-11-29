@@ -312,8 +312,12 @@ export const controlOpenCallList = function (
     }
   };
 
-  const handleEsc = () => {
-    if (!latestContainer.classList.contains("hidden")) {
+  const handleEsc = (event) => {
+    const allowedKeys = ["Escape", " ", "Enter", "c", "Delete", "q"];
+    if (
+      allowedKeys.includes(event.key) &&
+      !latestContainer.classList.contains("hidden")
+    ) {
       closeCallBox();
     }
   };
