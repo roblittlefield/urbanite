@@ -1,14 +1,14 @@
 const loadAff = function () {
   // Popup Affiliate
-  function popupAffHide() {
+  (function popupAffHide() {
     setTimeout(() => {
       document.querySelector(".affiliate-popup").classList.add("hidden");
     }, 5000);
-  }
+  })();
 
-  if (localStorage.getItem("openList") !== "allSF") {
-    popupAffHide();
-  }
+  // if (localStorage.getItem("openList") !== "allSF") {
+  //   popupAffHide();
+  // }
 
   // Affiliate Link loading
   let randAffNum = Math.floor(Math.random() * 6);
