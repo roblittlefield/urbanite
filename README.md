@@ -1,6 +1,6 @@
-# Urbanite SF
+# SFPD Calls
 
-Live Link: https://urbanitesf.netlify.app
+Live Link: https://SFPDcalls.com
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/8577fd5c-0a26-4efa-85cb-69155c7204d5/deploy-status)](https://app.netlify.com/sites/urbanitesf/deploys)
 
@@ -10,7 +10,7 @@ Live Link: https://urbanitesf.netlify.app
 
 ## Application Description
 
-Urbanite SF is a San Francisco law enforcement dispatched calls for service incident mapping web application. Built as a lightweight & straightforward alternative to other incident mapping apps with pay-walls and ads, Urbanite SF additionally provides call priority, status, exact response time, and CAD ID #. No user data is stored. The application was developed by Rob Littlefield.
+SFPD Calls is a San Francisco law enforcement dispatched calls for service incident mapping web application. Built as a lightweight & straightforward alternative to other incident mapping apps with pay-walls and ads, SFPD calls additionally provides call priority, status, exact response time, and CAD ID #. No user data is stored. The application was developed by Rob Littlefield.
 
 ## Features
 
@@ -25,11 +25,11 @@ Urbanite SF is a San Francisco law enforcement dispatched calls for service inci
 - **Frequent Updates**: Stay up to date with fresh data as the map refreshes every 10 minutes.
 - **Data Accessibility**: Access call data even when DataSF archives calls after 48 hours.
 - **See Police Stations**: See all SFPD stations on the map
-- **See Current Calls Responding To: See which calls SFPD is currently responding to or recently responded to. 
+- \*\*See Current Calls Responding To: See which calls SFPD is currently responding to or recently responded to.
 
 ## Components
 
-Urbanite SF was written using vanilla JavaScript. Includes "live" Police data, which is delayed 10 minutes and filtered for sensitive information.
+SFPD calls was written using vanilla JavaScript. Includes "live" Police data, which is delayed 10 minutes and filtered for sensitive information.
 
 ## Future Work
 
@@ -270,7 +270,7 @@ export function addCircleMarkers(data, callsLayer) {
         : "call received by SFPD"
     }${
       disposition ? `, ${disposition.toLowerCase()}` : ""
-    } https://urbanitesf.netlify.app/?cad=${call.cadNumber}`;
+    } SFPDcalls.com/?cad=${call.cadNumber}`;
 
     // Create text message / iMessage content from call data
     const textMessageContent = `"${call.callTypeFormatted} at ${
@@ -287,7 +287,7 @@ export function addCircleMarkers(data, callsLayer) {
         : "call received"
     }${
       disposition ? `, ${disposition.toLowerCase()}` : ""
-    }" via https://urbanitesf.netlify.app/?cad=${call.cadNumber}`;
+    }" via SFPDcalls.com/?cad=${call.cadNumber}`;
 
     // Create call circle marker pop-up content
     const popupContent = `
@@ -688,7 +688,7 @@ export const closestZoom = function (position, callsLayer) {
 
 ### Access Data SF Archives
 
-If the user clicks on a link in a text message or Tweet/X that matches a call that may no longer be available because 48 hours have passed, the app first tries the real-time database, and if it can't find the call, the app looks for the call in the Data SF archive which goes back to 2018 and adds a new circle marker with call details to the map. Urbanite SF does not map other historic calls beyond 48 hours, but can retrieve individual historic calls.
+If the user clicks on a link in a text message or Tweet/X that matches a call that may no longer be available because 48 hours have passed, the app first tries the real-time database, and if it can't find the call, the app looks for the call in the Data SF archive which goes back to 2018 and adds a new circle marker with call details to the map. SFPD calls does not map other historic calls beyond 48 hours, but can retrieve individual historic calls.
 
 ```javascript
 /**

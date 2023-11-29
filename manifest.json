@@ -1,6 +1,6 @@
 {
-  "name": "Urbanite",
-  "short_name": "Urbanite",
+  "name": "SFPD Calls",
+  "short_name": "SFPDcalls",
   "description": "Explore the latest San Francisco law enforcement dispatched calls for service near you.",
   "start_url": "/",
   "display": "standalone",

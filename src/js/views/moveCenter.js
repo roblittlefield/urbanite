@@ -25,10 +25,11 @@ export const addHandlerMoveCenter = function (callsLayer, map) {
       const popupElements = document.querySelectorAll(".affiliate-popup");
       popupElements.forEach((el) => (el.style.display = "none"));
     }
-    popupAffTimer = setTimeout(() => {
-      document.querySelector(".affiliate-popup").classList.add("hidden");
-    }, 2800);
-
+    if (navigator.language !== "hi-IN") {
+      popupAffTimer = setTimeout(() => {
+        document.querySelector(".affiliate-popup").classList.add("hidden");
+      }, 2800);
+    }
     // Clear any previously scheduled timer to avoid rapid execution
     clearTimeout(timer);
     timer = setTimeout(() => {

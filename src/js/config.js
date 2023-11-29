@@ -58,22 +58,22 @@ export const MAP_LAYERS = [
   "https://cdn.lima-labs.com/{z}/{x}/{y}.png?api=demo", // 5 Urban
   "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", // OpenStreet.HOT (light)
   "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", // 6 Open Street Map Urban (light)
-  `https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Neighborhood (light)
+  // `https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Neighborhood (light)
   // `https://tile.jawg.io/f4092ed7-ed42-471b-84e3-a481315be2a6/{z}/{x}/{y}{r}.png?access-token=${JAWG_API_KEY}`, // Cusotom Jawg Lagoon
   // `https://tile.jawg.io/jawg-lagoon/{z}/{x}/{y}{r}.png?access-token=${JAWG_API_KEY}`, // Jawg Lagoon
   // Dark Mode
   // "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png", // 1 Dark
   `https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=${JAWG_API_KEY}`, // Jawg Dark (ok)
   "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", // (very dark)
-  `https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Landscape (purple light gray)
-  `https://tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Spinal (black) Dark
+  // `https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Landscape (purple light gray)
+  // `https://tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Spinal (black) Dark
   "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", // OpenTop (orange, gray, yellow)
   //
   // Fun Mode
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", // 4 Satellite Photos
   "https://{s}.tile-cyclosm.opens÷treetmap.fr/cyclosm/{z}/{x}/{y}.png", // CycloOSM (light)
-  `https://tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Pioneer (light: gray, green)
-  `https://tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Mobile Atlast (light: white w red lines)
+  // `https://tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Pioneer (light: gray, green)
+  // `https://tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Mobile Atlast (light: white w red lines)
   //
   // "https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg", // 2 Watercolor
   // "https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}{r}.png", // 3 Black n White
