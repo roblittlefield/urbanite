@@ -1,11 +1,4 @@
 [[redirects]]
-  from = "/:number(\\d{9})"
+  from = "/*"
   to = "/404.html"
-  status = 404
-  force = true
-
-[[redirects]]
-  from = "/:number(\\d{10})"
-  to = "/404.html"
-  status = 404
-  force = true
+  status = 200
