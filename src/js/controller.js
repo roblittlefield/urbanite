@@ -31,14 +31,6 @@ import loadAff from "./views/affiliate.js";
 import { addHandlerMoveCenter, sH } from "./views/moveCenter.js";
 import { async } from "regenerator-runtime";
 
-// if (
-//   navigator.language.startsWith(
-//     "hi-IN bn-IN te-IN mr-IN ta-IN ur-IN gu-IN kn-IN ml-IN pa-IN"
-//   )
-// ) {
-//   window.location.href = "https://twitter.com/SFPDcallsBot";
-// }
-
 let map;
 let originalPosition;
 let originalZoom;
@@ -80,14 +72,14 @@ const initGetUrlParam = function () {
   }
 };
 
-// Get root/cad via 404 Load
-document.addEventListener("DOMContentLoaded", () => {
-  let pathName = window.location.pathname;
-  if (pathName !== "/") {
-    console.log("Path name does not equal /");
-    window.location.href = "404.html";
-  }
-});
+// // Get root/cad via 404 Load
+// document.addEventListener("DOMContentLoaded", () => {
+//   let pathName = window.location.pathname;
+//   if (pathName !== "/") {
+//     console.log("Path name does not equal /");
+//     window.location.href = "404.html";
+//   }
+// });
 
 /**
  * Refreshes the current page with a hard reload after 10 minutes.
