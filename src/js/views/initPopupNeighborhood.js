@@ -21,87 +21,88 @@ export const initPopupNieghborhood = (position, callsLayer, urlCAD, map) => {
   const now = Date.now();
   let liveDataIncludesCAD = false;
   if (urlCAD) {
-    // Check if the CAD number exists in the live data
-    callsLayer.eachLayer((layer) => {
-      if (layer.options.data.cadNumber === urlCAD) {
-        liveDataIncludesCAD = true;
+    if (/^\d{9,10}$/.test(urlCAD)) {
+      // Check if the CAD number exists in the live data
+      callsLayer.eachLayer((layer) => {
+        if (layer.options.data.cadNumber === urlCAD) {
+          liveDataIncludesCAD = true;
 
-        // Check the list view in local storage and toggle items accordingly
-        if (
-          localStorage.getItem("openList") === "nearby" ||
-          localStorage.getItem("openList") === "allSF"
-        ) {
-          toggleVisibleItems();
-          toggleVisibleList();
+          // Check the list view in local storage and toggle items accordingly
+          if (
+            localStorage.getItem("openList") === "nearby" ||
+            localStorage.getItem("openList") === "allSF"
+          ) {
+            toggleVisibleItems();
+            toggleVisibleList();
+          }
+
+          // Open the popup, trigger map movement, and set the neighborhood
+          layer.openPopup();
+          moving = true;
+          setTimeout(() => {
+            moving = false;
+          }, 3000);
+          map.flyTo(layer.getLatLng(), 15);
+          addHandlerMoveCenter(callsLayer, map);
+          const { neighborhood } = layer.options.data;
+          const neighborhoodText = document.getElementById("neighborhood-text");
+          neighborhoodText.textContent = neighborhood;
+          layer.openPopup();
         }
+      });
+      if (!liveDataIncludesCAD) {
+        (async () => {
+          try {
+            // Fetch historical data for the specified CAD number
+            const dataHistbyCAD = await fetchHistData(urlCAD);
 
-        // Open the popup, trigger map movement, and set the neighborhood
-        layer.openPopup();
-        moving = true;
-        setTimeout(() => {
-          moving = false;
-        }, 3000);
-        map.flyTo(layer.getLatLng(), 15);
-        addHandlerMoveCenter(callsLayer, map);
-        const { neighborhood } = layer.options.data;
-        const neighborhoodText = document.getElementById("neighborhood-text");
-        neighborhoodText.textContent = neighborhood;
-        layer.openPopup();
-      }
-    });
-    if (!liveDataIncludesCAD) {
-      (async () => {
-        try {
-          // Fetch historical data for the specified CAD number
-          const dataHistbyCAD = await fetchHistData(urlCAD);
+            // If historical data exists, display it
+            dataHistbyCAD[0] ??
+              showAlert(`Call pending DataSF archive entry, try later`);
+            const coordsHist = [
+              Number(dataHistbyCAD[0].latitude),
+              Number(dataHistbyCAD[0].longitude),
+            ];
+            dataHistbyCAD[coordsHist.coordinates] = coordsHist;
+            const cad_numberHist = dataHistbyCAD[0].cad_number;
+            const received_datetimeHist = new Date(
+              dataHistbyCAD[0].incident_datetime
+            );
+            const receivedTimeAgo = Math.round(
+              (now - received_datetimeHist) / 60000
+            );
+            const receivedTimeAgoF = minsHoursFormat(receivedTimeAgo);
+            const incident_descHist = dataHistbyCAD[0].incident_description;
+            const neighborhoodHist = neighborhoodFormat(
+              dataHistbyCAD[0].analysis_neighborhood
+            );
+            const addressHist = textProperCase(dataHistbyCAD[0].intersection);
+            const resolutionHist = dataHistbyCAD[0].resolution;
 
-          // If historical data exists, display it
-          dataHistbyCAD[0] ??
-            showAlert(`Call pending DataSF archive entry, try later`);
-          const coordsHist = [
-            Number(dataHistbyCAD[0].latitude),
-            Number(dataHistbyCAD[0].longitude),
-          ];
-          dataHistbyCAD[coordsHist.coordinates] = coordsHist;
-          const cad_numberHist = dataHistbyCAD[0].cad_number;
-          const received_datetimeHist = new Date(
-            dataHistbyCAD[0].incident_datetime
-          );
-          const receivedTimeAgo = Math.round(
-            (now - received_datetimeHist) / 60000
-          );
-          const receivedTimeAgoF = minsHoursFormat(receivedTimeAgo);
-          const incident_descHist = dataHistbyCAD[0].incident_description;
-          const neighborhoodHist = neighborhoodFormat(
-            dataHistbyCAD[0].analysis_neighborhood
-          );
-          const addressHist = textProperCase(dataHistbyCAD[0].intersection);
-          const resolutionHist = dataHistbyCAD[0].resolution;
+            // Create Twitter message content based on historical call data
+            const tweetContent = `${incident_descHist} at ${addressHist} in ${neighborhoodHist} ${
+              receivedTimeAgo <= 6
+                ? `${receivedTimeAgoF} ago`
+                : `${formatDate(receivedTimeAgo)}`
+            }${
+              resolutionHist
+                ? resolutionHist === "Open or Active"
+                  ? ""
+                  : `<br>${resolutionHist}`
+                : ""
+            } SFPDcalls.com/?cad=${cad_numberHist}`;
 
-          // Create Twitter message content based on historical call data
-          const tweetContent = `${incident_descHist} at ${addressHist} in ${neighborhoodHist} ${
-            receivedTimeAgo <= 6
-              ? `${receivedTimeAgoF} ago`
-              : `${formatDate(receivedTimeAgo)}`
-          }${
-            resolutionHist
-              ? resolutionHist === "Open or Active"
-                ? ""
-                : `<br>${resolutionHist}`
-              : ""
-          } SFPDcalls.com/?cad=${cad_numberHist}`;
+            // Create text message / iMessage content based on historical call data
+            const textMessageContent = `"${incident_descHist} at ${addressHist} in ${neighborhoodHist} ${receivedTimeAgo} ago${
+              resolutionHist
+                ? resolutionHist === "Open or Active"
+                  ? ""
+                  : `, ${resolutionHist}`
+                : ""
+            }, Case #${cad_numberHist}" SFPDcalls.com/?cad=${cad_numberHist}`;
 
-          // Create text message / iMessage content based on historical call data
-          const textMessageContent = `"${incident_descHist} at ${addressHist} in ${neighborhoodHist} ${receivedTimeAgo} ago${
-            resolutionHist
-              ? resolutionHist === "Open or Active"
-                ? ""
-                : `, ${resolutionHist}`
-              : ""
-          }, Case #${cad_numberHist}" SFPDcalls.com/?cad=${cad_numberHist}`;
-
-          // Create Leaflet marker pop-up content based on historical call data
-          const popupContent = `
+            // Create Leaflet marker pop-up content based on historical call data
+            const popupContent = `
           <div>
             <b>${incident_descHist}</b>
             \u2022 ${receivedTimeAgoF} 
@@ -125,45 +126,46 @@ export const initPopupNieghborhood = (position, callsLayer, urlCAD, map) => {
               </a>
               </div>
       `;
-          // Create an ad-hoc circle marker for the historical call, incluidng pop-up content
-          const markerHist = L.circleMarker(coordsHist, {
-            radius: window.innerWidth <= 758 ? 3 : 4,
-            keepInView: false,
-            fillColor: "#98f5e1",
-            color: "#333333",
-            weight: 1,
-            opacity: 0.6,
-            fillOpacity: 0.9,
-            data: {
-              cadNumber: cad_numberHist,
-              disposition: resolutionHist,
-              neighborhood: neighborhoodHist,
-              receivedTime: formatDate(received_datetimeHist),
-              address: addressHist,
-              callType: incident_descHist,
-              receivedTimeAgo: receivedTimeAgo,
-            },
-            autoPan: false,
-            closeOnClick: false,
-            interactive: false,
-            bubblingMouseEvents: false,
-          }).bindPopup(popupContent, {
-            closeButton: false,
-            disableAnimation: true,
-          });
-          markerHist.addTo(callsLayer);
-          callsLayer.addTo(map);
-          moving = true;
-          setTimeout(() => {
-            moving = false;
-          }, 3000);
-          map.flyTo(coordsHist, 15);
-          addHandlerMoveCenter(callsLayer, map);
-          markerHist.openPopup();
-        } catch (error) {
-          console.log(error);
-        }
-      })();
+            // Create an ad-hoc circle marker for the historical call, incluidng pop-up content
+            const markerHist = L.circleMarker(coordsHist, {
+              radius: window.innerWidth <= 758 ? 3 : 4,
+              keepInView: false,
+              fillColor: "#98f5e1",
+              color: "#333333",
+              weight: 1,
+              opacity: 0.6,
+              fillOpacity: 0.9,
+              data: {
+                cadNumber: cad_numberHist,
+                disposition: resolutionHist,
+                neighborhood: neighborhoodHist,
+                receivedTime: formatDate(received_datetimeHist),
+                address: addressHist,
+                callType: incident_descHist,
+                receivedTimeAgo: receivedTimeAgo,
+              },
+              autoPan: false,
+              closeOnClick: false,
+              interactive: false,
+              bubblingMouseEvents: false,
+            }).bindPopup(popupContent, {
+              closeButton: false,
+              disableAnimation: true,
+            });
+            markerHist.addTo(callsLayer);
+            callsLayer.addTo(map);
+            moving = true;
+            setTimeout(() => {
+              moving = false;
+            }, 3000);
+            map.flyTo(coordsHist, 15);
+            addHandlerMoveCenter(callsLayer, map);
+            markerHist.openPopup();
+          } catch (error) {
+            console.log(error);
+          }
+        })();
+      }
     }
   } else {
     // If no archived historical call found, just popup the closest call to position (map center)
