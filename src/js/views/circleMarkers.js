@@ -73,7 +73,7 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
   <div>
     <b>${call.callTypeFormatted}</b>
     <a target="_blank" href="https://www.amazon.com/Jordan-Nike-Shoes-Red-White-DQ8426-060/dp/B08X1HPF1L/ref=sr_1_1?crid=1DRLUE1ZAK7Y2&amp;keywords=nike%252Bshoes%252Bmen%252Bjordan&amp;qid=1701059855&amp;sprefix=nike%252Bshoes%252Bmen%252B%252Caps%252C150&amp;sr=8-1&amp;th=1&_encoding=UTF8&tag=urbanitesf1-20&linkCode=ur2&linkId=a935340a0225120676f57a9eceda529d&camp=1789&creative=9325" rel="nofollow">
-    <img src="https://i.imgur.com/bKryy1D.png" alt="Nike Air Jordan" style="width: 172px; height: 98px; position: absolute; left: 50%; transform: translateX(-50%);  top: -100px;" class="affiliate-popup">
+    <img src="https://i.imgur.com/D8tP9mx.png" alt="Nike Air Jordan" style="width: 172px; height: 98px; position: absolute; left: 50%; transform: translateX(-50%);  top: -100px;" class="affiliate-popup">
     </a>
     \u2022 ${receivedTimeAgoF} <a href="sms:&body=${encodeURIComponent(
       textMessageContent
