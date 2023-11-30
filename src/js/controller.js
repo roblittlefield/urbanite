@@ -84,6 +84,7 @@ const initGetUrlParam = function () {
 document.addEventListener("DOMContentLoaded", () => {
   let pathName = window.location.pathname;
   if (pathName !== "/") {
+    console.log("Path name does not equal /");
     window.location.href = "/404.html";
   }
 });
