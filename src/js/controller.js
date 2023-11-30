@@ -84,9 +84,7 @@ const initGetUrlParam = function () {
 document.addEventListener("DOMContentLoaded", () => {
   let pathName = window.location.pathname;
   if (pathName !== "/") {
-    if (pathName.length < 15) {
-      window.location.href = "/404.html";
-    }
+    window.location.href = "/404.html";
   }
 });
 
