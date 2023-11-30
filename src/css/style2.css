@@ -124,10 +124,6 @@
   }
 }
 
-#call-list-container {
-  width: 360px;
-}
-
 #response-times-container {
   width: 360px;
 }
@@ -214,12 +210,15 @@
   border: #292828;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   user-select: none;
+  white-space: nowrap;
 }
 
 #call-list {
   display: flex;
   padding: 1px;
-  margin: 0px 0px 5px 0px;
+  margin: 0px 0px 4px 0px;
+  left: 1px;
+  width: 94%;
 }
 
 #call-list,
@@ -237,27 +236,29 @@
   overscroll-behavior: none;
   flex-wrap: wrap;
   bottom: 3px;
-  width: 96%;
+  white-space: nowrap;
 }
 #response-times-list {
   top: 7px;
   line-height: 0.07;
   padding: 0px 0px 5px 5px;
   margin: 0px;
+  width: 93%;
 }
 
 .call-box {
   overflow: hidden;
   background-color: #2f2f2f;
-  width: 320px;
+  width: 300px;
   text-align: start;
   height: 72px;
   font-size: auto;
   color: white;
   border-radius: 8px;
-  padding: 2px 2px 3px 2px;
+  padding: 2px 5px 3px 1px !important;
   margin: 4px 4px 0px 0px;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .recent-resp {
@@ -282,7 +283,7 @@
 
 .call-box h3 {
   font-size: auto;
-  margin: 1.5px 9px -2px;
+  margin: 1.5px 7px -2px;
 }
 
 .call-box p {
@@ -290,50 +291,61 @@
   color: rgb(255, 255, 255);
   font-family: sans-serif;
   background-color: transparent;
-  margin: 0px 11px 0px;
+  margin: 0px 9px 0px;
 }
-@media screen and (max-width: 435px) {
+
+#call-list-container {
+  width: 83%;
+}
+
+@media screen and (min-width: 370px) {
   #call-list-container {
-    width: 82%;
+    width: 308px;
   }
 }
 
-@media screen and (min-width: 790px) {
+@media screen and (min-width: 387px) {
+  #call-list-container {
+    width: 320px;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  #call-list-container {
+    width: 628px;
+  }
   .call-box {
-    width: 300px;
-  }
-  #call-list-container {
-    width: 665px;
+    width: 280px;
   }
 }
 
-@media screen and (min-width: 1100px) {
+@media screen and (min-width: 1010px) {
   #call-list-container {
-    width: 985px;
+    width: 937px;
   }
 }
 
-@media screen and (min-width: 1480px) {
+@media screen and (min-width: 1334px) {
   #call-list-container {
-    width: 1310px;
+    width: 1245px;
   }
 }
 
-@media screen and (min-width: 1850px) {
+@media screen and (min-width: 1654px) {
   #call-list-container {
-    width: 1640px;
+    width: 1554px;
   }
 }
 
-@media screen and (min-width: 2220px) {
+@media screen and (min-width: 1960px) {
   #call-list-container {
-    width: 1960px;
+    width: 1862px;
   }
 }
-
-@media screen and (min-width: 2590px) {
+/* here */
+@media screen and (min-width: 2600px) {
   #call-list-container {
-    width: 92%;
+    width: 95.338%;
   }
 }
 

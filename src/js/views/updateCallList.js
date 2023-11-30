@@ -39,10 +39,10 @@ export const updateCallList = function (latestMarkers, map, nearby) {
     measureElement.textContent = str;
     return measureElement.offsetWidth;
   }
-  let totalRoom = 200;
-  if (window.innerWidth >= 790) {
-    totalRoom = 218;
-  }
+  let totalRoom = 210;
+  // if (window.innerWidth >= 387) {
+  //   totalRoom = 210;
+  // }
 
   // Sort markers by received time
   const sortedMarkersArr = markersArr.sort(
@@ -73,7 +73,6 @@ export const updateCallList = function (latestMarkers, map, nearby) {
     if (hours > calcHour) {
       calcHour = hours;
 
-      // Test starts here
       let minutesNumberHtml = `<span `;
       if (nearby) {
         minutesNumberHtml += `class="hidden received-time-ago-hours nearby-call-box" style="display: block; flex-basis: 100%; font-size: 20px !important; `;
@@ -109,16 +108,19 @@ export const updateCallList = function (latestMarkers, map, nearby) {
     const responseTimeF = minsHoursFormat(responseTime);
     if (circleMarker.options.data) {
       let callNotesTrim = "";
-      if (circleMarker.options.data.callNotes) {
-        const callTypeLength = getStringVisualLength(callType);
-        callNotesTrim = `: ${circleMarker.options.data.callNotes}`;
-        let callNotesLength = getStringVisualLength(callNotesTrim);
+      if (window.innerWidth >= 369);
+      {
+        if (circleMarker.options.data.callNotes) {
+          const callTypeLength = getStringVisualLength(callType);
+          callNotesTrim = `: ${circleMarker.options.data.callNotes}`;
+          let callNotesLength = getStringVisualLength(callNotesTrim);
 
-        let extraRoom = totalRoom - callTypeLength - callNotesLength;
-        while (extraRoom < 0) {
-          callNotesTrim = callNotesTrim.slice(0, -1);
-          callNotesLength = getStringVisualLength(callNotesTrim);
-          extraRoom = totalRoom - callTypeLength - callNotesLength;
+          let extraRoom = totalRoom - callTypeLength - callNotesLength;
+          while (extraRoom < 0) {
+            callNotesTrim = callNotesTrim.slice(0, -1);
+            callNotesLength = getStringVisualLength(callNotesTrim);
+            extraRoom = totalRoom - callTypeLength - callNotesLength;
+          }
         }
       }
 
@@ -388,8 +390,8 @@ const updateResponseTimesList = function (callNeighborhoodMedian) {
     const clickTarget = event.target;
     // Close the response times list if it's open and user clicks on somewhere not part of the list
     if (
-      !responseTimesContainer.classList.contains("hidden") &&
-      !responseTimesContainer.contains(clickTarget)
+      !responseTimesContainer.classList.contains("hidden")
+      // && !responseTimesContainer.contains(clickTarget) Allow click to close
     ) {
       toggleVisibleItems();
       toggleResponseTimesList();
@@ -438,7 +440,7 @@ export const calcMedian = function () {
   });
 
   // Add the calculated overall median to the neighborhood medians
-  callNeighborhoodMedian["All San Francisco (Citywide)"] =
+  callNeighborhoodMedian["All San Francisco (citywide)"] =
     overallMedian.toFixed(2);
 
   // Update the response times list with the calculated median values
