@@ -1,11 +1,4 @@
 [[redirects]]
-  from = "/[[:alnum:]]{9}"
+  from = "/*"
   to = "/404.html"
   status = 200
-  force = true
-
-[[redirects]]
-  from = "/[[:alnum:]]{10}"
-  to = "/404.html"
-  status = 200
-  force = true
