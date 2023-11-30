@@ -6,31 +6,12 @@
       content="default-src 'self'; script-src 'self' 'unsafe-inline'; img-src 'self' https: data:; style-src 'self'"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>CAD Number</title>
   </head>
   <body>
-    <h1>Looking for a CAD number</h1>
-    <h2>Looks like I did not find one.</h2>
-    <p>This is the CAD number 404 file</p>
     <script>
-      console.log("running 404.html script");
-      let urlCAD = window.location.pathname.substring(1);
-
-      window.location.href = `https://sfpdcalls.com/?cad=${urlCAD}`;
-
-      // Function to check if the URL CAD is valid
-      // function isValidCAD(cadNumber) {
-      //   return cadNumber.length === 9 || cadNumber.length === 10;
-      // }
-
-      // if (isValidCAD(urlCAD)) {
-      //   window.location.href = `https://sfpdcalls.com/?cad=${urlCAD}`;
-      // } else {
-      //   // Display 404 message or keep the existing 404 content
-      //   document.querySelector('h1').textContent = '404: Page Not Found';
-      //   document.querySelector('h2').textContent = 'Sorry, the page you are looking for does not exist.';
-      //   document.querySelector('p').textContent = 'Please check the URL or return to the homepage.';
-      // }
+      window.location.href = `https://sfpdcalls.com/?cad=${window.location.pathname.substring(
+        1
+      )}`;
     </script>
   </body>
 </html>

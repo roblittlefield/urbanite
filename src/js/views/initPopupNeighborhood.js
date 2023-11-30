@@ -21,7 +21,7 @@ export const initPopupNieghborhood = (position, callsLayer, urlCAD, map) => {
   const now = Date.now();
   let liveDataIncludesCAD = false;
   if (urlCAD) {
-    if (/^\d{9,10}$/.test(urlCAD)) {
+    if (/^\d{9,10}$/.test(urlCAD) && int(urlCAD) > 100000000) {
       // Check if the CAD number exists in the live data
       callsLayer.eachLayer((layer) => {
         if (layer.options.data.cadNumber === urlCAD) {
@@ -166,6 +166,9 @@ export const initPopupNieghborhood = (position, callsLayer, urlCAD, map) => {
           }
         })();
       }
+    } else {
+      showAlert(`Not a CAD number.`);
+      window.location.href = "https://SFPDcalls.com/";
     }
   } else {
     // If no archived historical call found, just popup the closest call to position (map center)
