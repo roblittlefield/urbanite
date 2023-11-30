@@ -10,9 +10,9 @@
   </head>
   <body>
     <script>
-      let urlCAD = window.location.href.split("/").pop(); //get the element after the last '/' in the url
-      //   let urlCAD = window.location.pathname.substring(1);
-      window.location.href = "/index.html" + "?cad=" + urlCAD;
+      //   let urlCAD = window.location.href.split("/").pop(); //get the element after the last '/' in the url
+      let urlCAD = window.location.pathname.substring(1);
+      window.location.href = `https://sfpdcalls.com/?cad=${urlCAD}`;
     </script>
   </body>
 </html>
