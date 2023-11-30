@@ -72,9 +72,7 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
     const popupContent = `
   <div>
     <b>${call.callTypeFormatted}</b>
-    <a target="_blank" href="https://www.amazon.com/Fossil-JR1354-Stainless-Chronograph-Leather/dp/B0066T2HS2?pd_rd_w=Sc6lb&amp;content-id=amzn1.sym.824da778-7057-4a61-b12d-33bc1f0a1b52&amp;pf_rd_p=824da778-7057-4a61-b12d-33bc1f0a1b52&amp;pf_rd_r=KF4713FV62BJMCB6FWPN&amp;pd_rd_wg=HtQtW&amp;pd_rd_r=eed80f04-ce65-4abd-9421-74168f112a7a&amp;pd_rd_i=B0066T2GAQ&amp;ref_=hol_deals_B0066T2GAQ&amp;th=1&_encoding=UTF8&tag=urbanitesf1-20&linkCode=ur2&linkId=706c81726518b72f50feffa93d9fec0a&camp=1789&creative=9325" rel="nofollow">
-    <img src="https://i.imgur.com/EGPhkyD.png" alt="Fossil Nate Men's Watch" style="width: 100px; position: absolute; left: 50%; transform: translateX(-50%);  top: -150px;" class="affiliate-popup">
-    </a>
+    
     \u2022 ${receivedTimeAgoF} <a href="sms:&body=${encodeURIComponent(
       textMessageContent
     )}">
