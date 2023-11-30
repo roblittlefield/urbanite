@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline'"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title></title>
+  </head>
+  <body>
+    <script>
+      let urlCAD = window.location.href.split("/").pop(); //get the element after the last '/' in the url
+      //   let urlCAD = window.location.pathname.substring(1);
+      window.location.href = "/index.html" + "?cad=" + urlCAD;
+    </script>
+  </body>
+</html>

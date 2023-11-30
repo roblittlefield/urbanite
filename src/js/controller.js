@@ -77,11 +77,18 @@ const initGetUrlParam = function () {
   urlCAD = getURLParameter("cad");
   if (!urlCAD) {
     urlCAD = getURLParameter("cad_number");
-    if (!urlCAD) {
-      urlCAD = window.location.pathname.substring(1);
-    }
   }
 };
+
+// // Get root/cad via 404 Load
+// document.addEventListener("DOMContentLoaded", () => {
+//   let pathName = window.location.pathname;
+//   if (pathName !== "/") {
+//     if (pathName.length < 15) {
+//       window.location.href = "/404.html";
+//     }
+//   }
+// });
 
 /**
  * Refreshes the current page with a hard reload after 10 minutes.
