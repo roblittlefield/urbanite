@@ -174,6 +174,7 @@ const controlMap = async function () {
 
     // Create a new Leaflet map and set its view
     map = L.map("map").setView(originalPosition, originalZoom);
+    // map = L.map("map", { zoomControl: false }).setView(originalPosition, originalZoom);
 
     // Remove all existing map layers
     map.eachLayer((layer) => {
