@@ -77,6 +77,9 @@ const initGetUrlParam = function () {
   urlCAD = getURLParameter("cad");
   if (!urlCAD) {
     urlCAD = getURLParameter("cad_number");
+    if (!urlCAD) {
+      urlCAD = window.location.pathname.substring(1);
+    }
   }
 };
 

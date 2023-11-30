@@ -44,9 +44,9 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
         : call.enteredTime
         ? `call entry in SFPD queue ${call.enteredTimeAgo} ago`
         : "call received by SFPD"
-    }${
-      disposition ? `, ${disposition.toLowerCase()}` : ""
-    } SFPDcalls.com/?cad=${call.cadNumber}`;
+    }${disposition ? `, ${disposition.toLowerCase()}` : ""} SFPDcalls.com/${
+      call.cadNumber
+    }`;
 
     // Create text message / iMessage content from call data
     const textMessageContent = `"${call.callTypeFormatted}${callNotesStr} at ${
@@ -63,7 +63,7 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
         : "call received"
     }${
       disposition ? `, ${disposition.toLowerCase()}` : ""
-    }" via SFPDcalls.com/?cad=${call.cadNumber}`;
+    }" via SFPDcalls.com/${call.cadNumber}`;
 
     // Create call circle marker pop-up content
 

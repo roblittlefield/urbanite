@@ -89,7 +89,7 @@ export const initPopupNieghborhood = (position, callsLayer, urlCAD, map) => {
                 ? ""
                 : `<br>${resolutionHist}`
               : ""
-          } SFPDcalls.com/?cad=${cad_numberHist}`;
+          } SFPDcalls.com/${cad_numberHist}`;
 
           // Create text message / iMessage content based on historical call data
           const textMessageContent = `"${incident_descHist} at ${addressHist} in ${neighborhoodHist} ${receivedTimeAgo} ago${
@@ -98,7 +98,7 @@ export const initPopupNieghborhood = (position, callsLayer, urlCAD, map) => {
                 ? ""
                 : `, ${resolutionHist}`
               : ""
-          }, Case #${cad_numberHist}" SFPDcalls.com/?cad=${cad_numberHist}`;
+          }, Case #${cad_numberHist}" SFPDcalls.com/${cad_numberHist}`;
 
           // Create Leaflet marker pop-up content based on historical call data
           const popupContent = `
