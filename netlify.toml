@@ -1,0 +1,6 @@
+[[redirects]]
+  from = "/:number"
+  to = "/404.html"
+  status = 200
+  force = true
+  conditions = {Number = ["^[0-9]{9,10}$"]}
