@@ -10,7 +10,7 @@ import {
   controlOpenCallList,
   calcMedian,
 } from "./views/updateCallList.js";
-import { getPosition, loadLastUpdated } from "./views/getPosition.js";
+import { getPosition, loadTimeSinceUpdate } from "./views/getPosition.js";
 import {
   initPopupNieghborhood,
   closestZoom,
@@ -227,7 +227,8 @@ const controlCircleMarkers = async function () {
     respCircleLayer = L.layerGroup();
 
     // Load time stamp on page
-    loadLastUpdated();
+    // setInterval(loadTimeSinceUpdate(), 1000);
+    loadTimeSinceUpdate();
 
     // Retrieve data from Data SF
     const responseSFPDAPI = await model.fetchApi(

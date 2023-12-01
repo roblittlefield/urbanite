@@ -64,10 +64,7 @@ export const getPosition = async function () {
   });
 };
 
-/**
- * Loads and updates the last updated timestamp in the user interface.
- */
-export const loadLastUpdated = function () {
+export const loadTimeSinceUpdate = () => {
   // Get the HTML element with the id "last-updated"
   const lastUpdatedElement = document.getElementById("last-updated");
 
@@ -86,4 +83,58 @@ export const loadLastUpdated = function () {
 
   // Update the text content of the lastUpdatedElement with the formatted date
   lastUpdatedElement.textContent = `${formattedDate}`;
+
+  // const startTime = new Date(); // Capture the start time when the function is called
+
+  // const updateCounter = () => {
+  //   const now = new Date();
+  //   const secondsPast = Math.floor((now - startTime) / 1000);
+  //   let result = "";
+
+  //   if (secondsPast < 60) {
+  //     // less than a minute
+  //     result = `${secondsPast}s`;
+  //   } else if (secondsPast < 3600) {
+  //     // less than an hour
+  //     result = `${Math.floor(secondsPast / 60)}m ${secondsPast % 60}s`;
+  //   } else if (secondsPast <= 86400) {
+  //     // less than a day
+  //     result = `${Math.floor(secondsPast / 3600)}h ${Math.floor(
+  //       (secondsPast % 3600) / 60
+  //     )}m`;
+  //   } // Extend for longer durations as needed
+
+  //   document.getElementById(
+  //     "last-updated"
+  //   ).innerText = `Last updated ${result} ago`;
+  // };
+
+  // return updateCounter;
 };
+
+// Example usage in another module:
+// setInterval(loadTimeSinceUpdate(), 1000);
+
+// /**
+//  * Loads and updates the last updated timestamp in the user interface.
+//  */
+
+// // Get the HTML element with the id "last-updated"
+// const lastUpdatedElement = document.getElementById("last-updated");
+
+// // Create a new JavaScript Date object representing the current date and time
+// const currentDate = new Date();
+
+// // Format the date as a string in a user-friendly format
+// const formattedDate = currentDate.toLocaleString("en-US", {
+//   month: "long",
+//   day: "numeric",
+//   hour: "numeric",
+//   minute: "numeric",
+//   hour12: true,
+//   timeZoneName: "short",
+// });
+
+// // Update the text content of the lastUpdatedElement with the formatted date
+// lastUpdatedElement.textContent = `${formattedDate}`;
+// };

@@ -409,3 +409,32 @@ export const callnotesMap = new Map([
   ["459 CASER", "burglary caser"],
   ["MACHETE", "machete"],
 ]);
+
+export const weatherConditions = {
+  // Clear and Clouds
+  800: "☀️ ", // clear sky
+  801: "🌤️", // few clouds
+  802: "⛅", // scattered clouds
+  803: "🌥️", // broken clouds
+  804: "☁️", // overcast clouds
+
+  // Rain and Drizzle
+  300: "🌦️", // light intensity drizzle
+  301: "🌦️", // drizzle
+  302: "🌦️", // heavy intensity drizzle
+  500: "🌦️", // light rain
+  501: "🌧️", // moderate rain
+  502: "🌧️", // heavy intensity rain
+  503: "🌧️", // very heavy rain
+  504: "🌧️", // extreme rain
+  511: "🌨️", // freezing rain (rare, but possible)
+
+  // Fog and Mist
+  701: "🌫️", // mist
+  711: "😮‍💨", // smoke (relevant for wildfire season)
+  721: "🌁", // haze
+  741: "🌁", // fog
+
+  // Additional
+  781: "🌀", // tornado (extremely rare)
+};

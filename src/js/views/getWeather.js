@@ -1,4 +1,5 @@
 import { WEATHER_API_KEY } from "../../../apikeys.js";
+import { weatherConditions } from "../config.js";
 
 /**
  * Retrieves weather data for a given geographic position.
@@ -15,6 +16,10 @@ const getWeather = async function (position) {
     const response = await fetch(openWeatherApiUrl);
     const data = await response.json();
 
+    // Get the current conditions by code
+    const conditionCode = data.weather[0].id.toString();
+    const conditionEmoji = weatherConditions[conditionCode] || "";
+
     // Round temperature to nearest single decimal
     const temperature = data.main.temp.toFixed(1);
 
@@ -25,7 +30,7 @@ const getWeather = async function (position) {
     containerTemp.innerHTML = "";
 
     // Update the temperature container with the latest temperature
-    containerTemp.innerHTML += `${temperature}&deg;F`;
+    containerTemp.innerHTML += `${temperature}&deg;F ${conditionEmoji}`;
   } catch (err) {
     throw err;
   }

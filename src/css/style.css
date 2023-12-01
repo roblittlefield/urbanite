@@ -379,7 +379,7 @@ body {
 
 #nearby-info {
   left: 50px;
-  top: 50px;
+  top: 48px;
   font-size: 14px;
   padding: 4px 8px 4px 8px;
   touch-action: none;
@@ -409,10 +409,10 @@ body {
 }
 
 #weather {
-  top: 10px;
+  top: 11px;
   left: 50px;
   font-size: 23px;
-  padding: 4px 8px 3.4px 8px;
+  padding: 0px 6px 1px 6px;
   text-align: center;
 }
 
