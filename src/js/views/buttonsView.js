@@ -5,11 +5,12 @@ const latestButton = document.getElementById("latest-list-btn");
 const latestContainer = document.getElementById("call-list-container");
 const nearbyButton = document.getElementById("nearby-list-btn");
 const responseButton = document.getElementById("response-times-list-btn");
+const buttonContainer1 = document.getElementById("bt1");
+const buttonContainer2 = document.getElementById("bt2");
 const responseTimesContainer = document.getElementById(
   "response-times-container"
 );
 const carBreaksinsButton = document.getElementById("car-breakins-btn");
-
 const countNearbyContainer = document.getElementById("nearby-info");
 const neighborhoodContainer = document.getElementById("neighborhood-text");
 const infoContainer = document.getElementById("project-info-container");
@@ -139,6 +140,8 @@ export const toggleVisibleItems = function () {
   neighborhoodContainer.classList.toggle("hidden");
   lastUpdatedElement.classList.toggle("hidden");
   affiliateCont.classList.toggle("hidden");
+  buttonContainer1.classList.toggle("hidden");
+  buttonContainer2.classList.toggle("hidden");
 };
 
 /**
