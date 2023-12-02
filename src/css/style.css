@@ -117,7 +117,7 @@ body {
 }
 
 .affiliate-target-name-1 {
-  top: 150px;
+  top: 100px;
 }
 
 .affiliate-target-name-2 {
@@ -126,6 +126,7 @@ body {
 
 .affiliate-target-name-3 {
   top: 125px;
+  right: 107px;
 }
 
 .affiliate-target-name-4 {
@@ -134,7 +135,8 @@ body {
 }
 
 .affiliate-target-name-5 {
-  top: 95px;
+  top: 113px;
+  right: 104px;
 }
 
 .affiliate-target-name-6 {
@@ -310,7 +312,7 @@ body {
 
 #nearby-info,
 #weather {
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.85);
 }
 
 #change-map-btn,
