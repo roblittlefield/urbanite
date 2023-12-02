@@ -53,8 +53,8 @@ export const onSceneCircleOpt = {
 // Leaflet map tile URL addresses
 export const MAP_LAYERS = [
   // Light Mode
-  // "https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png", // 0 Gray/Green
-  `https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Atlas (light)
+  "https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png", // 0 Gray/Green
+  // `https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Atlas (light)
   "https://cdn.lima-labs.com/{z}/{x}/{y}.png?api=demo", // 5 Urban
   "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", // OpenStreet.HOT (light)
   "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", // 6 Open Street Map Urban (light)
