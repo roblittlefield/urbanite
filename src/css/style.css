@@ -384,6 +384,23 @@ svg {
   margin: auto;
 }
 
+.bi-stopwatch,
+.bi-car-front,
+.bi-info-square {
+  width: 20px;
+  height: 20px;
+}
+
+.bi-map-fill {
+  width: 20px;
+  height: 20px;
+}
+
+.bi-crosshair {
+  width: 30px;
+  height: 30px;
+}
+
 #change-map-btn,
 #latest-list-btn,
 #nearby-list-btn,
