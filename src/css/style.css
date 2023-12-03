@@ -387,8 +387,8 @@ svg {
 .bi-stopwatch,
 .bi-car-front,
 .bi-info-square {
-  width: 4.2rem;
-  height: 4.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
 }
 
 .bi-map-fill {
@@ -408,7 +408,6 @@ svg {
 #response-times-list-btn,
 #car-breakins-btn {
   font-weight: bold;
-  font-size: 14px;
   text-align: center;
   width: 34px;
   height: 34px;
