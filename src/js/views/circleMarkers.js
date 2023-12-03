@@ -71,9 +71,6 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
     // <div class="x-com" style="height: 24px; position: absolute; top: calc(50% - -1px); right: -5.5px; font-size: 24px;">𝕏</div>
     const popupContent = `
   <div>
-    <a target="_blank" href="https://www.amazon.com/Flashlight-LHKNL-Ultra-Light-Rechargeable-Waterproof/dp/B08D66HCXW/ref=sr_1_1_sspa?keywords=rechargeable+headlamp&amp;qid=1701509460&amp;sr=8-1-spons&amp;sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&amp;psc=1&_encoding=UTF8&tag=urbanitesf1-20&linkCode=ur2&linkId=2e4dc2e49e0006436358b3b298de6a8c&camp=1789&creative=9325" rel="nofollow">
-    <img src="https://i.imgur.com/7Z0Pp1p.png" alt="Rechargable Headlamp" loading="lazy" style="width: 150px; position: absolute; left: 50%; transform: translateX(-50%);  top: -44px;" class="affiliate-popup">
-    </a>
     <b>${call.callTypeFormatted}</b>
     \u2022 ${receivedTimeAgoF} <a href="sms:&body=${encodeURIComponent(
       textMessageContent
