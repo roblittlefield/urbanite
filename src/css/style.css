@@ -389,18 +389,15 @@ svg {
 .bi-stopwatch,
 .bi-car-front,
 .bi-info-square {
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 1.8em;
 }
 
 .bi-map-fill {
-  width: 1rem;
-  height: 1rem;
+  width: 1.5em;
 }
 
-.bi-crosshair {
-  width: 1.4rem;
-  height: 1.4rem;
+.bi-crosshair2 {
+  width: 1.8em !important;
 }
 
 #change-map-btn,
