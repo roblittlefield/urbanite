@@ -413,6 +413,7 @@ svg {
   text-align: center;
   width: 34px;
   height: 34px;
+  z-index: 5;
   right: 11px;
   border: none;
   cursor: pointer;
