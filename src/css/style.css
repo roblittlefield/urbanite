@@ -354,16 +354,18 @@ body {
   box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.5);
 }
 
-#bt1 {
+#button-container-1 {
   top: 9px;
+  box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.5);
+  right: 11px;
+  position: fixed;
+  width: 34px;
+  height: 68px;
+  border-radius: 5px;
 }
 
-#bt2 {
+#button-container-2 {
   top: 82px;
-}
-
-.button-container,
-.button-container {
   box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.5);
   right: 11px;
   position: fixed;
