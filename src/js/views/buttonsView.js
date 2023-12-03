@@ -15,7 +15,7 @@ const countNearbyContainer = document.getElementById("nearby-info");
 const neighborhoodContainer = document.getElementById("neighborhood-text");
 const infoContainer = document.getElementById("project-info-container");
 const lastUpdatedElement = document.getElementById("last-updated");
-const affiliateCont = document.getElementById("affiliate");
+// const affiliateCont = document.getElementById("affiliate");
 
 /**
  * Load and initialize the "Change Map" button with a click event handler.
