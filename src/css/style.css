@@ -277,33 +277,33 @@ body {
 #project-info-btn {
   top: 9px;
   border-radius: 5px 5px 0px 0px !important;
-  border-left: 0.5px solid #989898 !important;
-  border-top: 0.5px solid #989898 !important;
-  border-right: 0.5px solid #989898 !important;
+  border-left: 0.2px solid #989898 !important;
+  border-top: 0.2px solid #989898 !important;
+  border-right: 0.2px solid #989898 !important;
 }
 
 #change-map-btn {
   top: 43px;
   border-radius: 0px 0px 5px 5px !important;
-  border-left: 0.5px solid #989898 !important;
-  border-right: 0.5px solid #989898 !important;
-  border-bottom: 0.5px solid #989898 !important;
+  border-left: 0.2px solid #989898 !important;
+  border-right: 0.2px solid #989898 !important;
+  border-bottom: 0.2px solid #989898 !important;
 }
 
 #response-times-list-btn {
   top: 82px;
   border-radius: 5px 5px 0px 0px !important;
-  border-left: 0.5px solid #989898 !important;
-  border-top: 0.5px solid #989898 !important;
-  border-right: 0.5px solid #989898 !important;
+  border-left: 0.2px solid #989898 !important;
+  border-top: 0.2px solid #989898 !important;
+  border-right: 0.2px solid #989898 !important;
 }
 
 #car-breakins-btn {
   top: 116px;
   border-radius: 0px 0px 5px 5px !important;
-  border-left: 0.5px solid #989898 !important;
-  border-right: 0.5px solid #989898 !important;
-  border-bottom: 0.5px solid #989898 !important;
+  border-left: 0.2px solid #989898 !important;
+  border-right: 0.2px solid #989898 !important;
+  border-bottom: 0.2px solid #989898 !important;
 }
 
 #nearby-list-btn {
@@ -315,10 +315,10 @@ body {
   /* background-color: #00af7c; */
   box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
-  border-bottom: 0.5px solid #989898 !important;
+  /* border-bottom: 0.5px solid #989898 !important;
   border-left: 0.5px solid #989898 !important;
   border-top: 0.5px solid #989898 !important;
-  border-right: 0.5px solid #989898 !important;
+  border-right: 0.5px solid #989898 !important; */
   /* width: 80px !important; */
   /* font-size: 20px !important; */
   /* text-shadow: none !important; */
@@ -332,13 +332,15 @@ body {
   box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.5);
   font-size: 20px !important;
   border-radius: 5px;
-  border-bottom: 0.2px solid #989898 !important;
+  border: 0.2px solid #989898 !important;
+  /* border-bottom: 0.2px solid #989898 !important;
   border-left: 0.2px solid #989898 !important;
   border-top: 0.2px solid #989898 !important;
-  border-right: 0.2px solid #989898 !important;
+  border-right: 0.2px solid #989898 !important; */
   /* background-image: none; */
   /* /* color: #c0362c !important; */
-  background-color: #c0362c;
+  /* background-color: #c0362c; */
+  background-image: linear-gradient(#de392d, #c0362c);
   text-shadow: none !important;
   width: 80px !important;
   /* height: 41px !important; */
@@ -452,7 +454,7 @@ svg {
 
 #response-times-list-btn,
 #project-info-btn {
-  border-bottom: 1px solid #989898;
+  border-bottom: 0.2px solid #989898;
 }
 
 #change-map-btn:active,
@@ -649,14 +651,16 @@ svg {
   #car-breakins-btn {
     background-image: linear-gradient(#2f2f2f, #1d1d1d);
     color: rgba(250, 250, 250, 0.95) !important;
+    /* border: 0.02px solid white !important; */
   }
 
   #nearby-list-btn {
     box-shadow: 0px 0px 6px 3px rgb(255, 255, 0, 0.6) !important;
+    border: 0.2px solid #989898 !important;
   }
 
   #latest-list-btn {
-    box-shadow: 0px 0px 6px 3px green !important;
+    box-shadow: 0px 0px 6px 3px #c0362c !important;
     /* color: green !important; */
   }
 
