@@ -432,8 +432,8 @@ export const weatherConditions = {
   // Fog and Mist
   701: "🌫️", // mist
   711: "😮‍💨", // smoke (relevant for wildfire season)
-  721: "🌁", // haze
-  741: "🌁", // fog
+  721: "🌫️", // haze
+  741: "🌫️", // fog
 
   // Additional
   781: "🌀", // tornado (extremely rare)
