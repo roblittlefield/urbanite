@@ -277,7 +277,6 @@ body {
 #project-info-btn {
   top: 9px;
   border-radius: 5px 5px 0px 0px !important;
-  /* border-top: 1px solid #989898 !important; */
   border-left: 0.5px solid #989898 !important;
   border-top: 0.5px solid #989898 !important;
   border-right: 0.5px solid #989898 !important;
@@ -289,7 +288,6 @@ body {
   border-left: 0.5px solid #989898 !important;
   border-right: 0.5px solid #989898 !important;
   border-bottom: 0.5px solid #989898 !important;
-  /* border: 1px 3px 5px 10px solid red !important; */
 }
 
 #response-times-list-btn {
@@ -420,6 +418,16 @@ svg {
 .bi-car-front,
 .bi-info-square {
   width: 2.1em !important;
+}
+
+@media screen and (max-width: 440px) {
+  .bi-map,
+  .bi-crosshair,
+  .bi-stopwatch,
+  .bi-car-front,
+  .bi-info-square {
+    width: 2.8em !important;
+  }
 }
 
 #change-map-btn,
