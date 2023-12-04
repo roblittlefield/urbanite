@@ -71,7 +71,7 @@ export const MAP_LAYERS = [
   //
   // Fun Mode
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", // 4 Satellite Photos
-  "https://{s}.tile-cyclosm.opens÷treetmap.fr/cyclosm/{z}/{x}/{y}.png", // CycloOSM (light)
+  // "https://{s}.tile-cyclosm.opens÷treetmap.fr/cyclosm/{z}/{x}/{y}.png", // CycloOSM (light)
   // `https://tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Pioneer (light: gray, green)
   // `https://tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Mobile Atlast (light: white w red lines)
   //

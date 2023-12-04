@@ -27,7 +27,7 @@ import {
   loadCarBreakinsButton,
 } from "./views/buttonsView.js";
 import getURLParameter from "./views/hashURL.js";
-import loadAff from "./views/affiliate.js";
+// import loadAff from "./views/affiliate.js";
 import { addHandlerMoveCenter, sH } from "./views/moveCenter.js";
 import { async } from "regenerator-runtime";
 
@@ -137,23 +137,23 @@ document.addEventListener("visibilitychange", () => {
   }
 });
 
-let inputSequence = "";
-function handleKeydown(event) {
-  inputSequence += event.key;
-  if (inputSequence.includes("415") || inputSequence.includes("frisco")) {
-    document.getElementById("affiliate").style.setProperty("display", "none");
-    document.querySelector(".affiliate-popup").classList.add("hidden");
-    sH(false);
-    inputSequence = "";
-    window.removeEventListener("keydown", handleKeydown);
-  }
-  if (inputSequence.length > 3) {
-    setTimeout(() => {
-      inputSequence = "";
-    }, 1500);
-  }
-}
-window.addEventListener("keydown", handleKeydown);
+// let inputSequence = "";
+// function handleKeydown(event) {
+//   inputSequence += event.key;
+//   if (inputSequence.includes("415") || inputSequence.includes("frisco")) {
+//     document.getElementById("affiliate").style.setProperty("display", "none");
+//     document.querySelector(".affiliate-popup").classList.add("hidden");
+//     sH(false);
+//     inputSequence = "";
+//     window.removeEventListener("keydown", handleKeydown);
+//   }
+//   if (inputSequence.length > 3) {
+//     setTimeout(() => {
+//       inputSequence = "";
+//     }, 1500);
+//   }
+// }
+// window.addEventListener("keydown", handleKeydown);
 
 /**
  * Initializes the map by creating a Leaflet map, setting its view, and adding layers.
@@ -516,7 +516,7 @@ const controlCarBreakins = async function () {
 
     // Hide the unrelated buttons and metrics
     toggleVisibleItems();
-    document.getElementById("affiliate").classList.add("hidden");
+    // document.getElementById("affiliate").classList.add("hidden");
     [lastUpdatedElement, carSubtextElement, carCountElement].forEach(
       (element) => element.classList.remove("hidden")
     );
@@ -576,7 +576,7 @@ const controlCarBreakins = async function () {
       carSubtextElement.classList.add("hidden");
       lastUpdatedElement.style.bottom = "28px";
       toggleVisibleItems();
-      document.getElementById("affiliate").classList.remove("hidden");
+      // document.getElementById("affiliate").classList.remove("hidden");
       lastUpdatedElement.classList.remove("hidden");
       firstCarBreakin = false;
       showingCarBreakin = false;
@@ -618,8 +618,8 @@ const init = async function () {
     loadChangeMapButton(controlChangeMap);
     loadProjectInfoButton(controlProjectInfo);
 
-    // Load affiliate links
-    loadAff();
+    // // Load affiliate links
+    // loadAff();
 
     // Remove the "hidden" class from the "addSFDataSource" element to display it
     document.getElementById("addSFDataSource").classList.remove("hidden");

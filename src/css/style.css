@@ -386,18 +386,12 @@ svg {
   margin: auto;
 }
 
+.bi-map,
+.bi-crosshair,
 .bi-stopwatch,
 .bi-car-front,
 .bi-info-square {
-  width: 1.8em;
-}
-
-.bi-map-fill {
-  width: 1.5em;
-}
-
-.bi-crosshair2 {
-  width: 1.8em !important;
+  width: 2.1em !important;
 }
 
 #change-map-btn,

@@ -19,16 +19,20 @@ export const addHandlerMoveCenter = function (callsLayer, map) {
   map.on("move", () => {
     // Check if the 'moving' flag is set; if true, exit the function
     if (moving) return;
-    // Popup Affiliate
-    clearTimeout(popupAffTimer);
-    if (!aaT) {
-      const popupElements = document.querySelectorAll(".affiliate-popup");
-      popupElements.forEach((el) => (el.style.display = "none"));
-    }
 
-    popupAffTimer = setTimeout(() => {
-      document.querySelector(".affiliate-popup").classList.add("hidden");
-    }, 2800);
+    // //
+    // // Popup Affiliate
+    // clearTimeout(popupAffTimer);
+    // if (!aaT) {
+    //   const popupElements = document.querySelectorAll(".affiliate-popup");
+    //   popupElements.forEach((el) => (el.style.display = "none"));
+    // }
+
+    // popupAffTimer = setTimeout(() => {
+    //   document.querySelector(".affiliate-popup").classList.add("hidden");
+    // }, 2800);
+    // // End Popup Affiliate
+    // //
 
     // Clear any previously scheduled timer to avoid rapid execution
     clearTimeout(timer);
