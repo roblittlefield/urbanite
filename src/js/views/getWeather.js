@@ -21,7 +21,7 @@ const getWeather = async function (position) {
     const conditionEmoji = weatherConditions[conditionCode] || "";
 
     // Round temperature to nearest single decimal
-    const temperature = data.main.temp.toFixed(1);
+    const temperature = data.main.temp.toFixed(0);
 
     // Find the temperature container
     const containerTemp = document.querySelector("#containerTemp");
@@ -30,7 +30,7 @@ const getWeather = async function (position) {
     containerTemp.innerHTML = "";
 
     // Update the temperature container with the latest temperature
-    containerTemp.innerHTML += `${temperature}&deg;F ${conditionEmoji}`;
+    containerTemp.innerHTML += `${temperature}&deg; ${conditionEmoji}`;
   } catch (err) {
     throw err;
   }

@@ -667,8 +667,13 @@ a.leaflet-control-zoom-out:hover {
     background-color: #989898;
   }
 
-  #weather,
   #nearby-info,
+  #weather {
+    background-color: rgba(28, 28, 28, 1);
+    border: none;
+    color: rgba(250, 250, 250, 0.95);
+  }
+
   #neighborhood-text,
   #last-updated {
     background-color: rgba(28, 28, 28, 0.8);
