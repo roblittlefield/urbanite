@@ -434,18 +434,14 @@ body {
   background-image: linear-gradient(#016403, #005302);
 } */
 
-svg {
-  margin: auto;
-}
-
 .bi-map,
 .bi-crosshair,
 .bi-stopwatch,
 .bi-car-front,
 .bi-info-square {
-  width: 2.1em;
+  width: 4rem;
 }
-
+/* 
 @media screen and (max-width: 440px) {
   .bi-map,
   .bi-crosshair,
@@ -454,7 +450,7 @@ svg {
   .bi-info-square {
     width: 3.4em;
   }
-}
+} */
 
 #change-map-btn,
 #latest-list-btn,
