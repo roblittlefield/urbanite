@@ -443,7 +443,7 @@ svg {
 .bi-stopwatch,
 .bi-car-front,
 .bi-info-square {
-  width: 2.1em !important;
+  width: 2.1em;
 }
 
 @media screen and (max-width: 440px) {
@@ -452,7 +452,7 @@ svg {
   .bi-stopwatch,
   .bi-car-front,
   .bi-info-square {
-    width: 2.8em !important;
+    width: 3.4em;
   }
 }
 
