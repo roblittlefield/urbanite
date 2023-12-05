@@ -307,7 +307,7 @@ body {
 }
 
 #nearby-list-btn {
-  bottom: 159px;
+  bottom: 160px;
   /* width: 50px !important;
   height: 50px !important; */
   /* color: #c0362c !important;
@@ -315,6 +315,7 @@ body {
   /* background-color: #00af7c; */
   box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
+  /* background-image: linear-gradient(#feca00, #c8a001) !important; */
   /* border-bottom: 0.5px solid #989898 !important;
   border-left: 0.5px solid #989898 !important;
   border-top: 0.5px solid #989898 !important;
@@ -332,7 +333,7 @@ body {
   box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.5);
   font-size: 20px !important;
   border-radius: 5px;
-  border: 0.2px solid #989898 !important;
+  /* border: 0.2px solid #989898 !important; */
   /* border-bottom: 0.2px solid #989898 !important;
   border-left: 0.2px solid #989898 !important;
   border-top: 0.2px solid #989898 !important;
@@ -340,15 +341,28 @@ body {
   /* background-image: none; */
   /* /* color: #c0362c !important; */
   /* background-color: #c0362c; */
-  background-image: linear-gradient(#de392d, #c0362c);
+  background-image: linear-gradient(#79766e, #5b5953);
   text-shadow: none !important;
   width: 80px !important;
   /* height: 41px !important; */
 }
 
+#right-vert {
+  position: fixed;
+  right: 27px;
+  top: 0px;
+  width: 1.6px;
+  height: calc(100% - 140px);
+  background-color: #5b5953;
+  user-select: none;
+  touch-action: none;
+}
+
 #nearby-info,
 #weather {
-  background-color: rgba(255, 255, 255, 0.9);
+  /* background-color: rgba(233, 238, 230, 1); */
+  background-color: rgba(245, 243, 241, 0.7);
+  /* background-color: #f4f3f1; */
 }
 
 #change-map-btn,
@@ -403,8 +417,18 @@ body {
 #project-info-btn,
 #response-times-list-btn,
 #car-breakins-btn {
-  background-image: linear-gradient(#f7f7f7, #e7e7e7);
+  background-image: linear-gradient(#f4f3f1, #eeede9);
 }
+
+#latest-list-btn:hover,
+#change-map-btn:hover,
+#nearby-list-btn:hover,
+#project-info-btn:hover,
+#response-times-list-btn:hover,
+#car-breakins-btn:hover {
+  color: #1c1c1a;
+}
+
 /* 
 #latest-list-btn {
   background-image: linear-gradient(#016403, #005302);
@@ -484,6 +508,7 @@ svg {
   padding: 4px 8px 4px 8px;
   touch-action: none;
   pointer-events: none;
+  border: 0.5px solid white;
 }
 
 #neighborhood-text {
@@ -491,7 +516,8 @@ svg {
   left: 50%;
   transform: translate(-50%, 50%);
   z-index: 3;
-  background-color: rgba(255, 255, 255, 0.7);
+  border: 0.5px solid white;
+  background-color: rgba(245, 243, 241, 0.7);
   box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.5);
   border-radius: 8px;
   padding: 1px 10px 4px 10px;
@@ -514,6 +540,7 @@ svg {
   font-size: 23px;
   padding: 0px 6px 1px 6px;
   text-align: center;
+  border: 0.5px solid white;
 }
 
 .leaflet-control-attribution {
@@ -535,7 +562,7 @@ svg {
 .leaflet-popup-content-wrapper,
 .station-popup .leaflet-popup-content,
 .leaflet-popup-tip {
-  color: #2a2928;
+  color: #5b5953;
 }
 
 .leaflet-popup-content {
@@ -573,20 +600,27 @@ svg {
 
 .leaflet-control-zoom-in,
 .leaflet-control-zoom-out {
-  font-weight: bold;
-  /* color: #484848; */
-  color: #736f65;
   background-image: linear-gradient(#f7f7f7, #e7e7e7);
   transition: transform 0.2s ease-in-out;
   user-select: none;
   box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.5);
 }
 
+a.leaflet-control-zoom-in,
+a.leaflet-control-zoom-out {
+  color: #5b5953;
+}
+
+a.leaflet-control-zoom-in:hover,
+a.leaflet-control-zoom-out:hover {
+  color: #1c1c1a;
+}
+
 .leaflet-control-zoom-in:active,
 .leaflet-control-zoom-out:active {
   background-color: #f8f8f8;
   outline: none;
-  transform: scale(1.02);
+  transform: scale(1.04);
   transform-origin: top;
 }
 
@@ -602,7 +636,7 @@ svg {
   z-index: 2;
   /* color: rgba(39, 39, 39, 0.7); */
   color: #736f65;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(245, 243, 241, 0.7);
   text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.7);
   box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.5);
   padding: 4px 10px 6px 10px;
@@ -633,36 +667,57 @@ svg {
     background-color: rgba(26, 26, 26, 0.93);
   }
 
+  #right-vert {
+    background-color: #989898;
+  }
+
   #weather,
   #nearby-info,
   #neighborhood-text,
   #last-updated {
     background-color: rgba(28, 28, 28, 0.8);
     color: rgba(250, 250, 250, 0.95);
+    border: none;
   }
 
   .leaflet-control-zoom-in,
   .leaflet-control-zoom-out,
   #change-map-btn,
-  #latest-list-btn,
   #nearby-list-btn,
   #project-info-btn,
   #response-times-list-btn,
   #car-breakins-btn {
     background-image: linear-gradient(#2f2f2f, #1d1d1d);
     color: rgba(250, 250, 250, 0.95) !important;
-    /* border: 0.02px solid white !important; */
-  }
-
-  #nearby-list-btn {
-    box-shadow: 0px 0px 6px 3px rgb(255, 255, 0, 0.6) !important;
-    border: 0.2px solid #989898 !important;
+    /* border: none; */
   }
 
   #latest-list-btn {
-    box-shadow: 0px 0px 6px 3px #c0362c !important;
-    /* color: green !important; */
+    background-image: linear-gradient(#707070, #454545);
+    color: rgba(250, 250, 250, 0.95) !important;
   }
+
+  #latest-list-btn {
+    border: none !important;
+  }
+
+  #latest-list-btn:hover,
+  #change-map-btn:hover,
+  #nearby-list-btn:hover,
+  #project-info-btn:hover,
+  #response-times-list-btn:hover,
+  #car-breakins-btn:hover {
+    color: rgba(135, 135, 135, 0.95) !important;
+  }
+
+  /* #nearby-list-btn {
+    box-shadow: 0px 0px 6px 3px rgb(255, 255, 0, 0.6) !important; */
+  /* border: 0.2px solid #989898 !important; */
+  /* } */
+
+  /* #latest-list-btn {
+    /* box-shadow: 0px 0px 6px 3px #c0362c !important; */
+  /* color: green !important; */
 
   .leaflet-popup-content-wrapper,
   .station-popup .leaflet-popup-content,
@@ -688,6 +743,16 @@ svg {
     background-color: #333333;
   }
 
+  a.leaflet-control-zoom-in,
+  a.leaflet-control-zoom-out {
+    color: rgba(250, 250, 250, 0.95) !important;
+  }
+
+  a.leaflet-control-zoom-in:hover,
+  a.leaflet-control-zoom-out:hover {
+    color: rgba(135, 135, 135, 0.95) !important;
+  }
+
   .leaflet-control-attribution,
   #addSFDataSource {
     background-color: rgba(30, 30, 30, 0.9) !important;
@@ -708,5 +773,37 @@ svg {
   .affiliate-target-name-6 {
     color: rgba(255, 255, 255, 0.9);
     background-color: rgba(30, 30, 30, 0.9);
+  }
+
+  #project-info-btn {
+    top: 9px;
+    border-radius: 5px 5px 0px 0px !important;
+    border-left: none !important;
+    border-top: none !important;
+    border-right: none !important;
+  }
+
+  #change-map-btn {
+    top: 43px;
+    border-radius: 0px 0px 5px 5px !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+  }
+
+  #response-times-list-btn {
+    top: 82px;
+    border-radius: 5px 5px 0px 0px !important;
+    border-left: none !important;
+    border-top: none !important;
+    border-right: none !important;
+  }
+
+  #car-breakins-btn {
+    top: 116px;
+    border-radius: 0px 0px 5px 5px !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
   }
 }
