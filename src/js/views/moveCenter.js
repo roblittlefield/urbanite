@@ -34,6 +34,9 @@ export const addHandlerMoveCenter = function (callsLayer, map) {
     // // End Popup Affiliate
     // //
 
+    // End Popup Affiliate
+    //
+
     // Clear any previously scheduled timer to avoid rapid execution
     clearTimeout(timer);
     timer = setTimeout(() => {
@@ -93,6 +96,10 @@ export const addHandlerMoveCenter = function (callsLayer, map) {
               const neighborhoodText =
                 document.getElementById("neighborhood-text");
               neighborhoodText.textContent = neighborhood;
+
+              // Create the Twitter data
+
+              // Create the iMessage data
             } else if (currentPopup === layer) {
               // Close the popup if it's already open
               isPopupOpen = false;
