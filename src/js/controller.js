@@ -103,7 +103,7 @@ setTimeout(() => {
   setTimeout(() => {
     reloadData();
     reloadTimeout();
-  }, 60000 * 7);
+  }, 60000 * 5);
 })();
 
 /**
