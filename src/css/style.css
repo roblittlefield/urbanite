@@ -514,7 +514,6 @@ body {
   padding: 4px 8px 4px 8px;
   touch-action: none;
   pointer-events: none;
-  border: 0.5px solid white;
 }
 
 #neighborhood-text {
@@ -522,7 +521,6 @@ body {
   left: 50%;
   transform: translate(-50%, 50%);
   z-index: 3;
-  border: 0.5px solid white;
   background-color: rgba(245, 243, 241, 0.7);
   box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.5);
   border-radius: 8px;
@@ -546,7 +544,6 @@ body {
   font-size: 23px;
   padding: 0px 6px 1px 6px;
   text-align: center;
-  border: 0.5px solid white;
 }
 
 .leaflet-control-attribution {
@@ -640,7 +637,6 @@ a.leaflet-control-zoom-out:hover {
   left: 50%;
   transform: translate(-50%, 50%);
   z-index: 2;
-  border: 0.5px solid white;
   color: #736f65;
   background-color: rgba(245, 243, 241, 0.7);
   text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.7);
@@ -702,16 +698,11 @@ a.leaflet-control-zoom-out:hover {
   #car-breakins-btn {
     background-image: linear-gradient(#2f2f2f, #1d1d1d);
     color: rgba(250, 250, 250, 0.95) !important;
-    /* border: none; */
   }
 
   #latest-list-btn {
     background-image: linear-gradient(#707070, #454545);
     color: rgba(250, 250, 250, 0.95) !important;
-  }
-
-  #latest-list-btn {
-    border: none !important;
   }
 
   #tweet-btn:hover,
@@ -724,15 +715,6 @@ a.leaflet-control-zoom-out:hover {
   #car-breakins-btn:hover {
     color: rgba(135, 135, 135, 0.95) !important;
   }
-
-  /* #nearby-list-btn {
-    box-shadow: 0px 0px 6px 3px rgb(255, 255, 0, 0.6) !important; */
-  /* border: 0.2px solid #989898 !important; */
-  /* } */
-
-  /* #latest-list-btn {
-    /* box-shadow: 0px 0px 6px 3px #c0362c !important; */
-  /* color: green !important; */
 
   .leaflet-popup-content-wrapper,
   .station-popup .leaflet-popup-content,
