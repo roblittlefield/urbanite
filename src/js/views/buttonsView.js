@@ -5,8 +5,11 @@ const latestButton = document.getElementById("latest-list-btn");
 const latestContainer = document.getElementById("call-list-container");
 const nearbyButton = document.getElementById("nearby-list-btn");
 const responseButton = document.getElementById("response-times-list-btn");
+const textMessageButton = document.getElementById("text-message-btn");
+const tweetButton = document.getElementById("tweet-btn");
 const buttonContainer1 = document.getElementById("button-container-1");
 const buttonContainer2 = document.getElementById("button-container-2");
+const buttonContainer3 = document.getElementById("button-container-3");
 const responseTimesContainer = document.getElementById(
   "response-times-container"
 );
@@ -125,6 +128,41 @@ export const loadCarBreakinsButton = function (handler) {
 };
 
 /**
+ * Load and initialize the "Tweet"" button with a click event handler.
+ *
+ * @param {function} closeAllPopups - The function to close all popups before executing the event handler.
+ */
+export const loadTweetButton = function () {
+  tweetButton.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const btn = e.target.closest("#tweet-btn");
+    if (!btn) return;
+    let tweetContent = document.getElementById("tweet-content").textContent;
+    window.open(
+      `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        tweetContent
+      )}`,
+      "_blank"
+    );
+  });
+};
+
+export const loadTextMessageButton = function () {
+  textMessageButton.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const btn = e.target.closest("#text-message-btn");
+    if (!btn) return;
+    let textMessageContent = document.getElementById(
+      "text-message-content"
+    ).textContent;
+    window.open(
+      `sms:&body=${encodeURIComponent(textMessageContent)}`,
+      "_blank"
+    );
+  });
+};
+
+/**
  * Toggle the visibility of various UI elements on the web app.
  * Elements such as temperature, buttons, and other containers are toggled between hidden and visible states.
  */
@@ -136,12 +174,15 @@ export const toggleVisibleItems = function () {
   nearbyButton.classList.toggle("hidden");
   responseButton.classList.toggle("hidden");
   carBreaksinsButton.classList.toggle("hidden");
+  textMessageButton.classList.toggle("hidden");
+  tweetButton.classList.toggle("hidden");
   countNearbyContainer.classList.toggle("hidden");
   neighborhoodContainer.classList.toggle("hidden");
   lastUpdatedElement.classList.toggle("hidden");
   // affiliateCont.classList.toggle("hidden");
   buttonContainer1.classList.toggle("hidden");
   buttonContainer2.classList.toggle("hidden");
+  buttonContainer3.classList.toggle("hidden");
 };
 
 /**

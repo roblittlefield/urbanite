@@ -219,10 +219,10 @@ export const callTypeConversionMap = new Map([
   ["PROWLER", "Prowler"],
   ["STALKING", "Stalking"],
 
-  ["WANTED VEHICLE / SUB", "Wanted vehicle / person"],
+  ["WANTED VEHICLE / SUB", "Wanted person"],
   ["SUSPICIOUS PERSON", "Suspicious person"],
 
-  ["MENTALLY DISTURBED", "Mentally disturbed person"],
+  ["MENTALLY DISTURBED", "Mentally disturbed"],
   ["INTOXICATED PERSON", "Intoxicated person"],
   ["PERSON SCREAMING", "Person screaming"],
   ["DRUNK DRIVER", "Drunk driver"],
@@ -230,13 +230,13 @@ export const callTypeConversionMap = new Map([
   ["STOLEN VEHICLE", "Stolen vehicle"],
   ["AUTO BOOST / STRIP", "Car break-in / strip"],
 
-  ["H&R INJURY ACCIDENT", "Hit & run with injuries"],
-  ["H&R VEH ACCIDENT", "Hit & run with no injuries"],
-  ["INJURY VEH ACCIDENT", "Car crash with injuries"],
+  ["H&R INJURY ACCIDENT", "Hit & run, injuries"],
+  ["H&R VEH ACCIDENT", "Hit & run"],
+  ["INJURY VEH ACCIDENT", "Car crash, injuries"],
   ["ARREST MADE", "Arrest made"],
   ["RESISTING ARREST", "Resisting arrest"],
   ["CITIZEN ARREST", "Citizen arrest"],
-  ["DEMO / PROTEST", "Demonstration / protest"],
+  ["DEMO / PROTEST", "Demonstration/protest"],
 ]);
 
 // SFPD Real-Time combined address for API call

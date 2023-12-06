@@ -44,12 +44,12 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
         : call.enteredTime
         ? `call entry in SFPD queue ${call.enteredTimeAgo} ago`
         : "call received by SFPD"
-    }${
-      disposition ? `, ${disposition.toLowerCase()}` : ""
-    } SFPDcalls.com/?cad=${call.cadNumber}`;
+    }${disposition ? `, ${disposition.toLowerCase()}` : ""} SFPDcalls.com/${
+      call.cadNumber
+    }`;
 
     // Create text message / iMessage content from call data
-    const textMessageContent = `"${call.callTypeFormatted}${callNotesStr} at ${
+    const textMessageContent = `${call.callTypeFormatted}${callNotesStr} at ${
       call.properCaseAddress
     } in ${call.neighborhoodFormatted} ${receivedTimeAgoF} ago, ${
       call.onView === "Y"
@@ -61,9 +61,12 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
         : call.enteredTime
         ? `call entry in queue ${call.enteredTimeAgo} ago`
         : "call received"
-    }${
-      disposition ? `, ${disposition.toLowerCase()}` : ""
-    }" via SFPDcalls.com/?cad=${call.cadNumber}`;
+    }${disposition ? `, ${disposition.toLowerCase()}` : ""} via SFPDcalls.com/${
+      call.cadNumber
+    }`;
+
+    document.getElementById("text-message-content").innerHTML =
+      textMessageContent;
 
     // Create call circle marker pop-up content
 
@@ -72,16 +75,8 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
     const popupContent = `
   <div>
     <b>${call.callTypeFormatted}</b>
-    \u2022 ${receivedTimeAgoF} <a href="sms:&body=${encodeURIComponent(
-      textMessageContent
-    )}">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IMessage_logo.svg/20px-IMessage_logo.svg.png" alt="iMessage / text" style="height: 20px; position: absolute; top: calc(50% - 21px); right: 2px;" class="text-message-btn" loading="lazy">
-    </a>
-    <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(
-      tweetContent
-    )}" target="_blank">
-    <img src="https://icons.iconarchive.com/icons/xenatt/the-circle/256/App-Twitter-icon.png" alt="Twitter Bird Icon" style="height: 24px; position: absolute; top: calc(50% - -5px);  right: 0px;" class="twitter-btn"  loading="lazy">
-    </a>${
+    \u2022 ${receivedTimeAgoF} 
+    ${
       call.callNotes
         ? `<br>${call.callNotes.charAt(0).toUpperCase()}${call.callNotes.slice(
             1
@@ -163,8 +158,9 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
       recentlyResponded,
       recentlyDispatched,
       callNotes: call.callNotes,
+      callTweetContent: tweetContent,
+      callMessageContent: textMessageContent,
     };
-
     // Create content for recent calls
     if (recentlyDispatched || recentlyResponded) {
       let emojiIcon = "";

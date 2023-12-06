@@ -306,6 +306,30 @@ body {
   border-bottom: 0.2px solid #989898 !important;
 }
 
+#text-message-btn {
+  border-radius: 5px 5px 0px 0px !important;
+  bottom: 233px;
+  border-left: 0.2px solid #989898 !important;
+  border-top: 0.2px solid #989898 !important;
+  border-right: 0.2px solid #989898 !important;
+}
+
+#text-message-content {
+  display: none;
+}
+
+#tweet-btn {
+  border-radius: 0px 0px 5px 5px !important;
+  bottom: 199px;
+  border-left: 0.2px solid #989898 !important;
+  border-right: 0.2px solid #989898 !important;
+  border-bottom: 0.2px solid #989898 !important;
+}
+
+#tweet-content {
+  display: none;
+}
+
 #nearby-list-btn {
   bottom: 160px;
   /* width: 50px !important;
@@ -365,6 +389,8 @@ body {
   /* background-color: #f4f3f1; */
 }
 
+#text-message-btn,
+#tweet-btn,
 #change-map-btn,
 #latest-list-btn,
 #nearby-list-btn,
@@ -412,6 +438,18 @@ body {
   border-radius: 5px;
 }
 
+#button-container-3 {
+  bottom: 199px;
+  box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.5);
+  right: 11px;
+  position: fixed;
+  width: 34px;
+  height: 68px;
+  border-radius: 5px;
+}
+
+#text-message-btn,
+#tweet-btn,
 #change-map-btn,
 #nearby-list-btn,
 #project-info-btn,
@@ -420,6 +458,8 @@ body {
   background-image: linear-gradient(#f4f3f1, #eeede9);
 }
 
+#text-message-btn:hover,
+#tweet-btn:hover,
 #latest-list-btn:hover,
 #change-map-btn:hover,
 #nearby-list-btn:hover,
@@ -434,12 +474,16 @@ body {
   background-image: linear-gradient(#016403, #005302);
 } */
 
+.bi-chat-dots,
+.bi-twitter-x,
+.bi-crosshair,
 .bi-map,
 .bi-crosshair,
 .bi-stopwatch,
 .bi-car-front,
 .bi-info-square {
-  width: 4rem;
+  width: 30px;
+  height: 30px;
 }
 /* 
 @media screen and (max-width: 440px) {
@@ -452,6 +496,8 @@ body {
   }
 } */
 
+#text-message-btn,
+#tweet-btn,
 #change-map-btn,
 #latest-list-btn,
 #nearby-list-btn,
@@ -472,11 +518,14 @@ body {
   align-items: center;
 }
 
+#text-message-btn,
 #response-times-list-btn,
 #project-info-btn {
   border-bottom: 0.2px solid #989898;
 }
 
+#text-message-btn:active,
+#tweet-btn:active,
 #change-map-btn:active,
 #latest-list-btn:active,
 #nearby-list-btn:active,
@@ -683,6 +732,8 @@ a.leaflet-control-zoom-out:hover {
 
   .leaflet-control-zoom-in,
   .leaflet-control-zoom-out,
+  #tweet-btn,
+  #text-message-btn,
   #change-map-btn,
   #nearby-list-btn,
   #project-info-btn,
@@ -702,6 +753,8 @@ a.leaflet-control-zoom-out:hover {
     border: none !important;
   }
 
+  #tweet-btn:hover,
+  #text-message-btn:hover,
   #latest-list-btn:hover,
   #change-map-btn:hover,
   #nearby-list-btn:hover,
@@ -729,6 +782,8 @@ a.leaflet-control-zoom-out:hover {
   #last-updated,
   .leaflet-control-zoom-in,
   .leaflet-control-zoom-out,
+  #tweet-btn,
+  #text-message-btn,
   #change-map-btn,
   #latest-list-btn,
   #nearby-list-btn,

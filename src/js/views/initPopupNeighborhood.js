@@ -44,10 +44,15 @@ export const initPopupNieghborhood = (position, callsLayer, urlCAD, map) => {
           }, 3000);
           map.flyTo(layer.getLatLng(), 15);
           addHandlerMoveCenter(callsLayer, map);
-          const { neighborhood } = layer.options.data;
-          const neighborhoodText = document.getElementById("neighborhood-text");
-          neighborhoodText.textContent = neighborhood;
           layer.openPopup();
+          const { neighborhood, callTweetContent, callMessageContent } =
+            layer.options.data;
+          document.getElementById("neighborhood-text").textContent =
+            neighborhood;
+          document.getElementById("tweet-content").textContent =
+            callTweetContent;
+          document.getElementById("text-message-content").textContent =
+            callMessageContent;
         }
       });
       if (!liveDataIncludesCAD) {
@@ -80,26 +85,26 @@ export const initPopupNieghborhood = (position, callsLayer, urlCAD, map) => {
             const resolutionHist = dataHistbyCAD[0].resolution;
 
             // Create Twitter message content based on historical call data
-            const tweetContent = `${incident_descHist} at ${addressHist} in ${neighborhoodHist} ${
-              receivedTimeAgo <= 6
-                ? `${receivedTimeAgoF} ago`
-                : `${formatDate(receivedTimeAgo)}`
-            }${
-              resolutionHist
-                ? resolutionHist === "Open or Active"
-                  ? ""
-                  : `<br>${resolutionHist}`
-                : ""
-            } SFPDcalls.com/?cad=${cad_numberHist}`;
+            // const tweetContent = `${incident_descHist} at ${addressHist} in ${neighborhoodHist} ${
+            //   receivedTimeAgo <= 6
+            //     ? `${receivedTimeAgoF} ago`
+            //     : `${formatDate(receivedTimeAgo)}`
+            // }${
+            //   resolutionHist
+            //     ? resolutionHist === "Open or Active"
+            //       ? ""
+            //       : `<br>${resolutionHist}`
+            //     : ""
+            // } SFPDcalls.com/?cad=${cad_numberHist}`;
 
             // Create text message / iMessage content based on historical call data
-            const textMessageContent = `"${incident_descHist} at ${addressHist} in ${neighborhoodHist} ${receivedTimeAgo} ago${
-              resolutionHist
-                ? resolutionHist === "Open or Active"
-                  ? ""
-                  : `, ${resolutionHist}`
-                : ""
-            }, Case #${cad_numberHist}" SFPDcalls.com/?cad=${cad_numberHist}`;
+            // const textMessageContent = `"${incident_descHist} at ${addressHist} in ${neighborhoodHist} ${receivedTimeAgo} ago${
+            //   resolutionHist
+            //     ? resolutionHist === "Open or Active"
+            //       ? ""
+            //       : `, ${resolutionHist}`
+            //     : ""
+            // }, Case #${cad_numberHist}" SFPDcalls.com/?cad=${cad_numberHist}`;
 
             // Create Leaflet marker pop-up content based on historical call data
             const popupContent = `
@@ -116,14 +121,6 @@ export const initPopupNieghborhood = (position, callsLayer, urlCAD, map) => {
                   : `<br>${resolutionHist}`
                 : ""
             }<br>(Archived call)
-            <a href="sms:&body=${encodeURIComponent(textMessageContent)}">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IMessage_logo.svg/20px-IMessage_logo.svg.png" alt="iMessage / text" style="height:20px; position: absolute; bottom: 0px; left: calc(50% - 27px); transform: translate(-50%, -50%);">
-              </a>
-              <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                tweetContent
-              )}" target="_blank">
-              <img src="https://icons.iconarchive.com/icons/xenatt/the-circle/256/App-Twitter-icon.png" alt="Twitter Bird Icon" style=" height: 22px; position: absolute; bottom: 0px; left: calc(50% + 25px); transform: translate(-50%, -50%);">
-              </a>
               </div>
       `;
             // Create an ad-hoc circle marker for the historical call, incluidng pop-up content

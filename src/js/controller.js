@@ -25,6 +25,8 @@ import {
   toggleVisibleInfo,
   loadResponseTimesButton,
   loadCarBreakinsButton,
+  loadTweetButton,
+  loadTextMessageButton,
 } from "./views/buttonsView.js";
 import getURLParameter from "./views/hashURL.js";
 // import loadAff from "./views/affiliate.js";
@@ -117,9 +119,9 @@ function reloadData() {
   }
 }
 
-let tenMinPassed = false;
+let visTimePassed = false;
 setTimeout(() => {
-  tenMinPassed = true;
+  visTimePassed = true;
 }, 60000 * 3.5);
 
 /**
@@ -129,9 +131,9 @@ setTimeout(() => {
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
     /**
-     * @param {boolean} tenMinPassed - A flag indicating whether five minutes have passed.
+     * @param {boolean} visTimePassed - A flag indicating whether five minutes have passed.
      */
-    if (tenMinPassed) {
+    if (visTimePassed) {
       window.location.reload(true);
     }
   }
@@ -277,6 +279,8 @@ const controlCircleMarkers = async function () {
       loadNearbyListButton(loadNearbyCalls, openCallList, closeAllPopups);
       loadResponseTimesButton(closeAllPopups);
       loadCarBreakinsButton(controlCarBreakins);
+      loadTweetButton();
+      loadTextMessageButton();
       if (localStorage.getItem("openList") === "allSF")
         document.getElementById("latest-list-btn").click();
     } else {

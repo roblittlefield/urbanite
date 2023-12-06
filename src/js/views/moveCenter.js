@@ -45,7 +45,7 @@ export const addHandlerMoveCenter = function (callsLayer, map) {
 
       // Calculate the center of the map
       const centerX = x / 2;
-      const centerY = y / 2 + 106;
+      const centerY = y / 2 + 50;
 
       // Initialize variables to find the closest marker
       let minDistance = Infinity;
@@ -92,14 +92,14 @@ export const addHandlerMoveCenter = function (callsLayer, map) {
                 currentPopup = layer;
               }
               // Get the 'neighborhood' data from the marker's options
-              const { neighborhood } = layer.options.data;
-              const neighborhoodText =
-                document.getElementById("neighborhood-text");
-              neighborhoodText.textContent = neighborhood;
-
-              // Create the Twitter data
-
-              // Create the iMessage data
+              const { neighborhood, callTweetContent, callMessageContent } =
+                layer.options.data;
+              document.getElementById("neighborhood-text").textContent =
+                neighborhood;
+              document.getElementById("tweet-content").textContent =
+                callTweetContent;
+              document.getElementById("text-message-content").textContent =
+                callMessageContent;
             } else if (currentPopup === layer) {
               // Close the popup if it's already open
               isPopupOpen = false;
