@@ -265,53 +265,42 @@ body {
   word-wrap: normal;
 }
 
-/* -----Buttons----- 
-1 - 9px
-2 - 44px
-3 - 79px
-4 - 114px
-5 - 149px
-6 - 184px 
-*/
+/* -----Buttons----- */
 
 #project-info-btn {
   top: 9px;
-  border-radius: 5px 5px 0px 0px !important;
-  border-left: 0.2px solid #989898 !important;
-  border-top: 0.2px solid #989898 !important;
-  border-right: 0.2px solid #989898 !important;
+  border-radius: 5px 5px 0px 0px;
+  border: 0.2px solid #989898;
+  border-bottom: none;
+  background-clip: padding-box;
 }
 
 #change-map-btn {
   top: 43px;
-  border-radius: 0px 0px 5px 5px !important;
-  border-left: 0.2px solid #989898 !important;
-  border-right: 0.2px solid #989898 !important;
-  border-bottom: 0.2px solid #989898 !important;
+  border-radius: 0px 0px 5px 5px;
+  border: 0.2px solid #989898;
+  border-top: none;
 }
 
 #response-times-list-btn {
   top: 82px;
-  border-radius: 5px 5px 0px 0px !important;
-  border-left: 0.2px solid #989898 !important;
-  border-top: 0.2px solid #989898 !important;
-  border-right: 0.2px solid #989898 !important;
+  border-radius: 5px 5px 0px 0px;
+  border: 0.2px solid #989898;
+  border-bottom: none;
 }
 
 #car-breakins-btn {
   top: 116px;
-  border-radius: 0px 0px 5px 5px !important;
-  border-left: 0.2px solid #989898 !important;
-  border-right: 0.2px solid #989898 !important;
-  border-bottom: 0.2px solid #989898 !important;
+  border-radius: 0px 0px 5px 5px;
+  border: 0.2px solid #989898;
+  border-top: none;
 }
 
 #text-message-btn {
-  border-radius: 5px 5px 0px 0px !important;
+  border-radius: 5px 5px 0px 0px;
   bottom: 233px;
-  border-left: 0.2px solid #989898 !important;
-  border-top: 0.2px solid #989898 !important;
-  border-right: 0.2px solid #989898 !important;
+  border: 0.2px solid #989898;
+  border-bottom: none;
 }
 
 #text-message-content {
@@ -319,11 +308,10 @@ body {
 }
 
 #tweet-btn {
-  border-radius: 0px 0px 5px 5px !important;
+  border-radius: 0px 0px 5px 5px;
   bottom: 199px;
-  border-left: 0.2px solid #989898 !important;
-  border-right: 0.2px solid #989898 !important;
-  border-bottom: 0.2px solid #989898 !important;
+  border: 0.2px solid #989898;
+  border-top: none;
 }
 
 #tweet-content {
@@ -332,22 +320,8 @@ body {
 
 #nearby-list-btn {
   bottom: 160px;
-  /* width: 50px !important;
-  height: 50px !important; */
-  /* color: #c0362c !important;
-  background-color: #7aa8c6; */
-  /* background-color: #00af7c; */
   box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
-  /* background-image: linear-gradient(#feca00, #c8a001) !important; */
-  /* border-bottom: 0.5px solid #989898 !important;
-  border-left: 0.5px solid #989898 !important;
-  border-top: 0.5px solid #989898 !important;
-  border-right: 0.5px solid #989898 !important; */
-  /* width: 80px !important; */
-  /* font-size: 20px !important; */
-  /* text-shadow: none !important; */
-  /* height: 20x !important;  */
 }
 
 #latest-list-btn {
@@ -357,36 +331,25 @@ body {
   box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.5);
   font-size: 20px !important;
   border-radius: 5px;
-  /* border: 0.2px solid #989898 !important; */
-  /* border-bottom: 0.2px solid #989898 !important;
-  border-left: 0.2px solid #989898 !important;
-  border-top: 0.2px solid #989898 !important;
-  border-right: 0.2px solid #989898 !important; */
-  /* background-image: none; */
-  /* /* color: #c0362c !important; */
-  /* background-color: #c0362c; */
   background-image: linear-gradient(#79766e, #5b5953);
   text-shadow: none !important;
   width: 80px !important;
-  /* height: 41px !important; */
 }
 
-/* #right-vert {
+#right-vert {
   position: fixed;
-  right: 27px;
+  right: 31px;
   top: 0px;
-  width: 1.6px;
+  width: 0.7px;
   height: calc(100% - 140px);
   background-color: #5b5953;
   user-select: none;
   touch-action: none;
-} */
+}
 
 #nearby-info,
 #weather {
-  /* background-color: rgba(233, 238, 230, 1); */
   background-color: rgba(245, 243, 241, 0.7);
-  /* background-color: #f4f3f1; */
 }
 
 #text-message-btn,
@@ -418,34 +381,28 @@ body {
   border-radius: 5px;
 }
 
-#button-container-1 {
-  top: 9px;
+#button-container-1,
+#button-container-2,
+#button-container-3 {
   box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.5);
   right: 11px;
   position: fixed;
   width: 34px;
   height: 68px;
   border-radius: 5px;
+  background-color: transparent;
+}
+
+#button-container-1 {
+  top: 9px;
 }
 
 #button-container-2 {
   top: 82px;
-  box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.5);
-  right: 11px;
-  position: fixed;
-  width: 34px;
-  height: 68px;
-  border-radius: 5px;
 }
 
 #button-container-3 {
   bottom: 199px;
-  box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.5);
-  right: 11px;
-  position: fixed;
-  width: 34px;
-  height: 68px;
-  border-radius: 5px;
 }
 
 #text-message-btn,
@@ -509,13 +466,17 @@ body {
   width: 34px;
   height: 34px;
   z-index: 5;
-  right: 11px;
-  border: none;
+  right: 15px;
   cursor: pointer;
   background-clip: padding-box;
   display: flex;
   justify-content: center; /* Centers children horizontally */
   align-items: center;
+}
+
+#latest-list-btn,
+#nearby-list-btn {
+  border: none;
 }
 
 #text-message-btn,
@@ -617,7 +578,7 @@ body {
 }
 
 .leaflet-popup-content a {
-  color: #3288bd;
+  color: #888888;
 }
 
 /* .leaflet-popup-content a .x-com {
@@ -679,7 +640,7 @@ a.leaflet-control-zoom-out:hover {
   left: 50%;
   transform: translate(-50%, 50%);
   z-index: 2;
-  /* color: rgba(39, 39, 39, 0.7); */
+  border: 0.5px solid white;
   color: #736f65;
   background-color: rgba(245, 243, 241, 0.7);
   text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.7);
@@ -797,6 +758,7 @@ a.leaflet-control-zoom-out:hover {
   .leaflet-control-zoom-in:active,
   .leaflet-control-zoom-out:active {
     background-color: #333333;
+    border: none;
   }
 
   a.leaflet-control-zoom-in,
@@ -812,6 +774,7 @@ a.leaflet-control-zoom-out:hover {
   .leaflet-control-attribution,
   #addSFDataSource {
     background-color: rgba(30, 30, 30, 0.9) !important;
+    border: none;
   }
 
   .response-marker-popup-text {

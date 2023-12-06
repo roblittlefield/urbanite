@@ -53,7 +53,12 @@ const prefersDarkMode = window.matchMedia(
 //   [0, 1, 3].includes(storedMapLayer) // Light Maps
 //   ? storedMapLayer
 //   : 0;
-let mapLayer = prefersDarkMode ? 4 : 0;
+let mapLayer;
+if (navigator.language === "en-US") {
+  mapLayer = prefersDarkMode ? 4 : 0;
+} else {
+  mapLayer = prefersDarkMode ? 5 : 1;
+}
 // localStorage.setItem("mapNumber", mapLayer);
 
 const countContainer = document.getElementById("nearby-info");
