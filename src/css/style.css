@@ -832,7 +832,6 @@ a.leaflet-control-zoom-out:hover {
   }
 
   #project-info-btn {
-    top: 9px;
     border-radius: 5px 5px 0px 0px !important;
     border-left: none !important;
     border-top: none !important;
@@ -840,7 +839,6 @@ a.leaflet-control-zoom-out:hover {
   }
 
   #change-map-btn {
-    top: 43px;
     border-radius: 0px 0px 5px 5px !important;
     border-left: none !important;
     border-right: none !important;
@@ -848,7 +846,6 @@ a.leaflet-control-zoom-out:hover {
   }
 
   #response-times-list-btn {
-    top: 82px;
     border-radius: 5px 5px 0px 0px !important;
     border-left: none !important;
     border-top: none !important;
@@ -856,7 +853,20 @@ a.leaflet-control-zoom-out:hover {
   }
 
   #car-breakins-btn {
-    top: 116px;
+    border-radius: 0px 0px 5px 5px !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+  }
+
+  #text-message-btn {
+    border-radius: 5px 5px 0px 0px !important;
+    border-left: none !important;
+    border-top: none !important;
+    border-right: none !important;
+  }
+
+  #tweet-btn {
     border-radius: 0px 0px 5px 5px !important;
     border-left: none !important;
     border-right: none !important;
