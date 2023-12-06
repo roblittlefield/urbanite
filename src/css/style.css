@@ -347,6 +347,30 @@ body {
   touch-action: none;
 }
 
+@media screen and (min-width: 440px) {
+  #right-vert {
+    height: calc(100% - 50px);
+  }
+  #nearby-list-btn {
+    bottom: 80px;
+  }
+  #latest-list-btn {
+    bottom: 40px;
+  }
+
+  #text-message-btn {
+    bottom: 173px;
+  }
+
+  #tweet-btn {
+    bottom: 139px;
+  }
+
+  #button-container-3 {
+    bottom: 139px !important;
+  }
+}
+
 #nearby-info,
 #weather {
   background-color: rgba(245, 243, 241, 0.7);
