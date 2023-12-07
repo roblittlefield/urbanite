@@ -336,19 +336,31 @@ body {
   width: 80px !important;
 }
 
-#right-vert {
+.right-vert {
   position: fixed;
   right: 31px;
   top: 0px;
-  width: 0.7px;
+  width: 1px;
   height: calc(100% - 140px);
   background-color: #5b5953;
   user-select: none;
   touch-action: none;
 }
 
+#vert1 {
+  right: 25px;
+}
+
+#vert2 {
+  right: 31px;
+}
+
+#vert3 {
+  right: 37px;
+}
+
 @media screen and (min-width: 598px) {
-  #right-vert {
+  .right-vert {
     height: calc(100% - 50px);
   }
   #nearby-list-btn {
@@ -693,7 +705,7 @@ a.leaflet-control-zoom-out:hover {
     background-color: rgba(26, 26, 26, 0.93);
   }
 
-  #right-vert {
+  .right-vert {
     background-color: #989898;
   }
 
