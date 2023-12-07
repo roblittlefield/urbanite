@@ -347,7 +347,7 @@ body {
   touch-action: none;
 }
 
-@media screen and (min-width: 440px) {
+@media screen and (min-width: 598px) {
   #right-vert {
     height: calc(100% - 50px);
   }
