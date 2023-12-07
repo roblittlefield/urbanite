@@ -340,7 +340,7 @@ body {
   position: fixed;
   top: 0px;
   width: 1px;
-  background-color: #5b5953;
+  background-color: #989898;
   user-select: none;
   touch-action: none;
 }
@@ -726,10 +726,6 @@ a.leaflet-control-zoom-out:hover {
   .leaflet-popup-tip {
     color: rgba(255, 255, 255, 0.94);
     background-color: rgba(26, 26, 26, 0.93);
-  }
-
-  .vert-line {
-    background-color: #989898;
   }
 
   #nearby-info,
