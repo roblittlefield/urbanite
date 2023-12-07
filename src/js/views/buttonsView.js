@@ -10,6 +10,7 @@ const tweetButton = document.getElementById("tweet-btn");
 const buttonContainer1 = document.getElementById("button-container-1");
 const buttonContainer2 = document.getElementById("button-container-2");
 const buttonContainer3 = document.getElementById("button-container-3");
+
 const responseTimesContainer = document.getElementById(
   "response-times-container"
 );
@@ -183,6 +184,9 @@ export const toggleVisibleItems = function () {
   buttonContainer1.classList.toggle("hidden");
   buttonContainer2.classList.toggle("hidden");
   buttonContainer3.classList.toggle("hidden");
+  document.querySelectorAll(".vert-line").forEach((line) => {
+    line.classList.toggle("hidden");
+  });
 };
 
 /**
