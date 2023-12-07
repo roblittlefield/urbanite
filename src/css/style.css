@@ -336,15 +336,19 @@ body {
   width: 80px !important;
 }
 
-.right-vert {
+.vert-line {
   position: fixed;
-  right: 31px;
   top: 0px;
   width: 1px;
-  height: calc(100% - 140px);
   background-color: #5b5953;
   user-select: none;
   touch-action: none;
+}
+
+#vert1,
+#vert2,
+#vert3 {
+  height: calc(100% - 140px);
 }
 
 #vert1 {
@@ -359,10 +363,29 @@ body {
   right: 37px;
 }
 
+#vert4,
+#vert5,
+#vert6 {
+  height: 11.6px;
+}
+
+#vert4 {
+  left: 21px;
+}
+#vert5 {
+  left: 27px;
+}
+#vert6 {
+  left: 33px;
+}
+
 @media screen and (min-width: 598px) {
-  .right-vert {
+  #vert1,
+  #vert2,
+  #vert3 {
     height: calc(100% - 50px);
   }
+
   #nearby-list-btn {
     bottom: 80px;
   }
@@ -705,7 +728,7 @@ a.leaflet-control-zoom-out:hover {
     background-color: rgba(26, 26, 26, 0.93);
   }
 
-  .right-vert {
+  .vert-line {
     background-color: #989898;
   }
 
