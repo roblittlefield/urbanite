@@ -225,14 +225,13 @@ export const closestZoom = function (position, callsLayer) {
         // Open a popup for the nearest marker
         layer.openPopup();
 
-        // Get the 'neighborhood' data from the marker's options
-        const { neighborhood } = layer.options.data;
-
-        // Find the HTML element with the id 'neighborhood-text'
-        const neighborhoodText = document.getElementById("neighborhood-text");
-
-        // Update the text content of the 'neighborhood-text' element
-        neighborhoodText.textContent = neighborhood;
+        // Get the 'neighborhood', 'tweetContent' and 'Text Messsage Content' data from the marker's options
+        const { neighborhood, callTweetContent, callMessageContent } =
+          layer.options.data;
+        document.getElementById("neighborhood-text").textContent = neighborhood;
+        document.getElementById("tweet-content").textContent = callTweetContent;
+        document.getElementById("text-message-content").textContent =
+          callMessageContent;
       } else {
         // If the current layer is not the nearest marker, close its popup
         layer.closePopup();

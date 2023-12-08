@@ -194,9 +194,14 @@ export const updateCallList = function (latestMarkers, map, nearby) {
         }, 3000);
         map.flyTo(circleMarker.getLatLng(), 14);
         circleMarker.openPopup();
-        const { neighborhood } = circleMarker.options.data;
-        const neighborhoodText = document.getElementById("neighborhood-text");
-        neighborhoodText.textContent = neighborhood;
+
+        // Get the 'neighborhood', 'tweetContent' and 'Text Messsage Content' data from the marker's options
+        const { neighborhood, callTweetContent, callMessageContent } =
+          circleMarker.options.data;
+        document.getElementById("neighborhood-text").textContent = neighborhood;
+        document.getElementById("tweet-content").textContent = callTweetContent;
+        document.getElementById("text-message-content").textContent =
+          callMessageContent;
       });
       callList.appendChild(callBox);
     }

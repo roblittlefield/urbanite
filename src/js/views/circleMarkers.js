@@ -1,5 +1,6 @@
 import { formatDate, minsHoursFormat } from "../helpers.js";
 import { colorMap, onSceneCircleOpt } from "../config.js";
+import { circleMarker } from "leaflet";
 // Amount to offset each circle marker by when there are multiple at the same location (stacks the circle markers North a bit)
 const overlapOffset = 0.00008;
 
@@ -247,7 +248,7 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
       });
 
       // Edit the pop-up content to mention SFPD is responding
-      L.marker(callLatlng, {
+      const marker = L.marker(callLatlng, {
         icon: respondingIcon,
         keepInView: false,
         fillColor: colorMap.get(call.call_type) || "#0000000",
@@ -264,9 +265,17 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
           // className: "station-popup",
         })
         .addTo(callsLayer);
+      marker.on("click", function (e) {
+        const { neighborhood, callTweetContent, callMessageContent } =
+          e.target.options.data;
+        document.getElementById("neighborhood-text").textContent = neighborhood;
+        document.getElementById("tweet-content").textContent = callTweetContent;
+        document.getElementById("text-message-content").textContent =
+          callMessageContent;
+      });
     } else {
       // Create a new circle marker with the combined call data
-      L.circleMarker(callLatlng, {
+      const circleMarker = L.circleMarker(callLatlng, {
         radius: window.innerWidth <= 758 ? 6 : 6,
         keepInView: false,
         fillColor: colorMap.get(call.call_type) || "#0000000",
@@ -285,6 +294,14 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
           disableAnimation: true,
         })
         .addTo(callsLayer);
+      circleMarker.on("click", function (e) {
+        const { neighborhood, callTweetContent, callMessageContent } =
+          e.target.options.data;
+        document.getElementById("neighborhood-text").textContent = neighborhood;
+        document.getElementById("tweet-content").textContent = callTweetContent;
+        document.getElementById("text-message-content").textContent =
+          callMessageContent;
+      });
     }
   });
   return [callsLayer, respCircleLayer];

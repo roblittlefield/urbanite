@@ -91,7 +91,7 @@ export const addHandlerMoveCenter = function (callsLayer, map) {
                 isPopupOpen = true;
                 currentPopup = layer;
               }
-              // Get the 'neighborhood' data from the marker's options
+              // Get the 'neighborhood', 'tweetContent' and 'Text Messsage Content' data from the marker's options
               const { neighborhood, callTweetContent, callMessageContent } =
                 layer.options.data;
               document.getElementById("neighborhood-text").textContent =
