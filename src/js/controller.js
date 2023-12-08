@@ -79,15 +79,6 @@ const initGetUrlParam = function () {
   }
 };
 
-// // Get root/cad via 404 Load
-// document.addEventListener("DOMContentLoaded", () => {
-//   let pathName = window.location.pathname;
-//   if (pathName !== "/") {
-//     console.log("Path name does not equal /");
-//     window.location.href = "404.html";
-//   }
-// });
-
 /**
  * Refreshes the current page with a hard reload after 10 minutes.
  *
