@@ -15,11 +15,20 @@ export function sH(v) {
  */
 export const addHandlerMoveCenter = function (callsLayer, map) {
   let timer = null;
-  let popupAffTimer = null;
+  let lineTimer = null;
+  // let popupAffTimer = null;
   map.on("move", () => {
+    document.querySelectorAll(".vert-line").forEach(function (el) {
+      el.classList.add("hidden");
+    });
     // Check if the 'moving' flag is set; if true, exit the function
     if (moving) return;
-
+    clearTimeout(lineTimer);
+    lineTimer = setTimeout(() => {
+      document.querySelectorAll(".vert-line").forEach(function (el) {
+        el.classList.remove("hidden");
+      });
+    }, 3000);
     // //
     // // Popup Affiliate
     // clearTimeout(popupAffTimer);
