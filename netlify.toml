@@ -1,5 +1,5 @@
 [[redirects]]
-  from = "/blog*"
+  from = "/prod"
   to = "/prod.html"
   status = 200
 
