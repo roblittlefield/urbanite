@@ -135,23 +135,54 @@ document.addEventListener("visibilitychange", () => {
   }
 });
 
-// let inputSequence = "";
-// function handleKeydown(event) {
-//   inputSequence += event.key;
-//   if (inputSequence.includes("415") || inputSequence.includes("frisco")) {
-//     document.getElementById("affiliate").style.setProperty("display", "none");
-//     document.querySelector(".affiliate-popup").classList.add("hidden");
-//     sH(false);
-//     inputSequence = "";
-//     window.removeEventListener("keydown", handleKeydown);
-//   }
-//   if (inputSequence.length > 3) {
-//     setTimeout(() => {
-//       inputSequence = "";
-//     }, 1500);
-//   }
-// }
-// window.addEventListener("keydown", handleKeydown);
+let inputSequence = "";
+function handleKeydown(event) {
+  console.log(event.key);
+  // inputSequence += event.key;
+  inputSeq = event.key;
+  if (
+    inputSeq.includes("`") ||
+    inputSeq.includes("q") ||
+    inputSeq.includes("0") ||
+    inputSeq.includes("l") ||
+    inputSeq.includes("w")
+  ) {
+    document.getElementById("latest-list-btn").click();
+  } else if (inputSeq.includes("n") || inputSeq.includes("1")) {
+    document.getElementById("nearby-list-btn").click();
+  } else if (inputSeq.includes("x") || inputSeq.includes("z")) {
+    document.getElementById("tweet-btn").click();
+  } else if (inputSeq.includes("i")) {
+    document.getElementById("text-message-btn").click();
+  } else if (inputSeq.includes("m")) {
+    document.getElementById("change-map-btn").click();
+  } else if (inputSeq.includes("2")) {
+    reInit();
+  }
+  inputSeq = "";
+  // else if (inputSequence.includes("n") || inputSequence.includes("i")) {
+  //   document.getElementById("nearby-list-btn").click();
+  // }
+
+  // }
+  // inputSequence = "";
+  // else if (
+  //   inputSequence.includes("415") ||
+  //   inputSequence.includes("frisco")
+  // ) {
+  //   document.getElementById("affiliate").style.setProperty("display", "none");
+  //   document.querySelector(".affiliate-popup").classList.add("hidden");
+  //   sH(false);
+  //   inputSequence = "";
+  //   window.removeEventListener("keydown", handleKeydown);
+  // }
+  // if (inputSequence.length > 3) {
+  //   setTimeout(() => {
+  //     inputSequence = "";
+  //   }, 1000);
+  // }
+}
+window.addEventListener("keydown", handleKeydown);
 
 /**
  * Initializes the map by creating a Leaflet map, setting its view, and adding layers.

@@ -185,6 +185,8 @@ body {
   background: transparent;
   border: none;
   font-size: x-large;
+  touch-action: none;
+  pointer-events: none;
 }
 
 .response-marker {

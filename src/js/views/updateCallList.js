@@ -323,7 +323,7 @@ export const controlOpenCallList = function (
   };
 
   const handleEsc = (event) => {
-    const allowedKeys = ["Escape", " ", "Enter", "c", "Delete", "q"];
+    const allowedKeys = ["Escape", " ", "Enter", "Delete"];
     if (
       allowedKeys.includes(event.key) &&
       !latestContainer.classList.contains("hidden")
