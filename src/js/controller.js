@@ -135,7 +135,7 @@ document.addEventListener("visibilitychange", () => {
   }
 });
 
-let inputSequence = "";
+let inputSeq = "";
 function handleKeydown(event) {
   console.log(event.key);
   // inputSequence += event.key;
