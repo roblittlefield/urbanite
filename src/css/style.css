@@ -500,8 +500,8 @@ body {
 .bi-stopwatch,
 .bi-car-front,
 .bi-info-square {
-  width: 30px;
-  height: 30px;
+  width: 100px;
+  height: 100px;
 }
 /* 
 @media screen and (max-width: 440px) {
