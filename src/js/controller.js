@@ -143,12 +143,12 @@ function handleKeydown(event) {
   if (
     inputSeq.includes("`") ||
     inputSeq.includes("q") ||
-    inputSeq.includes("0") ||
+    inputSeq.includes("1") ||
     inputSeq.includes("l") ||
     inputSeq.includes("w")
   ) {
     document.getElementById("latest-list-btn").click();
-  } else if (inputSeq.includes("n") || inputSeq.includes("1")) {
+  } else if (inputSeq.includes("n") || inputSeq.includes("2")) {
     document.getElementById("nearby-list-btn").click();
   } else if (inputSeq.includes("x") || inputSeq.includes("z")) {
     document.getElementById("tweet-btn").click();
@@ -156,7 +156,7 @@ function handleKeydown(event) {
     document.getElementById("text-message-btn").click();
   } else if (inputSeq.includes("m")) {
     document.getElementById("change-map-btn").click();
-  } else if (inputSeq.includes("2")) {
+  } else if (inputSeq.includes("3")) {
     reInit();
   }
   inputSeq = "";
