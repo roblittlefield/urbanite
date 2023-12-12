@@ -55,9 +55,9 @@ const prefersDarkMode = window.matchMedia(
 //   : 0;
 let mapLayer;
 if (navigator.language === "en-US") {
-  mapLayer = prefersDarkMode ? 4 : 0;
+  mapLayer = prefersDarkMode ? 3 : 0;
 } else {
-  mapLayer = prefersDarkMode ? 5 : 1;
+  mapLayer = prefersDarkMode ? 4 : 1;
 }
 // localStorage.setItem("mapNumber", mapLayer);
 
