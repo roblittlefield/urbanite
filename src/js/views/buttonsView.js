@@ -184,9 +184,9 @@ export const toggleVisibleItems = function () {
   buttonContainer1.classList.toggle("hidden");
   buttonContainer2.classList.toggle("hidden");
   buttonContainer3.classList.toggle("hidden");
-  document.querySelectorAll(".vert-line").forEach((line) => {
-    line.classList.toggle("hidden");
-  });
+  // document.querySelectorAll(".vert-line").forEach((line) => {
+  //   line.classList.toggle("hidden");
+  // });
 };
 
 /**

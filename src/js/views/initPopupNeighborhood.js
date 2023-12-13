@@ -19,6 +19,7 @@ import { showAlert } from "./getPosition.js";
  */
 export const initPopupNieghborhood = (position, callsLayer, urlCAD, map) => {
   const now = Date.now();
+  console.log(urlCAD);
   let liveDataIncludesCAD = false;
   if (urlCAD) {
     if (/^\d{9,10}$/.test(urlCAD) && parseInt(urlCAD, 10) > 100000000) {
@@ -85,26 +86,30 @@ export const initPopupNieghborhood = (position, callsLayer, urlCAD, map) => {
             const resolutionHist = dataHistbyCAD[0].resolution;
 
             // Create Twitter message content based on historical call data
-            // const tweetContent = `${incident_descHist} at ${addressHist} in ${neighborhoodHist} ${
-            //   receivedTimeAgo <= 6
-            //     ? `${receivedTimeAgoF} ago`
-            //     : `${formatDate(receivedTimeAgo)}`
-            // }${
-            //   resolutionHist
-            //     ? resolutionHist === "Open or Active"
-            //       ? ""
-            //       : `<br>${resolutionHist}`
-            //     : ""
-            // } SFPDcalls.com/?cad=${cad_numberHist}`;
+            document.getElementById(
+              "tweet-content"
+            ).textContent = `${incident_descHist} at ${addressHist} in ${neighborhoodHist} ${
+              receivedTimeAgo <= 6
+                ? `${receivedTimeAgoF} ago`
+                : `${formatDate(receivedTimeAgo)}`
+            }${
+              resolutionHist
+                ? resolutionHist === "Open or Active"
+                  ? ""
+                  : `<br>${resolutionHist}`
+                : ""
+            } SFPDcalls.com/${cad_numberHist}`;
 
             // Create text message / iMessage content based on historical call data
-            // const textMessageContent = `"${incident_descHist} at ${addressHist} in ${neighborhoodHist} ${receivedTimeAgo} ago${
-            //   resolutionHist
-            //     ? resolutionHist === "Open or Active"
-            //       ? ""
-            //       : `, ${resolutionHist}`
-            //     : ""
-            // }, Case #${cad_numberHist}" SFPDcalls.com/?cad=${cad_numberHist}`;
+            document.getElementById(
+              "text-message-content"
+            ).textContent = `"${incident_descHist} at ${addressHist} in ${neighborhoodHist} ${receivedTimeAgo} ago${
+              resolutionHist
+                ? resolutionHist === "Open or Active"
+                  ? ""
+                  : `, ${resolutionHist}`
+                : ""
+            }, Case #${cad_numberHist}" SFPDcalls.com/${cad_numberHist}`;
 
             // Create Leaflet marker pop-up content based on historical call data
             const popupContent = `

@@ -14,15 +14,6 @@ body {
   font-family: Tahoma, Arial, Helvetica, sans-serif;
 }
 
-/* ---- Top Overlay ----
-#top-overlay {
-  position: fixed;
-  top: 0px;
-  width: 100%;
-  height: 5px;
-  background-image: linear-gradient(to bottom, #989898, transparent);
-} */
-
 /*----Leaflet Styling----*/
 #map {
   position: absolute;
@@ -338,16 +329,17 @@ body {
   width: 80px !important;
 }
 
-.vert-line {
+/* .vert-line {
   position: fixed;
   top: 0px;
   width: 1px;
   background-color: #989898;
   user-select: none;
   touch-action: none;
-}
+  display: block;
+} */
 
-#vert1,
+/* #vert1,
 #vert2,
 #vert3 {
   height: calc(100% - 140px);
@@ -379,14 +371,14 @@ body {
 }
 #vert6 {
   left: 33px;
-}
+} */
 
 @media screen and (min-width: 598px) {
-  #vert1,
+  /* #vert1,
   #vert2,
   #vert3 {
     height: calc(100% - 50px);
-  }
+  } */
 
   #nearby-list-btn {
     bottom: 80px;
@@ -448,6 +440,7 @@ body {
   box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.5);
   right: 15px;
   position: fixed;
+  z-index: 1;
   width: 34px;
   height: 68px;
   border-radius: 5px;
@@ -500,8 +493,8 @@ body {
 .bi-stopwatch,
 .bi-car-front,
 .bi-info-square {
-  width: 100px;
-  height: 100px;
+  width: 30px;
+  height: 30px;
 }
 /* 
 @media screen and (max-width: 440px) {

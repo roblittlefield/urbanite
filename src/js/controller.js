@@ -1,8 +1,8 @@
 import "regenerator-runtime/runtime";
 import "core-js/stable";
 import L from "leaflet";
-import * as model from "./model.js";
 import * as sfapi from "./config.js";
+import * as model from "./model.js";
 import { addCircleMarkers } from "./views/circleMarkers.js";
 import addStations from "./views/sfpdStations.js";
 import {
@@ -38,28 +38,17 @@ let originalPosition;
 let originalZoom;
 let initLoaded = false;
 window.moving = false;
-// Check for dark-mode and if there is a user preference. If the user preference matches the current mode, use it, oth
-// const storedMapLayer = +localStorage.getItem("map");
 const prefersDarkMode = window.matchMedia(
   "(prefers-color-scheme: dark)"
 ).matches;
-// Previous Map selector allowed saved maps but found it was more annoying than helpful
-// let mapLayer = prefersDarkMode
-//   ? // ? [1, 3].includes(storedMapLayer) // Dark Maps
-//     [2].includes(storedMapLayer) // Dark Maps
-//     ? storedMapLayer
-//     : 2
-//   : // : [0, 2, 4, 5].includes(storedMapLayer) // Light Maps
-//   [0, 1, 3].includes(storedMapLayer) // Light Maps
-//   ? storedMapLayer
-//   : 0;
-let mapLayer;
-if (navigator.language === "en-US") {
-  mapLayer = prefersDarkMode ? 3 : 0;
-} else {
-  mapLayer = prefersDarkMode ? 4 : 1;
-}
-// localStorage.setItem("mapNumber", mapLayer);
+let mapLayer =
+  navigator.language === "en-US"
+    ? prefersDarkMode
+      ? 3
+      : 0
+    : prefersDarkMode
+    ? 4
+    : 1;
 
 const countContainer = document.getElementById("nearby-info");
 const infoContainer = document.getElementById("project-info-container");
@@ -71,13 +60,7 @@ const carSubtextElement = document.getElementById("car-breakins-subtext");
  * Initializes the 'urlCAD' variable by retrieving the value of the 'cad' parameter from the URL.
  * If 'cad' parameter is not found, it attempts to retrieve 'cad_number', for older posts.
  */
-let urlCAD;
-const initGetUrlParam = function () {
-  urlCAD = getURLParameter("cad");
-  if (!urlCAD) {
-    urlCAD = getURLParameter("cad_number");
-  }
-};
+let urlCAD = getURLParameter("cad") || getURLParameter("cad_number");
 
 /**
  * Refreshes the current page with a hard reload after 10 minutes.
@@ -182,6 +165,7 @@ function handleKeydown(event) {
   //   }, 1000);
   // }
 }
+
 window.addEventListener("keydown", handleKeydown);
 
 /**
@@ -636,9 +620,6 @@ const openPopup = function () {
  */
 const init = async function () {
   try {
-    // Initialize URL parameters
-    initGetUrlParam();
-
     // Control map features
     await controlMap();
 
