@@ -246,7 +246,7 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
         html: emojiIcon,
         iconSize: [30, 30],
       });
-
+      callLatlng[1] += 0.00009;
       // Edit the pop-up content to mention SFPD is responding
       const marker = L.marker(callLatlng, {
         icon: respondingIcon,
