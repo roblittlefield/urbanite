@@ -31,7 +31,6 @@ export const loadChangeMapButton = function (handler) {
     const btn = e.target.closest("#change-map-btn");
     if (!btn) return;
     e.stopPropagation();
-    navigator.vibrate([100]);
     handler();
   });
 };
@@ -48,7 +47,6 @@ export const loadLatestListButton = function (handler, closeAllPopups) {
     const btn = e.target.closest("#latest-list-btn");
     if (!btn) return;
     closeAllPopups();
-    navigator.vibrate([100]);
     handler(false);
   });
 };
@@ -70,7 +68,7 @@ export const loadNearbyListButton = function (loader, handler, closeAllPopups) {
       try {
         await loader();
         closeAllPopups();
-        navigator.vibrate([100]);
+
         handler(true);
         nearbyButton.disabled = false;
       } catch (err) {
@@ -90,7 +88,6 @@ export const loadProjectInfoButton = function (handler) {
     e.stopPropagation();
     const btn = e.target.closest("#project-info-btn");
     if (!btn) return;
-    navigator.vibrate([100]);
     handler();
   });
 };
@@ -105,7 +102,6 @@ export const loadResponseTimesButton = function (closeAllPopups) {
     e.stopPropagation();
     const btn = e.target.closest("#response-times-list-btn");
     if (!btn) return;
-    navigator.vibrate([100]);
     toggleResponseTimesList();
     toggleVisibleItems();
     closeAllPopups();
@@ -123,7 +119,6 @@ export const loadCarBreakinsButton = function (handler) {
     e.stopPropagation();
     const btn = e.target.closest("#car-breakins-btn");
     if (!btn) return;
-    navigator.vibrate([100]);
     carBreaksinsButton.disabled = true;
     const interval = firstCarBreakin ? 6005 : 8005;
     handler();
@@ -144,7 +139,6 @@ export const loadTweetButton = function () {
     e.stopPropagation();
     const btn = e.target.closest("#tweet-btn");
     if (!btn) return;
-    navigator.vibrate([100]);
     let tweetContent = document.getElementById("tweet-content").textContent;
     window.open(
       `https://twitter.com/intent/tweet?text=${encodeURIComponent(
@@ -160,7 +154,6 @@ export const loadTextMessageButton = function () {
     e.stopPropagation();
     const btn = e.target.closest("#text-message-btn");
     if (!btn) return;
-    navigator.vibrate([100]);
     let textMessageContent = document.getElementById(
       "text-message-content"
     ).textContent;
