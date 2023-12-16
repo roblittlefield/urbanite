@@ -9,8 +9,9 @@ body {
 
 .productImage {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 10px;
+  margin-right: 10px;
   width: 350px;
   height: auto;
+  float: left;
 }
