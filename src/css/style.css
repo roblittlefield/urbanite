@@ -748,7 +748,6 @@ a.leaflet-control-zoom-out:hover {
   #car-breakins-btn {
     background-image: linear-gradient(#2f2f2f, #1d1d1d);
     color: rgba(250, 250, 250, 0.95) !important;
-    outline: none !important;
   }
 
   #latest-list-btn {
@@ -828,42 +827,49 @@ a.leaflet-control-zoom-out:hover {
   }
 
   #project-info-btn {
-    border-radius: 5px 5px 0px 0px !important;
+    border-radius: 0px 0px 0px 0px !important;
     border-left: none !important;
     border-top: none !important;
     border-right: none !important;
   }
 
   #change-map-btn {
-    border-radius: 0px 0px 5px 5px !important;
+    border-radius: 0px 0px 0px 0px !important;
     border-left: none !important;
     border-right: none !important;
     border-bottom: none !important;
   }
 
   #response-times-list-btn {
-    border-radius: 5px 5px 0px 0px !important;
+    border-radius: 0px 0px 0px 0px !important;
     border-left: none !important;
     border-top: none !important;
     border-right: none !important;
   }
 
   #car-breakins-btn {
-    border-radius: 0px 0px 5px 5px !important;
+    border-radius: 0px 0px 0px 0px !important;
     border-left: none !important;
     border-right: none !important;
     border-bottom: none !important;
   }
 
   #text-message-btn {
-    border-radius: 5px 5px 0px 0px !important;
+    border-radius: 0px 0px 0px 0px !important;
     border-left: none !important;
     border-top: none !important;
     border-right: none !important;
   }
 
   #tweet-btn {
-    border-radius: 0px 0px 5px 5px !important;
+    border-radius: 0px 0px 0px 0px !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+  }
+
+  #nearby-list-btn {
+    border-radius: 0px 0px 0px 0px !important;
     border-left: none !important;
     border-right: none !important;
     border-bottom: none !important;
