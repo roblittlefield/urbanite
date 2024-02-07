@@ -30,6 +30,12 @@ h2 {
   line-height: 1.3em;
 }
 
+ul,
+ol {
+  clear: left;
+}
+
 li {
-  padding-left: 25px;
+  padding-left: 30px;
+  /* margin-left: 30px; */
 }
