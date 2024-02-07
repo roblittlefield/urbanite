@@ -32,10 +32,28 @@ h2 {
 
 ul,
 ol {
-  clear: left;
+  padding-left: 40px;
+  margin-left: 20px;
 }
 
 li {
   padding-left: 30px;
   /* margin-left: 30px; */
+}
+
+/* Base article styling */
+article {
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+
+article:nth-of-type(2n) {
+  background-color: #f0fe8b;
+  opacity: 0.1;
+}
+
+article:nth-of-type(2n + 1) {
+  background-color: #00af7c;
+  opacity: 0.1;
 }
