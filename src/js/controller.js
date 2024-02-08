@@ -136,7 +136,7 @@ function handleKeydown(event) {
   } else if (inputSequence === "n" || inputSequence === "2") {
     document.getElementById("nearby-list-btn").click();
     inputSequence = "";
-  } else if (inputSequence === "x" || inputSeq === "z") {
+  } else if (inputSequence === "x" || inputSequence === "z") {
     document.getElementById("tweet-btn").click();
     inputSequence = "";
   } else if (inputSequence === "t") {
