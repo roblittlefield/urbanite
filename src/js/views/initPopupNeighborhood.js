@@ -89,9 +89,10 @@ export const initPopupNieghborhood = (position, callsLayer, urlCAD, map) => {
             document.getElementById(
               "tweet-content"
             ).textContent = `${incident_descHist} at ${addressHist} in ${neighborhoodHist} ${
-              receivedTimeAgo <= 6
-                ? `${receivedTimeAgoF} ago`
-                : `${formatDate(receivedTimeAgo)}`
+              // receivedTimeAgo <= 6
+              //   ? `${receivedTimeAgoF} ago`
+              //   :
+              `${formatDate(receivedTimeAgo)}`
             }${
               resolutionHist
                 ? resolutionHist === "Open or Active"
