@@ -125,27 +125,27 @@ function handleKeydown(event) {
   inputSequence += event.key;
   // inputSeq = event.key;
   if (
-    inputSequence.includes("`") ||
-    inputSequence.includes("q") ||
+    inputSequence === "`" ||
+    inputSequence === "q" ||
     // inputSequence.includes("1") ||
-    inputSequence.includes("l") ||
-    inputSequence.includes("w")
+    inputSequence === "l" ||
+    inputSequence === "w"
   ) {
     document.getElementById("latest-list-btn").click();
     inputSequence = "";
-  } else if (inputSequence.includes("n") || inputSequence.includes("2")) {
+  } else if (inputSequence === "n" || inputSequence === "2") {
     document.getElementById("nearby-list-btn").click();
     inputSequence = "";
-  } else if (inputSequence.includes("x") || inputSeq.includes("z")) {
+  } else if (inputSequence === "x" || inputSeq === "z") {
     document.getElementById("tweet-btn").click();
     inputSequence = "";
-  } else if (inputSequence.includes("t")) {
+  } else if (inputSequence === "t") {
     document.getElementById("text-message-btn").click();
     inputSequence = "";
-  } else if (inputSequence.includes("m")) {
+  } else if (inputSequence === "m") {
     document.getElementById("change-map-btn").click();
     inputSequence = "";
-  } else if (inputSequence.includes("3")) {
+  } else if (inputSequence === "3") {
     reInit();
     inputSequence = "";
   }
@@ -157,17 +157,19 @@ function handleKeydown(event) {
 
   // }
   // inputSequence = "";
-  else if (inputSequence.includes("415") || inputSequence.includes("frisco")) {
+  else if (inputSequence === "415" || inputSequence === "frisco") {
     document.getElementById("affiliate").style.setProperty("display", "none");
     document.querySelector(".affiliate-popup").classList.add("hidden");
-    sH(false);
+    // sH(false);
     inputSequence = "";
     window.removeEventListener("keydown", handleKeydown);
   }
-  if (inputSequence.length > 5) {
+
+  if (inputSequence.length > 0) {
+    const delay = inputSequence.length > 5 ? 1000 : 4000;
     setTimeout(() => {
       inputSequence = "";
-    }, 1000);
+    }, delay);
   }
 }
 
