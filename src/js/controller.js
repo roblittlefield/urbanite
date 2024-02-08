@@ -30,7 +30,7 @@ import {
 } from "./views/buttonsView.js";
 import getURLParameter from "./views/hashURL.js";
 import loadAff from "./views/affiliate.js";
-import { addHandlerMoveCenter, sH } from "./views/moveCenter.js";
+import { addHandlerMoveCenter } from "./views/moveCenter.js";
 import { async } from "regenerator-runtime";
 
 let map;
@@ -160,7 +160,6 @@ function handleKeydown(event) {
   else if (inputSequence === "415" || inputSequence === "frisco") {
     document.getElementById("affiliate").style.setProperty("display", "none");
     document.querySelector(".affiliate-popup").classList.add("hidden");
-    // sH(false);
     inputSequence = "";
     window.removeEventListener("keydown", handleKeydown);
   }
