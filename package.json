@@ -3,7 +3,7 @@
   "version": "4.0.0",
   "description": "San Francisco .gov data mapping app",
   "scripts": {
-    "start": "parcel prod.html",
+    "start": "parcel index.html",
     "build": "parcel build index.html 404.html prod.html --dist-dir ./dist"
   },
   "repository": {
