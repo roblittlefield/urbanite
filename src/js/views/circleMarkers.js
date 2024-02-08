@@ -32,9 +32,10 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
     const tweetContent = `${call.neighborhoodFormatted.toUpperCase()}: ${
       call.callTypeFormatted
     }${callNotesStr} near ${call.properCaseAddress} ${
-      call.receivedTimeAgo < 3200
-        ? `${receivedTimeAgoF} ago`
-        : `${formatDate(call.receivedTime)}`
+      // call.receivedTimeAgo < 3200
+      //   ? `${receivedTimeAgoF} ago`
+      //   :
+      `${formatDate(call.receivedTime)}`
     }, Priority ${call.priority}, ${
       call.onView === "Y"
         ? "SFPD officer observed"

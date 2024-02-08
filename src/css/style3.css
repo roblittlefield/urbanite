@@ -3,57 +3,60 @@
 }
 
 body {
-  margin: 20px;
-  padding: 20px;
+  margin: 0;
+  padding: 0;
 }
 
 .productImage {
   display: block;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 0px;
+  padding-right: 10px;
   width: 350px;
+  max-width: 90vw;
   height: auto;
+  max-height: 600px;
   float: left;
+  border-radius: 20px;
 }
 
 h1 {
+  padding: 3px;
+  margin-top: -3px;
+  margin-bottom: 0px;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  text-align: center;
+  font-size: 3em;
+  font-weight: bolder;
+  background-color: rgba(244, 109, 67, 0.7);
+  padding-top: 7px;
+  padding-bottom: 4px;
+  font-style: italic;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
   font-size: 1.8em;
   text-align: left;
-  padding: 0.3em;
   margin: 0;
   top: 0;
-  letter-spacing: 0.5px;
-  line-height: 1.3em;
 }
 
 ul,
 ol {
-  padding-left: 40px;
-  margin-left: 20px;
+  list-style-position: inside;
 }
 
-li {
-  padding-left: 30px;
-  /* margin-left: 30px; */
-}
-
-/* Base article styling */
 article {
-  padding: 20px;
-  margin-bottom: 15px;
+  padding: 3px;
   border-radius: 5px;
 }
 
 article:nth-of-type(2n) {
-  background-color: #f0fe8b;
-  opacity: 0.1;
+  background-color: rgba(0, 175, 124, 0.15);
 }
 
 article:nth-of-type(2n + 1) {
-  background-color: #00af7c;
-  opacity: 0.1;
+  background-color: rgba(240, 254, 139, 0.25);
 }
