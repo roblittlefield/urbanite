@@ -19,7 +19,7 @@ import { showAlert } from "./getPosition.js";
  */
 export const initPopupNieghborhood = (position, callsLayer, urlCAD, map) => {
   const now = Date.now();
-  console.log(urlCAD);
+  if (urlCAD) console.log(urlCAD);
   let liveDataIncludesCAD = false;
   if (urlCAD) {
     if (/^\d{9,10}$/.test(urlCAD) && parseInt(urlCAD, 10) > 100000000) {

@@ -1,11 +1,11 @@
 import { centerPopupTolerance } from "../config.js";
 let currentPopup = null;
 let isPopupOpen = false;
-let aaT = true;
+// let aaT = true;
 
-export function sH(v) {
-  aaT = v;
-}
+// export function sH(v) {
+//   aaT = v;
+// }
 
 /**
  * Add a handler to move the center of the map based on the location of markers and open popups.
@@ -15,7 +15,7 @@ export function sH(v) {
  */
 export const addHandlerMoveCenter = function (callsLayer, map) {
   let timer = null;
-  let lineTimer = null;
+  // let lineTimer = null;
   // let popupAffTimer = null;
   map.on("move", () => {
     document.querySelectorAll(".vert-line").forEach(function (el) {
@@ -23,13 +23,13 @@ export const addHandlerMoveCenter = function (callsLayer, map) {
     });
     // Check if the 'moving' flag is set; if true, exit the function
     if (moving) return;
-    clearTimeout(lineTimer);
-    lineTimer = setTimeout(() => {
-      document.querySelectorAll(".vert-line").forEach(function (el) {
-        el.classList.remove("hidden");
-      });
-    }, 3000);
-    // //
+    // clearTimeout(lineTimer);
+    // lineTimer = setTimeout(() => {
+    //   document.querySelectorAll(".vert-line").forEach(function (el) {
+    //     el.classList.remove("hidden");
+    //   });
+    // }, 3000);
+
     // // Popup Affiliate
     // clearTimeout(popupAffTimer);
     // if (!aaT) {
@@ -41,10 +41,6 @@ export const addHandlerMoveCenter = function (callsLayer, map) {
     //   document.querySelector(".affiliate-popup").classList.add("hidden");
     // }, 2800);
     // // End Popup Affiliate
-    // //
-
-    // End Popup Affiliate
-    //
 
     // Clear any previously scheduled timer to avoid rapid execution
     clearTimeout(timer);

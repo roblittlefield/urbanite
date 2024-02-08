@@ -29,7 +29,7 @@ import {
   loadTextMessageButton,
 } from "./views/buttonsView.js";
 import getURLParameter from "./views/hashURL.js";
-// import loadAff from "./views/affiliate.js";
+import loadAff from "./views/affiliate.js";
 import { addHandlerMoveCenter, sH } from "./views/moveCenter.js";
 import { async } from "regenerator-runtime";
 
@@ -48,7 +48,7 @@ let mapLayer =
       : 0
     : prefersDarkMode
     ? 4
-    : 1;
+    : 5;
 
 const countContainer = document.getElementById("nearby-info");
 const infoContainer = document.getElementById("project-info-container");
@@ -118,52 +118,57 @@ document.addEventListener("visibilitychange", () => {
   }
 });
 
-let inputSeq = "";
+// let inputSeq = "";
+let inputSequence = "";
 function handleKeydown(event) {
   console.log(event.key);
-  // inputSequence += event.key;
-  inputSeq = event.key;
+  inputSequence += event.key;
+  // inputSeq = event.key;
   if (
-    inputSeq.includes("`") ||
-    inputSeq.includes("q") ||
-    inputSeq.includes("1") ||
-    inputSeq.includes("l") ||
-    inputSeq.includes("w")
+    inputSequence.includes("`") ||
+    inputSequence.includes("q") ||
+    // inputSequence.includes("1") ||
+    inputSequence.includes("l") ||
+    inputSequence.includes("w")
   ) {
     document.getElementById("latest-list-btn").click();
-  } else if (inputSeq.includes("n") || inputSeq.includes("2")) {
+    inputSequence = "";
+  } else if (inputSequence.includes("n") || inputSequence.includes("2")) {
     document.getElementById("nearby-list-btn").click();
-  } else if (inputSeq.includes("x") || inputSeq.includes("z")) {
+    inputSequence = "";
+  } else if (inputSequence.includes("x") || inputSeq.includes("z")) {
     document.getElementById("tweet-btn").click();
-  } else if (inputSeq.includes("i")) {
+    inputSequence = "";
+  } else if (inputSequence.includes("t")) {
     document.getElementById("text-message-btn").click();
-  } else if (inputSeq.includes("m")) {
+    inputSequence = "";
+  } else if (inputSequence.includes("m")) {
     document.getElementById("change-map-btn").click();
-  } else if (inputSeq.includes("3")) {
+    inputSequence = "";
+  } else if (inputSequence.includes("3")) {
     reInit();
+    inputSequence = "";
   }
-  inputSeq = "";
+  // inputSeq = "";
+
   // else if (inputSequence.includes("n") || inputSequence.includes("i")) {
   //   document.getElementById("nearby-list-btn").click();
   // }
 
   // }
   // inputSequence = "";
-  // else if (
-  //   inputSequence.includes("415") ||
-  //   inputSequence.includes("frisco")
-  // ) {
-  //   document.getElementById("affiliate").style.setProperty("display", "none");
-  //   document.querySelector(".affiliate-popup").classList.add("hidden");
-  //   sH(false);
-  //   inputSequence = "";
-  //   window.removeEventListener("keydown", handleKeydown);
-  // }
-  // if (inputSequence.length > 3) {
-  //   setTimeout(() => {
-  //     inputSequence = "";
-  //   }, 1000);
-  // }
+  else if (inputSequence.includes("415") || inputSequence.includes("frisco")) {
+    document.getElementById("affiliate").style.setProperty("display", "none");
+    document.querySelector(".affiliate-popup").classList.add("hidden");
+    sH(false);
+    inputSequence = "";
+    window.removeEventListener("keydown", handleKeydown);
+  }
+  if (inputSequence.length > 5) {
+    setTimeout(() => {
+      inputSequence = "";
+    }, 1000);
+  }
 }
 
 window.addEventListener("keydown", handleKeydown);
@@ -531,7 +536,7 @@ const controlCarBreakins = async function () {
 
     // Hide the unrelated buttons and metrics
     toggleVisibleItems();
-    // document.getElementById("affiliate").classList.add("hidden");
+    document.getElementById("affiliate").classList.add("hidden");
     [lastUpdatedElement, carSubtextElement, carCountElement].forEach(
       (element) => element.classList.remove("hidden")
     );
@@ -591,7 +596,7 @@ const controlCarBreakins = async function () {
       carSubtextElement.classList.add("hidden");
       lastUpdatedElement.style.bottom = "28px";
       toggleVisibleItems();
-      // document.getElementById("affiliate").classList.remove("hidden");
+      document.getElementById("affiliate").classList.remove("hidden");
       lastUpdatedElement.classList.remove("hidden");
       firstCarBreakin = false;
       showingCarBreakin = false;
@@ -630,8 +635,8 @@ const init = async function () {
     loadChangeMapButton(controlChangeMap);
     loadProjectInfoButton(controlProjectInfo);
 
-    // // Load affiliate links
-    // loadAff();
+    // Load affiliate links
+    loadAff();
 
     // Remove the "hidden" class from the "addSFDataSource" element to display it
     document.getElementById("addSFDataSource").classList.remove("hidden");

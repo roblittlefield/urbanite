@@ -19,7 +19,7 @@ const countNearbyContainer = document.getElementById("nearby-info");
 const neighborhoodContainer = document.getElementById("neighborhood-text");
 const infoContainer = document.getElementById("project-info-container");
 const lastUpdatedElement = document.getElementById("last-updated");
-// const affiliateCont = document.getElementById("affiliate");
+const affiliateCont = document.getElementById("affiliate");
 
 /**
  * Load and initialize the "Change Map" button with a click event handler.
@@ -181,7 +181,7 @@ export const toggleVisibleItems = function () {
   countNearbyContainer.classList.toggle("hidden");
   neighborhoodContainer.classList.toggle("hidden");
   lastUpdatedElement.classList.toggle("hidden");
-  // affiliateCont.classList.toggle("hidden");
+  affiliateCont.classList.toggle("hidden");
   buttonContainer1.classList.toggle("hidden");
   buttonContainer2.classList.toggle("hidden");
   buttonContainer3.classList.toggle("hidden");

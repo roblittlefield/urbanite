@@ -263,7 +263,7 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
           closeButton: false,
           disableAnimation: true,
           autoPan: false,
-          // className: "station-popup",
+          className: "station-popup",
         })
         .addTo(callsLayer);
       marker.on("click", function (e) {

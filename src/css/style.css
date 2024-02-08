@@ -34,7 +34,7 @@ body {
 }
 
 /*----Affiliate Advertising----*/
-/* .aff-hidden {
+.aff-hidden {
   opacity: 0;
   transition: opacity 1s ease;
 }
@@ -169,7 +169,7 @@ body {
   .affiliate-target-name-6 {
     display: none;
   }
-} */
+}
 
 /* For SF Police Stations and Responding Cop Car Emoji */
 .station-marker {
