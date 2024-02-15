@@ -249,7 +249,8 @@
 .call-box {
   overflow: hidden;
   background-color: #2f2f2f;
-  width: 300px;
+  width: 281px;
+  /* ^^ Changed on Feb 15 2024 */
   text-align: start;
   height: 72px;
   font-size: auto;
