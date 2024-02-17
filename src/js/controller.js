@@ -298,12 +298,12 @@ const controlCircleMarkers = async function () {
       loadCarBreakinsButton(controlCarBreakins);
       loadTweetButton();
       loadTextMessageButton();
-      if (localStorage.getItem("openList") === "allSF")
-        document.getElementById("latest-list-btn").click();
-    } else {
+      // if (localStorage.getItem("openList") === "allSF")
+      //   document.getElementById("latest-list-btn").click();
+    // } else {
       addHandlerMoveCenter(callsLayer, map);
       openPopup();
-    }
+    // }
 
     // If user location is known, update the nearby calls list
     if (initLoaded && position) loadNearbyCalls();
