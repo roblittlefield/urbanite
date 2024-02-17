@@ -57,8 +57,8 @@ export const MAP_LAYERS = [
   "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", // OpenStreet.HOT (light)
   // "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", // 6 Open Street Map Urban (light)
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", // 4 Satellite Photos
-  "https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg", // 2 Watercolor
-  // "https://cdn.lima-labs.com/{z}/{x}/{y}.png?api=demo", // 5 Urban
+  // "https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg", // 2 Watercolor
+  "https://cdn.lima-labs.com/{z}/{x}/{y}.png?api=demo", // 5 Urban
   // `https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Atlas (light)
   // `https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=${THUNDERFOREST_API_KEY}`, // Thunderforest Neighborhood (light)
   // `https://tile.jawg.io/f4092ed7-ed42-471b-84e3-a481315be2a6/{z}/{x}/{y}{r}.png?access-token=${JAWG_API_KEY}`, // Cusotom Jawg Lagoon
