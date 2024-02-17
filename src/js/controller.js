@@ -300,10 +300,10 @@ const controlCircleMarkers = async function () {
       loadTextMessageButton();
       // if (localStorage.getItem("openList") === "allSF")
       //   document.getElementById("latest-list-btn").click();
-    // } else {
+    } else {
       addHandlerMoveCenter(callsLayer, map);
       openPopup();
-    // }
+    }
 
     // If user location is known, update the nearby calls list
     if (initLoaded && position) loadNearbyCalls();
