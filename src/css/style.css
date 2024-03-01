@@ -291,7 +291,7 @@ body {
 
 #text-message-btn {
   border-radius: 5px 5px 0px 0px;
-  bottom: 233px;
+  bottom: 248px;
   border: 0.2px solid #989898;
   border-bottom: none;
 }
@@ -302,7 +302,7 @@ body {
 
 #tweet-btn {
   border-radius: 0px 0px 5px 5px;
-  bottom: 199px;
+  bottom: 214px;
   border: 0.2px solid #989898;
   border-top: none;
 }
@@ -318,7 +318,6 @@ body {
 }
 
 #latest-list-btn {
-  /* top: 149px; */
   bottom: 120px;
   color: rgba(255, 255, 255, 1) !important;
   box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.5);
@@ -329,57 +328,7 @@ body {
   width: 80px !important;
 }
 
-/* .vert-line {
-  position: fixed;
-  top: 0px;
-  width: 1px;
-  background-color: #989898;
-  user-select: none;
-  touch-action: none;
-  display: block;
-} */
-
-/* #vert1,
-#vert2,
-#vert3 {
-  height: calc(100% - 140px);
-}
-
-#vert1 {
-  right: 25px;
-}
-
-#vert2 {
-  right: 31px;
-}
-
-#vert3 {
-  right: 37px;
-}
-
-#vert4,
-#vert5,
-#vert6 {
-  height: 11.6px;
-}
-
-#vert4 {
-  left: 21px;
-}
-#vert5 {
-  left: 27px;
-}
-#vert6 {
-  left: 33px;
-} */
-
 @media screen and (min-width: 598px) {
-  /* #vert1,
-  #vert2,
-  #vert3 {
-    height: calc(100% - 50px);
-  } */
-
   #nearby-list-btn {
     bottom: 80px;
   }
@@ -456,7 +405,7 @@ body {
 }
 
 #button-container-3 {
-  bottom: 199px;
+  bottom: 214px;
 }
 
 #text-message-btn,
@@ -479,11 +428,6 @@ body {
 #car-breakins-btn:hover {
   color: #1c1c1a;
 }
-
-/* 
-#latest-list-btn {
-  background-image: linear-gradient(#016403, #005302);
-} */
 
 .bi-chat-dots,
 .bi-twitter-x,
@@ -632,10 +576,6 @@ body {
   color: #888888;
 }
 
-/* .leaflet-popup-content a .x-com {
-  color: rgba(0, 0, 0, 1);
-} */
-
 .leaflet-popup-content-small-padding {
   padding: 0.1px 0px 0px 0px;
   background-color: transparent;
@@ -708,9 +648,6 @@ a.leaflet-control-zoom-out:hover {
 }
 
 .station-popup .leaflet-popup-content {
-  padding: 0.1px 0px 0.1px 0px !important;
-  background-color: transparent;
-  transition: padding 0.5s;
   text-align: center;
 }
 
