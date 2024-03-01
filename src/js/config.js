@@ -268,6 +268,7 @@ export const PARAM_MAP_POLICE_48h = {
   sensitive: "sensitive_call",
   notes_original: "call_type_original_notes",
   notes_final: "call_type_final_notes",
+  district: "supervisor_district",
 };
 
 // SFPD Call disposition / conclusion dictionary

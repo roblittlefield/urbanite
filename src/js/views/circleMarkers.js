@@ -35,8 +35,10 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
       // call.receivedTimeAgo < 3200
       //   ? `${receivedTimeAgoF} ago`
       //   :
-      `${formatDate(call.receivedTime)}`
-    }, Priority ${call.priority}, ${
+      receivedTimeF
+    }, District ${call.district}: Supervisor ${call.supervisor}, Priority ${
+      call.priority
+    }, ${
       call.onView === "Y"
         ? "SFPD officer observed"
         : call.responseTime
@@ -86,6 +88,7 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
         : ``
     }
     <br>${call.properCaseAddress}
+    <br>District ${call.district}: ${call.supervisor}
     <br>Priority ${
       call.priority
     } #<a href="https://data.sfgov.org/resource/gnap-fj3t.json?cad_number=${

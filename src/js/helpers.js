@@ -88,23 +88,40 @@ export const minsHoursFormat = function (time) {
  * @returns {string} The formatted neighborhood name.
  */
 export const neighborhoodFormat = function (neighborhood) {
-  const neighborhoodFormatted =
-    neighborhood === "Financial District/South Beach"
-      ? "Financial"
-      : neighborhood === "Lone Mountain/USF"
-      ? "USF"
-      : neighborhood === "Castro/Upper Market"
-      ? "Castro"
-      : neighborhood === "Sunset/Parkside"
-      ? "Sunset"
-      : neighborhood === "West of Twin Peaks"
-      ? "W Twin Peaks"
-      : neighborhood === "Bayview Hunters Point"
-      ? "Bayview"
-      : neighborhood === "Oceanview/Merced/Ingleside"
-      ? "OMI"
-      : neighborhood === "South of Market"
-      ? "SoMa"
-      : neighborhood;
-  return neighborhoodFormatted;
+  const map = {
+    "Financial District/South Beach": "Financial",
+    "Lone Mountain/USF": "USF",
+    "Castro/Upper Market": "Castro",
+    "Sunset/Parkside": "Sunset",
+    "West of Twin Peaks": "W Twin Peaks",
+    "Bayview Hunters Point": "Bayview",
+    "Oceanview/Merced/Ingleside": "OMI",
+    "South of Market": "SoMa",
+  };
+
+  return map[neighborhood] || neighborhood;
+};
+
+/**
+ * Retrieves the name of the supervisor for a specified San Francisco district.
+ *
+ * @param {string} district - The district number as a string. It should be a number between 1 and 11, inclusive.
+ * @returns {string} The name of the supervisor for the given district number.
+ *
+ */
+export const districtSupervisor = function (district) {
+  const map = {
+    1: "Connie Chan",
+    2: "Catherine Stefani",
+    3: "Aaron Peskin",
+    4: "Joel Engardio",
+    5: "Dean Preston",
+    6: "Matt Dorsey",
+    7: "Myrna Melgar",
+    8: "Rafael Mandelman",
+    9: "Hillary Ronen",
+    10: "Shamann Walton",
+    11: "Ahsha Safai",
+  };
+  return map[Number(district)];
 };

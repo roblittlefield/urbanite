@@ -9,6 +9,7 @@ import {
   standardizeData,
   textProperCase,
   neighborhoodFormat,
+  districtSupervisor,
 } from "./helpers.js";
 
 /**
@@ -75,6 +76,7 @@ export const dataProcess = function (position, dataRaw, callTypeMap, paramMap) {
     );
     const properCaseAddress = textProperCase(call.address);
     const neighborhoodFormatted = neighborhoodFormat(call.neighborhood);
+    const supervisor = districtSupervisor(call.district);
     const callTypeFormatted = callTypeConversionMap.get(callType) || callType;
     const callNotes =
       callnotesMap.get(call.notes_original) ||
@@ -94,6 +96,7 @@ export const dataProcess = function (position, dataRaw, callTypeMap, paramMap) {
       responseTimeExact,
       properCaseAddress,
       neighborhoodFormatted,
+      supervisor,
       callTypeFormatted,
       dispositionMeaning,
       positionLatLng,
