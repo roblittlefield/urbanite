@@ -161,23 +161,25 @@ export const updateCallList = function (latestMarkers, map, nearby) {
           ${circleMarker.options.data.neighborhood}, Priority ${
         circleMarker.options.data.priority
       }</p>
-         </i><p>${
-           circleMarker.options.data.onView === "Y"
-             ? `Officer observed`
-             : responseTime
-             ? `Response time: ${responseTimeF}`
-             : circleMarker.options.data.dispatchedTimeAgoF
-             ? `Dispatched ${circleMarker.options.data.dispatchedTimeAgoF} ago`
-             : circleMarker.options.data.enteredTimeAgo
-             ? `Call entry in queue ${circleMarker.options.data.enteredTimeAgo} ago`
-             : `Call received, pending entry`
-         }${
+         </i><p>${circleMarker.options.data.address}, District ${
+        circleMarker.options.data.district
+      }</p><p>${
+        circleMarker.options.data.onView === "Y"
+          ? `Officer observed`
+          : responseTime
+          ? `Response time: ${responseTimeF}`
+          : circleMarker.options.data.dispatchedTimeAgoF
+          ? `Dispatched ${circleMarker.options.data.dispatchedTimeAgoF} ago`
+          : circleMarker.options.data.enteredTimeAgo
+          ? `Call entry in queue ${circleMarker.options.data.enteredTimeAgo} ago`
+          : `Call received, pending entry`
+      }${
         circleMarker.options.data.disposition
           ? `, ${circleMarker.options.data.disposition.toLowerCase()}`
           : ", open"
       }
         </p>
-          <p>${circleMarker.options.data.address}</p>
+          
         `;
 
       const callBox = document.createElement("li");

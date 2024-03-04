@@ -165,6 +165,7 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
       callNotes: call.callNotes,
       callTweetContent: tweetContent,
       callMessageContent: textMessageContent,
+      district: call.district,
     };
     // Create content for recent calls
     if (recentlyDispatched || recentlyResponded) {
