@@ -53,8 +53,8 @@ export const onSceneCircleOpt = {
 // Leaflet map tile URL addresses
 export const MAP_LAYERS = [
   // Light Mode (US:0, 3) vs (4, 5)
-  "https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png", // 0 Gray/Green (The best one!)
-  // "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", // OpenStreet.HOT (light)
+  // "https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png", // 0 Gray/Green (The best one!)
+  "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", // OpenStreet.HOT (light)
   // "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", // 6 Open Street Map Urban (light)
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", // 4 Satellite Photos
   // "https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg", // 2 Watercolor
