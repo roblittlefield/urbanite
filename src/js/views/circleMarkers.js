@@ -29,9 +29,11 @@ export function addCircleMarkers(data, callsLayer, respCircleLayer) {
         : "";
 
     // Create Tweet / X message content from call data
-    const tweetContent = `${call.neighborhoodFormatted.toUpperCase()}: ${
-      call.callTypeFormatted
-    }${callNotesStr} near ${call.properCaseAddress} ${
+    const tweetContent = `${(
+      call.neighborhoodFormatted || "undefined"
+    ).toUpperCase()}: ${call.callTypeFormatted}${callNotesStr} near ${
+      call.properCaseAddress
+    } ${
       // call.receivedTimeAgo < 3200
       //   ? `${receivedTimeAgoF} ago`
       //   :
